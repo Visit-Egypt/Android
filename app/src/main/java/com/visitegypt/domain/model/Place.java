@@ -2,31 +2,52 @@ package com.visitegypt.domain.model;
 
 public class Place {
     // TODO define the rest of the variables
-    private String name;
-    private String ticketPrice;
+    private String title;
+    private String description;
+    private String mainImageUrl;
+    private int ticketPrice = -1;
 
-    public Place(){}
+    public Place() {
+    }
 
-    // TODO finish constructor
-    public Place(String name, String ticketPrice) {
-        this.name = name;
+    public Place(String title, String description, int ticketPrice) {
+        this.title = title;
+        this.description = description;
+        this.ticketPrice = ticketPrice;
+    }
+
+    public Place(String title, String description, String mainImageUrl) {
+        this.title = title;
+        this.description = description;
+        this.mainImageUrl = mainImageUrl;
+    }
+
+    public Place(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
+
+    public Place(String title, String description, String mainImageUrl, int ticketPrice) {
+        this.title = title;
+        this.description = description;
+        this.mainImageUrl = mainImageUrl;
         this.ticketPrice = ticketPrice;
     }
 
     // TODO make the rest of the setters and getters
     public String getName() {
-        return name;
+        return title;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.title = name;
     }
 
-    public String getTicketPrice() {
+    public int getTicketPrice() {
         return ticketPrice;
     }
 
-    public void setTicketPrice(String ticketPrice) {
+    public void setTicketPrice(int ticketPrice) {
         this.ticketPrice = ticketPrice;
     }
 
