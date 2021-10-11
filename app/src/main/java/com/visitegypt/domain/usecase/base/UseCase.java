@@ -1,4 +1,4 @@
 package com.visitegypt.domain.usecase.base;
 
-public class UseCase {
+public abstract class UseCase {
 }
