@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">VisitEgypt</string>
+    <string name= "Email">E-mail</string>
+    <string name="loginMsg" >Sign in</string>
+    <string name="password" >Password</string>
+    <string name="forgetPassword" >
+        <u>
+            Forget your password ?
+        </u>
+    </string>
+    <string name="newHere" >
+        New Here ?
+        <b>
+            Sign up
+        </b>
+    </string>
+    <string name="sign_in">Sign in</string>
 </resources>
