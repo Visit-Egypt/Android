@@ -12,6 +12,7 @@ public class User {
     private String password;
     private String email;
     private String phoneNumber;
+    private int age;
 
     public User() {
     }
@@ -21,12 +22,13 @@ public class User {
         this.password = password;
     }
 
-    public User(String firstname, String lastname, String email, String password, String phoneNumber) {
+    public User(String firstname, String lastname, String email, String password, String phoneNumber, int age) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.age = age;
     }
 
     public String getFirstname() {
@@ -75,5 +77,13 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }
