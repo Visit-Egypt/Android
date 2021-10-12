@@ -18,7 +18,7 @@
             android:scaleType="centerCrop"
             android:src="@drawable/test" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/placeCardTitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/placeCardDescriptionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

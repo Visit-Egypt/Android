@@ -23,6 +23,10 @@ public class Place {
     private String title;
     private String description;
 
+    private String locationDescription;
+    private int longitude;
+    private int altitude;
+
     @TypeConverters(ImageUrlsConverter.class)
     private List<String> imageUrls;
     @TypeConverters(TicketPricesConverter.class)
@@ -33,6 +37,19 @@ public class Place {
     private List<Review> reviews;
 
     public Place() {
+    }
+
+    public Place(@NonNull String _id, String title, String description, String locationDescription, int longitude, int altitude, List<String> imageUrls, Map<Constants.customerType, Integer> ticketPrices, Map<Constants.weekDays, String> openingHours, List<Review> reviews) {
+        this._id = _id;
+        this.title = title;
+        this.description = description;
+        this.locationDescription = locationDescription;
+        this.longitude = longitude;
+        this.altitude = altitude;
+        this.imageUrls = imageUrls;
+        this.ticketPrices = ticketPrices;
+        this.openingHours = openingHours;
+        this.reviews = reviews;
     }
 
     public Place(String title, String description, Map<Constants.customerType, Integer> ticketPrices) {
@@ -113,6 +130,30 @@ public class Place {
 
     public void setOpeningHours(Map<Constants.weekDays, String> openingHours) {
         this.openingHours = openingHours;
+    }
+
+    public String getLocationDescription() {
+        return locationDescription;
+    }
+
+    public void setLocationDescription(String locationDescription) {
+        this.locationDescription = locationDescription;
+    }
+
+    public int getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(int longitude) {
+        this.longitude = longitude;
+    }
+
+    public int getAltitude() {
+        return altitude;
+    }
+
+    public void setAltitude(int altitude) {
+        this.altitude = altitude;
     }
 
     public List<Review> getReviews() {

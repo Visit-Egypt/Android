@@ -3,6 +3,7 @@ package com.visitegypt.presentation.home;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.visitegypt.R;
@@ -30,6 +31,7 @@ public class HomeActivity extends AppCompatActivity {
         arrayList.add(new Place("Mat7af Gamed", "a great place for family gathering, built in 19th century by a dead man"));
         homeRecyclerView = findViewById(R.id.homeRecyclerView);
         homeRecyclerViewAdapter = new HomeRecyclerViewAdapter(arrayList);
+        homeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         homeRecyclerView.setAdapter(homeRecyclerViewAdapter);
     }
 }

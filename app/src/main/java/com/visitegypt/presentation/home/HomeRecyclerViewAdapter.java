@@ -18,6 +18,7 @@ import java.util.List;
 public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerViewAdapter.ViewHolder> {
     private static final String TAG = "Home RecyclerView Adapter";
     private List<Place> placesList;
+
     public HomeRecyclerViewAdapter(List<Place> placesList) {
         this.placesList = placesList;
     }
