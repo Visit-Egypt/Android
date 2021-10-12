@@ -1,17 +1,22 @@
 package com.visitegypt.domain.model;
 
-import java.util.ArrayList;
+import androidx.room.TypeConverters;
+
+import com.visitegypt.domain.model.Converters.ImageUrlsConverter;
+
+import java.util.List;
 
 public class Item {
     private String title;
     private String description;
-    private ArrayList<String> imageUrls;
+    @TypeConverters(ImageUrlsConverter.class)
+    private List<String> imageUrls;
 
     public Item() {
 
     }
 
-    public Item(String title, String description, ArrayList<String> imageUrls) {
+    public Item(String title, String description, List<String> imageUrls) {
         this.title = title;
         this.description = description;
         this.imageUrls = imageUrls;
@@ -38,11 +43,11 @@ public class Item {
         this.description = description;
     }
 
-    public ArrayList<String> getImageUrls() {
+    public List<String> getImageUrls() {
         return imageUrls;
     }
 
-    public void setImageUrl(ArrayList<String> imageUrls) {
+    public void setImageUrl(List<String> imageUrls) {
         this.imageUrls = imageUrls;
     }
 }

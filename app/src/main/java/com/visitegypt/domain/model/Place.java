@@ -6,11 +6,13 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.visitegypt.domain.model.Converters.ImageUrlsConverter;
+import com.visitegypt.domain.model.Converters.ItemsTypeConverter;
 import com.visitegypt.domain.model.Converters.OpeningHoursConverter;
 import com.visitegypt.domain.model.Converters.ReviewsConverter;
 import com.visitegypt.domain.model.Converters.TicketPricesConverter;
 import com.visitegypt.utils.Constants;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +29,9 @@ public class Place {
     private int longitude;
     private int altitude;
 
+    @TypeConverters(ItemsTypeConverter.class)
+    private List<Item> items;
+
     @TypeConverters(ImageUrlsConverter.class)
     private List<String> imageUrls;
     @TypeConverters(TicketPricesConverter.class)
@@ -39,13 +44,14 @@ public class Place {
     public Place() {
     }
 
-    public Place(@NonNull String _id, String title, String description, String locationDescription, int longitude, int altitude, List<String> imageUrls, Map<Constants.customerType, Integer> ticketPrices, Map<Constants.weekDays, String> openingHours, List<Review> reviews) {
+    public Place(@NonNull String _id, String title, String description, String locationDescription, int longitude, int altitude, ArrayList<Item> items, List<String> imageUrls, Map<Constants.customerType, Integer> ticketPrices, Map<Constants.weekDays, String> openingHours, List<Review> reviews) {
         this._id = _id;
         this.title = title;
         this.description = description;
         this.locationDescription = locationDescription;
         this.longitude = longitude;
         this.altitude = altitude;
+        this.items = items;
         this.imageUrls = imageUrls;
         this.ticketPrices = ticketPrices;
         this.openingHours = openingHours;
@@ -154,6 +160,14 @@ public class Place {
 
     public void setAltitude(int altitude) {
         this.altitude = altitude;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
     public List<Review> getReviews() {
