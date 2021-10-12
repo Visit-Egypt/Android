@@ -3,11 +3,11 @@ package com.visitegypt.data.source.local;
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
-import com.visitegypt.data.source.local.dao.UserDao;
-import com.visitegypt.domain.model.User;
+import com.visitegypt.data.source.local.dao.PlaceDao;
+import com.visitegypt.domain.model.Place;
 
-@Database(entities = {User.class}, version = 1)
+@Database(entities = {Place.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     // TODO https://developer.android.com/training/data-storage/room
-    public abstract UserDao userDao();
+    public abstract PlaceDao userDao();
 }

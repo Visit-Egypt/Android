@@ -1,6 +1,22 @@
 package com.visitegypt.data.source.local.dao;
 
-public class PlaceDao {
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
+
+import com.visitegypt.domain.model.Place;
+
+import java.util.List;
+
+public interface PlaceDao {
     // TODO https://developer.android.com/training/data-storage/room
-    private static final String TAG = "Place Dao";
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(Place place);
+
+    @Query("SELECT * FROM Place")
+    List<Place> getALLPlaces();
+
+    @Query("SELECT * FROM Place WHERE title=(:title)")
+    Place getPlaceByTitle(String title);
 }

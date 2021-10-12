@@ -1,7 +1,12 @@
 package com.visitegypt.domain.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class User {
-    // TODO define the rest of the variables
+    @PrimaryKey
+    private String id;
     private String firstname;
     private String lastname;
     private String password;
@@ -11,7 +16,12 @@ public class User {
     public User() {
     }
 
-    public User(String firstname, String lastname, String password, String email, String phoneNumber) {
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public User(String firstname, String lastname, String email, String password, String phoneNumber) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.password = password;
@@ -57,5 +67,13 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
 
@@ -30,12 +31,9 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull HomeRecyclerViewAdapter.ViewHolder holder, int position) {
-        holder.titleTextView.setText(placesList.get(position).getName());
-
-        //TODO
-        //holder.descriptionTextView.setText(placesList.get(position).getDescription);
-        //holder.placeImageView...;
-
+        holder.titleTextView.setText(placesList.get(position).getTitle());
+        holder.descriptionTextView.setText(placesList.get(position).getDescription());
+        Picasso.get().load(placesList.get(position).getMainImageUrl().get(0)).into(holder.placeImageView);
     }
 
     @Override
