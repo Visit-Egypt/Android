@@ -1,7 +1,14 @@
 package com.visitegypt.domain.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
+import com.visitegypt.domain.model.Converters.ImageUrlsConverter;
+import com.visitegypt.domain.model.Converters.OpeningHoursConverter;
+import com.visitegypt.domain.model.Converters.ReviewsConverter;
+import com.visitegypt.domain.model.Converters.TicketPricesConverter;
 import com.visitegypt.utils.Constants;
 
 import java.util.HashMap;
@@ -10,11 +17,19 @@ import java.util.Map;
 
 @Entity
 public class Place {
+    @PrimaryKey
+    @NonNull
+    private String _id;
     private String title;
     private String description;
+
+    @TypeConverters(ImageUrlsConverter.class)
     private List<String> imageUrls;
+    @TypeConverters(TicketPricesConverter.class)
     private Map<Constants.customerType, Integer> ticketPrices = new HashMap<>();
+    @TypeConverters(OpeningHoursConverter.class)
     private Map<Constants.weekDays, String> openingHours = new HashMap<>();
+    @TypeConverters(ReviewsConverter.class)
     private List<Review> reviews;
 
     public Place() {
@@ -42,6 +57,14 @@ public class Place {
         this.description = description;
         this.imageUrls = mainImageUrl;
         this.ticketPrices = ticketPrices;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getTitle() {
