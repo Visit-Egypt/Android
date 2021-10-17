@@ -5,6 +5,9 @@ public class Review {
     private String review;
     private User user;
 
+    public Review() {
+    }
+
     public Review(float rating, String review, User user) {
         this.rating = rating;
         this.review = review;

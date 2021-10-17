@@ -26,8 +26,8 @@ public class Place {
     private String description;
 
     private String locationDescription;
-    private int longitude;
-    private int altitude;
+    private double longitude;
+    private double altitude;
 
     @TypeConverters(ItemsTypeConverter.class)
     private List<Item> items;
@@ -146,19 +146,19 @@ public class Place {
         this.locationDescription = locationDescription;
     }
 
-    public int getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(int longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
-    public int getAltitude() {
+    public double getAltitude() {
         return altitude;
     }
 
-    public void setAltitude(int altitude) {
+    public void setAltitude(double altitude) {
         this.altitude = altitude;
     }
 

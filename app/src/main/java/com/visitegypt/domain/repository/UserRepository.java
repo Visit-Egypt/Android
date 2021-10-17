@@ -5,9 +5,9 @@ import com.visitegypt.domain.model.User;
 import io.reactivex.rxjava3.core.Single;
 
 public interface UserRepository {
-    Single<User> getUser();
+    Single<User> getUser(String userId);
 
-    void deleteUser(User user);
+    void deleteUser(String userId);
 
     void registerUser(User user);
 
