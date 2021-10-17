@@ -5,13 +5,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 
 public abstract class UseCase {
     protected CompositeDisposable compositeDisposable = new CompositeDisposable();
-    Disposable lastDisposable;
-
-    public interface Listener {
-        void onOfferPlaced();
-
-        void onOfferPlaceFailed();
-    }
+    Disposable lastDisposable = null;
 
     public void setDisposable(Disposable lastDisposable) {
         this.lastDisposable = lastDisposable;
