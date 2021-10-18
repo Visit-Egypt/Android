@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,14 +17,16 @@
             android:name=".presentation.signup.SignUpActivity"
             android:exported="true" />
         <activity
-            android:name=".presentation.signin.SignInActivity"
+            android:name=".presentation.home.HomeActivity"
             android:exported="true" />
         <activity
             android:name=".presentation.splash.SplashActivity"
             android:exported="true" />
         <activity
-            android:name=".presentation.home.HomeActivity"
-            android:exported="true">
+            android:name=".presentation.signin.SignInActivity"
+            android:exported="true"
+            >
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

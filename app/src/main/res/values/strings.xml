@@ -2,6 +2,9 @@
     <string name="app_name">Visit Egypt</string>
     <string name= "Email">E-mail</string>
     <string name="loginMsg" >Sign in</string>
+    <string name="firstName" >First name</string>
+    <string name="lastName" >Last name</string>
+    <string name="phoneNo" >Phone Number</string>
     <string name="password" >Password</string>
     <string name="forgetPassword" >
         <u>
@@ -14,5 +17,12 @@
             Sign up
         </b>
     </string>
+    <string name="aleardyMembed" >
+        Already Member ?
+        <b>
+            Login
+        </b>
+    </string>
     <string name="sign_in">Sign in</string>
+    <string name="signUp">Sign up</string>
 </resources>
