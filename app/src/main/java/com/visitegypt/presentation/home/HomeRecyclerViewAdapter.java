@@ -23,6 +23,11 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         this.placesList = placesList;
     }
 
+    public void updatePlacesList(List<Place> placesList) {
+        this.placesList = placesList;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public HomeRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -34,7 +39,8 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     public void onBindViewHolder(@NonNull HomeRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.titleTextView.setText(placesList.get(position).getTitle());
         holder.descriptionTextView.setText(placesList.get(position).getDescription());
-        Picasso.get().load(placesList.get(position).getMainImageUrl().get(0)).into(holder.placeImageView);
+        if (placesList.get(position).getMainImageUrl() != null)
+            Picasso.get().load(placesList.get(position).getMainImageUrl().get(0)).into(holder.placeImageView);
     }
 
     @Override
@@ -42,7 +48,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         return placesList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView placeImageView;
         private TextView titleTextView, descriptionTextView;
 

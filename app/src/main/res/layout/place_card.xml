@@ -2,16 +2,19 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:clickable="true"
     android:elevation="4dp"
-    app:cardCornerRadius="20dp">
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="12dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/placeCardImageView"
             android:layout_width="match_parent"
             android:layout_height="100dp"
@@ -22,8 +25,9 @@
             android:id="@+id/placeCardTitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/prata_regular"
             android:text="title"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -32,7 +36,10 @@
             android:id="@+id/placeCardDescriptionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/prata_regular"
             android:text="description gajgaogai gaoijajgoagao goaiagiga\n gagagajkgangagjanga"
             android:textSize="16sp" />
     </LinearLayout>

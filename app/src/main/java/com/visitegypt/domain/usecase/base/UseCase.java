@@ -7,7 +7,7 @@ public abstract class UseCase {
     protected CompositeDisposable compositeDisposable = new CompositeDisposable();
     Disposable lastDisposable = null;
 
-    public void setDisposable(Disposable lastDisposable) {
+    protected void setDisposable(Disposable lastDisposable) {
         this.lastDisposable = lastDisposable;
     }
 
