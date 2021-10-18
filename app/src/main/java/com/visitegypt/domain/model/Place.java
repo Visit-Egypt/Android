@@ -5,6 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import com.visitegypt.domain.model.Converters.CategoriesConverter;
 import com.visitegypt.domain.model.Converters.ImageUrlsConverter;
 import com.visitegypt.domain.model.Converters.ItemsTypeConverter;
 import com.visitegypt.domain.model.Converters.OpeningHoursConverter;
@@ -28,10 +29,12 @@ public class Place {
     private String locationDescription;
     private double longitude;
     private double altitude;
+    private String city;
 
+    @TypeConverters(CategoriesConverter.class)
+    private List<String> categories;
     @TypeConverters(ItemsTypeConverter.class)
     private List<Item> items;
-
     @TypeConverters(ImageUrlsConverter.class)
     private List<String> imageUrls;
     @TypeConverters(TicketPricesConverter.class)
@@ -82,11 +85,12 @@ public class Place {
         this.ticketPrices = ticketPrices;
     }
 
+    @NonNull
     public String get_id() {
         return _id;
     }
 
-    public void set_id(String _id) {
+    public void set_id(@NonNull String _id) {
         this._id = _id;
     }
 
@@ -104,38 +108,6 @@ public class Place {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<String> getMainImageUrl() {
-        return imageUrls;
-    }
-
-    public void setMainImageUrl(List<String> mainImageUrls) {
-        this.imageUrls = mainImageUrls;
-    }
-
-    public Map<Constants.customerType, Integer> getTicketPrices() {
-        return ticketPrices;
-    }
-
-    public void setTicketPrices(Map<Constants.customerType, Integer> ticketPrices) {
-        this.ticketPrices = ticketPrices;
-    }
-
-    public List<String> getImageUrls() {
-        return imageUrls;
-    }
-
-    public void setImageUrls(List<String> imageUrls) {
-        this.imageUrls = imageUrls;
-    }
-
-    public Map<Constants.weekDays, String> getOpeningHours() {
-        return openingHours;
-    }
-
-    public void setOpeningHours(Map<Constants.weekDays, String> openingHours) {
-        this.openingHours = openingHours;
     }
 
     public String getLocationDescription() {
@@ -162,12 +134,52 @@ public class Place {
         this.altitude = altitude;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
+    }
+
     public List<Item> getItems() {
         return items;
     }
 
     public void setItems(List<Item> items) {
         this.items = items;
+    }
+
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
+    }
+
+    public Map<Constants.customerType, Integer> getTicketPrices() {
+        return ticketPrices;
+    }
+
+    public void setTicketPrices(Map<Constants.customerType, Integer> ticketPrices) {
+        this.ticketPrices = ticketPrices;
+    }
+
+    public Map<Constants.weekDays, String> getOpeningHours() {
+        return openingHours;
+    }
+
+    public void setOpeningHours(Map<Constants.weekDays, String> openingHours) {
+        this.openingHours = openingHours;
     }
 
     public List<Review> getReviews() {
