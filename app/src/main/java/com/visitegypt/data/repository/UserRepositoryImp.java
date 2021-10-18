@@ -1,31 +1,17 @@
 package com.visitegypt.data.repository;
 
 import com.visitegypt.data.source.remote.RetrofitService;
+import com.visitegypt.di.NetworkModule;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.repository.UserRepository;
 
-import io.reactivex.rxjava3.core.Single;
+import io.reactivex.Single;
+import retrofit2.Call;
 
 public class UserRepositoryImp implements UserRepository {
-    private RetrofitService retrofitService;
-
+    NetworkModule networkModule = new NetworkModule();
     @Override
-    public Single<User> getUser(String userId) {
-        return retrofitService.getUserById(userId);
-    }
-
-    @Override
-    public void deleteUser(String userId) {
-        retrofitService.deleteUser(userId);
-    }
-
-    @Override
-    public void registerUser(User user) {
-        retrofitService.registerUser(user);
-    }
-
-    @Override
-    public void loginUser(User user) {
-        retrofitService.loginUser(user);
+    public Call<User> loginUser(User user) {
+        return networkModule.getINSTANCE().getRetrofitService().registerUser(user) ;
     }
 }

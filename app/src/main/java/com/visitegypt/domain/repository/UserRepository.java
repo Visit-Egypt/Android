@@ -1,15 +1,17 @@
 package com.visitegypt.domain.repository;
-
 import com.visitegypt.domain.model.User;
-
-import io.reactivex.rxjava3.core.Single;
+import io.reactivex.Single;
+import retrofit2.Call;
 
 public interface UserRepository {
-    Single<User> getUser(String userId);
+    /**
+    void getUser();
 
-    void deleteUser(String userId);
+    void deleteUser(User user);
 
     void registerUser(User user);
-
-    void loginUser(User user);
+     *
+     * /
+     */
+    Call<User> loginUser(User user);
 }
