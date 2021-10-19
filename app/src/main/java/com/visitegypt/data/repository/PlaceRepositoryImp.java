@@ -14,11 +14,13 @@ public class PlaceRepositoryImp implements PlaceRepository {
 
     @Override
     public Single<List<Place>> getAllPlaces() {
-        return retrofitService.getPlaces();
+        //return retrofitService.getPlaces();
+        return  null;
     }
 
     @Override
     public Single<Place> getPlaceById(String placeId) {
-        return retrofitService.getPlaceById(placeId);
+       // return retrofitService.getPlaceById(placeId);
+        return null;
     }
 }

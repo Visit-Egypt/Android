@@ -5,10 +5,10 @@ import static com.visitegypt.utils.Constants.BASE_URL;
 import com.visitegypt.data.source.remote.RetrofitService;
 import com.visitegypt.domain.model.User;
 
-import io.reactivex.Single;
+import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkModule {
@@ -25,7 +25,7 @@ public class NetworkModule {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build();
         retrofitService = retrofit.create(RetrofitService.class);
     }
@@ -37,8 +37,8 @@ public class NetworkModule {
         return INSTANCE;
     }
 
-    public Call<User> registerUser(User user) {
-        return retrofitService.registerUser(user);
+    public Call<User> loginUser(User user) {
+        return retrofitService.loginUser(user);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.visitegypt.domain.repository;
 import com.visitegypt.domain.model.User;
-import io.reactivex.Single;
+
+import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 
 public interface UserRepository {
@@ -12,6 +13,7 @@ public interface UserRepository {
     void registerUser(User user);
      *
      * /
+     * @return
      */
     Call<User> loginUser(User user);
 }
