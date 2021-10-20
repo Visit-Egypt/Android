@@ -7,13 +7,19 @@ import com.visitegypt.domain.usecase.base.SingleUseCase;
 
 import java.util.List;
 
-public  class GetUserUseCase {
-    // TODO compare to https://github.com/ZahraHeydari/Android-Clean-Architecture-MVVM-Hilt-RX/blob/master/app/src/main/java/com/android/artgallery/domain/usecase/GetAlbumsUseCase.kt
-    UserRepository userRepository;
+import io.reactivex.rxjava3.core.Single;
+import retrofit2.Call;
 
-    public GetUserUseCase(UserRepository userRepository) {
+public class LoginUserUseCase{
+    UserRepository userRepository;
+    User user;
+
+    public LoginUserUseCase(UserRepository userRepository , User user) {
         this.userRepository = userRepository;
+        this.user = user;
     }
 
+    public Call<User> buildSingleUseCase() {
+        return userRepository.loginUser(user);
+    }
 }
-
