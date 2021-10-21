@@ -11,7 +11,7 @@ public class UserRepositoryImp implements UserRepository {
 
     @Override
     public Single<User> registerUser(User user) {
-        return null;
+        return NetworkModule.getINSTANCE() .registerUser(user);
     }
 
     @Override

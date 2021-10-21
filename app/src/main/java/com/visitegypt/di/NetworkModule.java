@@ -41,6 +41,9 @@ public class NetworkModule {
     public Single<User> loginUser(User user) {
         return retrofitService.loginUser(user);
     }
+    public Single<User> registerUser(User user) {
+        return retrofitService.registerUser(user);
+    }
 
     public Single<PlacePageResponse> getAllPlaces() {
         return retrofitService.getAllPlaces();
