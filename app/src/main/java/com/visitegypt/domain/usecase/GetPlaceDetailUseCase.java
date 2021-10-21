@@ -1,14 +1,21 @@
 package com.visitegypt.domain.usecase;
 
+import com.visitegypt.domain.repository.PlaceRepository;
 import com.visitegypt.domain.usecase.base.SingleUseCase;
 
 import io.reactivex.rxjava3.core.Single;
 
 public class GetPlaceDetailUseCase extends SingleUseCase {
+    PlaceRepository placeRepository;
+    String placeId;
+
+    public GetPlaceDetailUseCase(PlaceRepository placeRepository, String placeId) {
+        this.placeRepository = placeRepository;
+        this.placeId = placeId;
+    }
+
     @Override
     protected Single buildSingleUseCase() {
-
-        return null;
+        return placeRepository.getPlaceById(placeId);
     }
-    // TODO compare to https://github.com/ZahraHeydari/Android-Clean-Architecture-MVVM-Hilt-RX/blob/master/app/src/main/java/com/android/artgallery/domain/usecase/GetAlbumsUseCase.kt
 }

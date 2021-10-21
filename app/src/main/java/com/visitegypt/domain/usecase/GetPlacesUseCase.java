@@ -1,17 +1,18 @@
 package com.visitegypt.domain.usecase;
 
-import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.PlacePageResponse;
 import com.visitegypt.domain.repository.PlaceRepository;
 import com.visitegypt.domain.usecase.base.SingleUseCase;
 
-import java.util.List;
+import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Single;
 
-public class GetPlacesUseCase extends SingleUseCase<List<Place>> {
+public class GetPlacesUseCase extends SingleUseCase<PlacePageResponse> {
     PlaceRepository placeRepository;
 
     //TODO migrate to dependency injection
+    @Inject
     public GetPlacesUseCase(PlaceRepository placeRepository) {
         this.placeRepository = placeRepository;
     }

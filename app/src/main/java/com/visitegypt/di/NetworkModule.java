@@ -3,6 +3,7 @@ package com.visitegypt.di;
 import static com.visitegypt.utils.Constants.BASE_URL;
 
 import com.visitegypt.data.source.remote.RetrofitService;
+import com.visitegypt.domain.model.PlacePageResponse;
 import com.visitegypt.domain.model.User;
 
 import io.reactivex.rxjava3.core.Single;
@@ -39,6 +40,10 @@ public class NetworkModule {
 
     public Call<User> loginUser(User user) {
         return retrofitService.loginUser(user);
+    }
+
+    public Single<PlacePageResponse> getAllPlaces() {
+        return retrofitService.getAllPlaces();
     }
 
 }

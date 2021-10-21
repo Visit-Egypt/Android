@@ -22,7 +22,7 @@ import java.util.Map;
 public class Place {
     @PrimaryKey
     @NonNull
-    private String _id;
+    private String id;
     private String title;
     private String description;
 
@@ -30,6 +30,8 @@ public class Place {
     private double longitude;
     private double altitude;
     private String city;
+
+    private String default_image;
 
     @TypeConverters(CategoriesConverter.class)
     private List<String> categories;
@@ -47,8 +49,8 @@ public class Place {
     public Place() {
     }
 
-    public Place(@NonNull String _id, String title, String description, String locationDescription, int longitude, int altitude, ArrayList<Item> items, List<String> imageUrls, Map<Constants.customerType, Integer> ticketPrices, Map<Constants.weekDays, String> openingHours, List<Review> reviews) {
-        this._id = _id;
+    public Place(@NonNull String id, String title, String description, String locationDescription, int longitude, int altitude, ArrayList<Item> items, List<String> imageUrls, Map<Constants.customerType, Integer> ticketPrices, Map<Constants.weekDays, String> openingHours, List<Review> reviews) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.locationDescription = locationDescription;
@@ -86,12 +88,12 @@ public class Place {
     }
 
     @NonNull
-    public String get_id() {
-        return _id;
+    public String getId() {
+        return id;
     }
 
-    public void set_id(@NonNull String _id) {
-        this._id = _id;
+    public void setId(@NonNull String id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -188,5 +190,13 @@ public class Place {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public String getDefault_image() {
+        return default_image;
+    }
+
+    public void setDefault_image(String default_image) {
+        this.default_image = default_image;
     }
 }

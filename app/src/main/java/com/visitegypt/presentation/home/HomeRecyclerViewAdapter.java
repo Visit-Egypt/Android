@@ -39,12 +39,16 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     public void onBindViewHolder(@NonNull HomeRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.titleTextView.setText(placesList.get(position).getTitle());
         holder.descriptionTextView.setText(placesList.get(position).getDescription());
-        if (placesList.get(position).getMainImageUrl() != null)
-            Picasso.get().load(placesList.get(position).getMainImageUrl().get(0)).into(holder.placeImageView);
+        if (placesList.get(position).getImageUrls() != null)
+            Picasso.get().load(placesList.get(position).getImageUrls().get(0)).into(holder.placeImageView);
     }
 
     @Override
     public int getItemCount() {
+        if (placesList == null)
+            return 0;
+        if (placesList.isEmpty())
+            return 0;
         return placesList.size();
     }
 

@@ -1,6 +1,7 @@
 package com.visitegypt.data.source.remote;
 
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.PlacePageResponse;
 import com.visitegypt.domain.model.User;
 
 import io.reactivex.rxjava3.core.Single;
@@ -32,6 +33,7 @@ public interface RetrofitService {
     @GET("api/place/:id")
     public Place getPlaceById(int id);
 
-
+    @GET("api/place")
+    public Single<PlacePageResponse> getAllPlaces();
 
 }

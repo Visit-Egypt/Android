@@ -57,6 +57,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void initViewModel() {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        homeViewModel.getAllPlaces();
         homeViewModel.placesMutableLiveData.observe(this, new Observer() {
             @Override
             public void onChanged(Object o) {

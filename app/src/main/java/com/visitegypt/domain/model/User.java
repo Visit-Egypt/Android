@@ -3,57 +3,70 @@ package com.visitegypt.domain.model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.SerializedName;
+
 @Entity
 public class User {
     @PrimaryKey
-    private String user_id;
-    private String first_name;
-    private String last_name;
+    @SerializedName("user_id")
+    private String userId;
+    @SerializedName("first_name")
+    private String firstName;
+    @SerializedName("last_name")
+    private String lastName;
     private String password;
     private String email;
-    private String phone_number;
+    @SerializedName("phone_number")
+    private String phoneNumber;
     private int age;
-    private String access_token;
-    private String token_type;
-    private String refresh_token;
+    @SerializedName("access_token")
+    private String accessToken;
+    @SerializedName("token_type")
+    private String tokenType;
+    @SerializedName("refresh_token")
+    private String refreshToken;
+
     /*******************************************************************************/
     public User() {
 
     }
-    public User(String first_name, String last_name, String email, String phone_number,String password) {
-        this.first_name = first_name;
-        this.last_name = last_name;
+
+    public User(String firstName, String lastName, String email, String phoneNumber, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.phone_number = phone_number;
+        this.phoneNumber = phoneNumber;
     }
-    public User(String email,String password) {
+
+    public User(String email, String password) {
         this.email = email;
         this.password = password;
     }
+
     /********************************************************************************************************/
-    public String getUser_id() {
-        return user_id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPassword() {
@@ -72,12 +85,12 @@ public class User {
         this.email = email;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public int getAge() {
@@ -88,33 +101,29 @@ public class User {
         this.age = age;
     }
 
-    public String getAccess_token() {
-        return access_token;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setAccess_token(String access_token) {
-        this.access_token = access_token;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
-    public String getToken_type() {
-        return token_type;
+    public String getTokenType() {
+        return tokenType;
     }
 
-    public void setToken_type(String token_type) {
-        this.token_type = token_type;
+    public void setTokenType(String tokenType) {
+        this.tokenType = tokenType;
     }
 
-    public String getRefresh_token() {
-        return refresh_token;
+    public String getRefreshToken() {
+        return refreshToken;
     }
 
-    public void setRefresh_token(String refresh_token) {
-        this.refresh_token = refresh_token;
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
-
-
-
-
 }
 
 
