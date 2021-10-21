@@ -14,7 +14,7 @@ public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(User user);
 
-    @Query("SELECT * FROM User where id = (:id)")
+    @Query("SELECT * FROM User where user_id = (:id)")
     Single<User> getUserById(String id);
 
     @DELETE

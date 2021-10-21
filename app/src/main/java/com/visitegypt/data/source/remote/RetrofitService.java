@@ -15,15 +15,15 @@ import retrofit2.http.PUT;
 public interface RetrofitService {
 
     @POST("api/user/login")
-    public Call<User> loginUser(@Body User user);
-    @PUT("api/user/register")
-    public void registerUser(User user);
+    public Single<User> loginUser(@Body User user);
+    @POST("api/user/register")
+    public Single<User> registerUser(@Body User user);
 
     @GET("api/user/:id")
     public User getUserById(int id);
 
     @PUT("api/user/:id")
-    public void updateUser(int id);
+    public void updateUser(@Body int id);
 
     @DELETE("api/user/:id")
     public void deleteUser(int id);

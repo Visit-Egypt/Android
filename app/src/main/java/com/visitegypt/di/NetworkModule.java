@@ -38,7 +38,7 @@ public class NetworkModule {
         return INSTANCE;
     }
 
-    public Call<User> loginUser(User user) {
+    public Single<User> loginUser(User user) {
         return retrofitService.loginUser(user);
     }
 

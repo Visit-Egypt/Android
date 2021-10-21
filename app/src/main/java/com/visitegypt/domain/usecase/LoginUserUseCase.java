@@ -10,7 +10,7 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 
-public class LoginUserUseCase{
+public class LoginUserUseCase extends SingleUseCase<User> {
     UserRepository userRepository;
     User user;
 
@@ -19,7 +19,9 @@ public class LoginUserUseCase{
         this.user = user;
     }
 
-    public Call<User> buildSingleUseCase() {
+
+    @Override
+    protected Single<User> buildSingleUseCase() {
         return userRepository.loginUser(user);
     }
 }

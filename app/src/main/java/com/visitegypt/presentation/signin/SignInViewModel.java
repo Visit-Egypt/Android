@@ -9,8 +9,13 @@ import com.visitegypt.data.repository.UserRepositoryImp;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.usecase.LoginUserUseCase;
 
+import org.json.JSONObject;
+
+import io.reactivex.rxjava3.functions.Consumer;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.HttpException;
 import retrofit2.Response;
 
 public class SignInViewModel  extends ViewModel {
@@ -20,19 +25,33 @@ public class SignInViewModel  extends ViewModel {
     {
         UserRepositoryImp userRepositoryImp = new UserRepositoryImp() ;
         LoginUserUseCase loginUserUseCase = new LoginUserUseCase(userRepositoryImp,user);
-        loginUserUseCase.buildSingleUseCase().enqueue(new Callback<User>() {
+        loginUserUseCase.execute(new Consumer<User>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful()) {
-                    msgMutableLiveData.setValue("Your login done");
-                } else {
-                    msgMutableLiveData.setValue("Sorry, email or password is not correct");
-                }
+            public void accept(User user) throws Throwable {
+                msgMutableLiveData.setValue("Your login done");
+                Log.d("TAG", "accept: " + user.getUserId());
             }
-
+        }, new Consumer<Throwable>() {
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                msgMutableLiveData.setValue(t.toString());
+            public void accept(Throwable throwable) throws Throwable {
+               try
+               {
+                   ResponseBody body = ((HttpException) throwable).response().errorBody();
+                   JSONObject jObjectError  = new JSONObject(body.string());
+                   Log.d("TAG", "accept try : " + jObjectError.getJSONArray("errors").toString());
+                   if(jObjectError.getJSONArray("errors").toString().contains("msg"))
+                   {
+
+                       msgMutableLiveData.setValue( jObjectError.getJSONArray("errors").getJSONObject(0).getString("msg"));
+                   }
+                   else
+                   {
+                       msgMutableLiveData.setValue( jObjectError.getJSONArray("errors").toString());
+                   }
+               }catch (Exception e)
+               {
+                   Log.d("TAG", "accept catch: " + e.toString());
+               }
             }
         });
     }

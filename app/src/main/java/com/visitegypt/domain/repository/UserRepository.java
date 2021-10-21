@@ -10,10 +10,11 @@ public interface UserRepository {
 
     void deleteUser(User user);
 
-    void registerUser(User user);
      *
      * /
      * @return
      */
-    Call<User> loginUser(User user);
+    Single<User> registerUser(User user);
+    Single<User> loginUser(User user);
+
 }

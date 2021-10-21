@@ -1,8 +1,11 @@
 package com.visitegypt.presentation.signin;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,6 +16,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.User;
+import com.visitegypt.presentation.home.HomeActivity;
+import com.visitegypt.presentation.signup.SignUpActivity;
 
 
 public class SignInActivity extends AppCompatActivity {
@@ -20,6 +25,7 @@ public class SignInActivity extends AppCompatActivity {
     MaterialAutoCompleteTextView txtEmail, txtPassword;
     String password, email;
     SignInViewModel signInViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,16 +39,46 @@ public class SignInActivity extends AppCompatActivity {
         signInViewModel.msgMutableLiveData.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                Toast.makeText(SignInActivity.this,s,Toast.LENGTH_LONG).show();
+                if (s.equals("Your login done")) {
+                    Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(SignInActivity.this, s, Toast.LENGTH_LONG).show();
+                }
+
             }
         });
+
 
     }
 
     public void buttonOnClick(View view) {
         email = txtEmail.getText().toString();
         password = txtPassword.getText().toString();
-        User myUser = new User(email,password);
-        signInViewModel.loginViewModel(myUser);
+
+        if (email.isEmpty()|| password.isEmpty()) {
+
+            if(email.isEmpty())
+            {
+                txtEmail.setError("Please Enter Your Email");
+            }
+            if (password.isEmpty())
+            {
+                txtPassword.setError("Please,enter your password");
+            }
+        } else {
+
+            User myUser = new User(email, password);
+            signInViewModel.loginViewModel(myUser);
+        }
+    }
+
+    public void signUpButton(View view) {
+        Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
     }
 }
