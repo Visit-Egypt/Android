@@ -18,7 +18,7 @@
             android:name=".presentation.signup.SignUpActivity"
             android:exported="true" />
         <activity
-            android:name=".presentation.signin.SignInActivity"
+            android:name=".presentation.detailplace.DetailActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,7 +33,7 @@
             android:exported="true"></activity>
 
         <activity
-            android:name=".presentation.detailplace.DetailActivity"
+            android:name=".presentation.signin.SignInActivity"
             android:exported="true" />
     </application>
 

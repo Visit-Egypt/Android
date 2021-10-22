@@ -11,6 +11,8 @@ import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
+
 
 public interface RetrofitService {
 
@@ -35,5 +37,8 @@ public interface RetrofitService {
 
     @GET("api/place")
     public Single<PlacePageResponse> getAllPlaces();
+
+    @GET("api/place/{place_id}")
+    public Call<Place> getPlace(@Path("place_id") String id);
 
 }
