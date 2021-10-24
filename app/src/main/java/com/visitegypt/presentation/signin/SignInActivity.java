@@ -3,9 +3,6 @@ package com.visitegypt.presentation.signin;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
@@ -19,7 +16,10 @@ import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.home.HomeActivity;
 import com.visitegypt.presentation.signup.SignUpActivity;
 
+import dagger.hilt.android.AndroidEntryPoint;
 
+
+@AndroidEntryPoint
 public class SignInActivity extends AppCompatActivity {
     private static final String TAG = "Cannot invoke method length() on null object";
     MaterialAutoCompleteTextView txtEmail, txtPassword;
@@ -60,18 +60,16 @@ public class SignInActivity extends AppCompatActivity {
 
         if (email.isEmpty()|| password.isEmpty()) {
 
-            if(email.isEmpty())
-            {
+            if(email.isEmpty()) {
                 txtEmail.setError("Please Enter Your Email");
             }
-            if (password.isEmpty())
-            {
+            if (password.isEmpty()) {
                 txtPassword.setError("Please,enter your password");
             }
         } else {
 
             User myUser = new User(email, password);
-            signInViewModel.loginViewModel(myUser);
+            signInViewModel.login(myUser);
         }
     }
 

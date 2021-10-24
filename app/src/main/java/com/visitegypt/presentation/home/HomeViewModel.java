@@ -5,16 +5,23 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.visitegypt.data.repository.PlaceRepositoryImp;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.usecase.GetPlacesUseCase;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
+
+@HiltViewModel
 public class HomeViewModel extends ViewModel {
     private static final String TAG = "Home View Model";
     MutableLiveData placesMutableLiveData = new MutableLiveData<Place>();
-    private PlaceRepositoryImp placeRepository = new PlaceRepositoryImp();
+    private GetPlacesUseCase getPlacesUseCase;
 
-    private GetPlacesUseCase getPlacesUseCase = new GetPlacesUseCase(placeRepository);
+    @Inject
+    public HomeViewModel(GetPlacesUseCase getPlacesUseCase) {
+        this.getPlacesUseCase = getPlacesUseCase;
+    }
 
     public void getAllPlaces() {
         getPlacesUseCase.execute(placePageResponse -> {

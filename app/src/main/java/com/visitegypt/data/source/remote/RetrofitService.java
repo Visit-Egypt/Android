@@ -30,15 +30,16 @@ public interface RetrofitService {
     @DELETE("api/user/:id")
     public void deleteUser(int id);
 
-
-    // TODO finish place when the backend finishes
     @GET("api/place/:id")
-    public Place getPlaceById(int id);
+    public Place getPlaceById(String id);
 
     @GET("api/place")
     public Single<PlacePageResponse> getAllPlaces();
 
     @GET("api/place/{place_id}")
     public Call<Place> getPlace(@Path("place_id") String id);
+
+    @GET("api/place")
+    public Call<PlacePageResponse> getAllPlacesCall();
 
 }

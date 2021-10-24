@@ -14,6 +14,9 @@ import com.visitegypt.domain.model.Place;
 
 import java.util.ArrayList;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = "Home Activity";
