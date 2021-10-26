@@ -1,5 +1,10 @@
 package com.visitegypt.presentation.detailplace;
 
+import static com.visitegypt.utils.Constants.CustomerType.EGYPTIAN_ADULT;
+import static com.visitegypt.utils.Constants.CustomerType.EGYPTIAN_STUDENT;
+import static com.visitegypt.utils.Constants.CustomerType.FOREIGNER_ADULT;
+import static com.visitegypt.utils.Constants.CustomerType.FOREIGNER_STUDENT;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -13,7 +18,6 @@ import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.Slider;
 import com.visitegypt.presentation.home.HomeRecyclerViewAdapter;
-import com.visitegypt.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,15 +81,6 @@ public class DetailActivity extends AppCompatActivity {
         sliderView.setScrollTimeInSec(3);
         sliderView.setAutoCycle(true);
         sliderView.startAutoCycle();
-
-        fAdult.setText(ticketPrices.get("Foreigner Adult").toString() + " EGP");
-        fStudent.setText(ticketPrices.get("Foreigner Student").toString() + " EGP");
-        eStudent.setText(ticketPrices.get("Egyptian Student").toString() + " EGP");
-        eAdult.setText(ticketPrices.get("Egyptian Adult").toString() + " EGP");
-
-        title.setText("Karnak Temple");
-        desc.setText("The Karnak Temple Complex, commonly known as Karnak, comprises a vast mix of decayed temples, chapels, pylons, and other buildings near Luxor, Egypt.");
-
     }
 
     private void initViews() {
@@ -106,16 +101,16 @@ public class DetailActivity extends AppCompatActivity {
                 Log.d(TAG, "onChanged: " + place.getTitle());
                 if (place.getTicketPrices() != null) {
                     try {
-                        fAdult.setText(place.getTicketPrices().get(Constants.CustomerType.FOREIGNER_ADULT));
-                        eAdult.setText(place.getTicketPrices().get(Constants.CustomerType.EGYPTIAN_ADULT));
-                        eStudent.setText(place.getTicketPrices().get(Constants.CustomerType.FOREIGNER_STUDENT));
-                        fStudent.setText(place.getTicketPrices().get(Constants.CustomerType.FOREIGNER_STUDENT));
-                    } catch (Exception ignored) {
-                        
+                        fAdult.setText(place.getTicketPrices().get(FOREIGNER_ADULT.toString()).toString());
+                        eAdult.setText(place.getTicketPrices().get(EGYPTIAN_ADULT.toString()).toString());
+                        eStudent.setText(place.getTicketPrices().get(EGYPTIAN_STUDENT.toString()).toString());
+                        fStudent.setText(place.getTicketPrices().get(FOREIGNER_STUDENT.toString()).toString());
+                    } catch (Exception e) {
+                        Log.e(TAG, "setting ticket prices failed: " + e.getMessage());
                     }
                 }
                 title.setText(place.getTitle());
-                desc.setText(place.getDescription());
+                desc.setText(place.getLongDescription());
 
             }
         });

@@ -29,4 +29,5 @@
     <string name="foreigner_student">Foreigner Student</string>
     <string name="egyptian_adult">Egyptian Adult</string>
     <string name="egyptian_student">Egyptian Student</string>
+    <string name="no_data">No data</string>
 </resources>

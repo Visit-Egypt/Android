@@ -22,7 +22,11 @@ public class Place {
     @NonNull
     private String id;
     private String title;
-    private String description;
+
+    @SerializedName("long_description")
+    private String longDescription;
+    @SerializedName("short_description")
+    private String shortDescription;
 
     private String locationDescription;
     private double longitude;
@@ -53,26 +57,26 @@ public class Place {
     }
 
 
-    public Place(String title, String description, Map<String, Integer> ticketPrices) {
+    public Place(String title, String longDescription, Map<String, Integer> ticketPrices) {
         this.title = title;
-        this.description = description;
+        this.longDescription = longDescription;
         this.ticketPrices = ticketPrices;
     }
 
-    public Place(String title, String description, List<String> mainImageUrl) {
+    public Place(String title, String longDescription, List<String> mainImageUrl) {
         this.title = title;
-        this.description = description;
+        this.longDescription = longDescription;
         this.imageUrls = mainImageUrl;
     }
 
-    public Place(String title, String description) {
+    public Place(String title, String longDescription) {
         this.title = title;
-        this.description = description;
+        this.longDescription = longDescription;
     }
 
-    public Place(String title, String description, List<String> mainImageUrl, Map<String, Integer> ticketPrices) {
+    public Place(String title, String longDescription, List<String> mainImageUrl, Map<String, Integer> ticketPrices) {
         this.title = title;
-        this.description = description;
+        this.longDescription = longDescription;
         this.imageUrls = mainImageUrl;
         this.ticketPrices = ticketPrices;
     }
@@ -94,12 +98,12 @@ public class Place {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getLongDescription() {
+        return longDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setLongDescription(String longDescription) {
+        this.longDescription = longDescription;
     }
 
     public String getLocationDescription() {
@@ -188,5 +192,13 @@ public class Place {
 
     public void setDefaultImage(String defaultImage) {
         this.defaultImage = defaultImage;
+    }
+
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
     }
 }

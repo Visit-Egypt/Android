@@ -241,42 +241,18 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/prata_regular"
                         android:padding="10dp"
-                        android:text="@string/foreigner_adult"
+                        android:text="@string/egyptian_student"
                         android:textColor="@color/black"
                         app:layout_constraintTop_toBottomOf="@+id/hr6"
                         tools:ignore="MissingConstraints" />
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/foreignerAdultPriceTextView"
+                        android:id="@+id/egyptianStudentTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/prata_regular"
                         android:padding="10dp"
-                        android:text="Prices"
-                        android:textColor="@color/black"
-                        app:layout_constraintTop_toBottomOf="@+id/hr6"
-                        tools:ignore="MissingConstraints" />
-                </TableRow>
-
-                <TableRow>
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/prata_regular"
-                        android:padding="10dp"
-                        android:text="@string/foreigner_student"
-                        android:textColor="@color/black"
-                        app:layout_constraintTop_toBottomOf="@+id/hr6"
-                        tools:ignore="MissingConstraints" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/foreignerStudentPriceTextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/prata_regular"
-                        android:padding="10dp"
-                        android:text="Prices"
+                        android:text="@string/no_data"
                         android:textColor="@color/black"
                         app:layout_constraintTop_toBottomOf="@+id/hr6"
                         tools:ignore="MissingConstraints" />
@@ -300,7 +276,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/prata_regular"
                         android:padding="10dp"
-                        android:text="Prices"
+                        android:text="@string/no_data"
                         android:textColor="@color/black"
                         app:layout_constraintTop_toBottomOf="@+id/hr6"
                         tools:ignore="MissingConstraints" />
@@ -313,18 +289,42 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/prata_regular"
                         android:padding="10dp"
-                        android:text="@string/egyptian_student"
+                        android:text="@string/foreigner_student"
                         android:textColor="@color/black"
                         app:layout_constraintTop_toBottomOf="@+id/hr6"
                         tools:ignore="MissingConstraints" />
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/egyptianStudentTextView"
+                        android:id="@+id/foreignerStudentPriceTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/prata_regular"
                         android:padding="10dp"
-                        android:text="Prices"
+                        android:text="@string/no_data"
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toBottomOf="@+id/hr6"
+                        tools:ignore="MissingConstraints" />
+                </TableRow>
+
+                <TableRow>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/prata_regular"
+                        android:padding="10dp"
+                        android:text="@string/foreigner_adult"
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toBottomOf="@+id/hr6"
+                        tools:ignore="MissingConstraints" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/foreignerAdultPriceTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/prata_regular"
+                        android:padding="10dp"
+                        android:text="@string/no_data"
                         android:textColor="@color/black"
                         app:layout_constraintTop_toBottomOf="@+id/hr6"
                         tools:ignore="MissingConstraints" />

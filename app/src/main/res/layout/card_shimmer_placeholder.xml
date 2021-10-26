@@ -4,9 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:clickable="true"
     android:elevation="4dp"
-    android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="12dp">
 
     <LinearLayout
@@ -15,32 +13,28 @@
         android:orientation="vertical">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/placeCardImageView"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/test" />
+            android:background="@color/gray"
+            android:scaleType="centerCrop" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/placeCardTitleTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:background="@color/gray"
             android:fontFamily="@font/prata_regular"
-            android:text="title"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/placeCardDescriptionTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
+            android:background="@color/gray"
             android:fontFamily="@font/prata_regular"
-            android:text="description gajgaogai gaoijajgoagao goaiagiga\n gagagajkgangagjanga"
             android:textSize="16sp" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

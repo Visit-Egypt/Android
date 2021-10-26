@@ -1,7 +1,10 @@
 package com.visitegypt.presentation.home;
 
+import static com.visitegypt.utils.Constants.CustomerType.EGYPTIAN_STUDENT;
+
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +22,7 @@ import com.visitegypt.presentation.detailplace.DetailActivity;
 import java.util.List;
 
 public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerViewAdapter.ViewHolder> {
-    private static final String TAG = "Home RecyclerView Adapter";
+    private static final String TAG = "Home Adapter";
 
     public static String CHOSEN_PLACE_ID = "placeId";
 
@@ -51,9 +54,27 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull HomeRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.titleTextView.setText(placesList.get(position).getTitle());
-        holder.descriptionTextView.setText(placesList.get(position).getDescription());
-        if (placesList.get(position).getImageUrls() != null)
+        if (placesList.get(position).getTicketPrices() != null) {
+            try {
+                int startingPrice = placesList.get(position).getTicketPrices().get(EGYPTIAN_STUDENT.toString());
+                holder.descriptionTextView.setText("Starting at " + startingPrice + " EGP");
+            } catch (Exception e) {
+                Log.e(TAG, "couldn't load price text: " + e.getMessage());
+                holder.descriptionTextView.setVisibility(View.GONE);
+            }
+        } else {
+            holder.descriptionTextView.setVisibility(View.GONE);
+        }
+
+        if (placesList.get(position).getDefaultImage() != null) {
+            Log.d(TAG, "default image found for: " + placesList.get(position).getTitle());
+            Picasso.get().load(placesList.get(position).getDefaultImage()).into(holder.placeImageView);
+        } else if (placesList.get(position).getImageUrls() != null) {
+            Log.d(TAG, "default image not found! loading first image instead for: " + placesList.get(position).getTitle());
             Picasso.get().load(placesList.get(position).getImageUrls().get(0)).into(holder.placeImageView);
+        } else {
+            Log.d(TAG, "no images found for: " + placesList.get(position).getTitle());
+        }
     }
 
     @Override
