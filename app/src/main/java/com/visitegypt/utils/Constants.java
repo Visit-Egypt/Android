@@ -6,7 +6,12 @@ public class Constants {
     public enum CustomerType {
         FOREIGNER_STUDENT("Foreigner Student"),
         FOREIGNER_ADULT("Foreigner Adult"),
+        FOREIGNER_ADULT_VIDEO("Foreigner Adult Personal Video"),
+        FOREIGNER_ADULT_PHOTO("Foreigner Adult Personal Photography"),
         EGYPTIAN_STUDENT("Egyptian Student"),
+        EGYPTIAN_PHOTO("Egyptian Personal Photography"),
+        EGYPTIAN_VIDEO("Egyptian Personal Video"),
+        CHILDREN("Children Under 6 Years"),
         EGYPTIAN_ADULT("Egyptian Adult");
 
 
