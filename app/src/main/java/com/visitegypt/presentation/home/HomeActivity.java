@@ -13,6 +13,7 @@ import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -39,7 +40,6 @@ public class HomeActivity extends AppCompatActivity {
 
         initViews();
         createDummyPlaces();
-        initActionBar();
         initViewModel();
     }
 
@@ -48,23 +48,25 @@ public class HomeActivity extends AppCompatActivity {
         ourFavouritesArrayList = new ArrayList<>();
 
         homeRecyclerView = findViewById(R.id.homeRecyclerView);
-        homeRecyclerViewAdapter = new HomeRecyclerViewAdapter(placesArrayList);
+        homeRecyclerViewAdapter = new HomeRecyclerViewAdapter(placesArrayList, this);
         homeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         homeRecyclerView.setAdapter(homeRecyclerViewAdapter);
 
-        homeTopRecyclerViewAdapter = new HomeRecyclerViewAdapter(ourFavouritesArrayList);
+        homeTopRecyclerViewAdapter = new HomeRecyclerViewAdapter(ourFavouritesArrayList, this);
         homeTopRecyclerView = findViewById(R.id.horizontalHomeRecyclerView);
         homeTopRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         homeTopRecyclerView.setAdapter(homeTopRecyclerViewAdapter);
+        initActionBar();
     }
 
     private void initViewModel() {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         homeViewModel.getAllPlaces();
-        homeViewModel.placesMutableLiveData.observe(this, new Observer() {
+
+        homeViewModel.placesMutableLiveData.observe(this, new Observer<List<Place>>() {
             @Override
-            public void onChanged(Object o) {
-                homeRecyclerViewAdapter.updatePlacesList((ArrayList<Place>) o);
+            public void onChanged(List<Place> placesList) {
+                homeRecyclerViewAdapter.updatePlacesList(placesList);
             }
         });
     }

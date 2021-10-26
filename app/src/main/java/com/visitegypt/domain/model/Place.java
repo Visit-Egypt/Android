@@ -5,16 +5,14 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import com.google.gson.annotations.SerializedName;
 import com.visitegypt.domain.model.Converters.CategoriesConverter;
 import com.visitegypt.domain.model.Converters.ImageUrlsConverter;
 import com.visitegypt.domain.model.Converters.ItemsTypeConverter;
 import com.visitegypt.domain.model.Converters.OpeningHoursConverter;
 import com.visitegypt.domain.model.Converters.ReviewsConverter;
 import com.visitegypt.domain.model.Converters.TicketPricesConverter;
-import com.visitegypt.utils.Constants;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +29,8 @@ public class Place {
     private double altitude;
     private String city;
 
-    private String default_image;
+    @SerializedName("default_image")
+    private String defaultImage;
 
     @TypeConverters(CategoriesConverter.class)
     private List<String> categories;
@@ -39,31 +38,22 @@ public class Place {
     private List<Item> items;
     @TypeConverters(ImageUrlsConverter.class)
     private List<String> imageUrls;
+
     @TypeConverters(TicketPricesConverter.class)
-    private Map<Constants.customerType, Integer> ticketPrices = new HashMap<>();
+    @SerializedName("ticket_prices")
+    private Map<String, Integer> ticketPrices;
+
     @TypeConverters(OpeningHoursConverter.class)
-    private Map<Constants.weekDays, String> openingHours = new HashMap<>();
+    private Map<String, String> openingHours;
+
     @TypeConverters(ReviewsConverter.class)
     private List<Review> reviews;
 
     public Place() {
     }
 
-    public Place(@NonNull String id, String title, String description, String locationDescription, int longitude, int altitude, ArrayList<Item> items, List<String> imageUrls, Map<Constants.customerType, Integer> ticketPrices, Map<Constants.weekDays, String> openingHours, List<Review> reviews) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.locationDescription = locationDescription;
-        this.longitude = longitude;
-        this.altitude = altitude;
-        this.items = items;
-        this.imageUrls = imageUrls;
-        this.ticketPrices = ticketPrices;
-        this.openingHours = openingHours;
-        this.reviews = reviews;
-    }
 
-    public Place(String title, String description, Map<Constants.customerType, Integer> ticketPrices) {
+    public Place(String title, String description, Map<String, Integer> ticketPrices) {
         this.title = title;
         this.description = description;
         this.ticketPrices = ticketPrices;
@@ -80,7 +70,7 @@ public class Place {
         this.description = description;
     }
 
-    public Place(String title, String description, List<String> mainImageUrl, Map<Constants.customerType, Integer> ticketPrices) {
+    public Place(String title, String description, List<String> mainImageUrl, Map<String, Integer> ticketPrices) {
         this.title = title;
         this.description = description;
         this.imageUrls = mainImageUrl;
@@ -168,19 +158,19 @@ public class Place {
         this.imageUrls = imageUrls;
     }
 
-    public Map<Constants.customerType, Integer> getTicketPrices() {
+    public Map<String, Integer> getTicketPrices() {
         return ticketPrices;
     }
 
-    public void setTicketPrices(Map<Constants.customerType, Integer> ticketPrices) {
+    public void setTicketPrices(Map<String, Integer> ticketPrices) {
         this.ticketPrices = ticketPrices;
     }
 
-    public Map<Constants.weekDays, String> getOpeningHours() {
+    public Map<String, String> getOpeningHours() {
         return openingHours;
     }
 
-    public void setOpeningHours(Map<Constants.weekDays, String> openingHours) {
+    public void setOpeningHours(Map<String, String> openingHours) {
         this.openingHours = openingHours;
     }
 
@@ -192,11 +182,11 @@ public class Place {
         this.reviews = reviews;
     }
 
-    public String getDefault_image() {
-        return default_image;
+    public String getDefaultImage() {
+        return defaultImage;
     }
 
-    public void setDefault_image(String default_image) {
-        this.default_image = default_image;
+    public void setDefaultImage(String defaultImage) {
+        this.defaultImage = defaultImage;
     }
 }

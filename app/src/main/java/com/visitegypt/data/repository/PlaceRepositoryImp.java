@@ -5,8 +5,6 @@ import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlacePageResponse;
 import com.visitegypt.domain.repository.PlaceRepository;
 
-import javax.inject.Inject;
-
 import io.reactivex.rxjava3.core.Single;
 
 
@@ -18,15 +16,12 @@ public class PlaceRepositoryImp implements PlaceRepository {
         this.retrofitService = retrofitService;
     }
 
-    @Inject
     public Single<PlacePageResponse> getAllPlaces() {
         return retrofitService.getAllPlaces();
     }
 
     @Override
-    @Inject
     public Single<Place> getPlaceById(String placeId) {
-        // return retrofitService.getPlaceById(placeId);
-        return null;
+        return retrofitService.getPlaceById(placeId);
     }
 }

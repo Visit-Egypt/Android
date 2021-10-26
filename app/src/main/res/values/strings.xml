@@ -17,7 +17,7 @@
             Sign up
         </b>
     </string>
-    <string name="aleardyMembed" >
+    <string name="aleardyMembed">
         Already Member ?
         <b>
             Login
@@ -25,4 +25,8 @@
     </string>
     <string name="sign_in">Sign in</string>
     <string name="signUp">Sign up</string>
+    <string name="foreigner_adult">Foreigner Adult</string>
+    <string name="foreigner_student">Foreigner Student</string>
+    <string name="egyptian_adult">Egyptian Adult</string>
+    <string name="egyptian_student">Egyptian Student</string>
 </resources>

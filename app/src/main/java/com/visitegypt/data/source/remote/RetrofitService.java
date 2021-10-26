@@ -5,7 +5,6 @@ import com.visitegypt.domain.model.PlacePageResponse;
 import com.visitegypt.domain.model.User;
 
 import io.reactivex.rxjava3.core.Single;
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -30,16 +29,9 @@ public interface RetrofitService {
     @DELETE("api/user/:id")
     public void deleteUser(int id);
 
-    @GET("api/place/:id")
-    public Place getPlaceById(String id);
+    @GET("api/place/{id}")
+    public Single<Place> getPlaceById(@Path("id") String id);
 
     @GET("api/place")
     public Single<PlacePageResponse> getAllPlaces();
-
-    @GET("api/place/{place_id}")
-    public Call<Place> getPlace(@Path("place_id") String id);
-
-    @GET("api/place")
-    public Call<PlacePageResponse> getAllPlacesCall();
-
 }

@@ -1,6 +1,7 @@
 package com.visitegypt.presentation.detailplace;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,35 +12,45 @@ import com.smarteist.autoimageslider.SliderView;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.Slider;
+import com.visitegypt.presentation.home.HomeRecyclerViewAdapter;
+import com.visitegypt.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DetailActivity extends AppCompatActivity {
-    TextView fAdult, fStudent, eStudent, eAdult,desc,title;
+import dagger.hilt.android.AndroidEntryPoint;
 
-    DetailViewModel detailViewModel;
+
+@AndroidEntryPoint
+public class DetailActivity extends AppCompatActivity {
+
     private static final String TAG = "Detail Activity";
+
+    TextView fAdult, fStudent, eStudent, eAdult, desc, title;
+
+    private DetailViewModel detailViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        detailViewModel = ViewModelProviders.of(this).get(DetailViewModel.class);
-        detailViewModel.getPlace();
-        detailViewModel.mutableLiveData.observe(this, new Observer<Place>() {
-            @Override
-            public void onChanged(Place place) {
+
+
+        String placeId;
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                placeId = null;
+            } else {
+                placeId = extras.getString(HomeRecyclerViewAdapter.CHOSEN_PLACE_ID);
             }
-        });
+        } else {
+            placeId = (String) savedInstanceState.getSerializable(HomeRecyclerViewAdapter.CHOSEN_PLACE_ID);
+        }
+        Log.d(TAG, "Place ID: " + placeId);
+        initViews();
+        initViewModel(placeId);
 
-
-        fAdult = findViewById(R.id.fAdult);
-        fStudent = findViewById(R.id.fStudent);
-        eStudent = findViewById(R.id.eStudent);
-        eAdult = findViewById(R.id.eAdult);
-        desc=findViewById(R.id.description);
-        title=findViewById(R.id.name);
 
         HashMap<String, Integer> ticketPrices = new HashMap<String, Integer>();
 //        Map<String, Integer> ticketPrices = new Map<String, Integer>();
@@ -67,14 +78,47 @@ public class DetailActivity extends AppCompatActivity {
         sliderView.setAutoCycle(true);
         sliderView.startAutoCycle();
 
-        fAdult.setText(fAdult.getText() + ticketPrices.get("Foreigner Adult").toString());
-        fStudent.setText(fStudent.getText() + ticketPrices.get("Foreigner Student").toString());
-        eStudent.setText(eStudent.getText() + ticketPrices.get("Egyptian Student").toString());
-        eAdult.setText(eAdult.getText() + ticketPrices.get("Egyptian Adult").toString());
+        fAdult.setText(ticketPrices.get("Foreigner Adult").toString() + " EGP");
+        fStudent.setText(ticketPrices.get("Foreigner Student").toString() + " EGP");
+        eStudent.setText(ticketPrices.get("Egyptian Student").toString() + " EGP");
+        eAdult.setText(ticketPrices.get("Egyptian Adult").toString() + " EGP");
 
         title.setText("Karnak Temple");
         desc.setText("The Karnak Temple Complex, commonly known as Karnak, comprises a vast mix of decayed temples, chapels, pylons, and other buildings near Luxor, Egypt.");
 
+    }
+
+    private void initViews() {
+        fAdult = findViewById(R.id.foreignerAdultPriceTextView);
+        fStudent = findViewById(R.id.foreignerStudentPriceTextView);
+        eStudent = findViewById(R.id.egyptianStudentTextView);
+        eAdult = findViewById(R.id.egptianAdultPriceTextView);
+        desc = findViewById(R.id.descriptionTextView);
+        title = findViewById(R.id.name);
+    }
+
+    private void initViewModel(String placeId) {
+        detailViewModel = ViewModelProviders.of(this).get(DetailViewModel.class);
+        detailViewModel.getPlace(placeId);
+        detailViewModel.mutableLiveData.observe(this, new Observer<Place>() {
+            @Override
+            public void onChanged(Place place) {
+                Log.d(TAG, "onChanged: " + place.getTitle());
+                if (place.getTicketPrices() != null) {
+                    try {
+                        fAdult.setText(place.getTicketPrices().get(Constants.CustomerType.FOREIGNER_ADULT));
+                        eAdult.setText(place.getTicketPrices().get(Constants.CustomerType.EGYPTIAN_ADULT));
+                        eStudent.setText(place.getTicketPrices().get(Constants.CustomerType.FOREIGNER_STUDENT));
+                        fStudent.setText(place.getTicketPrices().get(Constants.CustomerType.FOREIGNER_STUDENT));
+                    } catch (Exception ignored) {
+                        
+                    }
+                }
+                title.setText(place.getTitle());
+                desc.setText(place.getDescription());
+
+            }
+        });
     }
 
 

@@ -25,7 +25,9 @@ public class HomeViewModel extends ViewModel {
 
     public void getAllPlaces() {
         getPlacesUseCase.execute(placePageResponse -> {
+            System.out.println(placePageResponse.getPlaces().get(1).getTicketPrices());
             Log.d(TAG, "places retrieved");
+            Log.d(TAG, "getAllPlaces: " + placePageResponse.getPlaces().get(0).getId());
             placesMutableLiveData.setValue(placePageResponse.getPlaces());
         }, throwable -> Log.e(TAG, "places retrieve error: " + throwable.getMessage()));
     }

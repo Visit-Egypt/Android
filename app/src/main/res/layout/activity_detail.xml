@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:padding="16dp"
     android:layout_height="match_parent"
     tools:context=".presentation.detailplace.DetailActivity">
 
@@ -11,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -34,12 +36,14 @@
                 tools:ignore="MissingConstraints" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:text="Karnak Temple"
+                android:textAlignment="center"
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/prata_regular"
-                android:padding="20dp"
-                android:text=""
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@+id/slider"
                 tools:ignore="MissingConstraints" />
@@ -55,18 +59,18 @@
                 tools:ignore="MissingConstraints" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/prata_regular"
-                android:padding="10dp"
+                android:padding="8dp"
+                android:textSize="16sp"
                 android:text="Description"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@+id/hr1"
                 tools:ignore="MissingConstraints" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/description"
+                android:id="@+id/descriptionTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/prata_regular"
@@ -83,21 +87,21 @@
                 android:layout_margin="5dp"
                 android:layout_marginHorizontal="20dp"
                 android:background="@color/brown"
-                app:layout_constraintTop_toBottomOf="@+id/description"
+                app:layout_constraintTop_toBottomOf="@+id/descriptionTextView"
                 tools:ignore="MissingConstraints" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/histo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/prata_regular"
                 android:padding="10dp"
+                android:textSize="16sp"
                 android:text="History"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@+id/hr2" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/history"
+                android:id="@+id/historyTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/prata_regular"
@@ -113,11 +117,11 @@
                 android:layout_margin="5dp"
                 android:layout_marginHorizontal="20dp"
                 android:background="@color/brown"
-                app:layout_constraintTop_toBottomOf="@+id/history"
+                app:layout_constraintTop_toBottomOf="@+id/historyTextView"
                 tools:ignore="MissingConstraints" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/loc"
+                android:textSize="16sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/prata_regular"
@@ -127,35 +131,26 @@
                 app:layout_constraintTop_toBottomOf="@+id/hr3" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/location"
+                android:id="@+id/locationTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:text=""
                 app:layout_constraintTop_toBottomOf="@+id/loc" />
 
-            <TableRow
-                android:id="@+id/hr4"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="5dp"
-                android:layout_marginHorizontal="20dp"
-                android:background="@color/brown"
-                app:layout_constraintTop_toBottomOf="@+id/location"
-                tools:ignore="MissingConstraints" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/rev"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/prata_regular"
                 android:padding="10dp"
                 android:text="Reviews"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@+id/hr4" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/reviews"
+                android:id="@+id/reviewsTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/prata_regular"
@@ -164,30 +159,23 @@
                 app:layout_constraintTop_toBottomOf="@+id/rev" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/reviews2"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:fontFamily="@font/prata_regular"
                 android:padding="10dp"
                 android:text="Did you visit this location?"
                 android:textColor="@color/black"
-                android:textSize="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/reviews"
-                tools:ignore="MissingConstraints"
-
-                />
+                android:textSize="16sp"
+                tools:ignore="MissingConstraints" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/writeReview"
+                android:id="@+id/writeReviewButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:backgroundTint="@color/white"
                 android:text="WRITE A REVIEW"
-                android:textColor="@color/brown"
-                app:layout_constraintTop_toBottomOf="@+id/reviews2"
-
-                />
+                android:textColor="@color/brown" />
 
             <TableRow
                 android:id="@+id/hr5"
@@ -196,7 +184,7 @@
                 android:layout_margin="5dp"
                 android:layout_marginHorizontal="20dp"
                 android:background="@color/brown"
-                app:layout_constraintTop_toBottomOf="@+id/writeReview"
+                app:layout_constraintTop_toBottomOf="@+id/writeReviewButton"
                 tools:ignore="MissingConstraints" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -205,13 +193,14 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/prata_regular"
                 android:padding="10dp"
+                android:textSize="16sp"
                 android:text="Opening Hours"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@+id/hr5"
                 tools:ignore="MissingConstraints" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/hour"
+                android:id="@+id/openingHoursTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -225,7 +214,7 @@
                 android:layout_margin="5dp"
                 android:layout_marginHorizontal="20dp"
                 android:background="@color/brown"
-                app:layout_constraintTop_toBottomOf="@+id/hour"
+                app:layout_constraintTop_toBottomOf="@+id/openingHoursTextView"
                 tools:ignore="MissingConstraints" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -235,91 +224,115 @@
                 android:fontFamily="@font/prata_regular"
                 android:padding="10dp"
                 android:text="Prices"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@+id/hr6"
                 tools:ignore="MissingConstraints" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/fAdult"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/prata_regular"
-                android:text="Foreigner Adult : "
-                app:layout_constraintTop_toBottomOf="@+id/price"
-                tools:ignore="MissingConstraints" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/fStudent"
+            <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/prata_regular"
-                android:text="Foreigner Student : "
-                app:layout_constraintTop_toBottomOf="@+id/fAdult"
-                tools:ignore="MissingConstraints" />
+                android:layout_height="wrap_content">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/fPhoto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/prata_regular"
-                android:text="Foreigner Adult Personal Photography : "
-                app:layout_constraintTop_toBottomOf="@+id/fStudent"
-                tools:ignore="MissingConstraints" />
+                <TableRow>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/fVideo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/prata_regular"
-                android:text="Foreigner Adult Personal Video :  "
-                app:layout_constraintTop_toBottomOf="@+id/fPhoto"
-                tools:ignore="MissingConstraints" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/prata_regular"
+                        android:padding="10dp"
+                        android:text="@string/foreigner_adult"
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toBottomOf="@+id/hr6"
+                        tools:ignore="MissingConstraints" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/eAdult"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/prata_regular"
-                android:text="Egyptian Adult :  "
-                app:layout_constraintTop_toBottomOf="@+id/fVideo"
-                tools:ignore="MissingConstraints" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/foreignerAdultPriceTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/prata_regular"
+                        android:padding="10dp"
+                        android:text="Prices"
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toBottomOf="@+id/hr6"
+                        tools:ignore="MissingConstraints" />
+                </TableRow>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/eStudent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/prata_regular"
-                android:text="Egyptian Student :  "
-                app:layout_constraintTop_toBottomOf="@+id/eAdult"
-                tools:ignore="MissingConstraints" />
+                <TableRow>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/ePhoto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/prata_regular"
-                android:text="Egyptian Personal Photography :   "
-                app:layout_constraintTop_toBottomOf="@+id/eStudent"
-                tools:ignore="MissingConstraints" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/prata_regular"
+                        android:padding="10dp"
+                        android:text="@string/foreigner_student"
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toBottomOf="@+id/hr6"
+                        tools:ignore="MissingConstraints" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/eVideo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/prata_regular"
-                android:text="Egyptian Personal Video :  "
-                app:layout_constraintTop_toBottomOf="@+id/ePhoto"
-                tools:ignore="MissingConstraints" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/foreignerStudentPriceTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/prata_regular"
+                        android:padding="10dp"
+                        android:text="Prices"
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toBottomOf="@+id/hr6"
+                        tools:ignore="MissingConstraints" />
+                </TableRow>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/child"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/prata_regular"
-                android:text="Children Under 6 Years : "
-                app:layout_constraintTop_toBottomOf="@+id/eVideo"
-                tools:ignore="MissingConstraints" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TableRow>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/prata_regular"
+                        android:padding="10dp"
+                        android:text="@string/egyptian_adult"
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toBottomOf="@+id/hr6"
+                        tools:ignore="MissingConstraints" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/egptianAdultPriceTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/prata_regular"
+                        android:padding="10dp"
+                        android:text="Prices"
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toBottomOf="@+id/hr6"
+                        tools:ignore="MissingConstraints" />
+                </TableRow>
+
+                <TableRow>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/prata_regular"
+                        android:padding="10dp"
+                        android:text="@string/egyptian_student"
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toBottomOf="@+id/hr6"
+                        tools:ignore="MissingConstraints" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/egyptianStudentTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/prata_regular"
+                        android:padding="10dp"
+                        android:text="Prices"
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toBottomOf="@+id/hr6"
+                        tools:ignore="MissingConstraints" />
+                </TableRow>
+            </TableLayout>
+
+
+        </LinearLayout>
     </ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
