@@ -5,7 +5,6 @@ import static com.visitegypt.utils.Constants.BASE_URL;
 import com.visitegypt.data.repository.PlaceRepositoryImp;
 import com.visitegypt.data.repository.UserRepositoryImp;
 import com.visitegypt.data.source.remote.RetrofitService;
-import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.repository.PlaceRepository;
 import com.visitegypt.domain.repository.UserRepository;
 
@@ -15,7 +14,6 @@ import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
-import io.reactivex.rxjava3.core.Single;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -23,8 +21,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 @InstallIn(SingletonComponent.class)
 public class NetworkModule {
-    private RetrofitService retrofitService;
-
     public NetworkModule() {
 
     }
@@ -67,13 +63,5 @@ public class NetworkModule {
     @Singleton
     public UserRepository provideUserRepository(RetrofitService retrofitService) {
         return new UserRepositoryImp(retrofitService);
-    }
-
-    public Single<User> loginUser(User user) {
-        return retrofitService.loginUser(user);
-    }
-
-    public Single<User> registerUser(User user) {
-        return retrofitService.registerUser(user);
     }
 }

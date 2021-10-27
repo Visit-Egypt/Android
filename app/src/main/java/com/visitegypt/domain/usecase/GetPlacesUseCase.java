@@ -11,7 +11,6 @@ import io.reactivex.rxjava3.core.Single;
 public class GetPlacesUseCase extends SingleUseCase<PlacePageResponse> {
     PlaceRepository placeRepository;
 
-    //TODO migrate to dependency injection
     @Inject
     public GetPlacesUseCase(PlaceRepository placeRepository) {
         this.placeRepository = placeRepository;

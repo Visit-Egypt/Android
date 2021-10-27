@@ -27,5 +27,25 @@ public class Constants {
         }
     }
 
-    public enum weekDays {Saturday, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday}
+    public enum Days {
+        SATURDAY("Saturday"),
+        SUNDAY("Sunday"),
+        MONDAY("Monday"),
+        TUESDAY("Tuesday"),
+        WEDNESDAY("Wednesday"),
+        THURSDAY("Thursday"),
+        FRIDAY("Friday");
+
+
+        private final String text;
+
+        Days(final String text) {
+            this.text = text;
+        }
+
+        @Override
+        public String toString() {
+            return text;
+        }
+    }
 }
