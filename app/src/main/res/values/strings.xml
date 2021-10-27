@@ -17,7 +17,7 @@
             Sign up
         </b>
     </string>
-    <string name="aleardyMembed" >
+    <string name="aleardyMembed">
         Already Member ?
         <b>
             Login
@@ -25,4 +25,28 @@
     </string>
     <string name="sign_in">Sign in</string>
     <string name="signUp">Sign up</string>
+    <string name="foreigner_adult">Foreigner Adult</string>
+    <string name="foreigner_student">Foreigner Student</string>
+    <string name="foreigner_personal_video">Foreigner Personal Video</string>
+    <string name="foreigner_personal_photo">Foreigner Personal Photography</string>
+    <string name="egyptian_adult">Egyptian Adult</string>
+    <string name="egyptian_student">Egyptian Student</string>
+    <string name="egyptian_personal_photo">Egyptian Personal Photography</string>
+    <string name="egyptian_personal_video">Egyptian Personal Video</string>
+    <string name="children">Children</string>
+    <string name="no_data">No data</string>
+
+    <string name="open">Open</string>
+    <string name="from">FROM</string>
+    <string name="to">TO</string>
+    <string name="day">DAY</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+
+    <string name="review">WRITE A REVIEW</string>
 </resources>

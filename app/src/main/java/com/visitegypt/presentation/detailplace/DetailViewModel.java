@@ -1,30 +1,41 @@
 package com.visitegypt.presentation.detailplace;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.visitegypt.data.repository.PlaceClient;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.usecase.GetPlaceDetailUseCase;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import javax.inject.Inject;
 
+import dagger.hilt.android.lifecycle.HiltViewModel;
+import io.reactivex.rxjava3.functions.Consumer;
+
+@HiltViewModel
 public class DetailViewModel extends ViewModel {
     private static final String TAG = "Detail View Model";
-    MutableLiveData<Place> mutableLiveData=new MutableLiveData<>();
-String place_id;
-    public void getPlace(){
-        PlaceClient.getPlaceRepo().getPlace(place_id).enqueue(new Callback<Place>() {
+    MutableLiveData<Place> mutableLiveData = new MutableLiveData<>();
+    private GetPlaceDetailUseCase getPlaceDetailUseCase;
+
+    @Inject
+    public DetailViewModel(GetPlaceDetailUseCase getPlaceDetailUseCase) {
+        this.getPlaceDetailUseCase = getPlaceDetailUseCase;
+    }
+
+    public void getPlace(String placeId) {
+        getPlaceDetailUseCase.setPlaceId(placeId);
+        getPlaceDetailUseCase.execute(new Consumer<Place>() {
             @Override
-            public void onResponse(Call<Place> call, Response<Place> response) {
-                mutableLiveData.setValue(response.body());
-                
+            public void accept(Place place) throws Throwable {
+                Log.d(TAG, "Place details retrieved!");
+                mutableLiveData.setValue(place);
             }
-
+        }, new Consumer<Throwable>() {
             @Override
-            public void onFailure(Call<Place> call, Throwable t) {
-
+            public void accept(Throwable throwable) throws Throwable {
+                Log.e(TAG, "place detail retrieve failed", throwable);
             }
         });
     }

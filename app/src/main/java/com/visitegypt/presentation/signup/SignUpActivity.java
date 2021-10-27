@@ -2,7 +2,6 @@ package com.visitegypt.presentation.signup;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -10,18 +9,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.visitegypt.R;
-import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.usecase.UserValidation;
 import com.visitegypt.presentation.signin.SignInActivity;
-import com.visitegypt.presentation.signin.SignInViewModel;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class SignUpActivity extends AppCompatActivity {
-    MaterialAutoCompleteTextView firstName,lastName,email,phoneNumber,password;
+    MaterialAutoCompleteTextView firstName, lastName, email, phoneNumber, password;
     SignUpViewModel signUpViewModel;
     private static final String TAG = "Cannot invoke method length() on null object";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,21 +39,17 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onChanged(String[] strings) {
 
-                if(!strings[0].isEmpty())
-                {
-                   firstName.setError(strings[0]);
+                if(!strings[0].isEmpty()) {
+                    firstName.setError(strings[0]);
                 }
-                if(!strings[1].isEmpty())
-                {
+                if(!strings[1].isEmpty()) {
 
                     lastName.setError(strings[1]);
                 }
-                if(!strings[2].isEmpty())
-                {
+                if(!strings[2].isEmpty()) {
                     email.setError(strings[2]);
                 }
-                if(!strings[3].isEmpty())
-                {
+                if(!strings[3].isEmpty()) {
                     password.setError(strings[3]);
                 }
             }
@@ -76,34 +72,26 @@ public class SignUpActivity extends AppCompatActivity {
     public void signupOnclick(View view) {
         if(
                 firstName.getText().toString().isEmpty() ||
-                lastName.getText().toString().isEmpty() ||
-                email.getText().toString().isEmpty() ||
-                phoneNumber.getText().toString().isEmpty() ||
-                password.getText().toString().isEmpty())
-        {
-            if (firstName.getText().toString().isEmpty())
-            {
+                        lastName.getText().toString().isEmpty() ||
+                        email.getText().toString().isEmpty() ||
+                        phoneNumber.getText().toString().isEmpty() ||
+                        password.getText().toString().isEmpty()) {
+            if (firstName.getText().toString().isEmpty()) {
                 firstName.setError("Enter your first name");
             }
-            if (lastName.getText().toString().isEmpty())
-            {
+            if (lastName.getText().toString().isEmpty()) {
                 lastName.setError("Enter your last name");
             }
-            if (email.getText().toString().isEmpty())
-            {
+            if (email.getText().toString().isEmpty()) {
                 email.setError("Enter your email");
             }
-            if (phoneNumber.getText().toString().isEmpty())
-            {
+            if (phoneNumber.getText().toString().isEmpty()) {
                 phoneNumber.setError("Enter your phone number");
             }
-            if (password.getText().toString().isEmpty())
-            {
+            if (password.getText().toString().isEmpty()) {
                 password.setError("Enter your password");
             }
-        }
-        else
-        {
+        } else {
             UserValidation userValidation = new UserValidation(firstName.getText().toString(),lastName.getText().toString(),
                     email.getText().toString(),
                     phoneNumber.getText().toString(),

@@ -3,7 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_detail.xml" value="0.10740740740740741" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Android2/app/src/main/res/layout/activity_detail.xml" value="0.20962199312714777" />
+        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.21510416666666668" />
+        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/drawable/ic_background.xml" value="0.21875" />
+        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/layout/action_bar.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/layout/activity_detail.xml" value="0.25" />
+        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/layout/activity_home.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/layout/activity_sign_in.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/layout/activity_sign_up.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/layout/activity_splash.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/layout/place_card.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/layout/review_card.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/layout/slide_layout.xml" value="0.20260416666666667" />
       </map>
     </option>
   </component>
