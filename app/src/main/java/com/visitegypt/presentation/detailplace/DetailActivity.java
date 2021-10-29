@@ -9,7 +9,13 @@ import static com.visitegypt.utils.Constants.CustomerType.EGYPTIAN_PHOTO;
 import static com.visitegypt.utils.Constants.CustomerType.EGYPTIAN_VIDEO;
 import static com.visitegypt.utils.Constants.CustomerType.CHILDREN;
 import static com.visitegypt.utils.Constants.CustomerType.FOREIGNER_STUDENT;
-
+import static com.visitegypt.utils.Constants.Days.SATURDAY;
+import static com.visitegypt.utils.Constants.Days.SUNDAY;
+import static com.visitegypt.utils.Constants.Days.MONDAY;
+import static com.visitegypt.utils.Constants.Days.TUESDAY;
+import static com.visitegypt.utils.Constants.Days.WEDNESDAY;
+import static com.visitegypt.utils.Constants.Days.THURSDAY;
+import static com.visitegypt.utils.Constants.Days.FRIDAY;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -35,7 +41,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private static final String TAG = "Detail Activity";
 
-    TextView fAdult, fStudent, eStudent, eAdult, desc, title, saturdayFrom, sundayFrom, mondayFrom, tuesdayFrom, thursdayFrom, wednesdayFrom, fridayFrom, saturdayTo, mondayTo, tuesdayTo, sundayTo, thursdayTo, fridayTo, wednesdayTo,fVideo,fPhoto,eVideo,ePhoto,children;
+    private TextView fAdult, fStudent, eStudent, eAdult, desc, title, saturdayOpeningHours, sundayOpeningHours, mondayOpeningHours, tuesdayOpeningHours, thursdayOpeningHours, wednesdayOpeningHours, fridayOpeningHours, fVideo,fPhoto,eVideo,ePhoto,children;
 
     private DetailViewModel detailViewModel;
 
@@ -78,32 +84,25 @@ public class DetailActivity extends AppCompatActivity {
         fAdult = findViewById(R.id.foreignerAdultPriceTextView);
         fStudent = findViewById(R.id.foreignerStudentPriceTextView);
         eStudent = findViewById(R.id.egyptianStudentTextView);
-        eAdult = findViewById(R.id.egptianAdultPriceTextView);
+        eAdult = findViewById(R.id.egyptianAdultPriceTextView);
         fVideo=findViewById(R.id.foreignerVideoPriceTextView);
         fPhoto=findViewById(R.id.foreignerPhotoPriceTextView);
         eVideo=findViewById(R.id.egyptianVideoPriceTextView);
         ePhoto=findViewById(R.id.egyptianPhotoPriceTextView);
         children=findViewById(R.id.childrenPriceTextView);
         desc = findViewById(R.id.descriptionTextView);
-        title = findViewById(R.id.name);
+        title = findViewById(R.id.titleTextView);
 
-        saturdayFrom = findViewById(R.id.saturdayFromTextView);
-        sundayFrom = findViewById(R.id.sundayFromTextView);
-        mondayFrom = findViewById(R.id.mondayFromTextView);
-        tuesdayFrom = findViewById(R.id.tuesdayFromTextView);
-        wednesdayFrom = findViewById(R.id.wednesdayFromTextView);
-        thursdayFrom = findViewById(R.id.thursdayFromTextView);
-        fridayFrom = findViewById(R.id.fridayFromTextView);
+        saturdayOpeningHours = findViewById(R.id.saturdayOpeningHoursTextView);
+        sundayOpeningHours = findViewById(R.id.sundayOpeningHoursTextView);
+        mondayOpeningHours = findViewById(R.id.mondayOpeningHoursTextView);
+        tuesdayOpeningHours = findViewById(R.id.tuesdayOpeningHoursTextView);
+        wednesdayOpeningHours = findViewById(R.id.wednesdayOpeningHoursTextView);
+        thursdayOpeningHours = findViewById(R.id.thursdayOpeningHoursTextView);
+        fridayOpeningHours = findViewById(R.id.fridayOpeningHoursTextView);
+        
 
-        saturdayTo = findViewById(R.id.saturdayToTextView);
-        sundayTo = findViewById(R.id.sundayToTextView);
-        mondayTo = findViewById(R.id.mondayToTextView);
-        tuesdayTo = findViewById(R.id.tuesdayToTextView);
-        wednesdayTo = findViewById(R.id.wednesdayToTextView);
-        thursdayTo = findViewById(R.id.thursdayToTextView);
-        fridayTo = findViewById(R.id.fridayToTextView);
-
-        sliderView = findViewById(R.id.slider);
+        sliderView = findViewById(R.id.sliderSliderView);
     }
 
     private void initViewModel(String placeId) {
@@ -131,20 +130,13 @@ public class DetailActivity extends AppCompatActivity {
                 }
                 if (place.getOpeningHours() != null) {
                     try {
-//                        saturdayFrom.setText(place.getOpeningHours().get());
-//                        sundayFrom.setText(place.getOpeningHours().get());
-//                        mondayFrom.setText(place.getOpeningHours().get());
-//                        tuesdayFrom.setText(place.getOpeningHours().get());
-//                        wednesdayFrom.setText(place.getOpeningHours().get());
-//                        thursdayFrom.setText(place.getOpeningHours().get());
-//                        fridayFrom.setText(place.getOpeningHours().get());
-//                        saturdayTo.setText(place.getOpeningHours().get());
-//                        sundayTo.setText(place.getOpeningHours().get());
-//                        mondayTo.setText(place.getOpeningHours().get());
-//                        thursdayTo.setText(place.getOpeningHours().get());
-//                        fridayTo.setText(place.getOpeningHours().get());
-//                        tuesdayTo.setText(place.getOpeningHours().get());
-//                        wednesdayTo.setText(place.getOpeningHours().get());
+                        saturdayOpeningHours.setText(place.getOpeningHours().get(SATURDAY));
+                        sundayOpeningHours.setText(place.getOpeningHours().get(SUNDAY));
+                        mondayOpeningHours.setText(place.getOpeningHours().get(MONDAY));
+                        tuesdayOpeningHours.setText(place.getOpeningHours().get(TUESDAY));
+                        wednesdayOpeningHours.setText(place.getOpeningHours().get(WEDNESDAY));
+                        thursdayOpeningHours.setText(place.getOpeningHours().get(THURSDAY));
+                        fridayOpeningHours.setText(place.getOpeningHours().get(FRIDAY));
 
                     } catch (Exception e) {
                         Log.e(TAG, "setting opening hours failed: " + e.getMessage());
