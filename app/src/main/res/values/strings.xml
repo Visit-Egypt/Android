@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Visit Egypt</string>
     <string name= "Email">E-mail</string>
-    <string name="loginMsg" >Sign in</string>
+    <string name="loginMsg" >Login</string>
     <string name="firstName" >First name</string>
     <string name="lastName" >Last name</string>
     <string name="phoneNo" >Phone Number</string>
@@ -24,7 +24,7 @@
         </b>
     </string>
     <string name="sign_in">Sign in</string>
-    <string name="signUp">Sign up</string>
+    <string name="signUp">Register</string>
     <string name="foreigner_adult">Foreigner Adult</string>
     <string name="foreigner_student">Foreigner Student</string>
     <string name="foreigner_personal_video">Foreigner Personal Video</string>

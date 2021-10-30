@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
+import com.google.android.material.textfield.TextInputLayout;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.home.HomeActivity;
@@ -22,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class SignInActivity extends AppCompatActivity {
     private static final String TAG = "Cannot invoke method length() on null object";
-    MaterialAutoCompleteTextView txtEmail, txtPassword;
+    TextInputLayout txtEmail, txtPassword;
     String password, email;
     SignInViewModel signInViewModel;
 
@@ -30,8 +31,8 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-        txtEmail = findViewById(R.id.Email);
-        txtPassword = findViewById(R.id.passowrd);
+       txtEmail = findViewById(R.id.txtEmail);
+       txtPassword = findViewById(R.id.txtPassword);
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
@@ -55,8 +56,8 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void buttonOnClick(View view) {
-        email = txtEmail.getText().toString();
-        password = txtPassword.getText().toString();
+        email = txtEmail.getEditText().getText().toString();
+        password = txtPassword.getEditText().getText().toString();
 
         if (email.isEmpty()|| password.isEmpty()) {
 

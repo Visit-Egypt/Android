@@ -2,6 +2,7 @@ package com.visitegypt.presentation.signup;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -9,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.textfield.MaterialAutoCompleteTextView;
+import com.google.android.material.textfield.TextInputLayout;
 import com.visitegypt.R;
 import com.visitegypt.domain.usecase.UserValidation;
 import com.visitegypt.presentation.signin.SignInActivity;
@@ -18,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class SignUpActivity extends AppCompatActivity {
-    MaterialAutoCompleteTextView firstName, lastName, email, phoneNumber, password;
+    TextInputLayout firstName, lastName, email, phoneNumber, password;
     SignUpViewModel signUpViewModel;
     private static final String TAG = "Cannot invoke method length() on null object";
 
@@ -29,11 +30,11 @@ public class SignUpActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-        firstName = findViewById(R.id.fistTextField);
-        lastName = findViewById(R.id.lastTextField);
-        email = findViewById(R.id.emailTxtField);
-        phoneNumber = findViewById(R.id.phoneNumbertxtField);
-        password = findViewById(R.id.passwordTxtField);
+        firstName = findViewById(R.id.txtFisrtName);
+        lastName = findViewById(R.id.txtLastName);
+        email = findViewById(R.id.txtEmail);
+        phoneNumber = findViewById(R.id.txtPhoneNumber);
+        password = findViewById(R.id.txtPassword);
         signUpViewModel = new  ViewModelProvider(this).get(SignUpViewModel.class);
         signUpViewModel.mutableLiveDataErrors.observe(this, new Observer<String[]>() {
             @Override
@@ -70,32 +71,35 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void signupOnclick(View view) {
+        Log.d("TAG", "signupOnclick: 1  " + firstName.getEditText().getText().toString());
+        Log.d("TAG", "signupOnclick: 2  " + firstName.getEditText().toString());
         if(
-                firstName.getText().toString().isEmpty() ||
-                        lastName.getText().toString().isEmpty() ||
-                        email.getText().toString().isEmpty() ||
-                        phoneNumber.getText().toString().isEmpty() ||
-                        password.getText().toString().isEmpty()) {
-            if (firstName.getText().toString().isEmpty()) {
+                firstName.getEditText().getText().toString().isEmpty() ||
+                        lastName.getEditText().getText().toString().isEmpty() ||
+                        email.getEditText().getText().toString().isEmpty() ||
+                        phoneNumber.getEditText().getText().toString().isEmpty() ||
+                        password.getEditText().getText().toString().isEmpty()) {
+            if (firstName.getEditText().getText().toString().isEmpty()) {
                 firstName.setError("Enter your first name");
             }
-            if (lastName.getText().toString().isEmpty()) {
+            if ( lastName.getEditText().getText().toString().isEmpty()) {
                 lastName.setError("Enter your last name");
             }
-            if (email.getText().toString().isEmpty()) {
+            if (email.getEditText().getText().toString().isEmpty()) {
                 email.setError("Enter your email");
             }
-            if (phoneNumber.getText().toString().isEmpty()) {
+            if (phoneNumber.getEditText().getText().toString().isEmpty()) {
                 phoneNumber.setError("Enter your phone number");
             }
-            if (password.getText().toString().isEmpty()) {
+            if (password.getEditText().getText().toString().isEmpty()) {
                 password.setError("Enter your password");
             }
+
         } else {
-            UserValidation userValidation = new UserValidation(firstName.getText().toString(),lastName.getText().toString(),
-                    email.getText().toString(),
-                    phoneNumber.getText().toString(),
-                    password.getText().toString());
+            UserValidation userValidation = new UserValidation(firstName.getEditText().getText().toString(),lastName.getEditText().getText().toString(),
+                    email.getEditText().getText().toString(),
+                    phoneNumber.getEditText().getText().toString(),
+                    password.getEditText().getText().toString());
             signUpViewModel.getUser(userValidation);
 
         }

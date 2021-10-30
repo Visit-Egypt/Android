@@ -16,27 +16,44 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <com.google.android.material.textfield.MaterialAutoCompleteTextView
-        android:id="@+id/emailTxtField"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtEmail"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/boarder"
-        app:layout_constraintDimensionRatio="6:1"
+
+        android:layout_height="wrap_content"
+        android:hint="@string/Email"
+        app:boxCornerRadiusBottomEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusTopStart="8dp"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="@id/textfield"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/startGuideLine"
-        app:layout_constraintTop_toBottomOf="@id/email"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        app:layout_constraintStart_toStartOf="@id/guideLineStartBox"
+        app:layout_constraintTop_toBottomOf="@id/txtLastName"
+
+
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/startGuideLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent=".05" />
+        app:layout_constraintGuide_percent=".03" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/endGuideLine"
@@ -57,173 +74,173 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.54" />
+        app:layout_constraintGuide_percent="0.9" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideLineTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".27" />
+        app:layout_constraintGuide_percent=".17" />
 
 
     <com.google.android.material.textview.MaterialTextView
+        android:layout_marginTop="5dp"
         android:id="@+id/signUp"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:text="@string/signUp"
-        android:textColor="@color/mainColor"
+        android:textColor="@color/camel"
         android:textSize="35sp"
-        app:layout_constraintDimensionRatio="2:1"
+
         app:layout_constraintEnd_toEndOf="@id/textGuideLine"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/startGuideLine"
         app:layout_constraintTop_toTopOf="@id/guideLineTop" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/firstName"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtFisrtName"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="@string/firstName"
-        android:textColor="@color/mainColor"
-        android:textSize="18sp"
-        app:layout_constraintDimensionRatio="5:1"
-        app:layout_constraintEnd_toEndOf="@id/textGuideLine"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/startGuideLine"
-        app:layout_constraintTop_toBottomOf="@+id/signUp" />
-
-    <com.google.android.material.textfield.MaterialAutoCompleteTextView
-        android:id="@+id/fistTextField"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/boarder"
-        app:layout_constraintDimensionRatio="6:1"
+        android:layout_height="wrap_content"
+        android:hint="@string/firstName"
+        app:boxCornerRadiusBottomEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusTopStart="8dp"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="@id/textfield"
-        app:layout_constraintStart_toStartOf="@id/startGuideLine"
-        app:layout_constraintTop_toBottomOf="@id/firstName"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        app:layout_constraintStart_toStartOf="@id/guideLineStartBox"
+        app:layout_constraintTop_toBottomOf="@+id/signUp"
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/lastName"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="@string/lastName"
-        android:textColor="@color/mainColor"
-        android:textSize="18sp"
-        app:layout_constraintDimensionRatio="5:1"
-        app:layout_constraintEnd_toEndOf="@id/textGuideLine"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/startGuideLine"
-        app:layout_constraintTop_toBottomOf="@id/fistTextField" />
+        >
 
-    <com.google.android.material.textfield.MaterialAutoCompleteTextView
-        android:id="@+id/lastTextField"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtLastName"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/boarder"
-        app:layout_constraintBottom_toTopOf="@+id/email"
-        app:layout_constraintDimensionRatio="6:1"
+
+        android:layout_height="wrap_content"
+        android:hint="@string/lastName"
+        app:boxCornerRadiusBottomEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusTopStart="8dp"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="@id/textfield"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/startGuideLine"
-        app:layout_constraintTop_toBottomOf="@id/lastName"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
+        app:layout_constraintStart_toStartOf="@id/guideLineStartBox"
+        app:layout_constraintTop_toBottomOf="@id/txtFisrtName"
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/email"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="@string/Email"
-        android:textColor="@color/mainColor"
-        android:textSize="18sp"
-        app:layout_constraintDimensionRatio="5:1"
-        app:layout_constraintEnd_toEndOf="@id/textGuideLine"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/startGuideLine"
-        app:layout_constraintTop_toBottomOf="@id/lastTextField" />
+        >
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/phoneNumber"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="@string/phoneNo"
-        android:textColor="@color/mainColor"
-        android:textSize="18sp"
-        app:layout_constraintDimensionRatio="5:1"
-        app:layout_constraintEnd_toEndOf="@id/textGuideLine"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/startGuideLine"
-        app:layout_constraintTop_toBottomOf="@id/emailTxtField" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-    <com.google.android.material.textfield.MaterialAutoCompleteTextView
-        android:id="@+id/phoneNumbertxtField"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtPhoneNumber"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/boarder"
-        app:layout_constraintDimensionRatio="6:1"
+
+        android:layout_height="wrap_content"
+        android:hint="@string/phoneNo"
+        app:boxCornerRadiusBottomEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusTopStart="8dp"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="@id/textfield"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/startGuideLine"
-        app:layout_constraintTop_toBottomOf="@id/phoneNumber"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintStart_toStartOf="@id/guideLineStartBox"
+        app:layout_constraintTop_toBottomOf="@id/txtEmail"
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/passowrd"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="4dp"
-        android:text="@string/password"
-        android:textColor="@color/mainColor"
-        android:textSize="18sp"
-        app:layout_constraintDimensionRatio="5:1"
-        app:layout_constraintEnd_toEndOf="@id/textGuideLine"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/startGuideLine"
-        app:layout_constraintTop_toBottomOf="@id/phoneNumbertxtField" />
+        >
 
-    <com.google.android.material.textfield.MaterialAutoCompleteTextView
-        android:id="@+id/passwordTxtField"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtPassword"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/password"
         android:inputType="textPassword"
-        android:background="@drawable/boarder"
-        app:layout_constraintDimensionRatio="6:1"
+        app:boxCornerRadiusBottomEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusTopStart="8dp"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="@id/textfield"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/startGuideLine"
-        app:layout_constraintTop_toBottomOf="@id/passowrd"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        app:layout_constraintStart_toStartOf="@id/guideLineStartBox"
+        app:layout_constraintTop_toBottomOf="@id/txtPhoneNumber"
+        app:passwordToggleEnabled="true"
+
+
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPassword"
+
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/txtaleardy"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="@string/aleardyMembed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:onClick="signInButton"
+
+        android:text="@string/aleardyMembed"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/guideLineBottom"
-        app:layout_constraintDimensionRatio="7:1"
         app:layout_constraintEnd_toEndOf="@id/textfield"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/startGuideLine"
-        app:layout_constraintTop_toBottomOf="@+id/passwordTxtField"
-        app:layout_constraintVertical_bias="0.85" />
+        app:layout_constraintTop_toBottomOf="@+id/txtPassword"
+        app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/signUpbutton"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="48dp"
-        android:backgroundTint="@color/mainColor"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/camel"
         android:onClick="signupOnclick"
         android:text="@string/signUp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="4:1"
+        app:layout_constraintDimensionRatio="3:1"
         app:layout_constraintEnd_toEndOf="@id/endGuideLine"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@id/textfield"
+        app:layout_constraintStart_toStartOf="@id/buttonGuideLine"
 
         app:strokeColor="#FFFFFF"
         app:strokeWidth="2dp" />
@@ -234,6 +251,21 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/buttonGuideLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.55" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLineStartBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".07"
+         />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
