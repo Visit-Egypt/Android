@@ -1,8 +1,11 @@
 package com.visitegypt.data.source.remote;
 
 import com.visitegypt.domain.model.Place;
-import com.visitegypt.domain.model.PlacePageResponse;
 import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.model.response.ItemPageResponse;
+import com.visitegypt.domain.model.response.PlacePageResponse;
+
+import java.util.Map;
 
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.http.Body;
@@ -11,6 +14,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.QueryMap;
 
 
 public interface RetrofitService {
@@ -34,4 +38,7 @@ public interface RetrofitService {
 
     @GET("api/place")
     public Single<PlacePageResponse> getAllPlaces();
+
+    @GET("api/item")
+    public Single<ItemPageResponse> getAllItems(@QueryMap Map<String, String> placeId);
 }

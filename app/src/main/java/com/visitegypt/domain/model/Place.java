@@ -6,12 +6,12 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.google.gson.annotations.SerializedName;
-import com.visitegypt.domain.model.Converters.CategoriesConverter;
-import com.visitegypt.domain.model.Converters.ImageUrlsConverter;
-import com.visitegypt.domain.model.Converters.ItemsTypeConverter;
-import com.visitegypt.domain.model.Converters.OpeningHoursConverter;
-import com.visitegypt.domain.model.Converters.ReviewsConverter;
-import com.visitegypt.domain.model.Converters.TicketPricesConverter;
+import com.visitegypt.domain.model.converters.CategoriesConverter;
+import com.visitegypt.domain.model.converters.ImageUrlsConverter;
+import com.visitegypt.domain.model.converters.ItemsTypeConverter;
+import com.visitegypt.domain.model.converters.OpeningHoursConverter;
+import com.visitegypt.domain.model.converters.ReviewsConverter;
+import com.visitegypt.domain.model.converters.TicketPricesConverter;
 
 import java.util.List;
 import java.util.Map;

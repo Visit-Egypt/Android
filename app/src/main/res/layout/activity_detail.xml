@@ -71,6 +71,22 @@
                 android:text=""
                 tools:ignore="MissingConstraints" />
 
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/prata_regular"
+                android:padding="8dp"
+                android:text="@string/artifacts"
+                android:textSize="16sp"
+                tools:ignore="MissingConstraints" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/itemsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
+
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="1dp"

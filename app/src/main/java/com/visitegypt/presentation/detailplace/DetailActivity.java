@@ -1,21 +1,21 @@
 package com.visitegypt.presentation.detailplace;
 
+import static com.visitegypt.utils.Constants.CustomerType.CHILDREN;
 import static com.visitegypt.utils.Constants.CustomerType.EGYPTIAN_ADULT;
+import static com.visitegypt.utils.Constants.CustomerType.EGYPTIAN_PHOTO;
 import static com.visitegypt.utils.Constants.CustomerType.EGYPTIAN_STUDENT;
+import static com.visitegypt.utils.Constants.CustomerType.EGYPTIAN_VIDEO;
 import static com.visitegypt.utils.Constants.CustomerType.FOREIGNER_ADULT;
 import static com.visitegypt.utils.Constants.CustomerType.FOREIGNER_ADULT_PHOTO;
 import static com.visitegypt.utils.Constants.CustomerType.FOREIGNER_ADULT_VIDEO;
-import static com.visitegypt.utils.Constants.CustomerType.EGYPTIAN_PHOTO;
-import static com.visitegypt.utils.Constants.CustomerType.EGYPTIAN_VIDEO;
-import static com.visitegypt.utils.Constants.CustomerType.CHILDREN;
 import static com.visitegypt.utils.Constants.CustomerType.FOREIGNER_STUDENT;
+import static com.visitegypt.utils.Constants.Days.FRIDAY;
+import static com.visitegypt.utils.Constants.Days.MONDAY;
 import static com.visitegypt.utils.Constants.Days.SATURDAY;
 import static com.visitegypt.utils.Constants.Days.SUNDAY;
-import static com.visitegypt.utils.Constants.Days.MONDAY;
+import static com.visitegypt.utils.Constants.Days.THURSDAY;
 import static com.visitegypt.utils.Constants.Days.TUESDAY;
 import static com.visitegypt.utils.Constants.Days.WEDNESDAY;
-import static com.visitegypt.utils.Constants.Days.THURSDAY;
-import static com.visitegypt.utils.Constants.Days.FRIDAY;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -24,14 +24,18 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.smarteist.autoimageslider.SliderView;
 import com.visitegypt.R;
+import com.visitegypt.domain.model.Item;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.Slider;
 import com.visitegypt.presentation.home.HomeRecyclerViewAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -41,11 +45,18 @@ public class DetailActivity extends AppCompatActivity {
 
     private static final String TAG = "Detail Activity";
 
-    private TextView fAdult, fStudent, eStudent, eAdult, desc, title, saturdayOpeningHours, sundayOpeningHours, mondayOpeningHours, tuesdayOpeningHours, thursdayOpeningHours, wednesdayOpeningHours, fridayOpeningHours, fVideo,fPhoto,eVideo,ePhoto,children;
+    private TextView fAdult, fStudent, eStudent, eAdult, desc,
+            title, saturdayOpeningHours, sundayOpeningHours, mondayOpeningHours,
+            tuesdayOpeningHours, thursdayOpeningHours, wednesdayOpeningHours,
+            fridayOpeningHours, fVideo, fPhoto, eVideo, ePhoto, children;
 
     private DetailViewModel detailViewModel;
 
-    SliderView sliderView;
+    private ItemsRecyclerViewAdapter itemsRecyclerViewAdapter;
+    private RecyclerView itemsRecyclerView;
+
+    private SliderView sliderView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,15 +111,30 @@ public class DetailActivity extends AppCompatActivity {
         wednesdayOpeningHours = findViewById(R.id.wednesdayOpeningHoursTextView);
         thursdayOpeningHours = findViewById(R.id.thursdayOpeningHoursTextView);
         fridayOpeningHours = findViewById(R.id.fridayOpeningHoursTextView);
-        
 
         sliderView = findViewById(R.id.sliderSliderView);
+
+        itemsRecyclerView = findViewById(R.id.itemsRecyclerView);
+        itemsRecyclerViewAdapter = new ItemsRecyclerViewAdapter(this);
+        itemsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        itemsRecyclerView.setAdapter(itemsRecyclerViewAdapter);
     }
 
     private void initViewModel(String placeId) {
         detailViewModel = ViewModelProviders.of(this).get(DetailViewModel.class);
         detailViewModel.getPlace(placeId);
-        detailViewModel.mutableLiveData.observe(this, new Observer<Place>() {
+        detailViewModel.getItemsByPlaceId(placeId);
+
+        detailViewModel.itemMutableLiveData.observe(this, new Observer<List<Item>>() {
+            @Override
+            public void onChanged(List<Item> items) {
+                Log.d(TAG, "setting items to recycler view...");
+                itemsRecyclerViewAdapter.setItemsArrayList(items);
+                //itemsRecyclerViewAdapter.setItemsArrayList(items);
+            }
+        });
+
+        detailViewModel.placesMutableLiveData.observe(this, new Observer<Place>() {
             @Override
             public void onChanged(Place place) {
                 Log.d(TAG, "onChanged: " + place.getTitle());
