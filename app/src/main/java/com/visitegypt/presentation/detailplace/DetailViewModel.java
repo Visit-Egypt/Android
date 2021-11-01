@@ -5,8 +5,13 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.visitegypt.domain.model.Item;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.response.ItemPageResponse;
+import com.visitegypt.domain.usecase.GetItemsUseCase;
 import com.visitegypt.domain.usecase.GetPlaceDetailUseCase;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -16,12 +21,17 @@ import io.reactivex.rxjava3.functions.Consumer;
 @HiltViewModel
 public class DetailViewModel extends ViewModel {
     private static final String TAG = "Detail View Model";
-    MutableLiveData<Place> mutableLiveData = new MutableLiveData<>();
+
+    MutableLiveData<Place> placesMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<List<Item>> itemMutableLiveData = new MutableLiveData<>();
+
     private GetPlaceDetailUseCase getPlaceDetailUseCase;
+    private GetItemsUseCase getItemsUseCase;
 
     @Inject
-    public DetailViewModel(GetPlaceDetailUseCase getPlaceDetailUseCase) {
+    public DetailViewModel(GetPlaceDetailUseCase getPlaceDetailUseCase, GetItemsUseCase getItemsUseCase) {
         this.getPlaceDetailUseCase = getPlaceDetailUseCase;
+        this.getItemsUseCase = getItemsUseCase;
     }
 
     public void getPlace(String placeId) {
@@ -30,7 +40,7 @@ public class DetailViewModel extends ViewModel {
             @Override
             public void accept(Place place) throws Throwable {
                 Log.d(TAG, "Place details retrieved!");
-                mutableLiveData.setValue(place);
+                placesMutableLiveData.setValue(place);
             }
         }, new Consumer<Throwable>() {
             @Override
@@ -39,4 +49,23 @@ public class DetailViewModel extends ViewModel {
             }
         });
     }
+
+    public void getItemsByPlaceId(String placeId) {
+        getItemsUseCase.setPlaceId(placeId);
+        getItemsUseCase.execute(new Consumer<ItemPageResponse>() {
+            @Override
+            public void accept(ItemPageResponse itemPageResponse) throws Throwable {
+                Log.d(TAG, "items retrieved!");
+                itemMutableLiveData.setValue(itemPageResponse.getItems());
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Throwable {
+                Log.e(TAG, "error retrieving items: " + throwable.getMessage());
+
+            }
+        });
+    }
+
+
 }

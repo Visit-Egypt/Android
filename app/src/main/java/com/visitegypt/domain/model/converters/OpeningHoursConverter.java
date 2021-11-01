@@ -1,4 +1,4 @@
-package com.visitegypt.domain.model.Converters;
+package com.visitegypt.domain.model.converters;
 
 import androidx.room.TypeConverter;
 
@@ -8,16 +8,16 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-public class TicketPricesConverter {
+public class OpeningHoursConverter {
     @TypeConverter
-    public static Map<String, Integer> fromString(String value) {
-        Type mapType = new TypeToken<Map<String, Integer>>() {
+    public static Map<String, String> fromString(String value) {
+        Type mapType = new TypeToken<Map<String, String>>() {
         }.getType();
         return new Gson().fromJson(value, mapType);
     }
 
     @TypeConverter
-    public static String fromStringMap(Map<String, Integer> map) {
+    public static String fromStringMap(Map<String, String> map) {
         Gson gson = new Gson();
         return gson.toJson(map);
     }

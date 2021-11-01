@@ -30,7 +30,7 @@
                 app:sliderIndicatorPadding="3dp"
                 app:sliderIndicatorRadius="2dp"
                 app:sliderIndicatorSelectedColor="@color/brown"
-                app:sliderIndicatorUnselectedColor="@color/camel"
+                app:sliderIndicatorUnselectedColor="@color/gray"
                 app:sliderScrollTimeInSec="1"
                 tools:ignore="MissingClass,MissingConstraints" />
 
@@ -58,6 +58,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/prata_regular"
                 android:padding="8dp"
+                android:textStyle="bold"
                 android:text="Description"
                 android:textSize="16sp"
                 tools:ignore="MissingConstraints" />
@@ -71,6 +72,23 @@
                 android:text=""
                 tools:ignore="MissingConstraints" />
 
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/prata_regular"
+                android:padding="8dp"
+                android:text="@string/artifacts"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/itemsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
+
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -79,68 +97,60 @@
                 android:background="@color/brown"
                 tools:ignore="MissingConstraints" />
 
+            <LinearLayout
+                android:id="@+id/locationLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/prata_regular"
+                    android:padding="10dp"
+                    android:text="@string/location"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/locationTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="" />
+            </LinearLayout>
+
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/prata_regular"
                 android:padding="10dp"
-                android:text="History"
+                android:text="@string/reviews"
+                android:textStyle="bold"
                 android:textSize="16sp" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/historyTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/prata_regular"
-                android:padding="10dp"
-                android:text="" />
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="5dp"
-                android:layout_marginHorizontal="15dp"
-                android:background="@color/brown"
-                tools:ignore="MissingConstraints" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/prata_regular"
-                android:padding="10dp"
-                android:text="Location"
-                android:textSize="16sp" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/locationTextView"
+                android:id="@+id/noReviewsTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="" />
+                android:text="@string/no_reviews" />
 
-            <com.google.android.material.textview.MaterialTextView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/reviewsRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/prata_regular"
-                android:padding="10dp"
-                android:text="Reviews"
-                android:textSize="16sp" />
+                android:nestedScrollingEnabled="false" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/reviewsTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/prata_regular"
-                android:padding="10dp"
-                android:text=" " />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:fontFamily="@font/prata_regular"
                 android:padding="10dp"
-                android:text="Did you visit this location?"
+                android:text="@string/know_this_place"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 tools:ignore="MissingConstraints" />
 
             <com.google.android.material.button.MaterialButton
@@ -148,9 +158,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
-                android:backgroundTint="@color/white"
-                android:text="@string/review"
-                android:textColor="@color/brown" />
+                android:text="@string/review" />
 
             <TableRow
                 android:layout_width="match_parent"
@@ -165,7 +173,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/prata_regular"
                 android:padding="10dp"
-                android:text="Opening Hours"
+                android:text="@string/opening_hours"
+                android:textStyle="bold"
                 android:textSize="16sp"
                 tools:ignore="MissingConstraints" />
 
@@ -191,7 +200,7 @@
                         android:layout_marginHorizontal="15dp"
                         android:fontFamily="@font/prata_regular"
                         android:padding="10dp"
-                        android:text="10:00"
+                        android:text="@string/no_data"
                         tools:ignore="MissingConstraints" />
 
                 </TableRow>
@@ -348,7 +357,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/prata_regular"
                 android:padding="10dp"
-                android:text="Prices"
+                android:text="@string/prices"
+                android:textStyle="bold"
                 android:textSize="16sp"
                 tools:ignore="MissingConstraints" />
 

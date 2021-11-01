@@ -1,22 +1,16 @@
 package com.visitegypt.domain.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Review {
     private float rating;
     private String review;
-    private User user;
+    @SerializedName("user_name")
+    private String firstName;
+    @SerializedName("user_id")
+    private String userId;
 
     public Review() {
-    }
-
-    public Review(float rating, String review, User user) {
-        this.rating = rating;
-        this.review = review;
-        this.user = user;
-    }
-
-    public Review(float rating, User user) {
-        this.rating = rating;
-        this.user = user;
     }
 
     public float getRating() {
@@ -35,11 +29,19 @@ public class Review {
         this.review = review;
     }
 
-    public User getUser() {
-        return user;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

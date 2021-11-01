@@ -1,7 +1,7 @@
 package com.visitegypt.domain.repository;
 
 import com.visitegypt.domain.model.Place;
-import com.visitegypt.domain.model.PlacePageResponse;
+import com.visitegypt.domain.model.response.PlacePageResponse;
 
 import io.reactivex.rxjava3.core.Single;
 

@@ -1,6 +1,5 @@
 package com.visitegypt.presentation.detailplace;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +15,15 @@ import java.util.List;
 
 public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapterViewHolder> {
 
-    private final List<Slider> mSliderItems;
+    private List<Slider> sliderList;
 
-    public SliderAdapter(Context context, ArrayList<Slider> SliderArrayList) {
-        this.mSliderItems = SliderArrayList;
+    public SliderAdapter(ArrayList<Slider> sliderList) {
+        this.sliderList = sliderList;
+    }
+
+    public void updateArrayList(List<Slider> sliderList) {
+        this.sliderList = sliderList;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -31,7 +35,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
     @Override
     public void onBindViewHolder(SliderAdapterViewHolder viewHolder, final int position) {
 
-        final Slider sliderItem = mSliderItems.get(position);
+        final Slider sliderItem = sliderList.get(position);
 
         Glide.with(viewHolder.itemView)
                 .load(sliderItem.getImgUrl())
@@ -41,7 +45,9 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
 
     @Override
     public int getCount() {
-        return mSliderItems.size();
+        if (sliderList == null)
+            return 0;
+        return sliderList.size();
     }
 
     static class SliderAdapterViewHolder extends SliderViewAdapter.ViewHolder {

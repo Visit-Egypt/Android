@@ -2,15 +2,22 @@ package com.visitegypt.domain.model;
 
 import androidx.room.TypeConverters;
 
-import com.visitegypt.domain.model.Converters.ImageUrlsConverter;
+import com.google.gson.annotations.SerializedName;
+import com.visitegypt.domain.model.converters.ImageUrlsConverter;
 
 import java.util.List;
 
 public class Item {
     private String title;
+
+    @SerializedName("long_description")
     private String description;
     @TypeConverters(ImageUrlsConverter.class)
+    @SerializedName("list_of_images")
     private List<String> imageUrls;
+
+    @SerializedName("place_id")
+    private String placeId;
 
     public Item() {
 
@@ -49,5 +56,13 @@ public class Item {
 
     public void setImageUrl(List<String> imageUrls) {
         this.imageUrls = imageUrls;
+    }
+
+    public String getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
     }
 }

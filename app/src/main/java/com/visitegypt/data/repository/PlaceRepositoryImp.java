@@ -2,7 +2,7 @@ package com.visitegypt.data.repository;
 
 import com.visitegypt.data.source.remote.RetrofitService;
 import com.visitegypt.domain.model.Place;
-import com.visitegypt.domain.model.PlacePageResponse;
+import com.visitegypt.domain.model.response.PlacePageResponse;
 import com.visitegypt.domain.repository.PlaceRepository;
 
 import io.reactivex.rxjava3.core.Single;
@@ -16,6 +16,7 @@ public class PlaceRepositoryImp implements PlaceRepository {
         this.retrofitService = retrofitService;
     }
 
+    @Override
     public Single<PlacePageResponse> getAllPlaces() {
         return retrofitService.getAllPlaces();
     }

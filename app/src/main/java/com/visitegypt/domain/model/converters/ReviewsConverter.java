@@ -1,4 +1,4 @@
-package com.visitegypt.domain.model.Converters;
+package com.visitegypt.domain.model.converters;
 
 import androidx.room.TypeConverter;
 

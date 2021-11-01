@@ -1,6 +1,6 @@
 package com.visitegypt.domain.usecase;
 
-import com.visitegypt.domain.model.PlacePageResponse;
+import com.visitegypt.domain.model.response.PlacePageResponse;
 import com.visitegypt.domain.repository.PlaceRepository;
 import com.visitegypt.domain.usecase.base.SingleUseCase;
 

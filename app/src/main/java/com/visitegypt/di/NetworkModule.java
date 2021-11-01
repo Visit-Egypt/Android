@@ -2,9 +2,11 @@ package com.visitegypt.di;
 
 import static com.visitegypt.utils.Constants.BASE_URL;
 
+import com.visitegypt.data.repository.ItemRepositoryImp;
 import com.visitegypt.data.repository.PlaceRepositoryImp;
 import com.visitegypt.data.repository.UserRepositoryImp;
 import com.visitegypt.data.source.remote.RetrofitService;
+import com.visitegypt.domain.repository.ItemRepository;
 import com.visitegypt.domain.repository.PlaceRepository;
 import com.visitegypt.domain.repository.UserRepository;
 
@@ -64,4 +66,11 @@ public class NetworkModule {
     public UserRepository provideUserRepository(RetrofitService retrofitService) {
         return new UserRepositoryImp(retrofitService);
     }
+
+    @Provides
+    @Singleton
+    public ItemRepository provideItemRepository(RetrofitService retrofitService) {
+        return new ItemRepositoryImp(retrofitService);
+    }
+
 }
