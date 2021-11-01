@@ -1,5 +1,6 @@
 package com.visitegypt.presentation.signin;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
@@ -22,10 +23,12 @@ public class SignInViewModel extends ViewModel {
     private static final String TAG = "Cannot invoke method length() on null object";
     MutableLiveData<String> msgMutableLiveData = new MutableLiveData<>();
     private LoginUserUseCase loginUserUseCase;
+    private SharedPreferences sharedPreferences;
 
     @Inject
-    public SignInViewModel(LoginUserUseCase loginUserUseCase) {
+    public SignInViewModel(LoginUserUseCase loginUserUseCase, SharedPreferences sharedPreferences) {
         this.loginUserUseCase = loginUserUseCase;
+        this.sharedPreferences = sharedPreferences;
     }
 
     public void login(User user) {
@@ -34,7 +37,9 @@ public class SignInViewModel extends ViewModel {
             @Override
             public void accept(User user) throws Throwable {
                 msgMutableLiveData.setValue("Your login done");
-                Log.d("TAG", "accept: " + user.getUserId());
+
+                loginUserUseCase.saveUserData(user);
+                Log.d("TAG", "Test shared pref: " + sharedPreferences.getString("userId",null));
             }
         }, new Consumer<Throwable>() {
             @Override

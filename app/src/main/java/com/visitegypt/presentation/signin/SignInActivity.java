@@ -2,7 +2,10 @@ package com.visitegypt.presentation.signin;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.visitegypt.R;
+import com.visitegypt.di.SharedPrefsModule;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.home.HomeActivity;
 import com.visitegypt.presentation.signup.SignUpActivity;
@@ -29,6 +33,7 @@ public class SignInActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
        txtEmail = findViewById(R.id.txtEmail);
