@@ -31,6 +31,7 @@ import com.smarteist.autoimageslider.SliderView;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Item;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.Slider;
 import com.visitegypt.presentation.home.HomeRecyclerViewAdapter;
 
@@ -53,8 +54,9 @@ public class DetailActivity extends AppCompatActivity {
     private DetailViewModel detailViewModel;
 
     private ItemsRecyclerViewAdapter itemsRecyclerViewAdapter;
-    private RecyclerView itemsRecyclerView;
+    private RecyclerView itemsRecyclerView, reviewsRecyclerView;
 
+    private ReviewsRecyclerViewAdapter reviewsRecyclerViewAdapter;
     private SliderView sliderView;
 
     @Override
@@ -96,11 +98,11 @@ public class DetailActivity extends AppCompatActivity {
         fStudent = findViewById(R.id.foreignerStudentPriceTextView);
         eStudent = findViewById(R.id.egyptianStudentTextView);
         eAdult = findViewById(R.id.egyptianAdultPriceTextView);
-        fVideo=findViewById(R.id.foreignerVideoPriceTextView);
-        fPhoto=findViewById(R.id.foreignerPhotoPriceTextView);
-        eVideo=findViewById(R.id.egyptianVideoPriceTextView);
-        ePhoto=findViewById(R.id.egyptianPhotoPriceTextView);
-        children=findViewById(R.id.childrenPriceTextView);
+        fVideo = findViewById(R.id.foreignerVideoPriceTextView);
+        fPhoto = findViewById(R.id.foreignerPhotoPriceTextView);
+        eVideo = findViewById(R.id.egyptianVideoPriceTextView);
+        ePhoto = findViewById(R.id.egyptianPhotoPriceTextView);
+        children = findViewById(R.id.childrenPriceTextView);
         desc = findViewById(R.id.descriptionTextView);
         title = findViewById(R.id.titleTextView);
 
@@ -118,6 +120,12 @@ public class DetailActivity extends AppCompatActivity {
         itemsRecyclerViewAdapter = new ItemsRecyclerViewAdapter(this);
         itemsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         itemsRecyclerView.setAdapter(itemsRecyclerViewAdapter);
+
+        reviewsRecyclerView = findViewById(R.id.reviewsRecyclerView);
+        reviewsRecyclerViewAdapter = new ReviewsRecyclerViewAdapter(this);
+        reviewsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        reviewsRecyclerView.setAdapter(reviewsRecyclerViewAdapter);
+
     }
 
     private void initViewModel(String placeId) {
@@ -134,10 +142,20 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
+        detailViewModel.reviewMutableLiveData.observe(this, new Observer<List<Review>>() {
+            @Override
+            public void onChanged(List<Review> reviews) {
+                Log.d(TAG, "setting reviews to recycler view...");
+                reviewsRecyclerViewAdapter.setReviewsArrayList(reviews);
+            }
+        });
+
+
         detailViewModel.placesMutableLiveData.observe(this, new Observer<Place>() {
             @Override
             public void onChanged(Place place) {
                 Log.d(TAG, "onChanged: " + place.getTitle());
+                Log.d(TAG, "onChangedreee: " + place.getReviews());
                 if (place.getTicketPrices() != null) {
                     try {
                         fAdult.setText(place.getTicketPrices().get(FOREIGNER_ADULT.toString()).toString());

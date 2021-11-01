@@ -100,30 +100,6 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/prata_regular"
                 android:padding="10dp"
-                android:text="History"
-                android:textSize="16sp" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/historyTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/prata_regular"
-                android:padding="10dp"
-                android:text="" />
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="5dp"
-                android:layout_marginHorizontal="15dp"
-                android:background="@color/brown"
-                tools:ignore="MissingConstraints" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/prata_regular"
-                android:padding="10dp"
                 android:text="Location"
                 android:textSize="16sp" />
 
@@ -142,13 +118,12 @@
                 android:text="Reviews"
                 android:textSize="16sp" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/reviewsTextView"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/reviewsRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/prata_regular"
-                android:padding="10dp"
-                android:text=" " />
+                android:nestedScrollingEnabled="false" />
+
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"

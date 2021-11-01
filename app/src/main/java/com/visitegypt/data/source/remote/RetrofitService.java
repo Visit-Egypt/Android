@@ -41,4 +41,6 @@ public interface RetrofitService {
 
     @GET("api/item")
     public Single<ItemPageResponse> getAllItems(@QueryMap Map<String, String> placeId);
+
+
 }

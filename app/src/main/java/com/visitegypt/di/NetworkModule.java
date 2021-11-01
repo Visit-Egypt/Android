@@ -72,4 +72,5 @@ public class NetworkModule {
     public ItemRepository provideItemRepository(RetrofitService retrofitService) {
         return new ItemRepositoryImp(retrofitService);
     }
+
 }
