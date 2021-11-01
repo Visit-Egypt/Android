@@ -1,5 +1,6 @@
 package com.visitegypt.presentation.detailplace;
 
+import static android.view.View.GONE;
 import static com.visitegypt.utils.Constants.CustomerType.CHILDREN;
 import static com.visitegypt.utils.Constants.CustomerType.EGYPTIAN_ADULT;
 import static com.visitegypt.utils.Constants.CustomerType.EGYPTIAN_PHOTO;
@@ -19,6 +20,7 @@ import static com.visitegypt.utils.Constants.Days.WEDNESDAY;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,7 +33,6 @@ import com.smarteist.autoimageslider.SliderView;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Item;
 import com.visitegypt.domain.model.Place;
-import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.Slider;
 import com.visitegypt.presentation.home.HomeRecyclerViewAdapter;
 
@@ -49,7 +50,9 @@ public class DetailActivity extends AppCompatActivity {
     private TextView fAdult, fStudent, eStudent, eAdult, desc,
             title, saturdayOpeningHours, sundayOpeningHours, mondayOpeningHours,
             tuesdayOpeningHours, thursdayOpeningHours, wednesdayOpeningHours,
-            fridayOpeningHours, fVideo, fPhoto, eVideo, ePhoto, children;
+            fridayOpeningHours, fVideo, fPhoto, eVideo, ePhoto, children, location, noReviews;
+
+    private LinearLayout locationLayout;
 
     private DetailViewModel detailViewModel;
 
@@ -58,6 +61,10 @@ public class DetailActivity extends AppCompatActivity {
 
     private ReviewsRecyclerViewAdapter reviewsRecyclerViewAdapter;
     private SliderView sliderView;
+
+    private SliderAdapter sliderAdapter;
+
+    private ArrayList<Slider> sliderArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,20 +84,6 @@ public class DetailActivity extends AppCompatActivity {
         Log.d(TAG, "Place ID: " + placeId);
         initViews();
         initViewModel(placeId);
-//      SliderShow
-        String url1 = "https://nileholiday.com/wp-content/uploads/2019/10/All-Temples-Of-Egypt1.jpg";
-        String url2 = "https://www.egypttoday.com/siteimages/Larg/202106010323272327.jpg";
-
-        ArrayList<Slider> SliderArrayList = new ArrayList<>();
-
-        SliderArrayList.add(new Slider(url1));
-        SliderArrayList.add(new Slider(url2));
-        SliderAdapter adapter = new SliderAdapter(this, SliderArrayList);
-        sliderView.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
-        sliderView.setSliderAdapter(adapter);
-        sliderView.setScrollTimeInSec(3);
-        sliderView.setAutoCycle(true);
-        sliderView.startAutoCycle();
     }
 
     private void initViews() {
@@ -105,6 +98,8 @@ public class DetailActivity extends AppCompatActivity {
         children = findViewById(R.id.childrenPriceTextView);
         desc = findViewById(R.id.descriptionTextView);
         title = findViewById(R.id.titleTextView);
+        location = findViewById(R.id.locationTextView);
+        noReviews = findViewById(R.id.noReviewsTextView);
 
         saturdayOpeningHours = findViewById(R.id.saturdayOpeningHoursTextView);
         sundayOpeningHours = findViewById(R.id.sundayOpeningHoursTextView);
@@ -126,6 +121,16 @@ public class DetailActivity extends AppCompatActivity {
         reviewsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         reviewsRecyclerView.setAdapter(reviewsRecyclerViewAdapter);
 
+        locationLayout = findViewById(R.id.locationLayout);
+
+        sliderArrayList = new ArrayList<>();
+        sliderAdapter = new SliderAdapter(sliderArrayList);
+
+        sliderView.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
+        sliderView.setSliderAdapter(sliderAdapter);
+        sliderView.setScrollTimeInSec(3);
+        sliderView.setAutoCycle(true);
+        sliderView.startAutoCycle();
     }
 
     private void initViewModel(String placeId) {
@@ -142,20 +147,20 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
-        detailViewModel.reviewMutableLiveData.observe(this, new Observer<List<Review>>() {
-            @Override
-            public void onChanged(List<Review> reviews) {
-                Log.d(TAG, "setting reviews to recycler view...");
-                reviewsRecyclerViewAdapter.setReviewsArrayList(reviews);
-            }
-        });
-
-
         detailViewModel.placesMutableLiveData.observe(this, new Observer<Place>() {
             @Override
             public void onChanged(Place place) {
                 Log.d(TAG, "onChanged: " + place.getTitle());
-                Log.d(TAG, "onChangedreee: " + place.getReviews());
+
+                if (place.getImageUrls() != null) {
+                    Log.d(TAG, "images found: " + place.getImageUrls().toString());
+                    for (String url : place.getImageUrls()) {
+                        sliderArrayList.add(new Slider(url));
+                    }
+                    sliderAdapter.updateArrayList(sliderArrayList);
+                } else {
+                    Log.e(TAG, "no images found");
+                }
                 if (place.getTicketPrices() != null) {
                     try {
                         fAdult.setText(place.getTicketPrices().get(FOREIGNER_ADULT.toString()).toString());
@@ -166,8 +171,11 @@ public class DetailActivity extends AppCompatActivity {
                         fVideo.setText(place.getTicketPrices().get(FOREIGNER_ADULT_VIDEO.toString()).toString());
                         eVideo.setText(place.getTicketPrices().get(EGYPTIAN_VIDEO.toString()).toString());
                         ePhoto.setText(place.getTicketPrices().get(EGYPTIAN_PHOTO.toString()).toString());
-                        children.setText(place.getTicketPrices().get(CHILDREN.toString()).toString());
-
+                        if (place.getTicketPrices().get(CHILDREN.toString()) == 0) {
+                            children.setText("FREE");
+                        } else {
+                            children.setText(place.getTicketPrices().get(CHILDREN.toString()).toString());
+                        }
                     } catch (Exception e) {
                         Log.e(TAG, "setting ticket prices failed: " + e.getMessage());
                     }
@@ -188,7 +196,19 @@ public class DetailActivity extends AppCompatActivity {
                 }
                 title.setText(place.getTitle());
                 desc.setText(place.getLongDescription());
-
+                if (place.getReviews() != null & !place.getReviews().isEmpty()) {
+                    noReviews.setVisibility(GONE);
+                    reviewsRecyclerViewAdapter.setReviewsArrayList(place.getReviews());
+                    Log.d(TAG, "reviews available");
+                } else {
+                    Log.d(TAG, "no reviews available ");
+                }
+                if (place.getLocationDescription() != null) {
+                    Log.d(TAG, "location provided: " + place.getLocationDescription());
+                    location.setText(place.getLocationDescription());
+                } else {
+                    locationLayout.setVisibility(GONE);
+                }
             }
         });
     }

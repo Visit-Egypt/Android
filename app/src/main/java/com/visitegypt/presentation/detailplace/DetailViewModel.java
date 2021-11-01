@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.visitegypt.domain.model.Item;
 import com.visitegypt.domain.model.Place;
-import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.response.ItemPageResponse;
 import com.visitegypt.domain.usecase.GetItemsUseCase;
 import com.visitegypt.domain.usecase.GetPlaceDetailUseCase;
@@ -25,7 +24,6 @@ public class DetailViewModel extends ViewModel {
 
     MutableLiveData<Place> placesMutableLiveData = new MutableLiveData<>();
     MutableLiveData<List<Item>> itemMutableLiveData = new MutableLiveData<>();
-    MutableLiveData<List<Review>> reviewMutableLiveData = new MutableLiveData<>();
 
     private GetPlaceDetailUseCase getPlaceDetailUseCase;
     private GetItemsUseCase getItemsUseCase;

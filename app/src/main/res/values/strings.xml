@@ -34,7 +34,6 @@
     <string name="egyptian_personal_photo">Egyptian Personal Photography</string>
     <string name="egyptian_personal_video">Egyptian Personal Video</string>
     <string name="children">Children</string>
-    <string name="no_data">No data</string>
 
     <string name="open">Open</string>
     <string name="from">FROM</string>
@@ -50,4 +49,11 @@
 
     <string name="review">WRITE A REVIEW</string>
     <string name="artifacts">Artifacts</string>
+    <string name="no_data">No data</string>
+    <string name="location">Location</string>
+    <string name="reviews">Reviews</string>
+    <string name="no_reviews">No Reviews</string>
+    <string name="know_this_place">Know this place?</string>
+    <string name="opening_hours">Opening Hours</string>
+    <string name="prices">Prices</string>
 </resources>

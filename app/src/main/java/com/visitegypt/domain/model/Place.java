@@ -41,6 +41,7 @@ public class Place {
     @TypeConverters(ItemsTypeConverter.class)
     private List<Item> items;
     @TypeConverters(ImageUrlsConverter.class)
+    @SerializedName("image_urls")
     private List<String> imageUrls;
 
     @TypeConverters(TicketPricesConverter.class)
