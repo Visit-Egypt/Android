@@ -41,7 +41,7 @@ public class SignUpViewModel extends ViewModel {
                 registerUseCase.execute(new Consumer<User>() {
                     @Override
                     public void accept(User user) throws Throwable {
-                        mutableLiveDataResponse.setValue("Your Account created successfully,please Sign in");
+                        mutableLiveDataResponse.setValue("Your account was created successfully, please Sign in");
 
                     }
                 }, new Consumer<Throwable>() {

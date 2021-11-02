@@ -1,12 +1,11 @@
 package com.visitegypt.domain.usecase;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.repository.UserRepository;
 import com.visitegypt.domain.usecase.base.SingleUseCase;
+import com.visitegypt.utils.Constants;
 
 import javax.inject.Inject;
 
@@ -30,11 +29,12 @@ public class LoginUserUseCase extends SingleUseCase<User> {
     {
 
         sharedPreferences.edit()
-                .putString("accessToken",user.getAccessToken())
-                .putString("tokenType",user.getTokenType())
-                .putString("refreshToken",user.getRefreshToken())
-                .putString("userId",user.getUserId())
-                .commit();
+                .putString(Constants.SHARED_PREF_USER_ACCESS_TOKEN, user.getAccessToken())
+                .putString(Constants.SHARED_PREF_TOKEN_TYPE, user.getTokenType())
+                .putString(Constants.SHARED_PREF_USER_REFRESH_TOKEN, user.getRefreshToken())
+                .putString(Constants.SHARED_PREF_USER_ID, user.getUserId())
+                .putString(Constants.SHARED_PREF_FULL_NAME, user.getFirstName() + " " + user.getLastName())
+                .apply();
     }
 
 

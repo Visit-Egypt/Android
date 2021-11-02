@@ -2,6 +2,7 @@ package com.visitegypt.data.repository;
 
 import com.visitegypt.data.source.remote.RetrofitService;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.response.PlacePageResponse;
 import com.visitegypt.domain.repository.PlaceRepository;
 
@@ -24,5 +25,10 @@ public class PlaceRepositoryImp implements PlaceRepository {
     @Override
     public Single<Place> getPlaceById(String placeId) {
         return retrofitService.getPlaceById(placeId);
+    }
+
+    @Override
+    public Single<Void> submitReview(String placeId, String token, Review review) {
+        return retrofitService.submitReview(placeId, token, review);
     }
 }

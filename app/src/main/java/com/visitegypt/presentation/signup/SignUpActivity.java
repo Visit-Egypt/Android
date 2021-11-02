@@ -96,9 +96,9 @@ public class SignUpActivity extends AppCompatActivity {
             }
 
         } else {
-            UserValidation userValidation = new UserValidation(firstName.getEditText().getText().toString(),lastName.getEditText().getText().toString(),
-                    email.getEditText().getText().toString(),
-                    phoneNumber.getEditText().getText().toString(),
+            UserValidation userValidation = new UserValidation(firstName.getEditText().getText().toString().trim(), lastName.getEditText().getText().toString(),
+                    email.getEditText().getText().toString().trim(),
+                    phoneNumber.getEditText().getText().toString().trim(),
                     password.getEditText().getText().toString());
             signUpViewModel.getUser(userValidation);
 

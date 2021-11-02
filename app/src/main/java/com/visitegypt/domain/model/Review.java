@@ -13,6 +13,13 @@ public class Review {
     public Review() {
     }
 
+    public Review(float rating, String review, String firstName, String userId) {
+        this.rating = rating;
+        this.review = review;
+        this.firstName = firstName;
+        this.userId = userId;
+    }
+
     public float getRating() {
         return rating;
     }

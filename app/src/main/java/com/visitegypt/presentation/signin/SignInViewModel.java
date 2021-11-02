@@ -36,10 +36,11 @@ public class SignInViewModel extends ViewModel {
         loginUserUseCase.execute(new Consumer<User>() {
             @Override
             public void accept(User user) throws Throwable {
-                msgMutableLiveData.setValue("Your login done");
+                msgMutableLiveData.setValue("Your login is done");
 
                 loginUserUseCase.saveUserData(user);
-                Log.d("TAG", "Test shared pref: " + sharedPreferences.getString("userId",null));
+                Log.d("TAG", "Test shared pref " + sharedPreferences.getAll());
+
             }
         }, new Consumer<Throwable>() {
             @Override
