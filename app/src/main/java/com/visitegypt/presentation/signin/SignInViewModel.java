@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.usecase.GetUser;
 import com.visitegypt.domain.usecase.LoginUserUseCase;
 
 import org.json.JSONObject;
@@ -20,15 +21,17 @@ import retrofit2.HttpException;
 
 @HiltViewModel
 public class SignInViewModel extends ViewModel {
-    private static final String TAG = "Cannot invoke method length() on null object";
+    private static final String TAG = "Sign in view model test";
     MutableLiveData<String> msgMutableLiveData = new MutableLiveData<>();
     private LoginUserUseCase loginUserUseCase;
     private SharedPreferences sharedPreferences;
+    private GetUser getUser;
 
     @Inject
-    public SignInViewModel(LoginUserUseCase loginUserUseCase, SharedPreferences sharedPreferences) {
+    public SignInViewModel(LoginUserUseCase loginUserUseCase, SharedPreferences sharedPreferences,GetUser getUser) {
         this.loginUserUseCase = loginUserUseCase;
         this.sharedPreferences = sharedPreferences;
+        this.getUser = getUser;
     }
 
     public void login(User user) {
@@ -36,10 +39,10 @@ public class SignInViewModel extends ViewModel {
         loginUserUseCase.execute(new Consumer<User>() {
             @Override
             public void accept(User user) throws Throwable {
-                msgMutableLiveData.setValue("Your login done");
-
                 loginUserUseCase.saveUserData(user);
-                Log.d("TAG", "Test shared pref: " + sharedPreferences.getString("userId",null));
+                getUser.setUser(user.getUserId(),loginUserUseCase.getUser().getEmail(),user.getAccessToken());
+                saveUserData();
+                msgMutableLiveData.setValue("Your login done");
             }
         }, new Consumer<Throwable>() {
             @Override
@@ -60,6 +63,31 @@ public class SignInViewModel extends ViewModel {
             }
         });
     }
+    private void saveUserData()
+    {
+        getUser.execute(new Consumer<User>() {
+            @Override
+            public void accept(User user) throws Throwable {
+                getUser.saveUserData(user);
 
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Throwable {
+                try {
+                    ResponseBody body = ((HttpException) throwable).response().errorBody();
+                    JSONObject jObjectError = new JSONObject(body.string());
+                    Log.d("TAG", "accept try : " + jObjectError.getJSONArray("errors").toString());
+                    if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
 
+                        msgMutableLiveData.setValue(jObjectError.getJSONArray("errors").getJSONObject(0).getString("msg"));
+                    } else {
+                        msgMutableLiveData.setValue(jObjectError.getJSONArray("errors").toString());
+                    }
+                } catch (Exception e) {
+                    Log.d("TAG", "accept catch: " + e.toString());
+                }
+            }
+        });
+    }
 }

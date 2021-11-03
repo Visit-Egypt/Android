@@ -26,4 +26,12 @@ public class UserRepositoryImp implements UserRepository {
     public Single<User> loginUser(User user) {
         return retrofitService.loginUser(user);
     }
+
+    @Override
+    public Single<User> refreshUserToken(User user) { return retrofitService.refreshUserToken(user);}
+
+    @Override
+    public Single<User> getUser(String userId, String email, String auth) {
+        return retrofitService.getUser(userId,email,auth);
+    }
 }

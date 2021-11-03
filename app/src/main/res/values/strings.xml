@@ -1,17 +1,17 @@
 <resources>
     <string name="app_name">Visit Egypt</string>
-    <string name= "Email">E-mail</string>
-    <string name="loginMsg" >Login</string>
-    <string name="firstName" >First name</string>
-    <string name="lastName" >Last name</string>
-    <string name="phoneNo" >Phone Number</string>
-    <string name="password" >Password</string>
-    <string name="forgetPassword" >
+    <string name="Email">E-mail</string>
+    <string name="loginMsg">Login</string>
+    <string name="firstName">First name</string>
+    <string name="lastName">Last name</string>
+    <string name="phoneNo">Phone Number</string>
+    <string name="password">Password</string>
+    <string name="forgetPassword">
         <u>
             Forgot your password?
         </u>
     </string>
-    <string name="newHere" >
+    <string name="newHere">
         New Here ?
         <b>
             Sign up
