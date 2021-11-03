@@ -18,10 +18,16 @@ import static com.visitegypt.utils.Constants.Days.THURSDAY;
 import static com.visitegypt.utils.Constants.Days.TUESDAY;
 import static com.visitegypt.utils.Constants.Days.WEDNESDAY;
 
+import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -29,15 +35,21 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.smarteist.autoimageslider.SliderView;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Item;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.Slider;
 import com.visitegypt.presentation.home.HomeRecyclerViewAdapter;
+import com.visitegypt.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -47,10 +59,15 @@ public class DetailActivity extends AppCompatActivity {
 
     private static final String TAG = "Detail Activity";
 
+    @Inject
+    public SharedPreferences sharedPreferences;
+
     private TextView fAdult, fStudent, eStudent, eAdult, desc,
             title, saturdayOpeningHours, sundayOpeningHours, mondayOpeningHours,
             tuesdayOpeningHours, thursdayOpeningHours, wednesdayOpeningHours,
             fridayOpeningHours, fVideo, fPhoto, eVideo, ePhoto, children, location, noReviews;
+
+    private MaterialButton addReviewButton;
 
     private LinearLayout locationLayout;
 
@@ -66,11 +83,15 @@ public class DetailActivity extends AppCompatActivity {
 
     private ArrayList<Slider> sliderArrayList;
 
+    private Dialog addReviewDialog;
+
+    private String placeId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        String placeId;
+
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
@@ -109,6 +130,14 @@ public class DetailActivity extends AppCompatActivity {
         thursdayOpeningHours = findViewById(R.id.thursdayOpeningHoursTextView);
         fridayOpeningHours = findViewById(R.id.fridayOpeningHoursTextView);
 
+        addReviewButton = findViewById(R.id.writeReviewButton);
+        addReviewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog();
+            }
+        });
+
         sliderView = findViewById(R.id.sliderSliderView);
 
         itemsRecyclerView = findViewById(R.id.itemsRecyclerView);
@@ -143,7 +172,6 @@ public class DetailActivity extends AppCompatActivity {
             public void onChanged(List<Item> items) {
                 Log.d(TAG, "setting items to recycler view...");
                 itemsRecyclerViewAdapter.setItemsArrayList(items);
-                //itemsRecyclerViewAdapter.setItemsArrayList(items);
             }
         });
 
@@ -158,6 +186,9 @@ public class DetailActivity extends AppCompatActivity {
                         sliderArrayList.add(new Slider(url));
                     }
                     sliderAdapter.updateArrayList(sliderArrayList);
+                } else if (place.getDefaultImage() != null) {
+                    sliderArrayList.add(new Slider(place.getDefaultImage()));
+                    Log.d(TAG, "not image urls found, using default image instead");
                 } else {
                     Log.e(TAG, "no images found");
                 }
@@ -213,5 +244,37 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
+    private void showDialog() {
+        View dialogLayout = LayoutInflater.from(DetailActivity.this).inflate(R.layout.dialog_add_review, null);
+        addReviewDialog = new Dialog(this);
+        addReviewDialog.setContentView(dialogLayout);
+        addReviewDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        addReviewDialog.show();
+        addReviewDialog.findViewById(R.id.submitReviewButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextInputEditText textInputEditText = (TextInputEditText) addReviewDialog.findViewById(R.id.reviewEditText);
+                String reviewText = textInputEditText.getText().toString().trim();
+                float numStars = ((RatingBar) addReviewDialog.findViewById(R.id.ratingBar)).getNumStars();
+                Log.d(TAG, "onClick: " + reviewText);
+                if (reviewText.isEmpty())
+                    textInputEditText.setError("Review can't be empty");
+                String name = sharedPreferences.getString(Constants.SHARED_PREF_FULL_NAME, "");
+                String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
+                Log.d(TAG, "onClick: " + name);
+                if (userId.equals("")) {
+                    showToast("user not authenticated");
+                }
+                Review review = new Review(numStars, reviewText, name, userId);
+                detailViewModel.submitReview(placeId, review);
+                if (detailViewModel.reviewSuccessState.getValue())
+                    addReviewDialog.dismiss();
+            }
+        });
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 
 }

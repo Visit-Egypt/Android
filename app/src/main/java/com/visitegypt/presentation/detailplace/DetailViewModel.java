@@ -7,9 +7,11 @@ import androidx.lifecycle.ViewModel;
 
 import com.visitegypt.domain.model.Item;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.response.ItemPageResponse;
 import com.visitegypt.domain.usecase.GetItemsUseCase;
 import com.visitegypt.domain.usecase.GetPlaceDetailUseCase;
+import com.visitegypt.domain.usecase.SubmitReviewUseCase;
 
 import java.util.List;
 
@@ -24,14 +26,17 @@ public class DetailViewModel extends ViewModel {
 
     MutableLiveData<Place> placesMutableLiveData = new MutableLiveData<>();
     MutableLiveData<List<Item>> itemMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<Boolean> reviewSuccessState = new MutableLiveData<>();
 
     private GetPlaceDetailUseCase getPlaceDetailUseCase;
     private GetItemsUseCase getItemsUseCase;
+    private SubmitReviewUseCase submitReviewUseCase;
 
     @Inject
-    public DetailViewModel(GetPlaceDetailUseCase getPlaceDetailUseCase, GetItemsUseCase getItemsUseCase) {
+    public DetailViewModel(GetPlaceDetailUseCase getPlaceDetailUseCase, GetItemsUseCase getItemsUseCase, SubmitReviewUseCase submitReviewUseCase) {
         this.getPlaceDetailUseCase = getPlaceDetailUseCase;
         this.getItemsUseCase = getItemsUseCase;
+        this.submitReviewUseCase = submitReviewUseCase;
     }
 
     public void getPlace(String placeId) {
@@ -63,6 +68,25 @@ public class DetailViewModel extends ViewModel {
             public void accept(Throwable throwable) throws Throwable {
                 Log.e(TAG, "error retrieving items: " + throwable.getMessage());
 
+            }
+        });
+    }
+
+    public void submitReview(String placeId, Review review) {
+        reviewSuccessState.setValue(false);
+        submitReviewUseCase.setPlaceId(placeId);
+        submitReviewUseCase.setReview(review);
+        submitReviewUseCase.execute(new Consumer<Void>() {
+            @Override
+            public void accept(Void unused) throws Throwable {
+                Log.d(TAG, "Review successfully added");
+                reviewSuccessState.setValue(true);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Throwable {
+                Log.e(TAG, "Failed to add review: " + throwable.getMessage());
+                reviewSuccessState.setValue(false);
             }
         });
     }

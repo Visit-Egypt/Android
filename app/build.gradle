@@ -50,6 +50,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
 
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
+
 
     implementation "com.google.dagger:hilt-android:2.38.1"
     annotationProcessor "com.google.dagger:hilt-compiler:2.38.1"

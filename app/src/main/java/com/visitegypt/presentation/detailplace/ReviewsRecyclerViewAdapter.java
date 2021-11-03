@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,6 +38,7 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
         Review currentReview = reviewsArrayList.get(position);
         holder.reviewVisitorNameTextView.setText(currentReview.getFirstName());
         holder.reviewTextView.setText(currentReview.getReview());
+        holder.reviewRatingBar.setRating(currentReview.getRating());
     }
 
     @Override
@@ -53,11 +55,13 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private MaterialTextView reviewVisitorNameTextView, reviewTextView;
+        private RatingBar reviewRatingBar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             reviewVisitorNameTextView = itemView.findViewById(R.id.reviewCardVisitorNameTextView);
             reviewTextView = itemView.findViewById(R.id.reviewCardTextView);
+            reviewRatingBar = itemView.findViewById(R.id.reviewCardRatingBar);
         }
     }
 }

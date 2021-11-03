@@ -16,6 +16,8 @@ import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -29,17 +31,38 @@ public class NetworkModule {
 
     @Provides
     @Singleton
+    public OkHttpClient.Builder provideOkHttpClientBuilder() {
+        return new OkHttpClient.Builder();
+    }
+
+    @Provides
+    @Singleton
+    public HttpLoggingInterceptor provideHttpLoggingInterceptor(OkHttpClient.Builder httpClient) {
+        return new HttpLoggingInterceptor();
+    }
+
+    @Provides
+    @Singleton
+    public OkHttpClient provideOkHttpClient(OkHttpClient.Builder httpClient, HttpLoggingInterceptor logging) {
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        httpClient.addInterceptor(logging);
+        return httpClient.build();
+    }
+
+    @Provides
+    @Singleton
     public RetrofitService getRetrofitService(Retrofit retrofit) {
         return retrofit.create(RetrofitService.class);
     }
 
     @Provides
     @Singleton
-    public Retrofit provideRetrofit(GsonConverterFactory gsonConverterFactory, RxJava3CallAdapterFactory rxJava3CallAdapterFactory) {
+    public Retrofit provideRetrofit(GsonConverterFactory gsonConverterFactory, RxJava3CallAdapterFactory rxJava3CallAdapterFactory, OkHttpClient client) {
         return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(gsonConverterFactory)
                 .addCallAdapterFactory(rxJava3CallAdapterFactory)
+                .client(client)
                 .build();
     }
 
