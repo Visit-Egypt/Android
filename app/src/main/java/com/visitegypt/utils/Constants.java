@@ -6,7 +6,9 @@ public class Constants {
     public static final String SHARED_PREF_USER_ID = "userId";
     public static final String SHARED_PREF_TOKEN_TYPE = "tokenType";
     public static final String SHARED_PREF_USER_REFRESH_TOKEN = "refreshToken";
-    public static final String SHARED_PREF_FULL_NAME = "fullName";
+    public static final String SHARED_PREF_FIRST_NAME = "firstName";
+    public static final String SHARED_PREF_LAST_NAME = "lastName";
+    public static final String SHARED_PREF_PHONE_NUMBER = "phoneNumber";
 
     public enum CustomerType {
         FOREIGNER_STUDENT("Foreigner Student"),
@@ -18,7 +20,6 @@ public class Constants {
         EGYPTIAN_VIDEO("Egyptian Personal Video"),
         CHILDREN("Children Under 6 Years"),
         EGYPTIAN_ADULT("Egyptian Adult");
-
 
         private final String text;
 
@@ -40,7 +41,6 @@ public class Constants {
         WEDNESDAY("Wednesday"),
         THURSDAY("Thursday"),
         FRIDAY("Friday");
-
 
         private final String text;
 

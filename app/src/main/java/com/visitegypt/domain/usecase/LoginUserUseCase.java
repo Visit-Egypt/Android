@@ -38,7 +38,7 @@ public class LoginUserUseCase extends SingleUseCase<User> {
                 .putString(Constants.SHARED_PREF_TOKEN_TYPE, user.getTokenType())
                 .putString(Constants.SHARED_PREF_USER_REFRESH_TOKEN, user.getRefreshToken())
                 .putString(Constants.SHARED_PREF_USER_ID, user.getUserId())
-                .putString(Constants.SHARED_PREF_FULL_NAME, user.getFirstName() + " " + user.getLastName())
+                .putString(Constants.SHARED_PREF_FIRST_NAME, user.getFirstName() + " " + user.getLastName())
                 .apply();
     }
 

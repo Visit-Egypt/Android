@@ -1,6 +1,7 @@
 package com.visitegypt.data.source.remote;
 
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.response.ItemPageResponse;
 import com.visitegypt.domain.model.response.PlacePageResponse;
@@ -32,17 +33,23 @@ public interface RetrofitService {
 
     @POST("api/user/login")
     public Single<User> loginUser(@Body User user);
+
     @POST("api/user/register")
     public Single<User> registerUser(@Body User user);
+
     @POST("api/user/refresh")
     public Single<User> refreshUserToken(@Body User user);
-    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+
+    @Headers({"Content-Type: application/json;charset=UTF-8"})
     @GET("api/user")
-    public Single<User> getUser(@Query("user_id") String userId,@Query("user_email") String email,@Header("Authorization") String auth);
+    public Single<User> getUser(@Query("user_id") String userId, @Query("user_email") String email, @Header("Authorization") String auth);
+
     @PUT("api/user/:id")
     public void updateUser(@Body int id);
+
     @DELETE("api/user/:id")
     public void deleteUser(int id);
+
     /*******************************************************************/
     @GET("api/place/{id}")
     public Single<Place> getPlaceById(@Path("id") String id);
@@ -52,6 +59,9 @@ public interface RetrofitService {
 
     @GET("api/item")
     public Single<ItemPageResponse> getAllItems(@QueryMap Map<String, String> placeId);
+
+    @POST("api/place/review/{placeId}")
+    public Single<Void> submitReview(@Path("placeId") String placeId, @Header("Authorization") String token, @Body Review review);
 
 
 }

@@ -229,6 +229,7 @@ public class DetailActivity extends AppCompatActivity {
                 desc.setText(place.getLongDescription());
                 if (place.getReviews() != null & !place.getReviews().isEmpty()) {
                     noReviews.setVisibility(GONE);
+                    Log.d(TAG, "reviews: " + place.getReviews().toString());
                     reviewsRecyclerViewAdapter.setReviewsArrayList(place.getReviews());
                     Log.d(TAG, "reviews available");
                 } else {
@@ -259,16 +260,19 @@ public class DetailActivity extends AppCompatActivity {
                 Log.d(TAG, "onClick: " + reviewText);
                 if (reviewText.isEmpty())
                     textInputEditText.setError("Review can't be empty");
-                String name = sharedPreferences.getString(Constants.SHARED_PREF_FULL_NAME, "");
+                String firstName = sharedPreferences.getString(Constants.SHARED_PREF_FIRST_NAME, "");
+                String lastName = sharedPreferences.getString(Constants.SHARED_PREF_LAST_NAME, "");
                 String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
-                Log.d(TAG, "onClick: " + name);
-                if (userId.equals("")) {
-                    showToast("user not authenticated");
-                }
-                Review review = new Review(numStars, reviewText, name, userId);
+                Log.d(TAG, "submitting review from: " + firstName + " " + lastName);
+                Review review = new Review(numStars, reviewText, firstName + " " + lastName, userId);
                 detailViewModel.submitReview(placeId, review);
-                if (detailViewModel.reviewSuccessState.getValue())
-                    addReviewDialog.dismiss();
+                detailViewModel.reviewSuccessState.observe(DetailActivity.this, new Observer<Boolean>() {
+                    @Override
+                    public void onChanged(Boolean aBoolean) {
+                        if (aBoolean)
+                            addReviewDialog.dismiss();
+                    }
+                });
             }
         });
     }

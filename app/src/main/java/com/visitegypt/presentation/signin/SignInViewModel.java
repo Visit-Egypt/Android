@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.visitegypt.domain.model.User;
-import com.visitegypt.domain.usecase.GetUser;
+import com.visitegypt.domain.usecase.GetUserUseCase;
 import com.visitegypt.domain.usecase.LoginUserUseCase;
 
 import org.json.JSONObject;
@@ -25,13 +25,13 @@ public class SignInViewModel extends ViewModel {
     MutableLiveData<String> msgMutableLiveData = new MutableLiveData<>();
     private LoginUserUseCase loginUserUseCase;
     private SharedPreferences sharedPreferences;
-    private GetUser getUser;
+    private GetUserUseCase getUserUseCase;
 
     @Inject
-    public SignInViewModel(LoginUserUseCase loginUserUseCase, SharedPreferences sharedPreferences,GetUser getUser) {
+    public SignInViewModel(LoginUserUseCase loginUserUseCase, SharedPreferences sharedPreferences, GetUserUseCase getUserUseCase) {
         this.loginUserUseCase = loginUserUseCase;
         this.sharedPreferences = sharedPreferences;
-        this.getUser = getUser;
+        this.getUserUseCase = getUserUseCase;
     }
 
     public void login(User user) {
@@ -40,7 +40,7 @@ public class SignInViewModel extends ViewModel {
             @Override
             public void accept(User user) throws Throwable {
                 loginUserUseCase.saveUserData(user);
-                getUser.setUser(user.getUserId(),loginUserUseCase.getUser().getEmail(),user.getAccessToken());
+                getUserUseCase.setUser(user.getUserId(), loginUserUseCase.getUser().getEmail(), user.getAccessToken());
                 saveUserData();
                 msgMutableLiveData.setValue("Your login done");
             }
@@ -65,10 +65,10 @@ public class SignInViewModel extends ViewModel {
     }
     private void saveUserData()
     {
-        getUser.execute(new Consumer<User>() {
+        getUserUseCase.execute(new Consumer<User>() {
             @Override
             public void accept(User user) throws Throwable {
-                getUser.saveUserData(user);
+                getUserUseCase.saveUserData(user);
 
             }
         }, new Consumer<Throwable>() {

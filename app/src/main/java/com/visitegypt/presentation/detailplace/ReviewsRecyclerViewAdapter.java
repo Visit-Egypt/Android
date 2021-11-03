@@ -36,7 +36,7 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Review currentReview = reviewsArrayList.get(position);
-        holder.reviewVisitorNameTextView.setText(currentReview.getFirstName());
+        holder.reviewVisitorNameTextView.setText(currentReview.getFullName());
         holder.reviewTextView.setText(currentReview.getReview());
         holder.reviewRatingBar.setRating(currentReview.getRating());
     }

@@ -6,7 +6,7 @@ public class Review {
     private float rating;
     private String review;
     @SerializedName("user_name")
-    private String firstName;
+    private String fullName;
     @SerializedName("user_id")
     private String userId;
 
@@ -16,7 +16,7 @@ public class Review {
     public Review(float rating, String review, String firstName, String userId) {
         this.rating = rating;
         this.review = review;
-        this.firstName = firstName;
+        this.fullName = firstName;
         this.userId = userId;
     }
 
@@ -36,12 +36,12 @@ public class Review {
         this.review = review;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getUserId() {
