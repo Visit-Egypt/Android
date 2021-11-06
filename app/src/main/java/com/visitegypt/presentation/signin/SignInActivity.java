@@ -1,12 +1,14 @@
 package com.visitegypt.presentation.signin;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +31,7 @@ public class SignInActivity extends AppCompatActivity {
     private static final String TAG = "Cannot invoke method length() on null object";
     TextInputLayout txtEmail, txtPassword;
     String password, email;
+    ProgressBar progressBar;
     SignInViewModel signInViewModel;
 
     @Override
@@ -38,6 +41,7 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
        txtEmail = findViewById(R.id.txtEmail);
        txtPassword = findViewById(R.id.txtPassword);
+       progressBar = findViewById(R.id.progressBar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
@@ -45,13 +49,27 @@ public class SignInActivity extends AppCompatActivity {
         signInViewModel.msgMutableLiveData.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
+                progressBar.setVisibility(View.VISIBLE);
+                /*
+                ProgressDialog progress = new ProgressDialog(SignInActivity.this);
+                progress.setTitle("Login");
+                progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                progress.setMessage("Wait while login...");
+                progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+                progress.show();
+// To dismiss the dialog
+*/
                 if (s.equals("Your login done")) {
+                    progressBar.setVisibility(View.GONE);
                     Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
+
                     finish();
                 } else {
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(SignInActivity.this, s, Toast.LENGTH_LONG).show();
+                    //progress.dismiss();
                 }
 
             }

@@ -39,10 +39,10 @@ public class SignInViewModel extends ViewModel {
         loginUserUseCase.execute(new Consumer<User>() {
             @Override
             public void accept(User user) throws Throwable {
+                msgMutableLiveData.setValue("Your login done");
                 loginUserUseCase.saveUserData(user);
                 getUserUseCase.setUser(user.getUserId(), loginUserUseCase.getUser().getEmail(), user.getAccessToken());
                 saveUserData();
-                msgMutableLiveData.setValue("Your login done");
             }
         }, new Consumer<Throwable>() {
             @Override
