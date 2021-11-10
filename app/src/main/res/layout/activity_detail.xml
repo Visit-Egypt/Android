@@ -5,16 +5,257 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:orientation="vertical"
     tools:context=".presentation.detailplace.DetailActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/shimmerScrollView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/sliderShimmerFrameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <include layout="@layout/detail_slider_shimmer_placeholder_layout" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/titleShimmerFrameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <include layout="@layout/detail_box_shimmer_placeholder_layout" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="5dp"
+                android:layout_marginHorizontal="15dp"
+                android:background="@color/brown"
+                tools:ignore="MissingConstraints" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/prata_regular"
+                android:padding="8dp"
+                android:text="Description"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/descriptionShimmerFrameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <include layout="@layout/detail_box_shimmer_placeholder_layout" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="5dp"
+                android:layout_marginHorizontal="15dp"
+                android:background="@color/brown"
+                tools:ignore="MissingConstraints" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/prata_regular"
+                android:padding="8dp"
+                android:text="@string/artifacts"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/artifactsShimmerFrameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <include layout="@layout/detail_table_shimmer_placeholder_layout" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="5dp"
+                android:layout_marginHorizontal="15dp"
+                android:background="@color/brown"
+                tools:ignore="MissingConstraints" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/prata_regular"
+                android:padding="10dp"
+                android:text="@string/location"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/locationShimmerFrameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <include layout="@layout/detail_table_shimmer_placeholder_layout" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="5dp"
+                android:layout_marginHorizontal="15dp"
+                android:background="@color/brown"
+                tools:ignore="MissingConstraints" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/prata_regular"
+                android:padding="10dp"
+                android:text="@string/reviews"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/reviewsShimmerFrameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <include layout="@layout/detail_box_shimmer_placeholder_layout" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="5dp"
+                android:layout_marginHorizontal="15dp"
+                android:background="@color/brown"
+                tools:ignore="MissingConstraints" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:fontFamily="@font/prata_regular"
+                android:padding="10dp"
+                android:text="@string/know_this_place"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/buttonShimmerFrameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <include layout="@layout/detail_button_shimmer_placeholder_layout" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="5dp"
+                android:layout_marginHorizontal="15dp"
+                android:background="@color/brown"
+                tools:ignore="MissingConstraints" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/prata_regular"
+                android:text="@string/opening_hours"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/hoursShimmerFrameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <include layout="@layout/detail_table_shimmer_placeholder_layout" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="5dp"
+                android:layout_marginHorizontal="15dp"
+                android:background="@color/brown"
+                tools:ignore="MissingConstraints" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/prata_regular"
+                android:padding="10dp"
+                android:text="@string/prices"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/pricesShimmerFrameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <include layout="@layout/detail_table_shimmer_placeholder_layout" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/detailActivityLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <com.smarteist.autoimageslider.SliderView
                 android:id="@+id/sliderSliderView"
@@ -35,11 +276,10 @@
                 tools:ignore="MissingClass,MissingConstraints" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/titleTextView"
+                android:id="@+id/placeTitleTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/prata_regular"
-                android:text=""
                 android:textAlignment="center"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -52,15 +292,14 @@
                 android:layout_marginHorizontal="15dp"
                 android:background="@color/brown"
                 tools:ignore="MissingConstraints" />
-
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/prata_regular"
                 android:padding="8dp"
-                android:textStyle="bold"
                 android:text="Description"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 tools:ignore="MissingConstraints" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -72,6 +311,13 @@
                 android:text=""
                 tools:ignore="MissingConstraints" />
 
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="5dp"
+                android:layout_marginHorizontal="15dp"
+                android:background="@color/brown"
+                tools:ignore="MissingConstraints" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
@@ -126,8 +372,8 @@
                 android:fontFamily="@font/prata_regular"
                 android:padding="10dp"
                 android:text="@string/reviews"
-                android:textStyle="bold"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/noReviewsTextView"
@@ -174,8 +420,8 @@
                 android:fontFamily="@font/prata_regular"
                 android:padding="10dp"
                 android:text="@string/opening_hours"
-                android:textStyle="bold"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 tools:ignore="MissingConstraints" />
 
             <TableLayout
@@ -358,8 +604,8 @@
                 android:fontFamily="@font/prata_regular"
                 android:padding="10dp"
                 android:text="@string/prices"
-                android:textStyle="bold"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 tools:ignore="MissingConstraints" />
 
             <TableLayout

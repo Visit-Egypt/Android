@@ -26,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.smarteist.autoimageslider.SliderView;
@@ -62,10 +64,10 @@ public class DetailActivity extends AppCompatActivity {
     @Inject
     public SharedPreferences sharedPreferences;
 
-    private TextView fAdult, fStudent, eStudent, eAdult, desc,
-            title, saturdayOpeningHours, sundayOpeningHours, mondayOpeningHours,
+    private TextView foreignerAdultPriceTextView, foreignerStudentPriceTextView, egyptianStudentTextView, egyptianAdultPriceTextView, descriptionTextView,
+            titleTextView, saturdayOpeningHours, sundayOpeningHours, mondayOpeningHours,
             tuesdayOpeningHours, thursdayOpeningHours, wednesdayOpeningHours,
-            fridayOpeningHours, fVideo, fPhoto, eVideo, ePhoto, children, location, noReviews;
+            fridayOpeningHours, foreignerVideoPriceTextView, foreignerPhotoPriceTextView, egyptianVideoPriceTextView, egyptianPhotoPriceTextView, childrenPriceTextView, locationTextView, noReviewsTextView;
 
     private MaterialButton addReviewButton;
 
@@ -86,6 +88,10 @@ public class DetailActivity extends AppCompatActivity {
     private Dialog addReviewDialog;
 
     private String placeId;
+
+    private ShimmerFrameLayout sliderShimmerFrameLayout, titleShimmerFrameLayout, descriptionShimmerFrameLayout, artifactsShimmerFrameLayout, locationShimmerFrameLayout, reviewsShimmerFrameLayout, buttonShimmerFrameLayout, hoursShimmerFrameLayout, pricesShimmerFrameLayout;
+    private LinearLayout detailLayout;
+    private ScrollView shimmerScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,19 +114,19 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        fAdult = findViewById(R.id.foreignerAdultPriceTextView);
-        fStudent = findViewById(R.id.foreignerStudentPriceTextView);
-        eStudent = findViewById(R.id.egyptianStudentTextView);
-        eAdult = findViewById(R.id.egyptianAdultPriceTextView);
-        fVideo = findViewById(R.id.foreignerVideoPriceTextView);
-        fPhoto = findViewById(R.id.foreignerPhotoPriceTextView);
-        eVideo = findViewById(R.id.egyptianVideoPriceTextView);
-        ePhoto = findViewById(R.id.egyptianPhotoPriceTextView);
-        children = findViewById(R.id.childrenPriceTextView);
-        desc = findViewById(R.id.descriptionTextView);
-        title = findViewById(R.id.titleTextView);
-        location = findViewById(R.id.locationTextView);
-        noReviews = findViewById(R.id.noReviewsTextView);
+        foreignerAdultPriceTextView = findViewById(R.id.foreignerAdultPriceTextView);
+        foreignerStudentPriceTextView = findViewById(R.id.foreignerStudentPriceTextView);
+        egyptianStudentTextView = findViewById(R.id.egyptianStudentTextView);
+        egyptianAdultPriceTextView = findViewById(R.id.egyptianAdultPriceTextView);
+        foreignerVideoPriceTextView = findViewById(R.id.foreignerVideoPriceTextView);
+        foreignerPhotoPriceTextView = findViewById(R.id.foreignerPhotoPriceTextView);
+        egyptianVideoPriceTextView = findViewById(R.id.egyptianVideoPriceTextView);
+        egyptianPhotoPriceTextView = findViewById(R.id.egyptianPhotoPriceTextView);
+        childrenPriceTextView = findViewById(R.id.childrenPriceTextView);
+        descriptionTextView = findViewById(R.id.descriptionTextView);
+        titleTextView = findViewById(R.id.placeTitleTextView);
+        locationTextView = findViewById(R.id.locationTextView);
+        noReviewsTextView = findViewById(R.id.noReviewsTextView);
 
         saturdayOpeningHours = findViewById(R.id.saturdayOpeningHoursTextView);
         sundayOpeningHours = findViewById(R.id.sundayOpeningHoursTextView);
@@ -151,7 +157,17 @@ public class DetailActivity extends AppCompatActivity {
         reviewsRecyclerView.setAdapter(reviewsRecyclerViewAdapter);
 
         locationLayout = findViewById(R.id.locationLayout);
-
+        sliderShimmerFrameLayout = findViewById(R.id.sliderShimmerFrameLayout);
+        titleShimmerFrameLayout = findViewById(R.id.titleShimmerFrameLayout);
+        descriptionShimmerFrameLayout = findViewById(R.id.descriptionShimmerFrameLayout);
+        artifactsShimmerFrameLayout = findViewById(R.id.artifactsShimmerFrameLayout);
+        locationShimmerFrameLayout = findViewById(R.id.locationShimmerFrameLayout);
+        reviewsShimmerFrameLayout = findViewById(R.id.reviewsShimmerFrameLayout);
+        buttonShimmerFrameLayout = findViewById(R.id.buttonShimmerFrameLayout);
+        hoursShimmerFrameLayout = findViewById(R.id.hoursShimmerFrameLayout);
+        pricesShimmerFrameLayout = findViewById(R.id.pricesShimmerFrameLayout);
+        detailLayout = findViewById(R.id.detailActivityLayout);
+        shimmerScrollView = findViewById(R.id.shimmerScrollView);
         sliderArrayList = new ArrayList<>();
         sliderAdapter = new SliderAdapter(sliderArrayList);
 
@@ -171,6 +187,9 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Item> items) {
                 Log.d(TAG, "setting items to recycler view...");
+                stopShimmerAnimation();
+                setLayoutVisible();
+                setShimmersGone();
                 itemsRecyclerViewAdapter.setItemsArrayList(items);
             }
         });
@@ -178,7 +197,7 @@ public class DetailActivity extends AppCompatActivity {
         detailViewModel.placesMutableLiveData.observe(this, new Observer<Place>() {
             @Override
             public void onChanged(Place place) {
-                Log.d(TAG, "onChanged: " + place.getTitle());
+                Log.d(TAG, "onChanged title: " + place.getTitle());
 
                 if (place.getImageUrls() != null) {
                     Log.d(TAG, "images found: " + place.getImageUrls().toString());
@@ -194,18 +213,18 @@ public class DetailActivity extends AppCompatActivity {
                 }
                 if (place.getTicketPrices() != null) {
                     try {
-                        fAdult.setText(place.getTicketPrices().get(FOREIGNER_ADULT.toString()).toString());
-                        eAdult.setText(place.getTicketPrices().get(EGYPTIAN_ADULT.toString()).toString());
-                        eStudent.setText(place.getTicketPrices().get(EGYPTIAN_STUDENT.toString()).toString());
-                        fStudent.setText(place.getTicketPrices().get(FOREIGNER_STUDENT.toString()).toString());
-                        fPhoto.setText(place.getTicketPrices().get(FOREIGNER_ADULT_PHOTO.toString()).toString());
-                        fVideo.setText(place.getTicketPrices().get(FOREIGNER_ADULT_VIDEO.toString()).toString());
-                        eVideo.setText(place.getTicketPrices().get(EGYPTIAN_VIDEO.toString()).toString());
-                        ePhoto.setText(place.getTicketPrices().get(EGYPTIAN_PHOTO.toString()).toString());
+                        foreignerAdultPriceTextView.setText(place.getTicketPrices().get(FOREIGNER_ADULT.toString()).toString());
+                        egyptianAdultPriceTextView.setText(place.getTicketPrices().get(EGYPTIAN_ADULT.toString()).toString());
+                        egyptianStudentTextView.setText(place.getTicketPrices().get(EGYPTIAN_STUDENT.toString()).toString());
+                        foreignerStudentPriceTextView.setText(place.getTicketPrices().get(FOREIGNER_STUDENT.toString()).toString());
+                        foreignerPhotoPriceTextView.setText(place.getTicketPrices().get(FOREIGNER_ADULT_PHOTO.toString()).toString());
+                        foreignerVideoPriceTextView.setText(place.getTicketPrices().get(FOREIGNER_ADULT_VIDEO.toString()).toString());
+                        egyptianVideoPriceTextView.setText(place.getTicketPrices().get(EGYPTIAN_VIDEO.toString()).toString());
+                        egyptianPhotoPriceTextView.setText(place.getTicketPrices().get(EGYPTIAN_PHOTO.toString()).toString());
                         if (place.getTicketPrices().get(CHILDREN.toString()) == 0) {
-                            children.setText("FREE");
+                            childrenPriceTextView.setText("FREE");
                         } else {
-                            children.setText(place.getTicketPrices().get(CHILDREN.toString()).toString());
+                            childrenPriceTextView.setText(place.getTicketPrices().get(CHILDREN.toString()).toString());
                         }
                     } catch (Exception e) {
                         Log.e(TAG, "setting ticket prices failed: " + e.getMessage());
@@ -225,10 +244,10 @@ public class DetailActivity extends AppCompatActivity {
                         Log.e(TAG, "setting opening hours failed: " + e.getMessage());
                     }
                 }
-                title.setText(place.getTitle());
-                desc.setText(place.getLongDescription());
+                titleTextView.setText(place.getTitle());
+                descriptionTextView.setText(place.getLongDescription());
                 if (place.getReviews() != null & !place.getReviews().isEmpty()) {
-                    noReviews.setVisibility(GONE);
+                    noReviewsTextView.setVisibility(GONE);
                     Log.d(TAG, "reviews: " + place.getReviews().toString());
                     reviewsRecyclerViewAdapter.setReviewsArrayList(place.getReviews());
                     Log.d(TAG, "reviews available");
@@ -237,7 +256,7 @@ public class DetailActivity extends AppCompatActivity {
                 }
                 if (place.getLocationDescription() != null) {
                     Log.d(TAG, "location provided: " + place.getLocationDescription());
-                    location.setText(place.getLocationDescription());
+                    locationTextView.setText(place.getLocationDescription());
                 } else {
                     locationLayout.setVisibility(GONE);
                 }
@@ -281,4 +300,48 @@ public class DetailActivity extends AppCompatActivity {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    private void startShimmerAnimation() {
+        sliderShimmerFrameLayout.startShimmerAnimation();
+        titleShimmerFrameLayout.startShimmerAnimation();
+        descriptionShimmerFrameLayout.startShimmerAnimation();
+        artifactsShimmerFrameLayout.startShimmerAnimation();
+        locationShimmerFrameLayout.startShimmerAnimation();
+        reviewsShimmerFrameLayout.startShimmerAnimation();
+        buttonShimmerFrameLayout.startShimmerAnimation();
+        hoursShimmerFrameLayout.startShimmerAnimation();
+        pricesShimmerFrameLayout.startShimmerAnimation();
+    }
+
+    private void stopShimmerAnimation() {
+        sliderShimmerFrameLayout.stopShimmerAnimation();
+        titleShimmerFrameLayout.stopShimmerAnimation();
+        descriptionShimmerFrameLayout.stopShimmerAnimation();
+        artifactsShimmerFrameLayout.stopShimmerAnimation();
+        locationShimmerFrameLayout.stopShimmerAnimation();
+        reviewsShimmerFrameLayout.stopShimmerAnimation();
+        buttonShimmerFrameLayout.stopShimmerAnimation();
+        hoursShimmerFrameLayout.stopShimmerAnimation();
+        pricesShimmerFrameLayout.stopShimmerAnimation();
+    }
+
+    private void setLayoutVisible() {
+        detailLayout.setVisibility(View.VISIBLE);
+
+    }
+
+    private void setShimmersGone() {
+        shimmerScrollView.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startShimmerAnimation();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopShimmerAnimation();
+    }
 }
