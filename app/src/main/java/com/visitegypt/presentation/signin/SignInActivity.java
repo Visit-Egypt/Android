@@ -8,13 +8,16 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.visitegypt.R;
@@ -30,8 +33,9 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class SignInActivity extends AppCompatActivity {
     private static final String TAG = "Cannot invoke method length() on null object";
     TextInputLayout txtEmail, txtPassword;
+    MaterialButton signInButton;
+    View loadingLayout;
     String password, email;
-    ProgressBar progressBar;
     SignInViewModel signInViewModel;
 
     @Override
@@ -39,37 +43,27 @@ public class SignInActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-       txtEmail = findViewById(R.id.txtEmail);
-       txtPassword = findViewById(R.id.txtPassword);
-       progressBar = findViewById(R.id.progressBar);
+        signInButton = findViewById(R.id.signInButton);
+        loadingLayout = findViewById(R.id.loadingLayout);
+        txtEmail = findViewById(R.id.txtEmail);
+        txtPassword = findViewById(R.id.txtPassword);
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
+
         signInViewModel = new ViewModelProvider(this).get(SignInViewModel.class);
         signInViewModel.msgMutableLiveData.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                progressBar.setVisibility(View.VISIBLE);
-                /*
-                ProgressDialog progress = new ProgressDialog(SignInActivity.this);
-                progress.setTitle("Login");
-                progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                progress.setMessage("Wait while login...");
-                progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
-                progress.show();
-// To dismiss the dialog
-*/
                 if (s.equals("Your login done")) {
-                    progressBar.setVisibility(View.GONE);
                     Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
 
                     finish();
                 } else {
-                    progressBar.setVisibility(View.GONE);
+
                     Toast.makeText(SignInActivity.this, s, Toast.LENGTH_LONG).show();
-                    //progress.dismiss();
                 }
 
             }
@@ -82,9 +76,9 @@ public class SignInActivity extends AppCompatActivity {
         email = txtEmail.getEditText().getText().toString();
         password = txtPassword.getEditText().getText().toString();
 
-        if (email.isEmpty()|| password.isEmpty()) {
+        if (email.isEmpty() || password.isEmpty()) {
 
-            if(email.isEmpty()) {
+            if (email.isEmpty()) {
                 txtEmail.setError("Please Enter Your Email");
             }
             if (password.isEmpty()) {
@@ -93,7 +87,9 @@ public class SignInActivity extends AppCompatActivity {
         } else {
 
             User myUser = new User(email, password);
+            showLoading();
             signInViewModel.login(myUser);
+
         }
     }
 
@@ -102,5 +98,15 @@ public class SignInActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
+    }
+
+    private void showLoading() {
+        signInButton.setVisibility(View.GONE);
+        loadingLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void hideLoading() {
+        signInButton.setVisibility(View.VISIBLE);
+        loadingLayout.setVisibility(View.GONE);
     }
 }

@@ -4,8 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:importantForAutofill="noExcludeDescendants"
+    tools:context=".presentation.signin.SignInActivity"
+    android:id="@+id/myView"
 
-    tools:context=".presentation.signin.SignInActivity">
+    >
 
 
     <View
@@ -122,13 +125,13 @@
         android:text="@string/forgetPassword"
         android:textColor="#827717"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/signinbutton"
+        app:layout_constraintBottom_toTopOf="@+id/signInButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.939"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/signinbutton"
+        android:id="@+id/signInButton"
         android:layout_width="139dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -142,6 +145,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:strokeColor="#FFFFFF"
         app:strokeWidth="2dp"
+
         tools:ignore="DuplicateSpeakableTextCheck" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -159,33 +163,15 @@
 
         />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/guideline3"
-        app:layout_constraintEnd_toEndOf="@+id/progressGuideLineEnd"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toStartOf="@+id/progressGuideLineStart"
 
-        app:layout_constraintTop_toTopOf="@+id/guideline2"
-        app:layout_constraintVertical_bias="0.725" />
+    <include
+        android:id="@+id/loadingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/loading"
+        android:visibility="gone"
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/progressGuideLineStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent=".3" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/progressGuideLineEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent=".5" />
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
