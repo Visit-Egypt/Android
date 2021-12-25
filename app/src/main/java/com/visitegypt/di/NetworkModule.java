@@ -4,10 +4,12 @@ import static com.visitegypt.utils.Constants.BASE_URL;
 
 import com.visitegypt.data.repository.ItemRepositoryImp;
 import com.visitegypt.data.repository.PlaceRepositoryImp;
+import com.visitegypt.data.repository.PostRepositoryImp;
 import com.visitegypt.data.repository.UserRepositoryImp;
 import com.visitegypt.data.source.remote.RetrofitService;
 import com.visitegypt.domain.repository.ItemRepository;
 import com.visitegypt.domain.repository.PlaceRepository;
+import com.visitegypt.domain.repository.PostsRepository;
 import com.visitegypt.domain.repository.UserRepository;
 
 import javax.inject.Singleton;
@@ -94,6 +96,12 @@ public class NetworkModule {
     @Singleton
     public ItemRepository provideItemRepository(RetrofitService retrofitService) {
         return new ItemRepositoryImp(retrofitService);
+    }
+
+    @Provides
+    @Singleton
+    public PostsRepository providePostRepository(RetrofitService retrofitService) {
+        return new PostRepositoryImp(retrofitService);
     }
 
 }

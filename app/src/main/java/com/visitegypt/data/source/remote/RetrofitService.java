@@ -1,11 +1,13 @@
 package com.visitegypt.data.source.remote;
 
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.Post;
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.response.ItemPageResponse;
 import com.visitegypt.domain.model.response.PlacePageResponse;
 
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.rxjava3.core.Single;
@@ -62,6 +64,34 @@ public interface RetrofitService {
 
     @POST("api/place/review/{placeId}")
     public Single<Void> submitReview(@Path("placeId") String placeId, @Header("Authorization") String token, @Body Review review);
+    /******************************************************
+     * this Retrofit services for Posts
+     * Get Post
+     * Get place posts
+     * Post add new post
+     * Post add  Like to post
+     *
+     * @return
+     */
+    @GET("api/post/place/{post_id}")
+    public Single<Post> getPost(@Path("post_id") String postId);
+    @GET("api/post/{place_id}")
+    public Single<List<Post>> getPlacePosts(@Path("place_id") String placeId);
+    @Headers({"Content-Type: application/json;charset=UTF-8"})
+    @POST("api/post")
+    public Single<Post> addNewPost(@Header("Authorization") String token,@Body Post post);
+    @Headers({"Content-Type: application/json;charset=UTF-8"})
+    @POST("api/post/like/{post_id}")
+    public Single<Void> addLike(@Header("Authorization") String token,@Path("post_id") String postId);
+    @Headers({"Content-Type: application/json;charset=UTF-8"})
+    @PUT("api/post/{post_id}")
+    public Single<Post> updatePost(@Header("Authorization") String token,@Path("post_id") String postId,Post post);
+    @Headers({"Content-Type: application/json;charset=UTF-8"})
+    @DELETE("api/post/{post_id}")
+    public Single<Void> deletePost(@Header("Authorization") String token,@Path("post_id") String postId);
+    @DELETE("api/post/like/{post_id}")
+    public Single<Void> unLike(@Header("Authorization") String token,@Path("post_id") String postId);
+
 
 
 }
