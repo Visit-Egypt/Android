@@ -23,8 +23,8 @@
             Login
         </b>
     </string>
-    <string name="sign_in">Sign in</string>
-    <string name="signUp">Register</string>
+    <string name="signIn">SIGN IN</string>
+    <string name="signUp">SIGN UP</string>
     <string name="foreigner_adult">Foreigner Adult</string>
     <string name="foreigner_student">Foreigner Student</string>
     <string name="foreigner_personal_video">Foreigner Personal Video</string>
@@ -56,4 +56,9 @@
     <string name="know_this_place">Know this place?</string>
     <string name="opening_hours">Opening Hours</string>
     <string name="prices">Prices</string>
+    <string name="title_activity_navigation">NavigationActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_account">Account</string>
+    <string name="title_setting">Setting</string>
+    <string name="setting">Setting</string>
 </resources>

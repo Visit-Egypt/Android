@@ -10,8 +10,10 @@
     <color name="mainColor">#2F80ED</color>
     <color name="camel">#ffb300</color>
     <color name="darkCamel">#c68400</color>
-    <color name="brown">#EF584D</color>
-    <color name="gray">#dddddd</color>
+    <color name="brown">#603A05</color>
+    <color name="gold">#D19E05</color>
+    <color name="gray">#E1E1E1</color>
+    <color name="semiwhite">#F7F7F7</color>
 
 
 </resources>
