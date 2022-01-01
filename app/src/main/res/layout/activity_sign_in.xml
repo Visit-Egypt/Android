@@ -41,13 +41,15 @@
         android:layout_height="wrap_content"
         android:background="@color/gold"
         android:text="@string/signUp"
+        android:onClick="signUpButton"
         android:textColor="#99FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/view7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.712"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.688" />
+        app:layout_constraintVertical_bias="0.688"
+        tools:ignore="UsingOnClickInXml" />
 
     <View
         android:id="@+id/view7"

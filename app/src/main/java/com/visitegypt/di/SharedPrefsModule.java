@@ -20,7 +20,6 @@ public class SharedPrefsModule {
     @Singleton
     @Provides
     public SharedPreferences provideSharedPreferences(@ApplicationContext Context context) {
-        Log.d(TAG, "provideSharedPreferences: Hello from shared pref " );
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 }

@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/gold"
-
+        android:onClick="signInButton"
         android:text="@string/signIn"
         android:textColor="#99FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/view7"
@@ -33,7 +33,8 @@
         app:layout_constraintHorizontal_bias="0.248"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.688" />
+        app:layout_constraintVertical_bias="0.688"
+        tools:ignore="OnClick" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/signUpTransferButton"
@@ -199,7 +200,7 @@
         android:layout_width="342dp"
         android:layout_height="wrap_content"
         android:background="@drawable/input_button"
-        android:onClick="buttonOnClick"
+        android:onClick="signupOnclick"
         android:text="@string/signUp"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -210,7 +211,7 @@
         app:layout_constraintVertical_bias="0.233"
         app:strokeColor="#FFFFFF"
         app:strokeWidth="2dp"
-        tools:ignore="DuplicateSpeakableTextCheck" />
+        tools:ignore="DuplicateSpeakableTextCheck,OnClick" />
 
     <include
         android:id="@+id/loadingLayout"

@@ -1,30 +1,36 @@
 package com.visitegypt.presentation.signin;
 
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.visitegypt.R;
-import com.visitegypt.di.SharedPrefsModule;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.home.HomeActivity;
 import com.visitegypt.presentation.signup.SignUpActivity;
+import com.visitegypt.utils.Encryption;
+import com.visitegypt.utils.JWT;
+
+import org.json.JSONException;
+
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.SecretKey;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -37,7 +43,7 @@ public class SignInActivity extends AppCompatActivity {
     View loadingLayout;
     String password, email;
     SignInViewModel signInViewModel;
-
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -50,7 +56,6 @@ public class SignInActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-
         signInViewModel = new ViewModelProvider(this).get(SignInViewModel.class);
         signInViewModel.msgMutableLiveData.observe(this, new Observer<String>() {
             @Override
@@ -59,10 +64,9 @@ public class SignInActivity extends AppCompatActivity {
                     Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
-
                     finish();
                 } else {
-
+                    hideLoading();
                     Toast.makeText(SignInActivity.this, s, Toast.LENGTH_LONG).show();
                 }
 
@@ -102,11 +106,17 @@ public class SignInActivity extends AppCompatActivity {
 
     private void showLoading() {
         signInButton.setVisibility(View.GONE);
+        txtPassword.setVisibility(View.GONE);
+        txtEmail.setVisibility(View.GONE);
         loadingLayout.setVisibility(View.VISIBLE);
     }
 
     private void hideLoading() {
         signInButton.setVisibility(View.VISIBLE);
+        txtPassword.setVisibility(View.VISIBLE);
+        txtEmail.setVisibility(View.VISIBLE);
         loadingLayout.setVisibility(View.GONE);
     }
+
+
 }

@@ -1,5 +1,7 @@
 package com.visitegypt.presentation.signin;
 
+import static com.visitegypt.utils.Constants.SHARED_PREF_USER_ID;
+
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -9,9 +11,13 @@ import androidx.lifecycle.ViewModel;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.usecase.GetUserUseCase;
 import com.visitegypt.domain.usecase.LoginUserUseCase;
+import com.visitegypt.utils.Encryption;
 
 import org.json.JSONObject;
 
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.NoSuchPaddingException;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
@@ -39,10 +45,11 @@ public class SignInViewModel extends ViewModel {
         loginUserUseCase.execute(new Consumer<User>() {
             @Override
             public void accept(User user) throws Throwable {
-                msgMutableLiveData.setValue("Your login done");
+                Log.d("TAG", "accept: Token "+user.getAccessToken());
+                Log.d("TAG", "accept: Token "+user.getRefreshToken());
                 loginUserUseCase.saveUserData(user);
-                getUserUseCase.setUser(user.getUserId(), loginUserUseCase.getUser().getEmail(), user.getAccessToken());
-                saveUserData();
+                msgMutableLiveData.setValue("Your login done");
+                //saveUserData();
             }
         }, new Consumer<Throwable>() {
             @Override
@@ -63,8 +70,8 @@ public class SignInViewModel extends ViewModel {
             }
         });
     }
-    private void saveUserData()
-    {
+/*
+    private void saveUserData() {
         getUserUseCase.execute(new Consumer<User>() {
             @Override
             public void accept(User user) throws Throwable {
@@ -90,4 +97,6 @@ public class SignInViewModel extends ViewModel {
             }
         });
     }
+
+ */
 }
