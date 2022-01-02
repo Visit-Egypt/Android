@@ -3,22 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/home">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/home"
         android:name="com.visitegypt.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/account"
         android:name="com.visitegypt.ui.account.AccountFragment"
         android:label="@string/title_account"
         tools:layout="@layout/fragment_account" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/setting"
         android:name="com.visitegypt.ui.setting.SettingFragment"
         android:label="@string/title_setting"
         tools:layout="@layout/fragment_setting" />

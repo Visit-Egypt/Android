@@ -14,33 +14,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.visitegypt.R;
 import com.visitegypt.databinding.FragmentHomeBinding;
+import com.visitegypt.R;
 
 public class HomeFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
-    private FragmentHomeBinding binding;
-
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
-
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        return root;
-    }
-
+    @Nullable
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    public View onCreateView(LayoutInflater inflater,@Nullable ViewGroup container,@Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 }

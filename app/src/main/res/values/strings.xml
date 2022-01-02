@@ -25,6 +25,7 @@
     </string>
     <string name="signIn">SIGN IN</string>
     <string name="signUp">SIGN UP</string>
+    <string name="logOut">LOG OUT</string>
     <string name="foreigner_adult">Foreigner Adult</string>
     <string name="foreigner_student">Foreigner Student</string>
     <string name="foreigner_personal_video">Foreigner Personal Video</string>

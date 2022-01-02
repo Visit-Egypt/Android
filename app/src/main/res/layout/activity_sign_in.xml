@@ -9,7 +9,7 @@
     tools:context=".presentation.signin.SignInActivity">
 
     <View
-        android:id="@+id/view5"
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="260dp"
         android:background="@drawable/input_background"
@@ -28,7 +28,7 @@
 
         android:text="@string/signIn"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/view7"
+        app:layout_constraintBottom_toTopOf="@+id/container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.248"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
         android:text="@string/signUp"
         android:onClick="signUpButton"
         android:textColor="#99FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/view7"
+        app:layout_constraintBottom_toTopOf="@+id/container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.712"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +52,7 @@
         tools:ignore="UsingOnClickInXml" />
 
     <View
-        android:id="@+id/view7"
+        android:id="@+id/container"
         android:layout_width="340dp"
         android:layout_height="260dp"
         android:background="@drawable/information_background"
@@ -74,10 +74,10 @@
         app:boxCornerRadiusBottomStart="8dp"
         app:boxCornerRadiusTopEnd="8dp"
         app:boxCornerRadiusTopStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/view5"
-        app:layout_constraintEnd_toEndOf="@+id/view7"
-        app:layout_constraintStart_toStartOf="@+id/view7"
-        app:layout_constraintTop_toTopOf="@+id/view7"
+        app:layout_constraintBottom_toBottomOf="@+id/header"
+        app:layout_constraintEnd_toEndOf="@+id/container"
+        app:layout_constraintStart_toStartOf="@+id/container"
+        app:layout_constraintTop_toTopOf="@+id/container"
         app:layout_goneMarginTop="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -98,9 +98,9 @@
         app:boxCornerRadiusBottomStart="8dp"
         app:boxCornerRadiusTopEnd="8dp"
         app:boxCornerRadiusTopStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/view7"
-        app:layout_constraintEnd_toEndOf="@+id/view7"
-        app:layout_constraintStart_toStartOf="@+id/view7"
+        app:layout_constraintBottom_toBottomOf="@+id/container"
+        app:layout_constraintEnd_toEndOf="@+id/container"
+        app:layout_constraintStart_toStartOf="@+id/container"
         app:layout_constraintTop_toBottomOf="@+id/txtEmail"
         app:passwordToggleEnabled="true">
 
@@ -120,10 +120,10 @@
         android:textColor="#827717"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/signInButton"
-        app:layout_constraintEnd_toEndOf="@+id/view7"
+        app:layout_constraintEnd_toEndOf="@+id/container"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view7" />
+        app:layout_constraintTop_toBottomOf="@+id/container" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signInButton"
@@ -135,9 +135,9 @@
         android:text="@string/signIn"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/view7"
+        app:layout_constraintEnd_toEndOf="@+id/container"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/view7"
+        app:layout_constraintStart_toStartOf="@+id/container"
         app:layout_constraintTop_toBottomOf="@+id/forgetPassword"
         app:layout_constraintVertical_bias="0.638"
         app:strokeColor="#FFFFFF"

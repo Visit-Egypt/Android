@@ -12,35 +12,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.visitegypt.R;
 import com.visitegypt.databinding.FragmentSettingBinding;
-import com.visitegypt.ui.setting.SettingViewModel;
 
 public class SettingFragment extends Fragment {
 
-    private SettingViewModel settingViewModel;
-    private FragmentSettingBinding binding;
-
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        settingViewModel =
-                new ViewModelProvider(this).get(SettingViewModel.class);
-
-        binding = FragmentSettingBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-        final TextView textView = binding.textSetting;
-        settingViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        return root;
-    }
-
+    @Nullable
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    public View onCreateView(LayoutInflater inflater,@Nullable ViewGroup container,@Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_setting, container, false);
     }
 }
