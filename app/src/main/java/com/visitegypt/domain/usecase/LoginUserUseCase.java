@@ -1,6 +1,7 @@
 package com.visitegypt.domain.usecase;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.repository.UserRepository;
@@ -41,7 +42,20 @@ public class LoginUserUseCase extends SingleUseCase<User> {
                 .putString(Constants.SHARED_PREF_FIRST_NAME, user.getFirstName() + " " + user.getLastName())
                 .apply();
     }
+    public Boolean isUserDataValid()
+    {
 
+       if (/*(sharedPreferences.getString(Constants.SHARED_PREF_USER_ACCESS_TOKEN,null) != null)
+               && (sharedPreferences.getString(Constants.SHARED_PREF_USER_REFRESH_TOKEN,null) != null)
+               &&*/ (sharedPreferences.getString(Constants.SHARED_PREF_USER_ID,null) != null)
+       )
+       {
+           return true;
+       }
+       return false;
+
+
+    }
 
     @Override
     protected Single<User> buildSingleUseCase() {

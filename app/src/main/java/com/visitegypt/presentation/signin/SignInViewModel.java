@@ -70,6 +70,10 @@ public class SignInViewModel extends ViewModel {
             }
         });
     }
+    public Boolean checkUser()
+    {
+        return loginUserUseCase.isUserDataValid();
+    }
 /*
     private void saveUserData() {
         getUserUseCase.execute(new Consumer<User>() {

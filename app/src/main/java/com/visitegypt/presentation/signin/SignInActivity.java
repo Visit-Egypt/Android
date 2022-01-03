@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -39,24 +42,30 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class SignInActivity extends AppCompatActivity {
     private static final String TAG = "Cannot invoke method length() on null object";
     TextInputLayout txtEmail, txtPassword;
-    MaterialButton signInButton;
+    AppCompatButton signInButton;
     View loadingLayout;
     String password, email;
     SignInViewModel signInViewModel;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-//        signInButton = findViewById(R.id.signInButton);
+        signInViewModel = new ViewModelProvider(this).get(SignInViewModel.class);
+        if(signInViewModel.checkUser())
+        {
+            redirectHome();
+        }
+        signInButton = findViewById(R.id.signInButton);
         loadingLayout = findViewById(R.id.loadingLayout);
         txtEmail = findViewById(R.id.txtEmail);
         txtPassword = findViewById(R.id.txtPassword);
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-        signInViewModel = new ViewModelProvider(this).get(SignInViewModel.class);
+
         signInViewModel.msgMutableLiveData.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -84,9 +93,49 @@ public class SignInActivity extends AppCompatActivity {
 
             if (email.isEmpty()) {
                 txtEmail.setError("Please Enter Your Email");
+                txtEmail.getEditText().addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        if (txtEmail.getEditText().getText().toString().isEmpty()) {
+                            txtEmail.setError("Please Enter Your Email");
+                        } else {
+                            txtEmail.setError(null);
+                        }
+                    }
+                });
             }
             if (password.isEmpty()) {
                 txtPassword.setError("Please,enter your password");
+                txtPassword.getEditText().addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        if (txtPassword.getEditText().getText().toString().isEmpty()) {
+                            txtPassword.setError("Please,enter your password");
+                        } else {
+                            txtPassword.setError(null);
+                        }
+                    }
+                });
             }
         } else {
 
@@ -98,10 +147,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void signUpButton(View view) {
-        Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
+        redirectSignup();
     }
 
     private void showLoading() {
@@ -117,6 +163,19 @@ public class SignInActivity extends AppCompatActivity {
         txtEmail.setVisibility(View.VISIBLE);
         loadingLayout.setVisibility(View.GONE);
     }
-
+    private  void redirectSignup()
+    {
+        Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
+    private  void redirectHome()
+    {
+        Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
 
 }
