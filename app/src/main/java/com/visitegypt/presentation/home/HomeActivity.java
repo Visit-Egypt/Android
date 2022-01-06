@@ -65,7 +65,7 @@ public class HomeActivity extends AppCompatActivity {
         allPlacesShimmer = findViewById(R.id.allPlacesShimmer);
         mustGoBeforeYouDieShimmer = findViewById(R.id.mustGoBeforeYouDieShimmer);
 
-        initActionBar();
+//        initActionBar();
     }
 
     private void initViewModel() {
@@ -83,10 +83,10 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void initActionBar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-    }
+//    private void initActionBar() {
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//    }
 
     private void createDummyPlaces() {
         Place place = new Place();

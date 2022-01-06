@@ -62,4 +62,8 @@
     <string name="title_account">Account</string>
     <string name="title_setting">Setting</string>
     <string name="setting">Setting</string>
+
+
+    <string name="bot_msg">Bot Message</string>
+    <string name="user_msg">User Message</string>
 </resources>

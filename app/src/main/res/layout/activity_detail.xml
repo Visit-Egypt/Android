@@ -112,6 +112,7 @@
                 android:fontFamily="@font/prata_regular"
                 android:padding="10dp"
                 android:text="@string/location"
+
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -420,6 +421,7 @@
                 android:fontFamily="@font/prata_regular"
                 android:padding="10dp"
                 android:text="@string/opening_hours"
+
                 android:textSize="16sp"
                 android:textStyle="bold"
                 tools:ignore="MissingConstraints" />
