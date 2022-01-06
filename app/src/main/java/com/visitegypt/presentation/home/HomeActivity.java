@@ -1,18 +1,24 @@
 package com.visitegypt.presentation.home;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.ui.account.AccountFragment;
+import com.visitegypt.ui.setting.SettingFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class HomeActivity extends AppCompatActivity {
-
+    Fragment selectedFragment;
     private static final String TAG = "Home Activity";
 
     private RecyclerView homeRecyclerView;
@@ -36,16 +42,19 @@ public class HomeActivity extends AppCompatActivity {
 
     private ShimmerFrameLayout allPlacesShimmer;
     private ShimmerFrameLayout mustGoBeforeYouDieShimmer;
+    public BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //hideStatusBar();
         setContentView(R.layout.activity_home);
 
         initViews();
         createDummyPlaces();
         initViewModel();
+
+        bottomNavigationView = findViewById(R.id.nav_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
     }
 
     private void initViews() {
@@ -63,9 +72,8 @@ public class HomeActivity extends AppCompatActivity {
         homeTopRecyclerView.setAdapter(homeTopRecyclerViewAdapter);
 
         allPlacesShimmer = findViewById(R.id.allPlacesShimmer);
-        mustGoBeforeYouDieShimmer = findViewById(R.id.mustGoBeforeYouDieShimmer);
+        mustGoBeforeYouDieShimmer = findViewById(R.id.recommendationsShimmer);
 
-//        initActionBar();
     }
 
     private void initViewModel() {
@@ -82,11 +90,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
-
-//    private void initActionBar() {
-//        Toolbar toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//    }
 
     private void createDummyPlaces() {
         Place place = new Place();
@@ -149,4 +152,33 @@ public class HomeActivity extends AppCompatActivity {
         super.onPause();
         stopShimmerAnimation();
     }
+
+    private final BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+            LinearLayout homeLinearLayout = (LinearLayout) findViewById(R.id.homeLinearLayout);
+
+            switch (item.getItemId()) {
+                case R.id.home:
+                    getSupportFragmentManager().beginTransaction().remove(selectedFragment).commit();
+                    homeLinearLayout.setVisibility(View.VISIBLE);
+                    break;
+
+                case R.id.setting:
+                    selectedFragment = new SettingFragment();
+                    homeLinearLayout.setVisibility(View.GONE);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.navFragment, selectedFragment).commit();
+                    break;
+
+                case R.id.account:
+                    selectedFragment = new AccountFragment();
+                    homeLinearLayout.setVisibility(View.GONE);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.navFragment, selectedFragment).commit();
+                    break;
+
+            }
+            return true;
+        }
+    };
 }

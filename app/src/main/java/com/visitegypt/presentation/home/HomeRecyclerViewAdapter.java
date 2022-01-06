@@ -27,7 +27,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     public static String CHOSEN_PLACE_ID = "placeId";
 
     private List<Place> placesList;
-    private Context context;
+    private final Context context;
 
     public HomeRecyclerViewAdapter(List<Place> placesList, Context context) {
         this.placesList = placesList;
