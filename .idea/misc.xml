@@ -3,12 +3,24 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/activity_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/drawable/chatbot_header.xml" value="0.2574074074074074" />
+        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/drawable/likes_background.xml" value="0.2574074074074074" />
+        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/activity_chatbot.xml" value="0.21481481481481482" />
+        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/activity_detail.xml" value="0.2" />
+        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/activity_home.xml" value="0.176" />
         <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/activity_navigation.xml" value="0.22552083333333334" />
+        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/activity_sign_in.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/activity_sign_up.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/card_shimmer_placeholder.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/detail_box_shimmer_placeholder_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/detail_button_shimmer_placeholder_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/detail_slider_shimmer_placeholder_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/detail_table_shimmer_placeholder_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/dialog_add_review.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/fragment_account.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/fragment_setting.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/item_card.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/review_card.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/menu/bottom_nav_menu.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/menu/home_navigation_menu.xml" value="0.22552083333333334" />
