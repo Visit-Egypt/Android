@@ -159,6 +159,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
+                    android:layout_marginBottom="20dp"
                     android:visibility="gone" />
             </LinearLayout>
         </ScrollView>
@@ -171,11 +172,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="7dp"
         android:src="@drawable/ic_chatbot"
-        app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintBottom_toBottomOf="@+id/navFragment"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-       />
+        app:layout_constraintEnd_toEndOf="@+id/nav_view"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"

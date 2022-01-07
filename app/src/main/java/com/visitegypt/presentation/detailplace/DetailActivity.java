@@ -72,8 +72,8 @@ public class DetailActivity extends AppCompatActivity {
             tuesdayOpeningHours, thursdayOpeningHours, wednesdayOpeningHours,
             fridayOpeningHours, foreignerVideoPriceTextView, foreignerPhotoPriceTextView, egyptianVideoPriceTextView, egyptianPhotoPriceTextView, childrenPriceTextView, locationTextView, noReviewsTextView;
 
-    private MaterialButton addReviewButton;
 
+    private MaterialButton addReviewButton;
     private FloatingActionButton chatbotFloatingActionButton;
     private LinearLayout locationLayout;
 
@@ -115,6 +115,15 @@ public class DetailActivity extends AppCompatActivity {
         Log.d(TAG, "Place ID: " + placeId);
         initViews();
         initViewModel(placeId);
+        addReviewButton = findViewById(R.id.writeReviewButton);
+//addReviewButton.setOnClickListener(new View.OnClickListener() {
+//    @Override
+//    public void onClick(View view) {
+//        Toast.makeText(DetailActivity.this,"alaa",Toast.LENGTH_SHORT).show();
+//        showDialog();
+//    }
+//});
+
     }
 
     private void initViews() {
@@ -140,20 +149,13 @@ public class DetailActivity extends AppCompatActivity {
         thursdayOpeningHours = findViewById(R.id.thursdayOpeningHoursTextView);
         fridayOpeningHours = findViewById(R.id.fridayOpeningHoursTextView);
 
-        chatbotFloatingActionButton=findViewById(R.id.chatbotFloatingActionButton);
+        chatbotFloatingActionButton = findViewById(R.id.chatbotFloatingActionButton);
 
-        addReviewButton = findViewById(R.id.writeReviewButton);
 
-        addReviewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialog();
-            }
-        });
         chatbotFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DetailActivity.this,ChatbotModel.class));
+                startActivity(new Intent(DetailActivity.this, ChatbotModel.class));
             }
         });
         sliderView = findViewById(R.id.sliderSliderView);
@@ -189,6 +191,7 @@ public class DetailActivity extends AppCompatActivity {
         sliderView.setScrollTimeInSec(3);
         sliderView.setAutoCycle(true);
         sliderView.startAutoCycle();
+
     }
 
     private void initViewModel(String placeId) {
@@ -277,38 +280,6 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
-    private void showDialog() {
-        View dialogLayout = LayoutInflater.from(DetailActivity.this).inflate(R.layout.dialog_add_review, null);
-        addReviewDialog = new Dialog(this);
-        addReviewDialog.setContentView(dialogLayout);
-        addReviewDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        addReviewDialog.show();
-        addReviewDialog.findViewById(R.id.submitReviewButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TextInputEditText textInputEditText = (TextInputEditText) addReviewDialog.findViewById(R.id.reviewEditText);
-                String reviewText = textInputEditText.getText().toString().trim();
-                float numStars = ((RatingBar) addReviewDialog.findViewById(R.id.ratingBar)).getNumStars();
-                Log.d(TAG, "onClick: " + reviewText);
-                if (reviewText.isEmpty())
-                    textInputEditText.setError("Review can't be empty");
-                String firstName = sharedPreferences.getString(Constants.SHARED_PREF_FIRST_NAME, "");
-                String lastName = sharedPreferences.getString(Constants.SHARED_PREF_LAST_NAME, "");
-                String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
-                Log.d(TAG, "submitting review from: " + firstName + " " + lastName);
-                Review review = new Review(numStars, reviewText, firstName + " " + lastName, userId);
-                detailViewModel.submitReview(placeId, review);
-                detailViewModel.reviewSuccessState.observe(DetailActivity.this, new Observer<Boolean>() {
-                    @Override
-                    public void onChanged(Boolean aBoolean) {
-                        if (aBoolean)
-                            addReviewDialog.dismiss();
-                    }
-                });
-            }
-        });
-
-    }
 
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -357,5 +328,55 @@ public class DetailActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         stopShimmerAnimation();
+    }
+
+    private void showDialog() {
+        View dialogLayout = LayoutInflater.from(DetailActivity.this).inflate(R.layout.dialog_add_review, null);
+        addReviewDialog = new Dialog(this);
+        addReviewDialog.setContentView(dialogLayout);
+        addReviewDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        addReviewDialog.show();
+        addReviewDialog.findViewById(R.id.submitReviewButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextInputEditText textInputEditText = (TextInputEditText) addReviewDialog.findViewById(R.id.reviewEditText);
+                String reviewText = textInputEditText.getText().toString().trim();
+                float numStars = ((RatingBar) addReviewDialog.findViewById(R.id.ratingBar)).getNumStars();
+                Log.d(TAG, "onClick: " + reviewText);
+                if (reviewText.isEmpty()) {
+                    textInputEditText.setError("Review can't be empty");
+//                    Toast.makeText(DetailActivity.this, "empty", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    String firstName = sharedPreferences.getString(Constants.SHARED_PREF_FIRST_NAME, "");
+                    String lastName = sharedPreferences.getString(Constants.SHARED_PREF_LAST_NAME, "");
+                    String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
+
+                    Log.d(TAG, "submitting review from: " + firstName + " " + lastName);
+
+                    Review review = new Review(numStars, reviewText, firstName + " " + lastName, userId);
+
+                    Toast.makeText(DetailActivity.this, " " + userId, Toast.LENGTH_SHORT).show();
+                    detailViewModel.submitReview(placeId, review);
+
+                    detailViewModel.reviewSuccessState.observe(DetailActivity.this, new Observer<Boolean>() {
+                        @Override
+                        public void onChanged(Boolean aBoolean) {
+                            if (aBoolean) {
+
+                                addReviewDialog.dismiss();
+                            }
+
+                        }
+
+                    });
+                }
+            }
+
+        });
+    }
+
+    public void addReview(View view) {
+        showDialog();
     }
 }
