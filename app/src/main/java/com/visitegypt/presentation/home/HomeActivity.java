@@ -1,5 +1,6 @@
 package com.visitegypt.presentation.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,8 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.presentation.chatbot.ChatbotModel;
 import com.visitegypt.ui.account.AccountFragment;
 import com.visitegypt.ui.setting.SettingFragment;
 
@@ -44,6 +47,7 @@ public class HomeActivity extends AppCompatActivity {
     private ShimmerFrameLayout mustGoBeforeYouDieShimmer;
     public BottomNavigationView bottomNavigationView;
 
+    private FloatingActionButton chatbotFloatingActionButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +77,15 @@ public class HomeActivity extends AppCompatActivity {
 
         allPlacesShimmer = findViewById(R.id.allPlacesShimmer);
         mustGoBeforeYouDieShimmer = findViewById(R.id.recommendationsShimmer);
+        chatbotFloatingActionButton=findViewById(R.id.chatbotFloatingActionButton);
 
+
+        chatbotFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, ChatbotModel.class));
+            }
+        });
     }
 
     private void initViewModel() {
@@ -89,6 +101,9 @@ public class HomeActivity extends AppCompatActivity {
                 homeRecyclerViewAdapter.updatePlacesList(placesList);
             }
         });
+
+
+
     }
 
     private void createDummyPlaces() {

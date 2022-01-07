@@ -19,6 +19,7 @@ import static com.visitegypt.utils.Constants.Days.TUESDAY;
 import static com.visitegypt.utils.Constants.Days.WEDNESDAY;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,6 +39,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.smarteist.autoimageslider.SliderView;
 import com.visitegypt.R;
@@ -45,6 +47,7 @@ import com.visitegypt.domain.model.Item;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.Slider;
+import com.visitegypt.presentation.chatbot.ChatbotModel;
 import com.visitegypt.presentation.home.HomeRecyclerViewAdapter;
 import com.visitegypt.utils.Constants;
 
@@ -71,6 +74,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private MaterialButton addReviewButton;
 
+    private FloatingActionButton chatbotFloatingActionButton;
     private LinearLayout locationLayout;
 
     private DetailViewModel detailViewModel;
@@ -136,14 +140,22 @@ public class DetailActivity extends AppCompatActivity {
         thursdayOpeningHours = findViewById(R.id.thursdayOpeningHoursTextView);
         fridayOpeningHours = findViewById(R.id.fridayOpeningHoursTextView);
 
+        chatbotFloatingActionButton=findViewById(R.id.chatbotFloatingActionButton);
+
         addReviewButton = findViewById(R.id.writeReviewButton);
+
         addReviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDialog();
             }
         });
-
+        chatbotFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DetailActivity.this,ChatbotModel.class));
+            }
+        });
         sliderView = findViewById(R.id.sliderSliderView);
 
         itemsRecyclerView = findViewById(R.id.itemsRecyclerView);
@@ -166,6 +178,7 @@ public class DetailActivity extends AppCompatActivity {
         buttonShimmerFrameLayout = findViewById(R.id.buttonShimmerFrameLayout);
         hoursShimmerFrameLayout = findViewById(R.id.hoursShimmerFrameLayout);
         pricesShimmerFrameLayout = findViewById(R.id.pricesShimmerFrameLayout);
+
         detailLayout = findViewById(R.id.detailActivityLayout);
         shimmerScrollView = findViewById(R.id.shimmerScrollView);
         sliderArrayList = new ArrayList<>();
@@ -294,6 +307,7 @@ public class DetailActivity extends AppCompatActivity {
                 });
             }
         });
+
     }
 
     private void showToast(String message) {

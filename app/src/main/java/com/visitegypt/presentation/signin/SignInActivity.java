@@ -2,12 +2,10 @@ package com.visitegypt.presentation.signin;
 
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -17,23 +15,11 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.home.HomeActivity;
 import com.visitegypt.presentation.signup.SignUpActivity;
-import com.visitegypt.utils.Encryption;
-import com.visitegypt.utils.JWT;
-
-import org.json.JSONException;
-
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.SecretKey;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -54,8 +40,7 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         signInViewModel = new ViewModelProvider(this).get(SignInViewModel.class);
-        if(signInViewModel.checkUser())
-        {
+        if (signInViewModel.checkUser()) {
             redirectHome();
         }
         signInButton = findViewById(R.id.signInButton);
@@ -82,7 +67,6 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     public void buttonOnClick(View view) {
@@ -90,7 +74,6 @@ public class SignInActivity extends AppCompatActivity {
         password = txtPassword.getEditText().getText().toString();
 
         if (email.isEmpty() || password.isEmpty()) {
-
             if (email.isEmpty()) {
                 txtEmail.setError("Please Enter Your Email");
                 txtEmail.getEditText().addTextChangedListener(new TextWatcher() {
@@ -163,15 +146,15 @@ public class SignInActivity extends AppCompatActivity {
         txtEmail.setVisibility(View.VISIBLE);
         loadingLayout.setVisibility(View.GONE);
     }
-    private  void redirectSignup()
-    {
+
+    private void redirectSignup() {
         Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }
-    private  void redirectHome()
-    {
+
+    private void redirectHome() {
         Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);

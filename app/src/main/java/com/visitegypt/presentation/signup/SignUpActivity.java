@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -105,6 +104,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         }
     }
+
     private void showLoading() {
         firstName.setVisibility(View.GONE);
         lastName.setVisibility(View.GONE);
@@ -114,6 +114,7 @@ public class SignUpActivity extends AppCompatActivity {
         signInButton.setVisibility(View.GONE);
         loadingLayout.setVisibility(View.VISIBLE);
     }
+
     private void hideLoading() {
         firstName.setVisibility(View.VISIBLE);
         lastName.setVisibility(View.VISIBLE);
@@ -123,6 +124,7 @@ public class SignUpActivity extends AppCompatActivity {
         signInButton.setVisibility(View.VISIBLE);
         loadingLayout.setVisibility(View.GONE);
     }
+
     public void checkValidations() {
         if (firstName.getEditText().getText().toString().isEmpty()) {
 
@@ -166,7 +168,6 @@ public class SignUpActivity extends AppCompatActivity {
                 @Override
                 public void afterTextChanged(Editable editable) {
                     if (lastName.getEditText().getText().toString().isEmpty()) {
-                        ;
                     } else {
                         lastName.setError(null);
                     }
