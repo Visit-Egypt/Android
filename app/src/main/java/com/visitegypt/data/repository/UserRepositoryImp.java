@@ -2,6 +2,7 @@ package com.visitegypt.data.repository;
 
 import com.visitegypt.data.source.remote.RetrofitService;
 import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.model.response.UploadResponse;
 import com.visitegypt.domain.repository.UserRepository;
 
 import javax.inject.Inject;
@@ -31,7 +32,12 @@ public class UserRepositoryImp implements UserRepository {
     public Single<User> refreshUserToken(User user) { return retrofitService.refreshUserToken(user);}
 
     @Override
-    public Single<User> getUser(String userId, String email, String auth) {
-        return retrofitService.getUser(userId,email,auth);
+    public Single<User> getUser(String userId, String email) {
+        return retrofitService.getUser(userId,email);
+    }
+
+    @Override
+    public Single<UploadResponse> uploadUserPhoto(String userId, String contentType){
+        return retrofitService.uploadUserPhoto(userId, contentType);
     }
 }

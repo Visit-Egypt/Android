@@ -1,9 +1,11 @@
 package com.visitegypt.presentation.home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +19,7 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.response.UploadResponse;
 import com.visitegypt.ui.account.AccountFragment;
 import com.visitegypt.ui.setting.SettingFragment;
 
@@ -89,6 +92,13 @@ public class HomeActivity extends AppCompatActivity {
                 homeRecyclerViewAdapter.updatePlacesList(placesList);
             }
         });
+       homeViewModel.uploadResponseMutableLiveData.observe(this, new Observer<UploadResponse>() {
+           @Override
+           public void onChanged(UploadResponse uploadResponse) {
+               Log.d("upload", uploadResponse.toString());
+               Toast.makeText(getApplicationContext(), uploadResponse.toString(), Toast.LENGTH_LONG).show();
+           }
+       });
     }
 
     private void createDummyPlaces() {

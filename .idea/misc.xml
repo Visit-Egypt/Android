@@ -12,6 +12,14 @@
         <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/review_card.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/menu/bottom_nav_menu.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/menu/home_navigation_menu.xml" value="0.22552083333333334" />
+        <entry key="app/src/main/res/layout/activity_chatbot.xml" value="0.16893115942028986" />
+        <entry key="app/src/main/res/layout/activity_detail.xml" value="0.16893115942028986" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.16893115942028986" />
+        <entry key="app/src/main/res/layout/bot_message.xml" value="0.16893115942028986" />
+        <entry key="app/src/main/res/layout/dialog_add_review.xml" value="0.14583333333333334" />
+        <entry key="app/src/main/res/layout/fragment_account.xml" value="0.16893115942028986" />
+        <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.16893115942028986" />
+        <entry key="app/src/main/res/layout/user_message.xml" value="0.16893115942028986" />
       </map>
     </option>
   </component>

@@ -14,7 +14,6 @@ import io.reactivex.rxjava3.core.Single;
 public class GetUserUseCase extends SingleUseCase<User> {
     private String userId;
     private String email;
-    private String userAccessToken;
     private SharedPreferences sharedPreferences;
     private UserRepository userRepository;
 
@@ -27,7 +26,6 @@ public class GetUserUseCase extends SingleUseCase<User> {
     public void setUser(String userId, String email, String userAccessToken) {
         this.userId = userId;
         this.email = email;
-        this.userAccessToken = userAccessToken;
     }
 
     public void saveUserData(User user) {
@@ -37,9 +35,8 @@ public class GetUserUseCase extends SingleUseCase<User> {
                 .putString(Constants.SHARED_PREF_PHONE_NUMBER, user.getPhoneNumber())
                 .apply();
     }
-
     @Override
     protected Single<User> buildSingleUseCase() {
-        return userRepository.getUser(userId, email, "Bearer " + userAccessToken);
+        return userRepository.getUser(userId, email);
     }
 }

@@ -13,7 +13,6 @@ import javax.inject.Inject;
 import io.reactivex.rxjava3.core.Single;
 
 public class UpdatePostUseCase extends SingleUseCase<Post> {
-    SharedPreferences sharedPreferences;
     PostsRepository postsRepository;
     private Post post;
 
@@ -22,13 +21,11 @@ public class UpdatePostUseCase extends SingleUseCase<Post> {
     }
 
     @Inject
-    public UpdatePostUseCase(SharedPreferences sharedPreferences, PostsRepository postsRepository) {
-        this.sharedPreferences = sharedPreferences;
+    public UpdatePostUseCase(PostsRepository postsRepository) {
         this.postsRepository = postsRepository;
     }
     @Override
     protected Single<Post> buildSingleUseCase() {
-        String token = "Bearer " + sharedPreferences.getString(SHARED_PREF_USER_ACCESS_TOKEN, "");
-        return postsRepository.updatePost(token, post.getId(), post);
+        return postsRepository.updatePost(post.getId(), post);
     }
 }

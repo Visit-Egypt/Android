@@ -28,27 +28,27 @@ public class PostRepositoryImp implements PostsRepository {
     }
 
     @Override
-    public Single<Post> addNewPost(String token, Post post) {
-        return retrofitService.addNewPost(token,post);
+    public Single<Post> addNewPost(Post post) {
+        return retrofitService.addNewPost(post);
     }
 
     @Override
-    public Single<Void> addLike(String token, String postId) {
-        return retrofitService.addLike(token, postId);
+    public Single<Void> addLike(String postId) {
+        return retrofitService.addLike(postId);
     }
 
     @Override
-    public Single<Post> updatePost(String token, String postId, Post post) {
-        return retrofitService.updatePost(token,postId,post);
+    public Single<Post> updatePost(String postId, Post post) {
+        return retrofitService.updatePost(postId,post);
     }
 
     @Override
-    public Single<Void> deletePost(String token, String postId) {
-        return retrofitService.deletePost(token, postId);
+    public Single<Void> deletePost(String postId) {
+        return retrofitService.deletePost(postId);
     }
 
     @Override
-    public Single<Void> unLike(String token, String postId) {
-        return retrofitService.unLike(token, postId);
+    public Single<Void> unLike(String postId) {
+        return retrofitService.unLike(postId);
     }
 }

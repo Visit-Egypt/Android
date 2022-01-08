@@ -18,17 +18,14 @@ public class AddNewPostUseCase extends SingleUseCase<Post> {
     }
 
     private Post post;
-    SharedPreferences sharedPreferences;
     PostsRepository postsRepository;
     @Inject
-    public AddNewPostUseCase(SharedPreferences sharedPreferences, PostsRepository postsRepository) {
-        this.sharedPreferences = sharedPreferences;
+    public AddNewPostUseCase(PostsRepository postsRepository) {
         this.postsRepository = postsRepository;
     }
 
     @Override
     protected Single<Post> buildSingleUseCase() {
-        String token = "Bearer " + sharedPreferences.getString(SHARED_PREF_USER_ACCESS_TOKEN, "");
-        return postsRepository.addNewPost(token,post);
+        return postsRepository.addNewPost(post);
     }
 }

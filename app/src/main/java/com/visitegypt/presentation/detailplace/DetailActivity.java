@@ -137,11 +137,8 @@ public class DetailActivity extends AppCompatActivity {
         fridayOpeningHours = findViewById(R.id.fridayOpeningHoursTextView);
 
         addReviewButton = findViewById(R.id.writeReviewButton);
-        addReviewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialog();
-            }
+        addReviewButton.setOnClickListener(view -> {
+            showDialog();
         });
 
         sliderView = findViewById(R.id.sliderSliderView);
