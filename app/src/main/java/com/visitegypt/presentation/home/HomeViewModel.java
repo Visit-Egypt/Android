@@ -28,5 +28,6 @@ public class HomeViewModel extends ViewModel {
             Log.d(TAG, "places retrieved");
             placesMutableLiveData.setValue(placePageResponse.getPlaces());
         }, throwable -> Log.e(TAG, "places retrieve error: " + throwable.getMessage()));
+
     }
 }

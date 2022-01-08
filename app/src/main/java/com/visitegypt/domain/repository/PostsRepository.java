@@ -10,15 +10,11 @@ public interface PostsRepository {
     Single<Post> getPost(String postId);
     Single<List<Post>> getPlacePosts(String postId);
     Single<List<Post>> getPostsByUser(String userId);
-    Single<Post> addNewPost(String token, Post post);
-
-    Single<Void> addLike(String token, String postId);
-
-    Single<Post> updatePost(String token, String postId, Post post);
-
-    Single<Void> deletePost(String token, String postId);
-
-    Single<Void> unLike(String token, String postId);
+    Single<Post> addNewPost(Post post);
+    Single<Void> addLike(String postId);
+    Single<Post> updatePost(String postId, Post post);
+    Single<Void> deletePost(String postId);
+    Single<Void> unLike(String postId);
 
 
 }

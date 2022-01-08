@@ -25,7 +25,8 @@ public class User {
     private String tokenType;
     @SerializedName("refresh_token")
     private String refreshToken;
-
+    @SerializedName("photo_link")
+    private String photoUrl;
     /*******************************************************************************/
     public User() {
 
@@ -124,4 +125,7 @@ public class User {
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
+
+    public String getPhotoUrl(){return photoUrl;}
+
 }

@@ -12,19 +12,16 @@ import javax.inject.Inject;
 import io.reactivex.rxjava3.core.Single;
 
 public class UnLikePostUseCase extends SingleUseCase<Void> {
-    SharedPreferences sharedPreferences;
     PostsRepository postsRepository;
     private String postId;
     @Inject
-    public UnLikePostUseCase(SharedPreferences sharedPreferences, PostsRepository postsRepository) {
-        this.sharedPreferences = sharedPreferences;
+    public UnLikePostUseCase(PostsRepository postsRepository) {
         this.postsRepository = postsRepository;
     }
 
     @Override
     protected Single<Void> buildSingleUseCase() {
-        String token = "Bearer " + sharedPreferences.getString(SHARED_PREF_USER_ACCESS_TOKEN, "");
-        return postsRepository.unLike(token,postId);
+        return postsRepository.unLike(postId);
     }
 
     public void setPostId(String postId) {

@@ -49,7 +49,7 @@ public class SignInViewModel extends ViewModel {
                 Log.d("TAG", "accept: Token "+user.getAccessToken());
                 Log.d("TAG", "accept: Token "+user.getRefreshToken());
                 loginUserUseCase.saveUserData(user);
-                saveUserData(user.getUserId(),email,user.getAccessToken());
+                saveUserData(user.getUserId(),email);
                 msgMutableLiveData.setValue("Your login done");
 
             }
@@ -77,8 +77,8 @@ public class SignInViewModel extends ViewModel {
         return loginUserUseCase.isUserDataValid();
     }
 
-    private void saveUserData(String userID,String email,String userAccessToken) {
-        getUserUseCase.setUser(userID, email, userAccessToken);
+    private void saveUserData(String userID,String email) {
+        getUserUseCase.setUser(userID, email);
         getUserUseCase.execute(new Consumer<User>() {
             @Override
             public void accept(User user) throws Throwable {

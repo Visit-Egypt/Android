@@ -12,7 +12,6 @@ import javax.inject.Inject;
 import io.reactivex.rxjava3.core.Single;
 
 public class AddLikeUseCase extends SingleUseCase<Void> {
-    SharedPreferences sharedPreferences;
     PostsRepository postsRepository;
     private String postId;
 
@@ -21,14 +20,12 @@ public class AddLikeUseCase extends SingleUseCase<Void> {
     }
 
     @Inject
-    public AddLikeUseCase(SharedPreferences sharedPreferences, PostsRepository postsRepository) {
-        this.sharedPreferences = sharedPreferences;
+    public AddLikeUseCase(PostsRepository postsRepository) {
         this.postsRepository = postsRepository;
     }
 
     @Override
     protected Single<Void> buildSingleUseCase() {
-        String token = "Bearer " + sharedPreferences.getString(SHARED_PREF_USER_ACCESS_TOKEN, "");
-        return postsRepository.addLike(token,postId);
+        return postsRepository.addLike(postId);
     }
 }

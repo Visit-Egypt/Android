@@ -12,7 +12,6 @@ import javax.inject.Inject;
 import io.reactivex.rxjava3.core.Single;
 
 public class DeletePostUseCase extends SingleUseCase<Void> {
-    SharedPreferences sharedPreferences;
     PostsRepository postsRepository;
     private String postId;
     public void setPostId(String postId) {
@@ -21,15 +20,12 @@ public class DeletePostUseCase extends SingleUseCase<Void> {
 
 
     @Inject
-    public DeletePostUseCase(SharedPreferences sharedPreferences, PostsRepository postsRepository) {
-        this.sharedPreferences = sharedPreferences;
+    public DeletePostUseCase(PostsRepository postsRepository) {
         this.postsRepository = postsRepository;
     }
 
     @Override
     protected Single<Void> buildSingleUseCase() {
-        String token = "Bearer " + sharedPreferences.getString(SHARED_PREF_USER_ACCESS_TOKEN, "");
-
-        return postsRepository.deletePost(token, postId);
+        return postsRepository.deletePost(postId);
     }
 }

@@ -17,15 +17,13 @@ public class SubmitReviewUseCase extends SingleUseCase<Void> {
 
     private static final String TAG = "submit review usecase";
 
-    private SharedPreferences sharedPreferences;
     private PlaceRepository placeRepository;
     private String placeId;
     private Review review;
 
     @Inject
-    public SubmitReviewUseCase(PlaceRepository placeRepository, SharedPreferences sharedPreferences) {
+    public SubmitReviewUseCase(PlaceRepository placeRepository) {
         this.placeRepository = placeRepository;
-        this.sharedPreferences = sharedPreferences;
     }
 
     public void setPlaceId(String placeId) {
@@ -38,8 +36,6 @@ public class SubmitReviewUseCase extends SingleUseCase<Void> {
 
     @Override
     protected Single<Void> buildSingleUseCase() {
-        String token = "Bearer " + sharedPreferences.getString(SHARED_PREF_USER_ACCESS_TOKEN, "");
-        Log.d(TAG, "retrieved token: " + token);
-        return placeRepository.submitReview(placeId, token, review);
+        return placeRepository.submitReview(placeId, review);
     }
 }

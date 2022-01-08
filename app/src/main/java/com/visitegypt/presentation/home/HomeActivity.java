@@ -2,9 +2,11 @@ package com.visitegypt.presentation.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -101,9 +103,6 @@ public class HomeActivity extends AppCompatActivity {
                 homeRecyclerViewAdapter.updatePlacesList(placesList);
             }
         });
-
-
-
     }
 
     private void createDummyPlaces() {

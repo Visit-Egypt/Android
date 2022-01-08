@@ -1,6 +1,11 @@
 package com.visitegypt.di;
 
 import static com.visitegypt.utils.Constants.BASE_URL;
+import static com.visitegypt.utils.Constants.SHARED_PREF_USER_ACCESS_TOKEN;
+
+import android.content.SharedPreferences;
+
+import androidx.annotation.NonNull;
 
 import com.visitegypt.data.repository.ItemRepositoryImp;
 import com.visitegypt.data.repository.PlaceRepositoryImp;
@@ -12,13 +17,18 @@ import com.visitegypt.domain.repository.PlaceRepository;
 import com.visitegypt.domain.repository.PostsRepository;
 import com.visitegypt.domain.repository.UserRepository;
 
+import java.io.IOException;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
@@ -43,11 +53,23 @@ public class NetworkModule {
         return new HttpLoggingInterceptor();
     }
 
+
     @Provides
     @Singleton
-    public OkHttpClient provideOkHttpClient(OkHttpClient.Builder httpClient, HttpLoggingInterceptor logging) {
+    public OkHttpClient provideOkHttpClient(OkHttpClient.Builder httpClient, HttpLoggingInterceptor logging, SharedPreferences sharedPreferences) {
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         httpClient.addInterceptor(logging);
+        httpClient.addInterceptor(new Interceptor() {
+            @NonNull
+            @Override
+            public Response intercept(@NonNull Chain chain) throws IOException {
+                final String token = sharedPreferences.getString(SHARED_PREF_USER_ACCESS_TOKEN, "");
+                Request newRequest  = chain.request().newBuilder()
+                        .addHeader("Authorization", "Bearer " + token)
+                        .build();
+                return chain.proceed(newRequest);
+            }
+        });
         return httpClient.build();
     }
 
