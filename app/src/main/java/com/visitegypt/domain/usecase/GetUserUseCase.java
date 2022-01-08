@@ -1,6 +1,7 @@
 package com.visitegypt.domain.usecase;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.repository.UserRepository;
@@ -35,6 +36,7 @@ public class GetUserUseCase extends SingleUseCase<User> {
         sharedPreferences.edit()
                 .putString(Constants.SHARED_PREF_FIRST_NAME, user.getFirstName() + " " + user.getLastName())
                 .putString(Constants.SHARED_PREF_PHONE_NUMBER, user.getPhoneNumber())
+                .putString(Constants.SHARED_PREF_EMAIL,email)
                 .apply();
     }
     @Override

@@ -40,6 +40,15 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+    public User(String firstName, String lastName, String password, String email, String phoneNumber, String photoUrl) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.photoUrl = photoUrl;
+    }
+
     public User(String email, String password) {
         this.email = email;
         this.password = password;
