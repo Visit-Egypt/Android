@@ -2,6 +2,7 @@ package com.visitegypt.data.source.remote;
 
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.Post;
+import com.visitegypt.domain.model.PostPage;
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.response.ItemPageResponse;
@@ -97,7 +98,7 @@ public interface RetrofitService {
     @DELETE("api/post/like/{post_id}")
     public Single<Void> unLike(@Path("post_id") String postId);
     @GET("api/post/user/{user_id}")
-    public Single<List<Post>> getPostsByUser(@Path("user_id") String userId);
+    public Single<PostPage> getPostsByUser(@Path("user_id") String userId);
 
 
 }

@@ -2,6 +2,7 @@ package com.visitegypt.data.repository;
 
 import com.visitegypt.data.source.remote.RetrofitService;
 import com.visitegypt.domain.model.Post;
+import com.visitegypt.domain.model.PostPage;
 import com.visitegypt.domain.repository.PostsRepository;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class PostRepositoryImp implements PostsRepository {
     }
 
     @Override
-    public Single<List<Post>> getPostsByUser(String userId) {
+    public Single<PostPage> getPostsByUser(String userId) {
         return retrofitService.getPostsByUser(userId);
     }
 
