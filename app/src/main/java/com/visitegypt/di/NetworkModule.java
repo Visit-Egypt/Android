@@ -7,11 +7,13 @@ import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 
+import com.visitegypt.data.repository.ChatbotRepositoryImp;
 import com.visitegypt.data.repository.ItemRepositoryImp;
 import com.visitegypt.data.repository.PlaceRepositoryImp;
 import com.visitegypt.data.repository.PostRepositoryImp;
 import com.visitegypt.data.repository.UserRepositoryImp;
 import com.visitegypt.data.source.remote.RetrofitService;
+import com.visitegypt.domain.repository.ChatbotRepository;
 import com.visitegypt.domain.repository.ItemRepository;
 import com.visitegypt.domain.repository.PlaceRepository;
 import com.visitegypt.domain.repository.PostsRepository;
@@ -125,5 +127,9 @@ public class NetworkModule {
     public PostsRepository providePostRepository(RetrofitService retrofitService) {
         return new PostRepositoryImp(retrofitService);
     }
-
+    @Provides
+    @Singleton
+    public ChatbotRepository provideChatbotRepository(RetrofitService retrofitService) {
+        return new ChatbotRepositoryImp(retrofitService);
+    }
 }

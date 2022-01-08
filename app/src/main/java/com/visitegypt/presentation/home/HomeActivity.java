@@ -2,11 +2,9 @@ package com.visitegypt.presentation.home;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +19,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
-import com.visitegypt.presentation.chatbot.ChatbotModel;
+import com.visitegypt.presentation.chatbot.ChatbotActivity;
 import com.visitegypt.ui.account.AccountFragment;
 import com.visitegypt.ui.setting.SettingFragment;
 
@@ -85,7 +83,7 @@ public class HomeActivity extends AppCompatActivity {
         chatbotFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this, ChatbotModel.class));
+                startActivity(new Intent(HomeActivity.this, ChatbotActivity.class));
             }
         });
     }

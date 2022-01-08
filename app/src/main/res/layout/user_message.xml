@@ -10,7 +10,7 @@
     app:cardCornerRadius="8dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="5dp"
+            android:minWidth="200dp"
             android:padding="3dp"
             android:text="@string/user_msg"
             android:textColor="@color/white" />

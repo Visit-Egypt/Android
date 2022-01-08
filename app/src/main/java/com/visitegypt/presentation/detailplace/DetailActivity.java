@@ -47,7 +47,8 @@ import com.visitegypt.domain.model.Item;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.Slider;
-import com.visitegypt.presentation.chatbot.ChatbotModel;
+import com.visitegypt.presentation.chatbot.ChatbotActivity;
+import com.visitegypt.presentation.chatbot.ChatbotViewModel;
 import com.visitegypt.presentation.home.HomeRecyclerViewAdapter;
 import com.visitegypt.utils.Constants;
 
@@ -155,7 +156,7 @@ public class DetailActivity extends AppCompatActivity {
         chatbotFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DetailActivity.this, ChatbotModel.class));
+                startActivity(new Intent(DetailActivity.this, ChatbotActivity.class));
             }
         });
         sliderView = findViewById(R.id.sliderSliderView);

@@ -1,5 +1,6 @@
 package com.visitegypt.data.source.remote;
 
+import com.visitegypt.domain.model.Message;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.Post;
 import com.visitegypt.domain.model.PostPage;
@@ -16,14 +17,12 @@ import io.reactivex.rxjava3.core.Single;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
-import retrofit2.http.Url;
 
 
 public interface RetrofitService {
@@ -56,7 +55,7 @@ public interface RetrofitService {
     public void deleteUser(int id);
 
     @GET("api/user/{id}/upload-photo")
-    public  Single<UploadResponse> uploadUserPhoto(@Path("id")  String id, @Query("content_type") String contentType);
+    public Single<UploadResponse> uploadUserPhoto(@Path("id") String id, @Query("content_type") String contentType);
 
     /*******************************************************************/
     @GET("api/place/{id}")
@@ -70,6 +69,7 @@ public interface RetrofitService {
 
     @POST("api/place/review/{placeId}")
     public Single<Void> submitReview(@Path("placeId") String placeId, @Body Review review);
+
     /******************************************************
      * this Retrofit services for Posts
      * Get Post
@@ -81,24 +81,36 @@ public interface RetrofitService {
      */
     @GET("api/post/place/{post_id}")
     public Single<Post> getPost(@Path("post_id") String postId);
+
     @GET("api/post/{place_id}")
     public Single<List<Post>> getPlacePosts(@Path("place_id") String placeId);
+
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @POST("api/post")
     public Single<Post> addNewPost(@Body Post post);
+
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @POST("api/post/like/{post_id}")
     public Single<Void> addLike(@Path("post_id") String postId);
+
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @PUT("api/post/{post_id}")
-    public Single<Post> updatePost(@Path("post_id") String postId,Post post);
+    public Single<Post> updatePost(@Path("post_id") String postId, Post post);
+
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @DELETE("api/post/{post_id}")
     public Single<Void> deletePost(@Path("post_id") String postId);
+
     @DELETE("api/post/like/{post_id}")
     public Single<Void> unLike(@Path("post_id") String postId);
+
     @GET("api/post/user/{user_id}")
     public Single<PostPage> getPostsByUser(@Path("user_id") String userId);
 
+
+    //Chatbot
+
+    @POST("/api/chatbot")
+    public Single<Message> chatbotReceiveRequest(@Body Message message);
 
 }
