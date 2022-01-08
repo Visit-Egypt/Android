@@ -28,6 +28,11 @@ public class PostRepositoryImp implements PostsRepository {
     }
 
     @Override
+    public Single<List<Post>> getPostsByUser(String userId) {
+        return retrofitService.getPostsByUser(userId);
+    }
+
+    @Override
     public Single<Post> addNewPost(String token, Post post) {
         return retrofitService.addNewPost(token,post);
     }

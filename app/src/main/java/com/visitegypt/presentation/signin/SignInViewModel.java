@@ -41,6 +41,7 @@ public class SignInViewModel extends ViewModel {
     }
 
     public void login(User user) {
+        String email = user.getEmail();
         loginUserUseCase.saveUser(user);
         loginUserUseCase.execute(new Consumer<User>() {
             @Override
@@ -48,8 +49,9 @@ public class SignInViewModel extends ViewModel {
                 Log.d("TAG", "accept: Token "+user.getAccessToken());
                 Log.d("TAG", "accept: Token "+user.getRefreshToken());
                 loginUserUseCase.saveUserData(user);
+                saveUserData(user.getUserId(),email,user.getAccessToken());
                 msgMutableLiveData.setValue("Your login done");
-                //saveUserData();
+
             }
         }, new Consumer<Throwable>() {
             @Override
@@ -74,8 +76,9 @@ public class SignInViewModel extends ViewModel {
     {
         return loginUserUseCase.isUserDataValid();
     }
-/*
-    private void saveUserData() {
+
+    private void saveUserData(String userID,String email,String userAccessToken) {
+        getUserUseCase.setUser(userID, email, userAccessToken);
         getUserUseCase.execute(new Consumer<User>() {
             @Override
             public void accept(User user) throws Throwable {
@@ -102,5 +105,4 @@ public class SignInViewModel extends ViewModel {
         });
     }
 
- */
 }

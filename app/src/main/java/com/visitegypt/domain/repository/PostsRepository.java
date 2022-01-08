@@ -8,9 +8,8 @@ import io.reactivex.rxjava3.core.Single;
 
 public interface PostsRepository {
     Single<Post> getPost(String postId);
-
     Single<List<Post>> getPlacePosts(String postId);
-
+    Single<List<Post>> getPostsByUser(String userId);
     Single<Post> addNewPost(String token, Post post);
 
     Single<Void> addLike(String token, String postId);

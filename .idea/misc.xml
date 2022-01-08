@@ -3,28 +3,48 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/drawable/chatbot_header.xml" value="0.2574074074074074" />
-        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/drawable/likes_background.xml" value="0.2574074074074074" />
-        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/activity_chatbot.xml" value="0.21481481481481482" />
-        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/activity_detail.xml" value="0.2" />
-        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/activity_home.xml" value="0.176" />
-        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/activity_navigation.xml" value="0.22552083333333334" />
-        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/activity_sign_in.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/activity_sign_up.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/activity_splash.xml" value="0.2" />
-        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/card_shimmer_placeholder.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/detail_box_shimmer_placeholder_layout.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/detail_button_shimmer_placeholder_layout.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/detail_slider_shimmer_placeholder_layout.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/detail_table_shimmer_placeholder_layout.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/dialog_add_review.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/fragment_account.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/fragment_setting.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/item_card.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/layout/review_card.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/menu/bottom_nav_menu.xml" value="0.22552083333333334" />
-        <entry key="..\:/Users/LAPTOP/Desktop/LastAndroid/app/src/main/res/menu/home_navigation_menu.xml" value="0.22552083333333334" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2703125" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/drawable-v24/save_logout.xml" value="0.20625" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/drawable/bb.xml" value="0.2703125" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/drawable/boarder.xml" value="0.2703125" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/drawable/brown_rounded_button.xml" value="0.2703125" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/drawable/ic_auth.xml" value="0.2703125" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/drawable/ic_background.xml" value="0.2703125" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.23177083333333334" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2703125" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/drawable/ic_registerbackground.xml" value="0.2703125" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/drawable/information_background.xml" value="0.2703125" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/drawable/input_background.xml" value="0.2703125" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/drawable/input_button.xml" value="0.20625" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/drawable/input_draw.xml" value="0.2703125" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/activity_detail.xml" value="0.2" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/activity_home.xml" value="0.176" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/activity_navigation.xml" value="0.2" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/activity_setting.xml" value="0.264" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/activity_sign_in.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/activity_sign_up.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/activity_splash.xml" value="0.2" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/card_shimmer_placeholder.xml" value="0.17760416666666667" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/detail_box_shimmer_placeholder_layout.xml" value="0.22708333333333333" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/detail_button_shimmer_placeholder_layout.xml" value="0.22708333333333333" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/detail_shimmer_placeholder_layout.xml" value="0.17760416666666667" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/detail_slider_shimmer_placeholder_layout.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/detail_table_shimmer_placeholder_layout.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/dialog_add_review.xml" value="0.17760416666666667" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/fragment_account.xml" value="0.215625" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/fragment_dashboard.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/fragment_home.xml" value="0.215625" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/fragment_notifications.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/fragment_setting.xml" value="0.215625" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/item_card.xml" value="0.215625" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/loading.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/place_card.xml" value="0.17760416666666667" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/profile.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/review_card.xml" value="0.17760416666666667" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/setting.xml" value="0.176" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/layout/slide_layout.xml" value="0.17760416666666667" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidd/app/src/main/res/menu/home_navigation_menu.xml" value="0.215625" />
       </map>
     </option>
   </component>

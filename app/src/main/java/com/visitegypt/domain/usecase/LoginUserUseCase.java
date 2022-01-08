@@ -45,9 +45,9 @@ public class LoginUserUseCase extends SingleUseCase<User> {
     public Boolean isUserDataValid()
     {
 
-       if (/*(sharedPreferences.getString(Constants.SHARED_PREF_USER_ACCESS_TOKEN,null) != null)
+       if ((sharedPreferences.getString(Constants.SHARED_PREF_USER_ACCESS_TOKEN,null) != null)
                && (sharedPreferences.getString(Constants.SHARED_PREF_USER_REFRESH_TOKEN,null) != null)
-               &&*/ (sharedPreferences.getString(Constants.SHARED_PREF_USER_ID,null) != null)
+               && (sharedPreferences.getString(Constants.SHARED_PREF_USER_ID,null) != null)
        )
        {
            return true;

@@ -91,7 +91,8 @@ public interface RetrofitService {
     public Single<Void> deletePost(@Header("Authorization") String token,@Path("post_id") String postId);
     @DELETE("api/post/like/{post_id}")
     public Single<Void> unLike(@Header("Authorization") String token,@Path("post_id") String postId);
-
+    @GET("api/post/user/{user_id}")
+    public Single<List<Post>> getPostsByUser(@Path("user_id") String userId);
 
 
 }
