@@ -8,21 +8,29 @@ import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.response.ItemPageResponse;
 import com.visitegypt.domain.model.response.PlacePageResponse;
+import com.visitegypt.domain.model.response.UploadFields;
 import com.visitegypt.domain.model.response.UploadResponse;
 
 import java.util.List;
 import java.util.Map;
 
 import io.reactivex.rxjava3.core.Single;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
+import retrofit2.http.Url;
 
 
 public interface RetrofitService {
@@ -57,6 +65,9 @@ public interface RetrofitService {
     @GET("api/user/{id}/upload-photo")
     public Single<UploadResponse> uploadUserPhoto(@Path("id") String id, @Query("content_type") String contentType);
 
+    @Multipart
+    @POST
+    Single<ResponseBody> genericUpload(@Url String url, @Part("fields") UploadFields uploadFields, @Part MultipartBody.Part file);
     /*******************************************************************/
     @GET("api/place/{id}")
     public Single<Place> getPlaceById(@Path("id") String id);
