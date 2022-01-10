@@ -6,12 +6,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'dagger.hilt.android.plugin'
 
 android {
-    compileSdk 31
+    compileSdk 29
 
     defaultConfig {
         applicationId "com.visitegypt"
-        minSdk 22
-        targetSdk 31
+        minSdk 24
+        targetSdk 29
         versionCode 1
         versionName "1.0"
 
@@ -38,6 +38,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor 'androidx.room:room-compiler:2.3.0'
     implementation 'androidx.room:room-runtime:2.3.0'
     implementation 'androidx.room:room-common:2.3.0'
@@ -79,4 +80,6 @@ dependencies {
     implementation 'androidx.preference:preference:1.1.1'
     //circular img view
     implementation 'com.mikhaellopez:circularimageview:3.2.0'
+    implementation project(':unityLibrary')
+    implementation fileTree(dir: project(':unityLibrary').getProjectDir().toString() + ('/libs'), include: ['*.jar'])
 }
