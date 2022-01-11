@@ -135,7 +135,7 @@ public class SettingFragment extends Fragment {
                 }
             }
         });
-
+/*
         settingViewModel.mutableLiveDataUploadedFiles.observe(getViewLifecycleOwner(), new Observer<UploadedFilesResponse>() {
             @Override
             public void onChanged(UploadedFilesResponse uploadedFilesResponse) {
@@ -155,6 +155,8 @@ public class SettingFragment extends Fragment {
         settingViewModel.error.observe(getViewLifecycleOwner(), s -> {
             Toast.makeText(requireContext(), s, Toast.LENGTH_LONG).show();
         });
+
+ */
     }
 
     @Override

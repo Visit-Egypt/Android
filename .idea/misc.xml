@@ -3,14 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Work/Android/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.2703125" />
-        <entry key="..\:/Work/Android/app/src/main/res/layout/activity_chatbot.xml" value="0.25416666666666665" />
-        <entry key="..\:/Work/Android/app/src/main/res/layout/activity_home.xml" value="0.37829457364341085" />
-        <entry key="..\:/Work/Android/app/src/main/res/layout/fragment_a_r__fagment.xml" value="0.25416666666666665" />
-        <entry key="..\:/Work/Android/app/src/main/res/layout/fragment_account.xml" value="0.4" />
-        <entry key="..\:/Work/Android/app/src/main/res/layout/fragment_setting.xml" value="0.25416666666666665" />
-        <entry key="..\:/Work/Android/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25416666666666665" />
-        <entry key="..\:/Work/Android/app/src/main/res/menu/home_navigation_menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidaaaaaaa/app/src/main/res/layout/activity_chatbot.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidaaaaaaa/app/src/main/res/layout/bot_message.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Androidaaaaaaa/app/src/main/res/layout/user_message.xml" value="0.25416666666666665" />
+        <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.17447916666666666" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.17447916666666666" />
+        <entry key="app/src/main/res/menu/home_navigation_menu.xml" value="0.17447916666666666" />
       </map>
     </option>
   </component>

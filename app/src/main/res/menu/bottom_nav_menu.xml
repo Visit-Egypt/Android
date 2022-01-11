@@ -16,7 +16,7 @@
         android:icon="@drawable/ic_baseline_settings_24"
         android:title="@string/title_setting" />
     <item
-        android:id="@+id/AR"
+        android:id="@+id/ar"
         android:icon="@drawable/ar"
         android:title="@string/title_ar" />
 

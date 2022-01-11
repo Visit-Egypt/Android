@@ -28,16 +28,13 @@ import retrofit2.HttpException;
 public class SettingViewModel extends ViewModel {
     private static final String TAG = "Setting View Model";
     GetUserUseCase getUserUseCase;
-    UploadUserPhotoUseCase uploadUserPhotoUseCase;
     SharedPreferences sharedPreferences;
     MutableLiveData<User> mutableLiveDataUser = new MutableLiveData<>();
-    MutableLiveData<UploadedFilesResponse> mutableLiveDataUploadedFiles = new MutableLiveData<>();
-    MutableLiveData<String> error = new MutableLiveData<>();
     @Inject
-    public SettingViewModel(GetUserUseCase getUserUseCase, SharedPreferences sharedPreferences, UploadUserPhotoUseCase uploadUserPhotoUseCase) {
+    public SettingViewModel(GetUserUseCase getUserUseCase, SharedPreferences sharedPreferences) {
         this.getUserUseCase = getUserUseCase;
         this.sharedPreferences = sharedPreferences;
-        this.uploadUserPhotoUseCase = uploadUserPhotoUseCase;
+        // this.uploadUserPhotoUseCase = uploadUserPhotoUseCase;
     }
 
     public void getUserData(){
@@ -70,7 +67,7 @@ public class SettingViewModel extends ViewModel {
         });
     }
 
-
+/*
     public void uploadUserProfilePhoto(File userPhoto, String contentType){
         uploadUserPhotoUseCase.setContentType(contentType);
         uploadUserPhotoUseCase.setUserFile(userPhoto);
@@ -86,5 +83,6 @@ public class SettingViewModel extends ViewModel {
             }
         });
     }
+    */
 }
 

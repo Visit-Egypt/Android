@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VisitEgypt">
 
+
+
+
         <activity
             android:name=".presentation.signup.SignUpActivity"
             android:exported="true">
