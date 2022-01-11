@@ -34,6 +34,9 @@ import com.visitegypt.R;
 import com.visitegypt.databinding.FragmentSettingBinding;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.response.UploadedFilesResponse;
+import com.visitegypt.presentation.home.HomeActivity;
+import com.visitegypt.presentation.signin.SignInActivity;
+import com.visitegypt.presentation.signup.SignUpActivity;
 import com.visitegypt.ui.account.AccountViewModel;
 import com.visitegypt.utils.UploadUtils;
 
@@ -72,9 +75,16 @@ public class SettingFragment extends Fragment {
                 selectPhoto();
             }
         });
+        logOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                settingViewModel.logOut();
+                redirect();
+
+            }
+        });
         return settingFragment;
     }
-
     private void selectPhoto() {
         final CharSequence[] options = {"Choose from Gallery", "Cancel"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -188,5 +198,13 @@ public class SettingFragment extends Fragment {
                 Toast.makeText(requireContext(), "You have to grant permissions to open the gallery", Toast.LENGTH_LONG).show();
             }
         }
+    }
+    private  void redirect()
+    {
+
+        Intent intent = new Intent(getContext(), SignInActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+
     }
 }

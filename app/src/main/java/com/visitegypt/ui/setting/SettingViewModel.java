@@ -84,5 +84,9 @@ public class SettingViewModel extends ViewModel {
         });
     }
     */
+    public void logOut()
+    {
+        getUserUseCase.logOut();
+    }
 }
 

@@ -145,6 +145,7 @@
                 android:id="@+id/nameTextView"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
+
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="18dp"
