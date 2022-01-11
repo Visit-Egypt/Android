@@ -194,11 +194,10 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/signInButton"
+        android:id="@+id/signUpButton"
         android:layout_width="342dp"
         android:layout_height="wrap_content"
         android:background="@drawable/input_button"
-        android:onClick="signupOnclick"
         android:text="@string/signUp"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -210,6 +209,11 @@
         app:strokeColor="#FFFFFF"
         app:strokeWidth="2dp"
         tools:ignore="DuplicateSpeakableTextCheck,OnClick" />
-
+    <include
+        android:id="@+id/loadingLayout"
+        layout="@layout/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

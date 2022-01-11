@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.textview.MaterialTextView;
 import com.visitegypt.R;
 import com.visitegypt.domain.usecase.UserValidation;
 import com.visitegypt.presentation.home.HomeActivity;
@@ -23,8 +25,10 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class SignUpActivity extends AppCompatActivity {
     TextInputLayout firstName, lastName, email, phoneNumber, password;
+    
     SignUpViewModel signUpViewModel;
-    AppCompatButton signInButton;
+    MaterialTextView signInButton;
+    AppCompatButton signUpButton;
     View loadingLayout;
     private static final String TAG = "Cannot invoke method length() on null object";
 
@@ -36,12 +40,13 @@ public class SignUpActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
         loadingLayout = findViewById(R.id.loadingLayout);
+        signUpButton = findViewById(R.id.signUpButton);
         firstName = findViewById(R.id.txtFisrtName);
         lastName = findViewById(R.id.txtLastName);
         email = findViewById(R.id.txtEmail);
         phoneNumber = findViewById(R.id.txtPhoneNumber);
         password = findViewById(R.id.txtPassword);
-        signInButton = findViewById(R.id.signInButton);
+        signInButton = findViewById(R.id.signInTransferButton);
         signUpViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
         signUpViewModel.mutableLiveDataErrors.observe(this, new Observer<String[]>() {
             @Override
@@ -75,17 +80,10 @@ public class SignUpActivity extends AppCompatActivity {
                 Toast.makeText(SignUpActivity.this, s, Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    public void signInButton(View view) {
-        Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
-    }
-
-    public void signupOnclick(View view) {
-        if (
+        signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                        if (
                 firstName.getEditText().getText().toString().isEmpty() ||
                         lastName.getEditText().getText().toString().isEmpty() ||
                         email.getEditText().getText().toString().isEmpty() ||
@@ -103,7 +101,39 @@ public class SignUpActivity extends AppCompatActivity {
                 signUpViewModel.getUser();
             }
         }
+            }
+        });
+        
     }
+
+    public void signInButton(View view) {
+        Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
+
+//    public void signupOnclick(View view) {
+//        if (
+//                firstName.getEditText().getText().toString().isEmpty() ||
+//                        lastName.getEditText().getText().toString().isEmpty() ||
+//                        email.getEditText().getText().toString().isEmpty() ||
+//                        phoneNumber.getEditText().getText().toString().isEmpty() ||
+//                        password.getEditText().getText().toString().isEmpty()) {
+//            checkValidations();
+//        } else {
+//            UserValidation userValidation = new UserValidation(firstName.getEditText().getText().toString().trim(), lastName.getEditText().getText().toString(),
+//                    email.getEditText().getText().toString().trim(),
+//                    phoneNumber.getEditText().getText().toString().trim(),
+//                    password.getEditText().getText().toString());
+//            signUpViewModel.setUserValidation(userValidation);
+//            if (signUpViewModel.checkUserValidation()) {
+//                showLoading();
+//                signUpViewModel.getUser();
+//            }
+//        }
+//    }
+
 
     private void showLoading() {
         firstName.setVisibility(View.GONE);
@@ -111,6 +141,7 @@ public class SignUpActivity extends AppCompatActivity {
         email.setVisibility(View.GONE);
         phoneNumber.setVisibility(View.GONE);
         password.setVisibility(View.GONE);
+        signUpButton.setVisibility(View.GONE);
         signInButton.setVisibility(View.GONE);
         loadingLayout.setVisibility(View.VISIBLE);
     }
@@ -122,6 +153,7 @@ public class SignUpActivity extends AppCompatActivity {
         phoneNumber.setVisibility(View.VISIBLE);
         password.setVisibility(View.VISIBLE);
         signInButton.setVisibility(View.VISIBLE);
+        signUpButton.setVisibility(View.VISIBLE);
         loadingLayout.setVisibility(View.GONE);
     }
 
@@ -245,4 +277,5 @@ public class SignUpActivity extends AppCompatActivity {
             });
         }
     }
+    
 }

@@ -145,7 +145,6 @@
                 android:id="@+id/nameTextView"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="AAAAAA"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="18dp"
@@ -202,7 +201,7 @@
                             android:id="@+id/postNameTextView"
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:text="AAAAAA"
+
                             android:textAlignment="textStart"
                             android:textColor="@color/white"
                             android:textSize="18dp"
@@ -228,7 +227,6 @@
                     android:layout_marginLeft="90dp"
                     android:inputType="textLongMessage"
                     android:maxLines="3"
-                    android:text="I visited this place  month ago.,,,,,"
                     android:textAlignment="textStart"
                     android:textColor="@color/gray"
                     android:textSize="18dp" />
