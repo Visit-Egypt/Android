@@ -42,6 +42,11 @@ public class UserRepositoryImp implements UserRepository {
     }
 
     @Override
+    public Single<User> updateUser(String userId, User user) {
+        return retrofitService.updateUser(userId, user);
+    }
+
+    @Override
     public Single<UploadResponse> uploadUserPhoto(String userId, String contentType){
         return retrofitService.uploadUserPhoto(userId, contentType);
     }

@@ -83,6 +83,19 @@ public class SettingFragment extends Fragment {
 
             }
         });
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(getContext(), "This feature is under development", Toast.LENGTH_LONG).show();
+            }
+        });
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         return settingFragment;
     }
     private void selectPhoto() {

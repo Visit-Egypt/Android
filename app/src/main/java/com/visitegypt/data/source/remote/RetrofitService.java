@@ -56,8 +56,8 @@ public interface RetrofitService {
     @GET("api/user")
     public Single<User> getUser(@Query("user_id") String userId, @Query("user_email") String email);
 
-    @PUT("api/user/:id")
-    public void updateUser(@Body int id);
+    @PUT("api/user/{user_id}")
+    public Single<User> updateUser(@Path("user_id") String userId,@Body User user);
 
     @DELETE("api/user/:id")
     public void deleteUser(int id);
@@ -69,8 +69,8 @@ public interface RetrofitService {
     @POST
     Single<ResponseBody> genericUpload(@Url String url, @Part("fields") UploadFields uploadFields, @Part MultipartBody.Part file);
     /*******************************************************************/
-    @GET("api/place/{id}")
-    public Single<Place> getPlaceById(@Path("id") String id);
+    @GET("api/place/{place_id}")
+    public Single<Place> getPlaceById(@Path("place_id") String id);
 
     @GET("api/place")
     public Single<PlacePageResponse> getAllPlaces();

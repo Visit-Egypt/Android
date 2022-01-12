@@ -10,6 +10,7 @@ import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.response.UploadResponse;
 import com.visitegypt.domain.model.response.UploadedFilesResponse;
 import com.visitegypt.domain.usecase.GetUserUseCase;
+import com.visitegypt.domain.usecase.UpdateUserUseCase;
 import com.visitegypt.domain.usecase.UploadUserPhotoUseCase;
 import com.visitegypt.utils.Constants;
 
@@ -28,13 +29,16 @@ import retrofit2.HttpException;
 public class SettingViewModel extends ViewModel {
     private static final String TAG = "Setting View Model";
     GetUserUseCase getUserUseCase;
+    UpdateUserUseCase updateUserUseCase;
     SharedPreferences sharedPreferences;
     MutableLiveData<User> mutableLiveDataUser = new MutableLiveData<>();
     @Inject
-    public SettingViewModel(GetUserUseCase getUserUseCase, SharedPreferences sharedPreferences) {
+    public SettingViewModel(GetUserUseCase getUserUseCase, SharedPreferences sharedPreferences,UpdateUserUseCase updateUserUseCase) {
         this.getUserUseCase = getUserUseCase;
         this.sharedPreferences = sharedPreferences;
+        this.updateUserUseCase = updateUserUseCase;
         // this.uploadUserPhotoUseCase = uploadUserPhotoUseCase;
+
     }
 
     public void getUserData(){
@@ -87,6 +91,41 @@ public class SettingViewModel extends ViewModel {
     public void logOut()
     {
         getUserUseCase.logOut();
+    }
+    public void updateUser(String firstName,String lastName,String email,String phoneNo,String password)
+
+    {
+        if(password.equals("FFFFFF"))
+        {
+            password = null;
+        }
+        User user = new User(firstName,lastName,email,phoneNo,password);
+        Log.d(TAG, "updateUser: "+email);
+        updateUserUseCase.setUser(user);
+        updateUserUseCase.execute(new Consumer<User>() {
+            @Override
+            public void accept(User user) throws Throwable {
+                mutableLiveDataUser.setValue(user);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Throwable {
+                try {
+                    ResponseBody body = ((HttpException) throwable).response().errorBody();
+                    JSONObject jObjectError = new JSONObject(body.string());
+                    Log.d("TAG", "accept try : " + jObjectError.getJSONArray("errors").toString());
+                    if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
+
+
+                    } else {
+
+                    }
+                } catch (Exception e) {
+                    Log.d("TAG", "accept catch: " + e.toString());
+                }
+            }
+        });
+
     }
 }
 
