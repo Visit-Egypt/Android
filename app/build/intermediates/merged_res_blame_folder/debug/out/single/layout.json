@@ -1,0 +1,86 @@
+[
+    {
+        "merged": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\loading.xml",
+        "source": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\src\\main\\res\\layout\\loading.xml"
+    },
+    {
+        "merged": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_chatbot.xml",
+        "source": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\src\\main\\res\\layout\\activity_chatbot.xml"
+    },
+    {
+        "merged": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\detail_button_shimmer_placeholder_layout.xml",
+        "source": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\src\\main\\res\\layout\\detail_button_shimmer_placeholder_layout.xml"
+    },
+    {
+        "merged": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_sign_up.xml",
+        "source": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\src\\main\\res\\layout\\activity_sign_up.xml"
+    },
+    {
+        "merged": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\place_card.xml",
+        "source": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\src\\main\\res\\layout\\place_card.xml"
+    },
+    {
+        "merged": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\dialog_add_review.xml",
+        "source": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\src\\main\\res\\layout\\dialog_add_review.xml"
+    },
+    {
+        "merged": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\slide_layout.xml",
+        "source": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\src\\main\\res\\layout\\slide_layout.xml"
+    },
+    {
+        "merged": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\user_message.xml",
+        "source": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\src\\main\\res\\layout\\user_message.xml"
+    },
+    {
+        "merged": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_account.xml",
+        "source": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\src\\main\\res\\layout\\fragment_account.xml"
+    },
+    {
+        "merged": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_setting.xml",
+        "source": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\src\\main\\res\\layout\\fragment_setting.xml"
+    },
+    {
+        "merged": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_home.xml",
+        "source": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\src\\main\\res\\layout\\activity_home.xml"
+    },
+    {
+        "merged": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\bot_message.xml",
+        "source": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\src\\main\\res\\layout\\bot_message.xml"
+    },
+    {
+        "merged": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\detail_table_shimmer_placeholder_layout.xml",
+        "source": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\src\\main\\res\\layout\\detail_table_shimmer_placeholder_layout.xml"
+    },
+    {
+        "merged": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\detail_box_shimmer_placeholder_layout.xml",
+        "source": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\src\\main\\res\\layout\\detail_box_shimmer_placeholder_layout.xml"
+    },
+    {
+        "merged": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_sign_in.xml",
+        "source": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\src\\main\\res\\layout\\activity_sign_in.xml"
+    },
+    {
+        "merged": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_splash.xml",
+        "source": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\src\\main\\res\\layout\\activity_splash.xml"
+    },
+    {
+        "merged": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\card_shimmer_placeholder.xml",
+        "source": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\src\\main\\res\\layout\\card_shimmer_placeholder.xml"
+    },
+    {
+        "merged": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\detail_slider_shimmer_placeholder_layout.xml",
+        "source": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\src\\main\\res\\layout\\detail_slider_shimmer_placeholder_layout.xml"
+    },
+    {
+        "merged": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\item_card.xml",
+        "source": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\src\\main\\res\\layout\\item_card.xml"
+    },
+    {
+        "merged": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\review_card.xml",
+        "source": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\src\\main\\res\\layout\\review_card.xml"
+    },
+    {
+        "merged": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_detail.xml",
+        "source": "C:\\Users\\DELL\\Downloads\\Android-new1\\app\\src\\main\\res\\layout\\activity_detail.xml"
+    }
+]
