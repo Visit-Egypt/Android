@@ -1,9 +1,5 @@
 package com.visitegypt.domain.usecase;
 
-import static com.visitegypt.utils.Constants.SHARED_PREF_USER_ACCESS_TOKEN;
-
-import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.repository.PlaceRepository;

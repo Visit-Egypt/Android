@@ -2,6 +2,7 @@ package com.visitegypt.data.repository;
 
 import com.visitegypt.data.source.remote.RetrofitService;
 import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.response.UploadFields;
 import com.visitegypt.domain.model.response.UploadResponse;
 import com.visitegypt.domain.repository.UserRepository;
@@ -42,7 +43,7 @@ public class UserRepositoryImp implements UserRepository {
     }
 
     @Override
-    public Single<User> updateUser(String userId, User user) {
+    public Single<User> updateUser(String userId, UserUpdateRequest user) {
         return retrofitService.updateUser(userId, user);
     }
 

@@ -39,6 +39,7 @@ import com.visitegypt.domain.usecase.GetUserUseCase;
 import com.visitegypt.domain.usecase.LoginUserUseCase;
 import com.visitegypt.domain.usecase.RegisterUseCase;
 import com.visitegypt.domain.usecase.SubmitReviewUseCase;
+import com.visitegypt.domain.usecase.UpdateUserUseCase;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
 import com.visitegypt.presentation.chatbot.ChatbotViewModel;
 import com.visitegypt.presentation.chatbot.ChatbotViewModel_HiltModules_KeyModule_ProvideFactory;
@@ -660,8 +661,12 @@ public final class DaggerMainApplication_HiltComponents_SingletonC extends MainA
       return new GetUserUseCase(singletonC.provideUserRepositoryProvider.get(), singletonC.provideSharedPreferencesProvider.get());
     }
 
+    private UpdateUserUseCase updateUserUseCase() {
+      return new UpdateUserUseCase(singletonC.provideUserRepositoryProvider.get(), singletonC.provideSharedPreferencesProvider.get());
+    }
+
     private SettingViewModel settingViewModel() {
-      return new SettingViewModel(getUserUseCase(), singletonC.provideSharedPreferencesProvider.get());
+      return new SettingViewModel(getUserUseCase(), singletonC.provideSharedPreferencesProvider.get(), updateUserUseCase());
     }
 
     private LoginUserUseCase loginUserUseCase() {

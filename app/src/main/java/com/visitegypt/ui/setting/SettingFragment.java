@@ -33,6 +33,7 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import com.visitegypt.R;
 import com.visitegypt.databinding.FragmentSettingBinding;
 import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.response.UploadedFilesResponse;
 import com.visitegypt.presentation.home.HomeActivity;
 import com.visitegypt.presentation.signin.SignInActivity;
@@ -86,8 +87,25 @@ public class SettingFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                UserUpdateRequest userUpdateRequest = new UserUpdateRequest();
+                String userFirstName = firstName.getText().toString();
+                String userLastName = lastName.getText().toString();
+                String userPhoneNumber = phone.getText().toString();
+                String userEmail = email.getText().toString();
+                String userPassword = password.getText().toString();
 
-                Toast.makeText(getContext(), "This feature is under development", Toast.LENGTH_LONG).show();
+                if (userFirstName != null && !userFirstName.isEmpty())
+                    userUpdateRequest.setFirstName(userFirstName);
+                if(userLastName != null && !userLastName.isEmpty())
+                    userUpdateRequest.setLastName(userLastName);
+                if(userPhoneNumber != null && !userPhoneNumber.isEmpty())
+                    userUpdateRequest.setPhoneNumber(userPhoneNumber);
+                if(userPassword != null && !userPassword.isEmpty())
+                    userUpdateRequest.setPassword(userPassword);
+                if(userEmail != null && !userEmail.isEmpty())
+                    userUpdateRequest.setEmail(userEmail);
+
+                settingViewModel.updateUser(userUpdateRequest);
             }
         });
         cancelButton.setOnClickListener(new View.OnClickListener() {

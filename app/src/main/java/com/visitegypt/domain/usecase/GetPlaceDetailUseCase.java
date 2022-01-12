@@ -1,6 +1,7 @@
 package com.visitegypt.domain.usecase;
 
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.response.PlacePageResponse;
 import com.visitegypt.domain.repository.PlaceRepository;
 import com.visitegypt.domain.usecase.base.SingleUseCase;
 
@@ -22,7 +23,7 @@ public class GetPlaceDetailUseCase extends SingleUseCase<Place> {
     }
 
     @Override
-    protected Single buildSingleUseCase() {
+    protected Single<Place> buildSingleUseCase() {
         return placeRepository.getPlaceById(placeId);
     }
 }

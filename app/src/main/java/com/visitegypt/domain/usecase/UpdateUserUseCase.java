@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import androidx.core.graphics.drawable.IconCompat;
 
 import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.repository.UserRepository;
 import com.visitegypt.domain.usecase.base.SingleUseCase;
 import com.visitegypt.utils.Constants;
@@ -17,6 +18,7 @@ public class UpdateUserUseCase extends SingleUseCase<User> {
 
     private UserRepository userRepository;
     private SharedPreferences sharedPreferences;
+    private UserUpdateRequest userUpdateRequest;
 
     @Inject
     public UpdateUserUseCase(UserRepository userRepository, SharedPreferences sharedPreferences) {
@@ -24,15 +26,13 @@ public class UpdateUserUseCase extends SingleUseCase<User> {
         this.sharedPreferences = sharedPreferences;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(UserUpdateRequest userUpdateRequest) {
+        this.userUpdateRequest = userUpdateRequest;
     }
-
-    private User user = new User();
 
 
     @Override
     protected Single<User> buildSingleUseCase() {
-        return userRepository.updateUser(sharedPreferences.getString(Constants.SHARED_PREF_USER_ID,null), user);
+        return userRepository.updateUser(sharedPreferences.getString(Constants.SHARED_PREF_USER_ID,null), userUpdateRequest);
     }
 }

@@ -80,11 +80,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name="androidx.room.MultiInstanceInvalidationService"
+            android:directBootAware="true"
+            android:exported="false" />
+
+        <provider
+            android:name="com.squareup.picasso.PicassoProvider"
+            android:authorities="com.visitegypt.com.squareup.picasso"
+            android:exported="false" />
+
         <activity
             android:name="com.unity3d.player.UnityPlayerActivity"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale|layoutDirection|density"
             android:hardwareAccelerated="false"
             android:launchMode="singleTask"
+            android:process=":unityplayer"
             android:screenOrientation="fullSensor"
             android:theme="@style/UnityThemeSelector" >
             <intent-filter>
@@ -106,17 +118,8 @@
             android:value="True" />
         <meta-data
             android:name="unity.build-id"
-            android:value="34b35935-0a7e-42d8-a98c-bd202d8f347c" />
+            android:value="04b4d8b2-13ae-4780-a880-595173563a1b" />
 
-        <service
-            android:name="androidx.room.MultiInstanceInvalidationService"
-            android:directBootAware="true"
-            android:exported="false" />
-
-        <provider
-            android:name="com.squareup.picasso.PicassoProvider"
-            android:authorities="com.visitegypt.com.squareup.picasso"
-            android:exported="false" />
         <provider
             android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
             android:authorities="com.visitegypt.lifecycle-process"

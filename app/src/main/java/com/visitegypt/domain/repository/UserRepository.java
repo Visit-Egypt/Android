@@ -1,5 +1,6 @@
 package com.visitegypt.domain.repository;
 import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.response.UploadFields;
 import com.visitegypt.domain.model.response.UploadResponse;
 
@@ -24,7 +25,7 @@ public interface UserRepository {
     Single<User> loginUser(User user);
     Single<User> refreshUserToken(User user);
     Single<User> getUser(String userId,String email);
-    Single<User> updateUser(String userId,User user);
+    Single<User> updateUser(String userId, UserUpdateRequest user);
     Single<UploadResponse> uploadUserPhoto(String userId, String contentType);
     Single<ResponseBody> genericUpload(String uploadUrl, UploadFields uploadFields, MultipartBody.Part file);
 }

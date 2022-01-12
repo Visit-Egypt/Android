@@ -115,7 +115,8 @@ public class DetailActivity extends AppCompatActivity {
         }
         Log.d(TAG, "Place ID: " + placeId);
         initViews();
-        initViewModel(placeId);
+        if(placeId != null)
+            initViewModel(placeId);
         addReviewButton = findViewById(R.id.writeReviewButton);
 //addReviewButton.setOnClickListener(new View.OnClickListener() {
 //    @Override

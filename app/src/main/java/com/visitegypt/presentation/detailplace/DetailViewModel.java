@@ -1,8 +1,6 @@
 package com.visitegypt.presentation.detailplace;
 
-import android.accounts.AccountManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -93,6 +91,4 @@ public class DetailViewModel extends ViewModel {
             }
         });
     }
-
-
 }

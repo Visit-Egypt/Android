@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.response.UploadResponse;
 import com.visitegypt.domain.model.response.UploadedFilesResponse;
 import com.visitegypt.domain.usecase.GetUserUseCase;
@@ -92,16 +93,8 @@ public class SettingViewModel extends ViewModel {
     {
         getUserUseCase.logOut();
     }
-    public void updateUser(String firstName,String lastName,String email,String phoneNo,String password)
-
-    {
-        if(password.equals("FFFFFF"))
-        {
-            password = null;
-        }
-        User user = new User(firstName,lastName,email,phoneNo,password);
-        Log.d(TAG, "updateUser: "+email);
-        updateUserUseCase.setUser(user);
+    public void updateUser(UserUpdateRequest userUpdateRequest) {
+        updateUserUseCase.setUser(userUpdateRequest);
         updateUserUseCase.execute(new Consumer<User>() {
             @Override
             public void accept(User user) throws Throwable {

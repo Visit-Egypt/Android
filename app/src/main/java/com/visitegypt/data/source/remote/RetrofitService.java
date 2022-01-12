@@ -6,6 +6,7 @@ import com.visitegypt.domain.model.Post;
 import com.visitegypt.domain.model.PostPage;
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.response.ItemPageResponse;
 import com.visitegypt.domain.model.response.PlacePageResponse;
 import com.visitegypt.domain.model.response.UploadFields;
@@ -57,7 +58,7 @@ public interface RetrofitService {
     public Single<User> getUser(@Query("user_id") String userId, @Query("user_email") String email);
 
     @PUT("api/user/{user_id}")
-    public Single<User> updateUser(@Path("user_id") String userId,@Body User user);
+    public Single<User> updateUser(@Path("user_id") String userId,@Body UserUpdateRequest user);
 
     @DELETE("api/user/:id")
     public void deleteUser(int id);

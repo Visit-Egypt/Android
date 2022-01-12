@@ -3,6 +3,7 @@ package com.visitegypt.ui.setting;
 
 import android.content.SharedPreferences;
 import com.visitegypt.domain.usecase.GetUserUseCase;
+import com.visitegypt.domain.usecase.UpdateUserUseCase;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import javax.inject.Provider;
@@ -17,24 +18,29 @@ public final class SettingViewModel_Factory implements Factory<SettingViewModel>
 
   private final Provider<SharedPreferences> sharedPreferencesProvider;
 
+  private final Provider<UpdateUserUseCase> updateUserUseCaseProvider;
+
   public SettingViewModel_Factory(Provider<GetUserUseCase> getUserUseCaseProvider,
-      Provider<SharedPreferences> sharedPreferencesProvider) {
+      Provider<SharedPreferences> sharedPreferencesProvider,
+      Provider<UpdateUserUseCase> updateUserUseCaseProvider) {
     this.getUserUseCaseProvider = getUserUseCaseProvider;
     this.sharedPreferencesProvider = sharedPreferencesProvider;
+    this.updateUserUseCaseProvider = updateUserUseCaseProvider;
   }
 
   @Override
   public SettingViewModel get() {
-    return newInstance(getUserUseCaseProvider.get(), sharedPreferencesProvider.get());
+    return newInstance(getUserUseCaseProvider.get(), sharedPreferencesProvider.get(), updateUserUseCaseProvider.get());
   }
 
   public static SettingViewModel_Factory create(Provider<GetUserUseCase> getUserUseCaseProvider,
-      Provider<SharedPreferences> sharedPreferencesProvider) {
-    return new SettingViewModel_Factory(getUserUseCaseProvider, sharedPreferencesProvider);
+      Provider<SharedPreferences> sharedPreferencesProvider,
+      Provider<UpdateUserUseCase> updateUserUseCaseProvider) {
+    return new SettingViewModel_Factory(getUserUseCaseProvider, sharedPreferencesProvider, updateUserUseCaseProvider);
   }
 
   public static SettingViewModel newInstance(GetUserUseCase getUserUseCase,
-      SharedPreferences sharedPreferences) {
-    return new SettingViewModel(getUserUseCase, sharedPreferences);
+      SharedPreferences sharedPreferences, UpdateUserUseCase updateUserUseCase) {
+    return new SettingViewModel(getUserUseCase, sharedPreferences, updateUserUseCase);
   }
 }

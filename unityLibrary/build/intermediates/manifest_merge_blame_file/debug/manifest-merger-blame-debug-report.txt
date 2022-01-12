@@ -6,116 +6,116 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="20"
-8-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml
+8-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml
 9        android:targetSdkVersion="29" />
-9-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml
+9-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml
 10
 11    <uses-feature android:glEsVersion="0x00020000" />
-11-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:16:3-52
-11-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:16:17-49
+11-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:16:3-52
+11-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:16:17-49
 12
 13    <uses-permission android:name="android.permission.INTERNET" />
-13-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:17:3-65
-13-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:17:20-62
+13-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:17:3-65
+13-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:17:20-62
 14    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
-14-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:18:3-84
-14-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:18:20-81
+14-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:18:3-84
+14-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:18:20-81
 15    <uses-permission android:name="android.permission.CAMERA" />
-15-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:19:3-63
-15-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:19:20-60
+15-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:19:3-63
+15-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:19:20-60
 16
 17    <uses-feature
-17-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:20:3-83
+17-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:20:3-83
 18        android:name="android.hardware.camera"
-18-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:20:17-55
+18-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:20:17-55
 19        android:required="false" />
-19-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:20:56-80
+19-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:20:56-80
 20    <uses-feature
-20-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:21:3-93
+20-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:21:3-93
 21        android:name="android.hardware.camera.autofocus"
-21-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:21:17-65
+21-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:21:17-65
 22        android:required="false" />
-22-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:21:66-90
+22-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:21:66-90
 23    <uses-feature
-23-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:22:3-89
+23-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:22:3-89
 24        android:name="android.hardware.camera.front"
-24-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:22:17-61
+24-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:22:17-61
 25        android:required="false" />
-25-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:22:62-86
+25-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:22:62-86
 26    <uses-feature
-26-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:23:3-88
+26-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:23:3-88
 27        android:name="android.hardware.touchscreen"
-27-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:23:17-60
+27-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:23:17-60
 28        android:required="false" />
-28-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:23:61-85
+28-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:23:61-85
 29    <uses-feature
-29-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:24:3-99
+29-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:24:3-99
 30        android:name="android.hardware.touchscreen.multitouch"
-30-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:24:17-71
+30-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:24:17-71
 31        android:required="false" />
-31-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:24:72-96
+31-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:24:72-96
 32    <uses-feature
-32-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:25:3-108
+32-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:25:3-108
 33        android:name="android.hardware.touchscreen.multitouch.distinct"
-33-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:25:17-80
+33-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:25:17-80
 34        android:required="false" />
-34-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:25:81-105
+34-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:25:81-105
 35
 36    <application>
-36-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:4:3-15:17
+36-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:4:3-15:17
 37        <activity
-37-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:5:5-11:16
+37-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:5:5-11:16
 38            android:name="com.unity3d.player.UnityPlayerActivity"
-38-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:5:15-68
+38-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:5:15-68
 39            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale|layoutDirection|density"
-39-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:5:182-363
+39-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:5:182-363
 40            android:hardwareAccelerated="false"
-40-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:5:364-399
+40-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:5:364-399
 41            android:launchMode="singleTask"
-41-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:5:150-181
+41-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:5:150-181
 42            android:process=":unityplayer"
-42-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:5:400-430
+42-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:5:400-430
 43            android:screenOrientation="fullSensor"
-43-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:5:111-149
+43-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:5:111-149
 44            android:theme="@style/UnityThemeSelector" >
-44-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:5:69-110
+44-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:5:69-110
 45            <intent-filter>
-45-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:6:7-9:23
+45-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:6:7-9:23
 46                <action android:name="android.intent.action.MAIN" />
-46-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:7:9-61
-46-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:7:17-58
+46-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:7:9-61
+46-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:7:17-58
 47
 48                <category android:name="android.intent.category.LAUNCHER" />
-48-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:8:9-69
-48-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:8:19-66
+48-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:8:9-69
+48-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:8:19-66
 49            </intent-filter>
 50
 51            <meta-data
-51-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:10:7-82
+51-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:10:7-82
 52                android:name="unityplayer.UnityActivity"
-52-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:10:18-58
+52-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:10:18-58
 53                android:value="true" />
-53-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:10:59-79
+53-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:10:59-79
 54        </activity>
 55
 56        <meta-data
-56-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:12:5-69
+56-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:12:5-69
 57            android:name="unity.splash-mode"
-57-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:12:16-48
+57-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:12:16-48
 58            android:value="0" />
-58-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:12:49-66
+58-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:12:49-66
 59        <meta-data
-59-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:13:5-74
+59-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:13:5-74
 60            android:name="unity.splash-enable"
-60-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:13:16-50
+60-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:13:16-50
 61            android:value="True" />
-61-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:13:51-71
+61-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:13:51-71
 62        <meta-data
-62-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:14:5-101
+62-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:14:5-101
 63            android:name="unity.build-id"
-63-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:14:16-45
+63-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:14:16-45
 64            android:value="04b4d8b2-13ae-4780-a880-595173563a1b" />
-64-->D:\Work\Android\unityLibrary\src\main\AndroidManifest.xml:14:46-98
+64-->/home/geekahmed/StudioProjects/Android/unityLibrary/src/main/AndroidManifest.xml:14:46-98
 65    </application>
 66
 67</manifest>
