@@ -51,10 +51,10 @@ com/visitegypt/domain/usecase/UserRefreshToken.java
  com.visitegypt.domain.usecase.UserRefreshToken
 com/visitegypt/databinding/ItemCardBinding.java
  com.visitegypt.databinding.ItemCardBinding
-com/visitegypt/domain/model/UserUpdateRequest.java
- com.visitegypt.domain.model.UserUpdateRequest
 com/visitegypt/domain/model/PostPage.java
  com.visitegypt.domain.model.PostPage
+com/visitegypt/domain/model/UserUpdateRequest.java
+ com.visitegypt.domain.model.UserUpdateRequest
 com/visitegypt/domain/model/Post.java
  com.visitegypt.domain.model.Post
 com/visitegypt/presentation/signin/SignInViewModel.java
@@ -162,6 +162,9 @@ com/visitegypt/domain/model/converters/PostConverter.java
  com.visitegypt.domain.model.converters.PostConverter$1
 com/visitegypt/domain/repository/ItemRepository.java
  com.visitegypt.domain.repository.ItemRepository
+com/visitegypt/presentation/chatbot/SingleLiveEvent.java
+ com.visitegypt.presentation.chatbot.SingleLiveEvent
+ com.visitegypt.presentation.chatbot.SingleLiveEvent$1
 com/visitegypt/presentation/chatbot/ChatbotViewModel.java
  com.visitegypt.presentation.chatbot.ChatbotViewModel
 com/visitegypt/domain/model/converters/OpeningHoursConverter.java
@@ -169,10 +172,10 @@ com/visitegypt/domain/model/converters/OpeningHoursConverter.java
  com.visitegypt.domain.model.converters.OpeningHoursConverter$1
 com/visitegypt/data/repository/UserRepositoryImp.java
  com.visitegypt.data.repository.UserRepositoryImp
-com/visitegypt/data/source/local/dao/PlaceDao.java
- com.visitegypt.data.source.local.dao.PlaceDao
 com/visitegypt/domain/model/Slider.java
  com.visitegypt.domain.model.Slider
+com/visitegypt/data/source/local/dao/PlaceDao.java
+ com.visitegypt.data.source.local.dao.PlaceDao
 com/visitegypt/data/repository/PlaceRepositoryImp.java
  com.visitegypt.data.repository.PlaceRepositoryImp
 com/visitegypt/domain/usecase/RegisterUseCase.java
@@ -270,10 +273,10 @@ com/visitegypt/domain/usecase/GetPlaceDetailUseCase.java
  com.visitegypt.domain.usecase.GetPlaceDetailUseCase
 com/visitegypt/databinding/DetailTableShimmerPlaceholderLayoutBinding.java
  com.visitegypt.databinding.DetailTableShimmerPlaceholderLayoutBinding
-com/visitegypt/data/repository/ChatbotRepositoryImp.java
- com.visitegypt.data.repository.ChatbotRepositoryImp
 com/visitegypt/domain/usecase/GetItemsUseCase.java
  com.visitegypt.domain.usecase.GetItemsUseCase
+com/visitegypt/data/repository/ChatbotRepositoryImp.java
+ com.visitegypt.data.repository.ChatbotRepositoryImp
 com/visitegypt/databinding/ActivityDetailBinding.java
  com.visitegypt.databinding.ActivityDetailBinding
 com/visitegypt/domain/usecase/base/SingleUseCase.java

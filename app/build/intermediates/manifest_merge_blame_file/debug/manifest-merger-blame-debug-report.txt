@@ -6,270 +6,270 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="24"
-8-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml
+8-->D:\Work\Android\app\src\main\AndroidManifest.xml
 9        android:targetSdkVersion="29" />
-9-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml
+9-->D:\Work\Android\app\src\main\AndroidManifest.xml
 10
 11    <uses-permission android:name="android.permission.INTERNET" />
-11-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:6:5-67
-11-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:6:22-64
+11-->D:\Work\Android\app\src\main\AndroidManifest.xml:6:5-67
+11-->D:\Work\Android\app\src\main\AndroidManifest.xml:6:22-64
 12    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-12-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:7:5-80
-12-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:7:22-77
+12-->D:\Work\Android\app\src\main\AndroidManifest.xml:7:5-80
+12-->D:\Work\Android\app\src\main\AndroidManifest.xml:7:22-77
 13    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-13-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:8:5-79
-13-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:8:22-76
+13-->D:\Work\Android\app\src\main\AndroidManifest.xml:8:5-79
+13-->D:\Work\Android\app\src\main\AndroidManifest.xml:8:22-76
 14
 15    <uses-feature android:glEsVersion="0x00020000" />
-15-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:11:5-54
-15-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:11:19-51
+15-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:11:5-54
+15-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:11:19-51
 16
 17    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
-17-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:14:5-86
-17-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:14:22-83
+17-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:14:5-86
+17-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:14:22-83
 18    <uses-permission android:name="android.permission.CAMERA" />
-18-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:15:5-65
-18-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:15:22-62
+18-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:15:5-65
+18-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:15:22-62
 19
 20    <uses-feature
-20-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:17:5-19:36
+20-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:17:5-19:36
 21        android:name="android.hardware.camera"
-21-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:18:9-47
+21-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:18:9-47
 22        android:required="true" />
-22-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:19:9-33
+22-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:19:9-33
 23    <uses-feature
-23-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:20:5-22:36
+23-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:20:5-22:36
 24        android:name="android.hardware.camera.autofocus"
-24-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:21:9-57
+24-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:21:9-57
 25        android:required="false" />
-25-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:22:9-33
+25-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:22:9-33
 26    <uses-feature
-26-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:23:5-25:36
+26-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:23:5-25:36
 27        android:name="android.hardware.camera.front"
-27-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:24:9-53
+27-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:24:9-53
 28        android:required="false" />
-28-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:25:9-33
+28-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:25:9-33
 29    <uses-feature
-29-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:26:5-28:36
+29-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:26:5-28:36
 30        android:name="android.hardware.touchscreen"
-30-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:27:9-52
+30-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:27:9-52
 31        android:required="false" />
-31-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:28:9-33
+31-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:28:9-33
 32    <uses-feature
-32-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:29:5-31:36
+32-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:29:5-31:36
 33        android:name="android.hardware.touchscreen.multitouch"
-33-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:30:9-63
+33-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:30:9-63
 34        android:required="false" />
-34-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:31:9-33
+34-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:31:9-33
 35    <uses-feature
-35-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:32:5-34:36
+35-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:32:5-34:36
 36        android:name="android.hardware.touchscreen.multitouch.distinct"
-36-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:33:9-72
+36-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:33:9-72
 37        android:required="false" />
-37-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:34:9-33
+37-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:34:9-33
 38
 39    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-39-->[:VuforiaWrapper:] /home/geekahmed/.gradle/caches/transforms-3/f7da5d8345adb7607fddd9ca58f09221/transformed/jetified-VuforiaWrapper/AndroidManifest.xml:12:5-81
-39-->[:VuforiaWrapper:] /home/geekahmed/.gradle/caches/transforms-3/f7da5d8345adb7607fddd9ca58f09221/transformed/jetified-VuforiaWrapper/AndroidManifest.xml:12:22-78
+39-->[:VuforiaWrapper:] C:\Users\Yehia\.gradle\caches\transforms-3\f7da5d8345adb7607fddd9ca58f09221\transformed\jetified-VuforiaWrapper\AndroidManifest.xml:12:5-81
+39-->[:VuforiaWrapper:] C:\Users\Yehia\.gradle\caches\transforms-3\f7da5d8345adb7607fddd9ca58f09221\transformed\jetified-VuforiaWrapper\AndroidManifest.xml:12:22-78
 40    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 41
 42    <application
-42-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:11:5-58:19
+42-->D:\Work\Android\app\src\main\AndroidManifest.xml:11:5-58:19
 43        android:name="com.visitegypt.MainApplication"
-43-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:12:9-40
+43-->D:\Work\Android\app\src\main\AndroidManifest.xml:12:9-40
 44        android:allowBackup="true"
-44-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:13:9-35
+44-->D:\Work\Android\app\src\main\AndroidManifest.xml:13:9-35
 45        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-45-->[androidx.core:core:1.5.0] /home/geekahmed/.gradle/caches/transforms-3/72cbb9628a516735d657154f3150283b/transformed/core-1.5.0/AndroidManifest.xml:24:18-86
+45-->[androidx.core:core:1.5.0] C:\Users\Yehia\.gradle\caches\transforms-3\72cbb9628a516735d657154f3150283b\transformed\core-1.5.0\AndroidManifest.xml:24:18-86
 46        android:debuggable="true"
 47        android:extractNativeLibs="false"
 48        android:icon="@mipmap/ic_launcher"
-48-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:14:9-43
+48-->D:\Work\Android\app\src\main\AndroidManifest.xml:14:9-43
 49        android:label="@string/app_name"
-49-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:15:9-41
+49-->D:\Work\Android\app\src\main\AndroidManifest.xml:15:9-41
 50        android:roundIcon="@mipmap/ic_launcher_round"
-50-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:16:9-54
+50-->D:\Work\Android\app\src\main\AndroidManifest.xml:16:9-54
 51        android:supportsRtl="true"
-51-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:17:9-35
+51-->D:\Work\Android\app\src\main\AndroidManifest.xml:17:9-35
 52        android:testOnly="true"
 53        android:theme="@style/Theme.VisitEgypt" >
-53-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:18:9-48
+53-->D:\Work\Android\app\src\main\AndroidManifest.xml:18:9-48
 54        <activity
-54-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:23:9-26:20
+54-->D:\Work\Android\app\src\main\AndroidManifest.xml:23:9-26:20
 55            android:name="com.visitegypt.presentation.signup.SignUpActivity"
-55-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:24:13-63
+55-->D:\Work\Android\app\src\main\AndroidManifest.xml:24:13-63
 56            android:exported="true" >
-56-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:25:13-36
+56-->D:\Work\Android\app\src\main\AndroidManifest.xml:25:13-36
 57        </activity>
 58        <activity
-58-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:27:9-31:20
+58-->D:\Work\Android\app\src\main\AndroidManifest.xml:27:9-31:20
 59            android:name="com.visitegypt.presentation.detailplace.DetailActivity"
-59-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:28:13-68
+59-->D:\Work\Android\app\src\main\AndroidManifest.xml:28:13-68
 60            android:exported="true" >
-60-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:29:13-36
+60-->D:\Work\Android\app\src\main\AndroidManifest.xml:29:13-36
 61        </activity>
 62        <activity
-62-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:32:9-36:20
+62-->D:\Work\Android\app\src\main\AndroidManifest.xml:32:9-36:20
 63            android:name="com.visitegypt.presentation.splash.SplashActivity"
-63-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:33:13-63
+63-->D:\Work\Android\app\src\main\AndroidManifest.xml:33:13-63
 64            android:exported="true" >
-64-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:34:13-36
+64-->D:\Work\Android\app\src\main\AndroidManifest.xml:34:13-36
 65        </activity>
 66        <activity
-66-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:37:9-41:20
+66-->D:\Work\Android\app\src\main\AndroidManifest.xml:37:9-41:20
 67            android:name="com.visitegypt.presentation.chatbot.ChatbotActivity"
-67-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:38:13-65
+67-->D:\Work\Android\app\src\main\AndroidManifest.xml:38:13-65
 68            android:exported="true" >
-68-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:39:13-36
+68-->D:\Work\Android\app\src\main\AndroidManifest.xml:39:13-36
 69        </activity>
 70        <activity
-70-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:42:9-47:20
+70-->D:\Work\Android\app\src\main\AndroidManifest.xml:42:9-47:20
 71            android:name="com.visitegypt.presentation.home.HomeActivity"
-71-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:43:13-59
+71-->D:\Work\Android\app\src\main\AndroidManifest.xml:43:13-59
 72            android:exported="true" >
-72-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:44:13-36
+72-->D:\Work\Android\app\src\main\AndroidManifest.xml:44:13-36
 73        </activity>
 74        <activity
-74-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:49:9-57:20
+74-->D:\Work\Android\app\src\main\AndroidManifest.xml:49:9-57:20
 75            android:name="com.visitegypt.presentation.signin.SignInActivity"
-75-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:50:13-63
+75-->D:\Work\Android\app\src\main\AndroidManifest.xml:50:13-63
 76            android:exported="true" >
-76-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:51:13-36
+76-->D:\Work\Android\app\src\main\AndroidManifest.xml:51:13-36
 77            <intent-filter>
-77-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:52:13-55:29
+77-->D:\Work\Android\app\src\main\AndroidManifest.xml:52:13-55:29
 78                <action android:name="android.intent.action.MAIN" />
-78-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:53:17-69
-78-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:53:25-66
+78-->D:\Work\Android\app\src\main\AndroidManifest.xml:53:17-69
+78-->D:\Work\Android\app\src\main\AndroidManifest.xml:53:25-66
 79
 80                <category android:name="android.intent.category.LAUNCHER" />
-80-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:54:17-77
-80-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:54:27-74
+80-->D:\Work\Android\app\src\main\AndroidManifest.xml:54:17-77
+80-->D:\Work\Android\app\src\main\AndroidManifest.xml:54:27-74
 81            </intent-filter>
 82        </activity>
 83
 84        <service
-84-->[androidx.room:room-runtime:2.3.0] /home/geekahmed/.gradle/caches/transforms-3/430e7c5d9b0cdbf9530d66c0ddac5180/transformed/room-runtime-2.3.0/AndroidManifest.xml:25:9-28:40
+84-->[androidx.room:room-runtime:2.3.0] C:\Users\Yehia\.gradle\caches\transforms-3\430e7c5d9b0cdbf9530d66c0ddac5180\transformed\room-runtime-2.3.0\AndroidManifest.xml:25:9-28:40
 85            android:name="androidx.room.MultiInstanceInvalidationService"
-85-->[androidx.room:room-runtime:2.3.0] /home/geekahmed/.gradle/caches/transforms-3/430e7c5d9b0cdbf9530d66c0ddac5180/transformed/room-runtime-2.3.0/AndroidManifest.xml:26:13-74
+85-->[androidx.room:room-runtime:2.3.0] C:\Users\Yehia\.gradle\caches\transforms-3\430e7c5d9b0cdbf9530d66c0ddac5180\transformed\room-runtime-2.3.0\AndroidManifest.xml:26:13-74
 86            android:directBootAware="true"
-86-->[androidx.room:room-runtime:2.3.0] /home/geekahmed/.gradle/caches/transforms-3/430e7c5d9b0cdbf9530d66c0ddac5180/transformed/room-runtime-2.3.0/AndroidManifest.xml:27:13-43
+86-->[androidx.room:room-runtime:2.3.0] C:\Users\Yehia\.gradle\caches\transforms-3\430e7c5d9b0cdbf9530d66c0ddac5180\transformed\room-runtime-2.3.0\AndroidManifest.xml:27:13-43
 87            android:exported="false" />
-87-->[androidx.room:room-runtime:2.3.0] /home/geekahmed/.gradle/caches/transforms-3/430e7c5d9b0cdbf9530d66c0ddac5180/transformed/room-runtime-2.3.0/AndroidManifest.xml:28:13-37
+87-->[androidx.room:room-runtime:2.3.0] C:\Users\Yehia\.gradle\caches\transforms-3\430e7c5d9b0cdbf9530d66c0ddac5180\transformed\room-runtime-2.3.0\AndroidManifest.xml:28:13-37
 88
 89        <provider
-89-->[com.squareup.picasso:picasso:2.71828] /home/geekahmed/.gradle/caches/transforms-3/fa49c035244e6e1e6062db462c4712b7/transformed/jetified-picasso-2.71828/AndroidManifest.xml:8:9-11:40
+89-->[com.squareup.picasso:picasso:2.71828] C:\Users\Yehia\.gradle\caches\transforms-3\481b1c353c7efc414562aab3ce755b0c\transformed\jetified-picasso-2.71828\AndroidManifest.xml:8:9-11:40
 90            android:name="com.squareup.picasso.PicassoProvider"
-90-->[com.squareup.picasso:picasso:2.71828] /home/geekahmed/.gradle/caches/transforms-3/fa49c035244e6e1e6062db462c4712b7/transformed/jetified-picasso-2.71828/AndroidManifest.xml:9:13-64
+90-->[com.squareup.picasso:picasso:2.71828] C:\Users\Yehia\.gradle\caches\transforms-3\481b1c353c7efc414562aab3ce755b0c\transformed\jetified-picasso-2.71828\AndroidManifest.xml:9:13-64
 91            android:authorities="com.visitegypt.com.squareup.picasso"
-91-->[com.squareup.picasso:picasso:2.71828] /home/geekahmed/.gradle/caches/transforms-3/fa49c035244e6e1e6062db462c4712b7/transformed/jetified-picasso-2.71828/AndroidManifest.xml:10:13-72
+91-->[com.squareup.picasso:picasso:2.71828] C:\Users\Yehia\.gradle\caches\transforms-3\481b1c353c7efc414562aab3ce755b0c\transformed\jetified-picasso-2.71828\AndroidManifest.xml:10:13-72
 92            android:exported="false" />
-92-->[com.squareup.picasso:picasso:2.71828] /home/geekahmed/.gradle/caches/transforms-3/fa49c035244e6e1e6062db462c4712b7/transformed/jetified-picasso-2.71828/AndroidManifest.xml:11:13-37
+92-->[com.squareup.picasso:picasso:2.71828] C:\Users\Yehia\.gradle\caches\transforms-3\481b1c353c7efc414562aab3ce755b0c\transformed\jetified-picasso-2.71828\AndroidManifest.xml:11:13-37
 93
 94        <activity
-94-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:37:9-54:20
+94-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:37:9-54:20
 95            android:name="com.unity3d.player.UnityPlayerActivity"
-95-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:38:13-66
+95-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:38:13-66
 96            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale|layoutDirection|density"
-96-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:39:13-194
+96-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:39:13-194
 97            android:hardwareAccelerated="false"
-97-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:40:13-48
+97-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:40:13-48
 98            android:launchMode="singleTask"
-98-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:41:13-44
+98-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:41:13-44
 99            android:process=":unityplayer"
-99-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:42:13-43
+99-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:42:13-43
 100            android:screenOrientation="fullSensor"
-100-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:43:13-51
+100-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:43:13-51
 101            android:theme="@style/UnityThemeSelector" >
-101-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:44:13-54
+101-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:44:13-54
 102            <intent-filter>
-102-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:52:13-55:29
+102-->D:\Work\Android\app\src\main\AndroidManifest.xml:52:13-55:29
 103                <action android:name="android.intent.action.MAIN" />
-103-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:53:17-69
-103-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:53:25-66
+103-->D:\Work\Android\app\src\main\AndroidManifest.xml:53:17-69
+103-->D:\Work\Android\app\src\main\AndroidManifest.xml:53:25-66
 104
 105                <category android:name="android.intent.category.LAUNCHER" />
-105-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:54:17-77
-105-->/home/geekahmed/StudioProjects/Android/app/src/main/AndroidManifest.xml:54:27-74
+105-->D:\Work\Android\app\src\main\AndroidManifest.xml:54:17-77
+105-->D:\Work\Android\app\src\main\AndroidManifest.xml:54:27-74
 106            </intent-filter>
 107
 108            <meta-data
-108-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:51:13-53:40
+108-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:51:13-53:40
 109                android:name="unityplayer.UnityActivity"
-109-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:52:17-57
+109-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:52:17-57
 110                android:value="true" />
-110-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:53:17-37
+110-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:53:17-37
 111        </activity>
 112
 113        <meta-data
-113-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:56:9-58:33
+113-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:56:9-58:33
 114            android:name="unity.splash-mode"
-114-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:57:13-45
+114-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:57:13-45
 115            android:value="0" />
-115-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:58:13-30
+115-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:58:13-30
 116        <meta-data
-116-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:59:9-61:36
+116-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:59:9-61:36
 117            android:name="unity.splash-enable"
-117-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:60:13-47
+117-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:60:13-47
 118            android:value="True" />
-118-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:61:13-33
+118-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:61:13-33
 119        <meta-data
-119-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:62:9-64:68
+119-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:62:9-64:68
 120            android:name="unity.build-id"
-120-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:63:13-42
+120-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:63:13-42
 121            android:value="04b4d8b2-13ae-4780-a880-595173563a1b" />
-121-->[:unityLibrary] /home/geekahmed/StudioProjects/Android/unityLibrary/build/intermediates/merged_manifest/debug/AndroidManifest.xml:64:13-65
+121-->[:unityLibrary] D:\Work\Android\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:64:13-65
 122
 123        <provider
-123-->[androidx.lifecycle:lifecycle-process:2.1.0] /home/geekahmed/.gradle/caches/transforms-3/ee9b14fc50a12651190daf3cdfb68756/transformed/jetified-lifecycle-process-2.1.0/AndroidManifest.xml:23:9-27:43
+123-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Yehia\.gradle\caches\transforms-3\ee9b14fc50a12651190daf3cdfb68756\transformed\jetified-lifecycle-process-2.1.0\AndroidManifest.xml:23:9-27:43
 124            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
-124-->[androidx.lifecycle:lifecycle-process:2.1.0] /home/geekahmed/.gradle/caches/transforms-3/ee9b14fc50a12651190daf3cdfb68756/transformed/jetified-lifecycle-process-2.1.0/AndroidManifest.xml:24:13-79
+124-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Yehia\.gradle\caches\transforms-3\ee9b14fc50a12651190daf3cdfb68756\transformed\jetified-lifecycle-process-2.1.0\AndroidManifest.xml:24:13-79
 125            android:authorities="com.visitegypt.lifecycle-process"
-125-->[androidx.lifecycle:lifecycle-process:2.1.0] /home/geekahmed/.gradle/caches/transforms-3/ee9b14fc50a12651190daf3cdfb68756/transformed/jetified-lifecycle-process-2.1.0/AndroidManifest.xml:25:13-69
+125-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Yehia\.gradle\caches\transforms-3\ee9b14fc50a12651190daf3cdfb68756\transformed\jetified-lifecycle-process-2.1.0\AndroidManifest.xml:25:13-69
 126            android:exported="false"
-126-->[androidx.lifecycle:lifecycle-process:2.1.0] /home/geekahmed/.gradle/caches/transforms-3/ee9b14fc50a12651190daf3cdfb68756/transformed/jetified-lifecycle-process-2.1.0/AndroidManifest.xml:26:13-37
+126-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Yehia\.gradle\caches\transforms-3\ee9b14fc50a12651190daf3cdfb68756\transformed\jetified-lifecycle-process-2.1.0\AndroidManifest.xml:26:13-37
 127            android:multiprocess="true" />
-127-->[androidx.lifecycle:lifecycle-process:2.1.0] /home/geekahmed/.gradle/caches/transforms-3/ee9b14fc50a12651190daf3cdfb68756/transformed/jetified-lifecycle-process-2.1.0/AndroidManifest.xml:27:13-40
+127-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Yehia\.gradle\caches\transforms-3\ee9b14fc50a12651190daf3cdfb68756\transformed\jetified-lifecycle-process-2.1.0\AndroidManifest.xml:27:13-40
 128
 129        <activity
-129-->[:UnityAds:] /home/geekahmed/.gradle/caches/transforms-3/3e3ed73feaf5f05fcff25e4106224c55/transformed/jetified-UnityAds/AndroidManifest.xml:15:9-19:74
+129-->[:UnityAds:] C:\Users\Yehia\.gradle\caches\transforms-3\3e3ed73feaf5f05fcff25e4106224c55\transformed\jetified-UnityAds\AndroidManifest.xml:15:9-19:74
 130            android:name="com.unity3d.services.ads.adunit.AdUnitActivity"
-130-->[:UnityAds:] /home/geekahmed/.gradle/caches/transforms-3/3e3ed73feaf5f05fcff25e4106224c55/transformed/jetified-UnityAds/AndroidManifest.xml:16:13-74
+130-->[:UnityAds:] C:\Users\Yehia\.gradle\caches\transforms-3\3e3ed73feaf5f05fcff25e4106224c55\transformed\jetified-UnityAds\AndroidManifest.xml:16:13-74
 131            android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen"
-131-->[:UnityAds:] /home/geekahmed/.gradle/caches/transforms-3/3e3ed73feaf5f05fcff25e4106224c55/transformed/jetified-UnityAds/AndroidManifest.xml:17:13-170
+131-->[:UnityAds:] C:\Users\Yehia\.gradle\caches\transforms-3\3e3ed73feaf5f05fcff25e4106224c55\transformed\jetified-UnityAds\AndroidManifest.xml:17:13-170
 132            android:hardwareAccelerated="true"
-132-->[:UnityAds:] /home/geekahmed/.gradle/caches/transforms-3/3e3ed73feaf5f05fcff25e4106224c55/transformed/jetified-UnityAds/AndroidManifest.xml:18:13-47
+132-->[:UnityAds:] C:\Users\Yehia\.gradle\caches\transforms-3\3e3ed73feaf5f05fcff25e4106224c55\transformed\jetified-UnityAds\AndroidManifest.xml:18:13-47
 133            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-133-->[:UnityAds:] /home/geekahmed/.gradle/caches/transforms-3/3e3ed73feaf5f05fcff25e4106224c55/transformed/jetified-UnityAds/AndroidManifest.xml:19:13-71
+133-->[:UnityAds:] C:\Users\Yehia\.gradle\caches\transforms-3\3e3ed73feaf5f05fcff25e4106224c55\transformed\jetified-UnityAds\AndroidManifest.xml:19:13-71
 134        <activity
-134-->[:UnityAds:] /home/geekahmed/.gradle/caches/transforms-3/3e3ed73feaf5f05fcff25e4106224c55/transformed/jetified-UnityAds/AndroidManifest.xml:20:9-24:86
+134-->[:UnityAds:] C:\Users\Yehia\.gradle\caches\transforms-3\3e3ed73feaf5f05fcff25e4106224c55\transformed\jetified-UnityAds\AndroidManifest.xml:20:9-24:86
 135            android:name="com.unity3d.services.ads.adunit.AdUnitTransparentActivity"
-135-->[:UnityAds:] /home/geekahmed/.gradle/caches/transforms-3/3e3ed73feaf5f05fcff25e4106224c55/transformed/jetified-UnityAds/AndroidManifest.xml:21:13-85
+135-->[:UnityAds:] C:\Users\Yehia\.gradle\caches\transforms-3\3e3ed73feaf5f05fcff25e4106224c55\transformed\jetified-UnityAds\AndroidManifest.xml:21:13-85
 136            android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen"
-136-->[:UnityAds:] /home/geekahmed/.gradle/caches/transforms-3/3e3ed73feaf5f05fcff25e4106224c55/transformed/jetified-UnityAds/AndroidManifest.xml:22:13-170
+136-->[:UnityAds:] C:\Users\Yehia\.gradle\caches\transforms-3\3e3ed73feaf5f05fcff25e4106224c55\transformed\jetified-UnityAds\AndroidManifest.xml:22:13-170
 137            android:hardwareAccelerated="true"
-137-->[:UnityAds:] /home/geekahmed/.gradle/caches/transforms-3/3e3ed73feaf5f05fcff25e4106224c55/transformed/jetified-UnityAds/AndroidManifest.xml:23:13-47
+137-->[:UnityAds:] C:\Users\Yehia\.gradle\caches\transforms-3\3e3ed73feaf5f05fcff25e4106224c55\transformed\jetified-UnityAds\AndroidManifest.xml:23:13-47
 138            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
-138-->[:UnityAds:] /home/geekahmed/.gradle/caches/transforms-3/3e3ed73feaf5f05fcff25e4106224c55/transformed/jetified-UnityAds/AndroidManifest.xml:24:13-83
+138-->[:UnityAds:] C:\Users\Yehia\.gradle\caches\transforms-3\3e3ed73feaf5f05fcff25e4106224c55\transformed\jetified-UnityAds\AndroidManifest.xml:24:13-83
 139        <activity
-139-->[:UnityAds:] /home/geekahmed/.gradle/caches/transforms-3/3e3ed73feaf5f05fcff25e4106224c55/transformed/jetified-UnityAds/AndroidManifest.xml:25:9-29:86
+139-->[:UnityAds:] C:\Users\Yehia\.gradle\caches\transforms-3\3e3ed73feaf5f05fcff25e4106224c55\transformed\jetified-UnityAds\AndroidManifest.xml:25:9-29:86
 140            android:name="com.unity3d.services.ads.adunit.AdUnitTransparentSoftwareActivity"
-140-->[:UnityAds:] /home/geekahmed/.gradle/caches/transforms-3/3e3ed73feaf5f05fcff25e4106224c55/transformed/jetified-UnityAds/AndroidManifest.xml:26:13-93
+140-->[:UnityAds:] C:\Users\Yehia\.gradle\caches\transforms-3\3e3ed73feaf5f05fcff25e4106224c55\transformed\jetified-UnityAds\AndroidManifest.xml:26:13-93
 141            android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen"
-141-->[:UnityAds:] /home/geekahmed/.gradle/caches/transforms-3/3e3ed73feaf5f05fcff25e4106224c55/transformed/jetified-UnityAds/AndroidManifest.xml:27:13-170
+141-->[:UnityAds:] C:\Users\Yehia\.gradle\caches\transforms-3\3e3ed73feaf5f05fcff25e4106224c55\transformed\jetified-UnityAds\AndroidManifest.xml:27:13-170
 142            android:hardwareAccelerated="false"
-142-->[:UnityAds:] /home/geekahmed/.gradle/caches/transforms-3/3e3ed73feaf5f05fcff25e4106224c55/transformed/jetified-UnityAds/AndroidManifest.xml:28:13-48
+142-->[:UnityAds:] C:\Users\Yehia\.gradle\caches\transforms-3\3e3ed73feaf5f05fcff25e4106224c55\transformed\jetified-UnityAds\AndroidManifest.xml:28:13-48
 143            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
-143-->[:UnityAds:] /home/geekahmed/.gradle/caches/transforms-3/3e3ed73feaf5f05fcff25e4106224c55/transformed/jetified-UnityAds/AndroidManifest.xml:29:13-83
+143-->[:UnityAds:] C:\Users\Yehia\.gradle\caches\transforms-3\3e3ed73feaf5f05fcff25e4106224c55\transformed\jetified-UnityAds\AndroidManifest.xml:29:13-83
 144        <activity
-144-->[:UnityAds:] /home/geekahmed/.gradle/caches/transforms-3/3e3ed73feaf5f05fcff25e4106224c55/transformed/jetified-UnityAds/AndroidManifest.xml:30:9-34:74
+144-->[:UnityAds:] C:\Users\Yehia\.gradle\caches\transforms-3\3e3ed73feaf5f05fcff25e4106224c55\transformed\jetified-UnityAds\AndroidManifest.xml:30:9-34:74
 145            android:name="com.unity3d.services.ads.adunit.AdUnitSoftwareActivity"
-145-->[:UnityAds:] /home/geekahmed/.gradle/caches/transforms-3/3e3ed73feaf5f05fcff25e4106224c55/transformed/jetified-UnityAds/AndroidManifest.xml:31:13-82
+145-->[:UnityAds:] C:\Users\Yehia\.gradle\caches\transforms-3\3e3ed73feaf5f05fcff25e4106224c55\transformed\jetified-UnityAds\AndroidManifest.xml:31:13-82
 146            android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen"
-146-->[:UnityAds:] /home/geekahmed/.gradle/caches/transforms-3/3e3ed73feaf5f05fcff25e4106224c55/transformed/jetified-UnityAds/AndroidManifest.xml:32:13-170
+146-->[:UnityAds:] C:\Users\Yehia\.gradle\caches\transforms-3\3e3ed73feaf5f05fcff25e4106224c55\transformed\jetified-UnityAds\AndroidManifest.xml:32:13-170
 147            android:hardwareAccelerated="false"
-147-->[:UnityAds:] /home/geekahmed/.gradle/caches/transforms-3/3e3ed73feaf5f05fcff25e4106224c55/transformed/jetified-UnityAds/AndroidManifest.xml:33:13-48
+147-->[:UnityAds:] C:\Users\Yehia\.gradle\caches\transforms-3\3e3ed73feaf5f05fcff25e4106224c55\transformed\jetified-UnityAds\AndroidManifest.xml:33:13-48
 148            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-148-->[:UnityAds:] /home/geekahmed/.gradle/caches/transforms-3/3e3ed73feaf5f05fcff25e4106224c55/transformed/jetified-UnityAds/AndroidManifest.xml:34:13-71
+148-->[:UnityAds:] C:\Users\Yehia\.gradle\caches\transforms-3\3e3ed73feaf5f05fcff25e4106224c55\transformed\jetified-UnityAds\AndroidManifest.xml:34:13-71
 149    </application>
 150
 151</manifest>

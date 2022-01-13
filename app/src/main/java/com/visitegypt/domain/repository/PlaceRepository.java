@@ -11,5 +11,5 @@ public interface PlaceRepository {
 
     Single<Place> getPlaceById(String placeId);
 
-    Single<Void> submitReview(String placeId, Review review);
+    Single<String> submitReview(String placeId, Review review);
 }

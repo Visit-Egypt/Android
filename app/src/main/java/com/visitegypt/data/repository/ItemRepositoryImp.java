@@ -21,8 +21,7 @@ public class ItemRepositoryImp implements ItemRepository {
 
     @Override
     public Single<ItemPageResponse> getItemsWithPlaceId(String placeId) {
-        Map<String, String> map = new HashMap();
-        map.put("place_id", placeId);
-        return retrofitService.getAllItems(map);
+        String placeQuery = "{\"place_id\":\"" +placeId + "\"}";
+        return retrofitService.getAllItems(placeQuery);
     }
 }

@@ -1,5 +1,9 @@
 package com.visitegypt.domain.usecase;
 
+import static com.visitegypt.utils.Constants.SHARED_PREF_USER_ACCESS_TOKEN;
+
+import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.repository.PlaceRepository;
@@ -9,7 +13,7 @@ import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Single;
 
-public class SubmitReviewUseCase extends SingleUseCase<Void> {
+public class SubmitReviewUseCase extends SingleUseCase<String> {
 
     private static final String TAG = "submit review usecase";
 
@@ -31,7 +35,7 @@ public class SubmitReviewUseCase extends SingleUseCase<Void> {
     }
 
     @Override
-    protected Single<Void> buildSingleUseCase() {
+    protected Single<String> buildSingleUseCase() {
         return placeRepository.submitReview(placeId, review);
     }
 }

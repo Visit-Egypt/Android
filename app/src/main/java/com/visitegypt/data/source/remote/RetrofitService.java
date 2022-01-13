@@ -70,17 +70,17 @@ public interface RetrofitService {
     @POST
     Single<ResponseBody> genericUpload(@Url String url, @Part("fields") UploadFields uploadFields, @Part MultipartBody.Part file);
     /*******************************************************************/
-    @GET("api/place/{place_id}")
-    public Single<Place> getPlaceById(@Path("place_id") String id);
+    @GET("api/place/{id}")
+    public Single<Place> getPlaceById(@Path("id") String id);
 
     @GET("api/place")
     public Single<PlacePageResponse> getAllPlaces();
 
     @GET("api/item")
-    public Single<ItemPageResponse> getAllItems(@QueryMap Map<String, String> placeId);
+    public Single<ItemPageResponse> getAllItems(@Query("filters") String queryMap);
 
-    @POST("api/place/review/{placeId}")
-    public Single<Void> submitReview(@Path("placeId") String placeId, @Body Review review);
+    @POST("api/place/review/{place_id}")
+    public Single<String> submitReview(@Path("place_id") String placeId, @Body Review review);
 
     /******************************************************
      * this Retrofit services for Posts

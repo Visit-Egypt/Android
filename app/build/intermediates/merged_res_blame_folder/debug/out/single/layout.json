@@ -1,86 +1,86 @@
 [
     {
-        "merged": "/home/geekahmed/StudioProjects/Android/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/activity_chatbot.xml",
-        "source": "/home/geekahmed/StudioProjects/Android/app/src/main/res/layout/activity_chatbot.xml"
+        "merged": "D:\\Work\\Android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_setting.xml",
+        "source": "D:\\Work\\Android\\app\\src\\main\\res\\layout\\fragment_setting.xml"
     },
     {
-        "merged": "/home/geekahmed/StudioProjects/Android/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/detail_button_shimmer_placeholder_layout.xml",
-        "source": "/home/geekahmed/StudioProjects/Android/app/src/main/res/layout/detail_button_shimmer_placeholder_layout.xml"
+        "merged": "D:\\Work\\Android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\bot_message.xml",
+        "source": "D:\\Work\\Android\\app\\src\\main\\res\\layout\\bot_message.xml"
     },
     {
-        "merged": "/home/geekahmed/StudioProjects/Android/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/slide_layout.xml",
-        "source": "/home/geekahmed/StudioProjects/Android/app/src/main/res/layout/slide_layout.xml"
+        "merged": "D:\\Work\\Android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\card_shimmer_placeholder.xml",
+        "source": "D:\\Work\\Android\\app\\src\\main\\res\\layout\\card_shimmer_placeholder.xml"
     },
     {
-        "merged": "/home/geekahmed/StudioProjects/Android/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/activity_splash.xml",
-        "source": "/home/geekahmed/StudioProjects/Android/app/src/main/res/layout/activity_splash.xml"
+        "merged": "D:\\Work\\Android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_home.xml",
+        "source": "D:\\Work\\Android\\app\\src\\main\\res\\layout\\activity_home.xml"
     },
     {
-        "merged": "/home/geekahmed/StudioProjects/Android/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/fragment_account.xml",
-        "source": "/home/geekahmed/StudioProjects/Android/app/src/main/res/layout/fragment_account.xml"
+        "merged": "D:\\Work\\Android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\detail_button_shimmer_placeholder_layout.xml",
+        "source": "D:\\Work\\Android\\app\\src\\main\\res\\layout\\detail_button_shimmer_placeholder_layout.xml"
     },
     {
-        "merged": "/home/geekahmed/StudioProjects/Android/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/detail_slider_shimmer_placeholder_layout.xml",
-        "source": "/home/geekahmed/StudioProjects/Android/app/src/main/res/layout/detail_slider_shimmer_placeholder_layout.xml"
+        "merged": "D:\\Work\\Android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_detail.xml",
+        "source": "D:\\Work\\Android\\app\\src\\main\\res\\layout\\activity_detail.xml"
     },
     {
-        "merged": "/home/geekahmed/StudioProjects/Android/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/item_card.xml",
-        "source": "/home/geekahmed/StudioProjects/Android/app/src/main/res/layout/item_card.xml"
+        "merged": "D:\\Work\\Android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_account.xml",
+        "source": "D:\\Work\\Android\\app\\src\\main\\res\\layout\\fragment_account.xml"
     },
     {
-        "merged": "/home/geekahmed/StudioProjects/Android/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/review_card.xml",
-        "source": "/home/geekahmed/StudioProjects/Android/app/src/main/res/layout/review_card.xml"
+        "merged": "D:\\Work\\Android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\detail_slider_shimmer_placeholder_layout.xml",
+        "source": "D:\\Work\\Android\\app\\src\\main\\res\\layout\\detail_slider_shimmer_placeholder_layout.xml"
     },
     {
-        "merged": "/home/geekahmed/StudioProjects/Android/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/place_card.xml",
-        "source": "/home/geekahmed/StudioProjects/Android/app/src/main/res/layout/place_card.xml"
+        "merged": "D:\\Work\\Android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\detail_table_shimmer_placeholder_layout.xml",
+        "source": "D:\\Work\\Android\\app\\src\\main\\res\\layout\\detail_table_shimmer_placeholder_layout.xml"
     },
     {
-        "merged": "/home/geekahmed/StudioProjects/Android/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/loading.xml",
-        "source": "/home/geekahmed/StudioProjects/Android/app/src/main/res/layout/loading.xml"
+        "merged": "D:\\Work\\Android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\user_message.xml",
+        "source": "D:\\Work\\Android\\app\\src\\main\\res\\layout\\user_message.xml"
     },
     {
-        "merged": "/home/geekahmed/StudioProjects/Android/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/activity_detail.xml",
-        "source": "/home/geekahmed/StudioProjects/Android/app/src/main/res/layout/activity_detail.xml"
+        "merged": "D:\\Work\\Android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_sign_in.xml",
+        "source": "D:\\Work\\Android\\app\\src\\main\\res\\layout\\activity_sign_in.xml"
     },
     {
-        "merged": "/home/geekahmed/StudioProjects/Android/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/activity_sign_in.xml",
-        "source": "/home/geekahmed/StudioProjects/Android/app/src/main/res/layout/activity_sign_in.xml"
+        "merged": "D:\\Work\\Android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\detail_box_shimmer_placeholder_layout.xml",
+        "source": "D:\\Work\\Android\\app\\src\\main\\res\\layout\\detail_box_shimmer_placeholder_layout.xml"
     },
     {
-        "merged": "/home/geekahmed/StudioProjects/Android/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/detail_table_shimmer_placeholder_layout.xml",
-        "source": "/home/geekahmed/StudioProjects/Android/app/src/main/res/layout/detail_table_shimmer_placeholder_layout.xml"
+        "merged": "D:\\Work\\Android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\slide_layout.xml",
+        "source": "D:\\Work\\Android\\app\\src\\main\\res\\layout\\slide_layout.xml"
     },
     {
-        "merged": "/home/geekahmed/StudioProjects/Android/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/user_message.xml",
-        "source": "/home/geekahmed/StudioProjects/Android/app/src/main/res/layout/user_message.xml"
+        "merged": "D:\\Work\\Android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_chatbot.xml",
+        "source": "D:\\Work\\Android\\app\\src\\main\\res\\layout\\activity_chatbot.xml"
     },
     {
-        "merged": "/home/geekahmed/StudioProjects/Android/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/activity_sign_up.xml",
-        "source": "/home/geekahmed/StudioProjects/Android/app/src/main/res/layout/activity_sign_up.xml"
+        "merged": "D:\\Work\\Android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\place_card.xml",
+        "source": "D:\\Work\\Android\\app\\src\\main\\res\\layout\\place_card.xml"
     },
     {
-        "merged": "/home/geekahmed/StudioProjects/Android/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/detail_box_shimmer_placeholder_layout.xml",
-        "source": "/home/geekahmed/StudioProjects/Android/app/src/main/res/layout/detail_box_shimmer_placeholder_layout.xml"
+        "merged": "D:\\Work\\Android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_sign_up.xml",
+        "source": "D:\\Work\\Android\\app\\src\\main\\res\\layout\\activity_sign_up.xml"
     },
     {
-        "merged": "/home/geekahmed/StudioProjects/Android/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/bot_message.xml",
-        "source": "/home/geekahmed/StudioProjects/Android/app/src/main/res/layout/bot_message.xml"
+        "merged": "D:\\Work\\Android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\loading.xml",
+        "source": "D:\\Work\\Android\\app\\src\\main\\res\\layout\\loading.xml"
     },
     {
-        "merged": "/home/geekahmed/StudioProjects/Android/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/activity_home.xml",
-        "source": "/home/geekahmed/StudioProjects/Android/app/src/main/res/layout/activity_home.xml"
+        "merged": "D:\\Work\\Android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\item_card.xml",
+        "source": "D:\\Work\\Android\\app\\src\\main\\res\\layout\\item_card.xml"
     },
     {
-        "merged": "/home/geekahmed/StudioProjects/Android/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/fragment_setting.xml",
-        "source": "/home/geekahmed/StudioProjects/Android/app/src/main/res/layout/fragment_setting.xml"
+        "merged": "D:\\Work\\Android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\dialog_add_review.xml",
+        "source": "D:\\Work\\Android\\app\\src\\main\\res\\layout\\dialog_add_review.xml"
     },
     {
-        "merged": "/home/geekahmed/StudioProjects/Android/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/dialog_add_review.xml",
-        "source": "/home/geekahmed/StudioProjects/Android/app/src/main/res/layout/dialog_add_review.xml"
+        "merged": "D:\\Work\\Android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_splash.xml",
+        "source": "D:\\Work\\Android\\app\\src\\main\\res\\layout\\activity_splash.xml"
     },
     {
-        "merged": "/home/geekahmed/StudioProjects/Android/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/card_shimmer_placeholder.xml",
-        "source": "/home/geekahmed/StudioProjects/Android/app/src/main/res/layout/card_shimmer_placeholder.xml"
+        "merged": "D:\\Work\\Android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\review_card.xml",
+        "source": "D:\\Work\\Android\\app\\src\\main\\res\\layout\\review_card.xml"
     }
 ]

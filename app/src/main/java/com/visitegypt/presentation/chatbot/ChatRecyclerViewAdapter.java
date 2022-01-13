@@ -50,6 +50,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter {
                 break;
             case "bot":
                 ((BotViewHolder) holder).botTextView.setText(chatbot.getMessage());
+                break;
         }
     }
 

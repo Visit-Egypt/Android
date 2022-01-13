@@ -1,6 +1,8 @@
 package com.visitegypt.presentation.detailplace;
 
+import android.accounts.AccountManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -13,12 +15,17 @@ import com.visitegypt.domain.usecase.GetItemsUseCase;
 import com.visitegypt.domain.usecase.GetPlaceDetailUseCase;
 import com.visitegypt.domain.usecase.SubmitReviewUseCase;
 
+import org.json.JSONObject;
+
 import java.util.List;
+import java.util.concurrent.BlockingDeque;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.functions.Consumer;
+import okhttp3.ResponseBody;
+import retrofit2.HttpException;
 
 @HiltViewModel
 public class DetailViewModel extends ViewModel {
@@ -76,7 +83,8 @@ public class DetailViewModel extends ViewModel {
         reviewSuccessState.setValue(false);
         submitReviewUseCase.setPlaceId(placeId);
         submitReviewUseCase.setReview(review);
-        submitReviewUseCase.execute(new Consumer<Void>() {
+        Log.d(TAG, "submitReview:  enter");
+        /*submitReviewUseCase.execute(new Consumer<Void>() {
             @Override
             public void accept(Void unused) throws Throwable {
                 Log.d(TAG, "Review successfully added");
@@ -85,10 +93,69 @@ public class DetailViewModel extends ViewModel {
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Throwable {
-                Log.e(TAG, "Failed to add review: " + throwable.getMessage());
-                Log.e(TAG, "Failed to add review: " + review.getUserId());
-                reviewSuccessState.setValue(false);
+                try {
+                    ResponseBody body = ((HttpException) throwable).response().errorBody();
+                    JSONObject jObjectError = new JSONObject(body.string());
+                    Log.d(TAG, "accept: submit error " +jObjectError.getJSONArray("errors").toString());
+                    if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
+
+
+                    }
+                } catch (Exception e) {
+                    Log.d("TAG", "accept catch: " + e.toString());
+                }
+            }
+        });*/
+//        submitReviewUseCase.execute(new Consumer<Void>() {
+//            @Override
+//            public void accept(Void unused) throws Throwable {
+//                Log.d(TAG, "accept: there's no error");
+//                reviewSuccessState.setValue(true);
+//
+//            }
+//        }, new Consumer<Throwable>() {
+//            @Override
+//            public void accept(Throwable throwable) throws Throwable {
+//                Log.d(TAG, "accept: i found error");
+//                try {
+//                    ResponseBody body = ((HttpException) throwable).response().errorBody();
+//                    JSONObject jObjectError = new JSONObject(body.string());
+//                    Log.d(TAG, "accept: submit error " +jObjectError.getJSONArray("errors").toString());
+//                    if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
+//
+//
+//                    }
+//                } catch (Exception e) {
+//                    Log.d("TAG", "accept catch: " + e.toString());
+//                }
+//            }
+//        });
+        submitReviewUseCase.execute(new Consumer<String>() {
+            @Override
+            public void accept(String s) throws Throwable {
+
+                Log.d(TAG, "accept: error free");
+                reviewSuccessState.setValue(true);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Throwable {
+                reviewSuccessState.setValue(true);
+                Log.d(TAG, "accept: i found error");
+                try {
+                    ResponseBody body = ((HttpException) throwable).response().errorBody();
+                    JSONObject jObjectError = new JSONObject(body.string());
+                    Log.d(TAG, "accept: submit error " +jObjectError.getJSONArray("errors").toString());
+                    if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
+
+
+                    }
+                } catch (Exception e) {
+                    Log.d("TAG", "accept catch: " + e.toString());
+                }
             }
         });
     }
+
+
 }

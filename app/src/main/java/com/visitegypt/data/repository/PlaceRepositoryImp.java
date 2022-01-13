@@ -28,7 +28,7 @@ public class PlaceRepositoryImp implements PlaceRepository {
     }
 
     @Override
-    public Single<Void> submitReview(String placeId, Review review) {
+    public Single<String> submitReview(String placeId, Review review) {
         return retrofitService.submitReview(placeId, review);
     }
 }

@@ -2,4 +2,4 @@
 rootProject.name = "VisitEgypt"
 include ':app'
 include ':unityLibrary'
-project(':unityLibrary').projectDir=new File("/home/geekahmed/StudioProjects/Android/unityLibrary")
+project(':unityLibrary').projectDir=new File("D:/Work/Android/unityLibrary")

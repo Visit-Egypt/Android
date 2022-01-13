@@ -33,7 +33,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -115,8 +115,7 @@ public class DetailActivity extends AppCompatActivity {
         }
         Log.d(TAG, "Place ID: " + placeId);
         initViews();
-        if(placeId != null)
-            initViewModel(placeId);
+        initViewModel(placeId);
         addReviewButton = findViewById(R.id.writeReviewButton);
 //addReviewButton.setOnClickListener(new View.OnClickListener() {
 //    @Override
@@ -197,7 +196,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void initViewModel(String placeId) {
-        detailViewModel = ViewModelProviders.of(this).get(DetailViewModel.class);
+        detailViewModel = new ViewModelProvider(this).get(DetailViewModel.class);
         detailViewModel.getPlace(placeId);
         detailViewModel.getItemsByPlaceId(placeId);
 
@@ -205,9 +204,6 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Item> items) {
                 Log.d(TAG, "setting items to recycler view...");
-                stopShimmerAnimation();
-                setLayoutVisible();
-                setShimmersGone();
                 itemsRecyclerViewAdapter.setItemsArrayList(items);
             }
         });
@@ -215,6 +211,10 @@ public class DetailActivity extends AppCompatActivity {
         detailViewModel.placesMutableLiveData.observe(this, new Observer<Place>() {
             @Override
             public void onChanged(Place place) {
+                stopShimmerAnimation();
+                setLayoutVisible();
+                setShimmersGone();
+
                 Log.d(TAG, "onChanged title: " + place.getTitle());
 
                 if (place.getImageUrls() != null) {
@@ -358,20 +358,25 @@ public class DetailActivity extends AppCompatActivity {
 
                     Review review = new Review(numStars, reviewText, firstName + " " + lastName, userId);
 
-                    Toast.makeText(DetailActivity.this, " " + userId, Toast.LENGTH_SHORT).show();
+                    //.makeText(DetailActivity.this, " " + userId, Toast.LENGTH_SHORT).show();
                     detailViewModel.submitReview(placeId, review);
 
                     detailViewModel.reviewSuccessState.observe(DetailActivity.this, new Observer<Boolean>() {
                         @Override
                         public void onChanged(Boolean aBoolean) {
                             if (aBoolean) {
+                                Log.d(TAG, "onChanged: this submit is done");
 
                                 addReviewDialog.dismiss();
+                                finish();
+                                startActivity(getIntent());
                             }
+
 
                         }
 
                     });
+
                 }
             }
 

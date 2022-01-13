@@ -72,23 +72,23 @@ public class SettingViewModel extends ViewModel {
         });
     }
 
-/*
-    public void uploadUserProfilePhoto(File userPhoto, String contentType){
-        uploadUserPhotoUseCase.setContentType(contentType);
-        uploadUserPhotoUseCase.setUserFile(userPhoto);
-        uploadUserPhotoUseCase.execute(new Consumer<UploadedFilesResponse>() {
-            @Override
-            public void accept(UploadedFilesResponse uploadedFilesResponse) throws Throwable {
-                mutableLiveDataUploadedFiles.setValue(uploadedFilesResponse);
-            }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Throwable {
-                error.setValue(throwable.toString());
-            }
-        });
-    }
-    */
+    /*
+        public void uploadUserProfilePhoto(File userPhoto, String contentType){
+            uploadUserPhotoUseCase.setContentType(contentType);
+            uploadUserPhotoUseCase.setUserFile(userPhoto);
+            uploadUserPhotoUseCase.execute(new Consumer<UploadedFilesResponse>() {
+                @Override
+                public void accept(UploadedFilesResponse uploadedFilesResponse) throws Throwable {
+                    mutableLiveDataUploadedFiles.setValue(uploadedFilesResponse);
+                }
+            }, new Consumer<Throwable>() {
+                @Override
+                public void accept(Throwable throwable) throws Throwable {
+                    error.setValue(throwable.toString());
+                }
+            });
+        }
+        */
     public void logOut()
     {
         getUserUseCase.logOut();
@@ -98,6 +98,7 @@ public class SettingViewModel extends ViewModel {
         updateUserUseCase.execute(new Consumer<User>() {
             @Override
             public void accept(User user) throws Throwable {
+                saveNewData(user);
                 mutableLiveDataUser.setValue(user);
             }
         }, new Consumer<Throwable>() {
@@ -119,6 +120,13 @@ public class SettingViewModel extends ViewModel {
             }
         });
 
+    }
+    public void saveNewData(User user)
+    {
+        sharedPreferences.edit()
+                .putString(Constants.SHARED_PREF_USER_ID, user.getUserId())
+                .putString(Constants.SHARED_PREF_FIRST_NAME, user.getFirstName() + " " + user.getLastName())
+                .apply();
     }
 }
 

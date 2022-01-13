@@ -3,7 +3,9 @@ package com.visitegypt.domain.model;
 import com.google.gson.annotations.SerializedName;
 
 public class Review {
+    @SerializedName("rating")
     private float rating;
+    @SerializedName("review")
     private String review;
     @SerializedName("user_name")
     private String fullName;

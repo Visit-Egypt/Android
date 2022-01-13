@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Chatbot;
@@ -31,6 +32,8 @@ public class ChatbotActivity extends AppCompatActivity {
     private ArrayList<Chatbot> chatbotArrayList;
     private ChatRecyclerViewAdapter ChatRecyclerViewAdapter;
     private ChatbotViewModel chatbotViewModel;
+    public String s;
+    public String x;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class ChatbotActivity extends AppCompatActivity {
         chatbotRecyclerView.setLayoutManager(linearLayoutManager);
         chatbotRecyclerView.setAdapter(ChatRecyclerViewAdapter);
         chatbotViewModel = new ViewModelProvider(this).get(ChatbotViewModel.class);
+
         sendMessageFAButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +70,7 @@ public class ChatbotActivity extends AppCompatActivity {
                         Log.d(TAG, "Bot response deliveried: " + o);
                         chatbotArrayList.add(new Chatbot(o.toString(), BOT_KEY));
                         ChatRecyclerViewAdapter.notifyDataSetChanged();
-                        Log.d(TAG, "Bot response deliveried: " + o.toString());
+
                     }
                 });
 
@@ -80,7 +84,7 @@ public class ChatbotActivity extends AppCompatActivity {
         ChatRecyclerViewAdapter.notifyDataSetChanged();
         Log.d(TAG, "chatbot activity: " + message);
         chatbotViewModel.setMessage(message);
-        Log.d(TAG, "chatbot activity: " + message);
     }
+
 
 }
