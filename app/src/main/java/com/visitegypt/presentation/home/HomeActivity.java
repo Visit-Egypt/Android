@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.unity3d.player.UnityPlayerActivity;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
@@ -207,8 +206,7 @@ public class HomeActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
         } else {
-            Intent intent = new Intent(HomeActivity.this, UnityPlayerActivity.class);
-            startActivity(intent);
+
         }
     }
     @Override
@@ -217,8 +215,6 @@ public class HomeActivity extends AppCompatActivity {
 
         if (requestCode == 0) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Intent intent = new Intent(HomeActivity.this, UnityPlayerActivity.class);
-                startActivity(intent);
             } else {
                 Toast.makeText(getApplicationContext(), "Error in permissions", Toast.LENGTH_LONG).show();
             }

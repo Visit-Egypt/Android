@@ -17,9 +17,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-        flatDir {
-            dirs "${project(':unityLibrary').projectDir}/libs"
-        }
     }
 }
 task clean(type: Delete) {
