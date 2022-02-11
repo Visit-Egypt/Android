@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -24,13 +23,12 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class SignUpActivity extends AppCompatActivity {
+    private static final String TAG = "Sign Up Activity";
     TextInputLayout firstName, lastName, email, phoneNumber, password;
-    
     SignUpViewModel signUpViewModel;
-    MaterialTextView signInButton;
-    AppCompatButton signUpButton;
+    MaterialTextView btnSignInTransfer;
+    AppCompatButton btnSignUp;
     View loadingLayout;
-    private static final String TAG = "Cannot invoke method length() on null object";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +38,13 @@ public class SignUpActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
         loadingLayout = findViewById(R.id.loadingLayout);
-        signUpButton = findViewById(R.id.signUpButton);
-        firstName = findViewById(R.id.txtFisrtName);
+        btnSignUp = findViewById(R.id.btnSignUp);
+        firstName = findViewById(R.id.txtFirstName);
         lastName = findViewById(R.id.txtLastName);
         email = findViewById(R.id.txtEmail);
         phoneNumber = findViewById(R.id.txtPhoneNumber);
         password = findViewById(R.id.txtPassword);
-        signInButton = findViewById(R.id.signInTransferButton);
+        btnSignInTransfer = findViewById(R.id.btnSignInTransfer);
         signUpViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
         signUpViewModel.mutableLiveDataErrors.observe(this, new Observer<String[]>() {
             @Override
@@ -55,7 +53,6 @@ public class SignUpActivity extends AppCompatActivity {
                     firstName.setError(strings[0]);
                 }
                 if (!strings[1].isEmpty()) {
-
                     lastName.setError(strings[1]);
                 }
                 if (!strings[2].isEmpty()) {
@@ -80,30 +77,25 @@ public class SignUpActivity extends AppCompatActivity {
                 Toast.makeText(SignUpActivity.this, s, Toast.LENGTH_LONG).show();
             }
         });
-        signUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                        if (
-                firstName.getEditText().getText().toString().isEmpty() ||
-                        lastName.getEditText().getText().toString().isEmpty() ||
-                        email.getEditText().getText().toString().isEmpty() ||
-                        phoneNumber.getEditText().getText().toString().isEmpty() ||
-                        password.getEditText().getText().toString().isEmpty()) {
-            checkValidations();
-        } else {
-            UserValidation userValidation = new UserValidation(firstName.getEditText().getText().toString().trim(), lastName.getEditText().getText().toString(),
-                    email.getEditText().getText().toString().trim(),
-                    phoneNumber.getEditText().getText().toString().trim(),
-                    password.getEditText().getText().toString());
-            signUpViewModel.setUserValidation(userValidation);
-            if (signUpViewModel.checkUserValidation()) {
-                showLoading();
-                signUpViewModel.getUser();
-            }
-        }
+        btnSignUp.setOnClickListener(v -> {
+            if (firstName.getEditText().getText().toString().isEmpty() ||
+                    lastName.getEditText().getText().toString().isEmpty() ||
+                    email.getEditText().getText().toString().isEmpty() ||
+                    phoneNumber.getEditText().getText().toString().isEmpty() ||
+                    password.getEditText().getText().toString().isEmpty()) {
+                checkValidations();
+            } else {
+                UserValidation userValidation = new UserValidation(firstName.getEditText().getText().toString().trim(), lastName.getEditText().getText().toString(),
+                        email.getEditText().getText().toString().trim(),
+                        phoneNumber.getEditText().getText().toString().trim(),
+                        password.getEditText().getText().toString());
+                signUpViewModel.setUserValidation(userValidation);
+                if (signUpViewModel.checkUserValidation()) {
+                    showLoading();
+                    signUpViewModel.getUser();
+                }
             }
         });
-        
     }
 
     public void signInButton(View view) {
@@ -113,36 +105,14 @@ public class SignUpActivity extends AppCompatActivity {
         finish();
     }
 
-//    public void signupOnclick(View view) {
-//        if (
-//                firstName.getEditText().getText().toString().isEmpty() ||
-//                        lastName.getEditText().getText().toString().isEmpty() ||
-//                        email.getEditText().getText().toString().isEmpty() ||
-//                        phoneNumber.getEditText().getText().toString().isEmpty() ||
-//                        password.getEditText().getText().toString().isEmpty()) {
-//            checkValidations();
-//        } else {
-//            UserValidation userValidation = new UserValidation(firstName.getEditText().getText().toString().trim(), lastName.getEditText().getText().toString(),
-//                    email.getEditText().getText().toString().trim(),
-//                    phoneNumber.getEditText().getText().toString().trim(),
-//                    password.getEditText().getText().toString());
-//            signUpViewModel.setUserValidation(userValidation);
-//            if (signUpViewModel.checkUserValidation()) {
-//                showLoading();
-//                signUpViewModel.getUser();
-//            }
-//        }
-//    }
-
-
     private void showLoading() {
         firstName.setVisibility(View.GONE);
         lastName.setVisibility(View.GONE);
         email.setVisibility(View.GONE);
         phoneNumber.setVisibility(View.GONE);
         password.setVisibility(View.GONE);
-        signUpButton.setVisibility(View.GONE);
-        signInButton.setVisibility(View.GONE);
+        btnSignUp.setVisibility(View.GONE);
+        btnSignInTransfer.setVisibility(View.GONE);
         loadingLayout.setVisibility(View.VISIBLE);
     }
 
@@ -152,14 +122,13 @@ public class SignUpActivity extends AppCompatActivity {
         email.setVisibility(View.VISIBLE);
         phoneNumber.setVisibility(View.VISIBLE);
         password.setVisibility(View.VISIBLE);
-        signInButton.setVisibility(View.VISIBLE);
-        signUpButton.setVisibility(View.VISIBLE);
+        btnSignInTransfer.setVisibility(View.VISIBLE);
+        btnSignUp.setVisibility(View.VISIBLE);
         loadingLayout.setVisibility(View.GONE);
     }
 
     public void checkValidations() {
         if (firstName.getEditText().getText().toString().isEmpty()) {
-
             firstName.setError("Enter your first name");
             firstName.requestFocus();
             firstName.getEditText().addTextChangedListener(new TextWatcher() {
@@ -277,5 +246,4 @@ public class SignUpActivity extends AppCompatActivity {
             });
         }
     }
-    
 }

@@ -48,7 +48,6 @@ import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.Slider;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
-import com.visitegypt.presentation.chatbot.ChatbotViewModel;
 import com.visitegypt.presentation.home.HomeRecyclerViewAdapter;
 import com.visitegypt.utils.Constants;
 
@@ -150,7 +149,7 @@ public class DetailActivity extends AppCompatActivity {
         thursdayOpeningHours = findViewById(R.id.thursdayOpeningHoursTextView);
         fridayOpeningHours = findViewById(R.id.fridayOpeningHoursTextView);
 
-        chatbotFloatingActionButton = findViewById(R.id.chatbotFloatingActionButton);
+        chatbotFloatingActionButton = findViewById(R.id.fBtnChatbot);
 
 
         chatbotFloatingActionButton.setOnClickListener(new View.OnClickListener() {

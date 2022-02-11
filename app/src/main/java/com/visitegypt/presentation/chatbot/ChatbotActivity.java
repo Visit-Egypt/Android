@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Chatbot;
@@ -24,16 +23,16 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class ChatbotActivity extends AppCompatActivity {
     private static final String TAG = "Chatbot Activity";
-    private RecyclerView chatbotRecyclerView;
-    private FloatingActionButton sendMessageFAButton;
-    private EditText messageEditText;
     private final String USER_KEY = "user";
     private final String BOT_KEY = "bot";
+    private RecyclerView chatbotRecyclerView;
+    private FloatingActionButton fBtnSendMessage;
+    private EditText edtTxtMessage;
     private ArrayList<Chatbot> chatbotArrayList;
     private ChatRecyclerViewAdapter ChatRecyclerViewAdapter;
     private ChatbotViewModel chatbotViewModel;
-    public String s;
-    public String x;
+//    public String s;
+//    public String x;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +43,8 @@ public class ChatbotActivity extends AppCompatActivity {
 
     private void initViews() {
         chatbotRecyclerView = findViewById(R.id.chatbotRecyclerView);
-        sendMessageFAButton = findViewById(R.id.sendMessageFAButton);
-        messageEditText = findViewById(R.id.messageEditText);
+        fBtnSendMessage = findViewById(R.id.sendMessageFAButton);
+        edtTxtMessage = findViewById(R.id.messageEditText);
         chatbotArrayList = new ArrayList<>();
         ChatRecyclerViewAdapter = new ChatRecyclerViewAdapter(chatbotArrayList, this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatbotActivity.this, RecyclerView.VERTICAL, false);
@@ -53,28 +52,23 @@ public class ChatbotActivity extends AppCompatActivity {
         chatbotRecyclerView.setAdapter(ChatRecyclerViewAdapter);
         chatbotViewModel = new ViewModelProvider(this).get(ChatbotViewModel.class);
 
-        sendMessageFAButton.setOnClickListener(new View.OnClickListener() {
+        fBtnSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (messageEditText.getText().toString().isEmpty()) {
+                if (edtTxtMessage.getText().toString().isEmpty()) {
                     Toast.makeText(ChatbotActivity.this, "Please enter your message..", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                getResponse(messageEditText.getText().toString());
-                messageEditText.setText("");
-
-
+                getResponse(edtTxtMessage.getText().toString());
+                edtTxtMessage.setText("");
                 chatbotViewModel.botResponseMutableLiveData.observe(ChatbotActivity.this, new Observer() {
                     @Override
                     public void onChanged(Object o) {
                         Log.d(TAG, "Bot response deliveried: " + o);
                         chatbotArrayList.add(new Chatbot(o.toString(), BOT_KEY));
                         ChatRecyclerViewAdapter.notifyDataSetChanged();
-
                     }
                 });
-
-
             }
         });
     }
@@ -85,6 +79,4 @@ public class ChatbotActivity extends AppCompatActivity {
         Log.d(TAG, "chatbot activity: " + message);
         chatbotViewModel.setMessage(message);
     }
-
-
 }

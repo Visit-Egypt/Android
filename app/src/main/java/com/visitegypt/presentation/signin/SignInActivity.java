@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -27,9 +26,9 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class SignInActivity extends AppCompatActivity {
-    private static final String TAG = "Cannot invoke method length() on null object";
+    private static final String TAG = "Sign In Activity";
     TextInputLayout txtEmail, txtPassword;
-    AppCompatButton signInButton;
+    AppCompatButton btnSignIn;
     View loadingLayout;
     String password, email;
     SignInViewModel signInViewModel;
@@ -44,7 +43,7 @@ public class SignInActivity extends AppCompatActivity {
         if (signInViewModel.checkUser()) {
             redirectHome();
         }
-        signInButton = findViewById(R.id.signInButton);
+        btnSignIn = findViewById(R.id.btnSignIn);
         loadingLayout = findViewById(R.id.loadingLayout);
         txtEmail = findViewById(R.id.txtEmail);
         txtPassword = findViewById(R.id.txtPassword);
@@ -64,10 +63,8 @@ public class SignInActivity extends AppCompatActivity {
                     hideLoading();
                     Toast.makeText(SignInActivity.this, s, Toast.LENGTH_LONG).show();
                 }
-
             }
         });
-
     }
 
     public void buttonOnClick(View view) {
@@ -126,7 +123,6 @@ public class SignInActivity extends AppCompatActivity {
             User myUser = new User(email, password);
             showLoading();
             signInViewModel.login(myUser);
-
         }
     }
 
@@ -135,14 +131,14 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void showLoading() {
-        signInButton.setVisibility(View.GONE);
+        btnSignIn.setVisibility(View.GONE);
         txtPassword.setVisibility(View.GONE);
         txtEmail.setVisibility(View.GONE);
         loadingLayout.setVisibility(View.VISIBLE);
     }
 
     private void hideLoading() {
-        signInButton.setVisibility(View.VISIBLE);
+        btnSignIn.setVisibility(View.VISIBLE);
         txtPassword.setVisibility(View.VISIBLE);
         txtEmail.setVisibility(View.VISIBLE);
         loadingLayout.setVisibility(View.GONE);
@@ -161,5 +157,4 @@ public class SignInActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
 }

@@ -1,6 +1,5 @@
 package com.visitegypt.presentation.home;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -11,8 +10,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -35,24 +32,51 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class HomeActivity extends AppCompatActivity {
-    Fragment selectedFragment;
     private static final String TAG = "Home Activity";
+    public BottomNavigationView bottomNavigationView;
+    Fragment selectedFragment;
+    private final BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+            LinearLayout homeLinearLayout = (LinearLayout) findViewById(R.id.homeLinearLayout);
+
+            switch (item.getItemId()) {
+                case R.id.home:
+                    getSupportFragmentManager().beginTransaction().remove(selectedFragment).commit();
+                    homeLinearLayout.setVisibility(View.VISIBLE);
+                    break;
+
+                case R.id.setting:
+                    selectedFragment = new SettingFragment();
+                    homeLinearLayout.setVisibility(View.GONE);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.navFragment, selectedFragment).commit();
+                    break;
+
+                case R.id.account:
+                    selectedFragment = new AccountFragment();
+                    homeLinearLayout.setVisibility(View.GONE);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.navFragment, selectedFragment).commit();
+                    break;
+                case R.id.ar:
+
+                    break;
+
+            }
+            return true;
+        }
+    };
     private RecyclerView homeRecyclerView;
     private HomeRecyclerViewAdapter homeRecyclerViewAdapter;
-
     private RecyclerView homeTopRecyclerView;
     private HomeRecyclerViewAdapter homeTopRecyclerViewAdapter;
-
     private HomeViewModel homeViewModel;
     private ArrayList<Place> placesArrayList;
     private ArrayList<Place> ourFavouritesArrayList;
-
     private ShimmerFrameLayout allPlacesShimmer;
     private ShimmerFrameLayout mustGoBeforeYouDieShimmer;
-    public BottomNavigationView bottomNavigationView;
+    private FloatingActionButton fBtnChatbot;
 
-    private FloatingActionButton chatbotFloatingActionButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,10 +106,9 @@ public class HomeActivity extends AppCompatActivity {
 
         allPlacesShimmer = findViewById(R.id.allPlacesShimmer);
         mustGoBeforeYouDieShimmer = findViewById(R.id.recommendationsShimmer);
-        chatbotFloatingActionButton=findViewById(R.id.chatbotFloatingActionButton);
+        fBtnChatbot = findViewById(R.id.fBtnChatbot);
 
-
-        chatbotFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+        fBtnChatbot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomeActivity.this, ChatbotActivity.class));
@@ -96,7 +119,6 @@ public class HomeActivity extends AppCompatActivity {
     private void initViewModel() {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         homeViewModel.getAllPlaces();
-
         homeViewModel.placesMutableLiveData.observe(this, new Observer<List<Place>>() {
             @Override
             public void onChanged(List<Place> placesList) {
@@ -170,49 +192,9 @@ public class HomeActivity extends AppCompatActivity {
         stopShimmerAnimation();
     }
 
-    private final BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-            LinearLayout homeLinearLayout = (LinearLayout) findViewById(R.id.homeLinearLayout);
-
-            switch (item.getItemId()) {
-                case R.id.home:
-                    getSupportFragmentManager().beginTransaction().remove(selectedFragment).commit();
-                    homeLinearLayout.setVisibility(View.VISIBLE);
-                    break;
-
-                case R.id.setting:
-                    selectedFragment = new SettingFragment();
-                    homeLinearLayout.setVisibility(View.GONE);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.navFragment, selectedFragment).commit();
-                    break;
-
-                case R.id.account:
-                    selectedFragment = new AccountFragment();
-                    homeLinearLayout.setVisibility(View.GONE);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.navFragment, selectedFragment).commit();
-                    break;
-                case R.id.ar:
-                    openAR();
-                    break;
-
-            }
-            return true;
-        }
-    };
-
-    private void openAR(){
-        if (ContextCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
-        } else {
-
-        }
-    }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
         if (requestCode == 0) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             } else {
