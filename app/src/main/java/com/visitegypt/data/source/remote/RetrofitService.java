@@ -5,6 +5,7 @@ import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.Post;
 import com.visitegypt.domain.model.PostPage;
 import com.visitegypt.domain.model.Review;
+import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.response.ItemPageResponse;
@@ -20,6 +21,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -51,7 +53,7 @@ public interface RetrofitService {
     public Single<User> registerUser(@Body User user);
 
     @POST("api/user/refresh")
-    public Single<User> refreshUserToken(@Body User user);
+    public Single<User> refreshUserToken(@Body Token token);
 
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @GET("api/user")
@@ -80,7 +82,7 @@ public interface RetrofitService {
     public Single<ItemPageResponse> getAllItems(@Query("filters") String queryMap);
 
     @POST("api/place/review/{place_id}")
-    public Single<String> submitReview(@Path("place_id") String placeId, @Body Review review);
+    public Single<List<Review>> submitReview(@Path("place_id") String placeId, @Body Review review);
 
     /******************************************************
      * this Retrofit services for Posts

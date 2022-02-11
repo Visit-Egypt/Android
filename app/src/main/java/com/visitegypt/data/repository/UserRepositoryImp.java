@@ -1,6 +1,7 @@
 package com.visitegypt.data.repository;
 
 import com.visitegypt.data.source.remote.RetrofitService;
+import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.response.UploadFields;
@@ -14,6 +15,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import retrofit2.Call;
 
 public class UserRepositoryImp implements UserRepository {
 
@@ -35,7 +37,10 @@ public class UserRepositoryImp implements UserRepository {
     }
 
     @Override
-    public Single<User> refreshUserToken(User user) { return retrofitService.refreshUserToken(user);}
+    public Single<User> refreshUserToken(Token token) {
+        return retrofitService.refreshUserToken(token);
+    }
+
 
     @Override
     public Single<User> getUser(String userId, String email) {

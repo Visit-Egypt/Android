@@ -1,8 +1,11 @@
 package com.visitegypt.domain.repository;
+import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.response.UploadFields;
 import com.visitegypt.domain.model.response.UploadResponse;
+
+import javax.inject.Named;
 
 import io.reactivex.rxjava3.core.Single;
 import okhttp3.MultipartBody;
@@ -23,7 +26,7 @@ public interface UserRepository {
      */
     Single<User> registerUser(User user);
     Single<User> loginUser(User user);
-    Single<User> refreshUserToken(User user);
+    Single<User> refreshUserToken(Token token);
     Single<User> getUser(String userId,String email);
     Single<User> updateUser(String userId, UserUpdateRequest user);
     Single<UploadResponse> uploadUserPhoto(String userId, String contentType);

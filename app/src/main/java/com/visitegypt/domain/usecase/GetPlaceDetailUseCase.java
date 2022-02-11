@@ -1,8 +1,11 @@
 package com.visitegypt.domain.usecase;
 
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.repository.PlaceRepository;
 import com.visitegypt.domain.usecase.base.SingleUseCase;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -22,7 +25,7 @@ public class GetPlaceDetailUseCase extends SingleUseCase<Place> {
     }
 
     @Override
-    protected Single buildSingleUseCase() {
+    protected Single<Place> buildSingleUseCase() {
         return placeRepository.getPlaceById(placeId);
     }
 }

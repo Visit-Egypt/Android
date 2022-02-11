@@ -6,7 +6,10 @@ import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.response.PlacePageResponse;
 import com.visitegypt.domain.repository.PlaceRepository;
 
+import java.util.List;
+
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.core.SingleSource;
 
 
 public class PlaceRepositoryImp implements PlaceRepository {
@@ -28,7 +31,7 @@ public class PlaceRepositoryImp implements PlaceRepository {
     }
 
     @Override
-    public Single<String> submitReview(String placeId, Review review) {
+    public Single<List<Review>> submitReview(String placeId, Review review) {
         return retrofitService.submitReview(placeId, review);
     }
 }

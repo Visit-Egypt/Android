@@ -1,11 +1,11 @@
 package com.visitegypt.domain.usecase;
 
-import android.content.SharedPreferences;
-
 import com.visitegypt.domain.model.Post;
-import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.repository.PostsRepository;
 import com.visitegypt.domain.usecase.base.SingleUseCase;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -20,12 +20,14 @@ public class GetPostUseCase extends SingleUseCase<Post> {
         this.postsRepository = postsRepository;
     }
 
-    @Override
-    protected Single<Post> buildSingleUseCase() {
-        return postsRepository.getPost(postId);
-    }
+
 
     public void getPostId(String postId) {
         this.postId = postId;
+    }
+
+    @Override
+    protected Single<Post> buildSingleUseCase() {
+        return postsRepository.getPost(postId);
     }
 }

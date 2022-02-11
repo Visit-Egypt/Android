@@ -2,12 +2,16 @@ package com.visitegypt.domain.usecase;
 import android.util.Log;
 
 import com.visitegypt.domain.model.Message;
+import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.repository.ChatbotRepository;
 import com.visitegypt.domain.usecase.base.SingleUseCase;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Single;
+
 public class ChatbotUseCase extends SingleUseCase<Message> {
     private static final String TAG = "Chatbot usecase";
 
@@ -23,11 +27,9 @@ public class ChatbotUseCase extends SingleUseCase<Message> {
     public ChatbotUseCase(ChatbotRepository chatbotRepository) {
         this.chatbotRepository = chatbotRepository;
     }
+
     @Override
     protected Single<Message> buildSingleUseCase() {
-        Log.d(TAG, "chattttttttbotttt "+message);
-        msg.setMsg(message);
-        Log.d(TAG, "chattttttttbotttt "+msg.getMsg());
         return chatbotRepository.chatbotReceiveRequest(msg);
     }
 }

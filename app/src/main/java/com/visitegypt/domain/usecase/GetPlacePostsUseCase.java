@@ -1,7 +1,7 @@
 package com.visitegypt.domain.usecase;
 
-import com.visitegypt.data.source.remote.RetrofitService;
 import com.visitegypt.domain.model.Post;
+import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.repository.PostsRepository;
 import com.visitegypt.domain.usecase.base.SingleUseCase;
 
@@ -24,8 +24,10 @@ public class GetPlacePostsUseCase extends SingleUseCase<List<Post>> {
         this.postId = postId;
     }
 
+
     @Override
     protected Single<List<Post>> buildSingleUseCase() {
         return postsRepository.getPlacePosts(postId);
+
     }
 }

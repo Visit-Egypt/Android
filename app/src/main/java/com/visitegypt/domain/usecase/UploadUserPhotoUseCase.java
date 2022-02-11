@@ -3,6 +3,7 @@ package com.visitegypt.domain.usecase;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.response.UploadResponse;
 import com.visitegypt.domain.model.response.UploadedFilesResponse;
 import com.visitegypt.domain.repository.UserRepository;
@@ -10,6 +11,7 @@ import com.visitegypt.domain.usecase.base.SingleUseCase;
 import com.visitegypt.utils.Constants;
 
 import java.io.File;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -18,7 +20,6 @@ import io.reactivex.rxjava3.functions.Consumer;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 

@@ -1,14 +1,17 @@
 package com.visitegypt.domain.usecase;
 
 import android.content.SharedPreferences;
-import android.util.Log;
 
+import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.repository.UserRepository;
 import com.visitegypt.domain.usecase.base.SingleUseCase;
 import com.visitegypt.utils.Constants;
 
+import java.util.List;
+
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import io.reactivex.rxjava3.core.Single;
 
@@ -20,7 +23,7 @@ public class GetUserUseCase extends SingleUseCase<User> {
     private SharedPreferences sharedPreferences;
 
     @Inject
-    public GetUserUseCase(UserRepository userRepository, SharedPreferences sharedPreferences) {
+    public GetUserUseCase(@Named("Normal") UserRepository userRepository, SharedPreferences sharedPreferences) {
         this.userRepository = userRepository;
         this.sharedPreferences = sharedPreferences;
     }
@@ -44,8 +47,10 @@ public class GetUserUseCase extends SingleUseCase<User> {
     {
         sharedPreferences.edit().clear().commit();
     }
+
     @Override
     protected Single<User> buildSingleUseCase() {
         return userRepository.getUser(userId, email);
+
     }
 }

@@ -5,51 +5,64 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import com.visitegypt.domain.model.Token;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Base64;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class JWT {
-    public static String getHeader() {
-        return header;
+
+public class JWT extends Token {
+    private static final String TAG = "Cannot invoke method length() on null object";
+
+    public JWT(String accessToken, String refreshToken) {
+        super(accessToken, refreshToken);
     }
 
-    public static String getPayLoad() {
-        return payLoad;
-    }
-
-    private static String header;
-    private static String payLoad;
+    private static String TokenPayLoad;
+    private static String refreshTokenPayLoad;
+    private static String tokenExp = null;
+    private static String refreshTokenExp = null;
     private static Base64.Decoder decoder = Base64.getDecoder();
 
-    public static void jwtDecode(String token) {
-        String[] chunks = token.split("\\.");
-        header = new String(decoder.decode(chunks[0]));
-        payLoad = new String(decoder.decode(chunks[1]));
+    private void jwtDecode() {
+        String[] tokenChunks = super.getAccessToken().split("\\.");
+        String[] refreshTokenChunks = this.getRefreshToken().split("\\.");
+        TokenPayLoad = new String(decoder.decode(tokenChunks[1]));
+        refreshTokenPayLoad = new String(decoder.decode(refreshTokenChunks[1]));
     }
 
-    public static String getExpiryDate() {
-        JSONObject myJsonObj = null;
-        String exp = null;
+    private static void getExpiryDate() {
+        JSONObject tokenJsonObject = null;
+        JSONObject refreshTokenJsonObject = null;
+
         try {
-            myJsonObj = new JSONObject(payLoad);
+            tokenJsonObject = new JSONObject(TokenPayLoad);
+            refreshTokenJsonObject = new JSONObject(refreshTokenPayLoad);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         try {
-            exp = myJsonObj.getString("exp");
+            tokenExp = tokenJsonObject.getString("exp");
+            refreshTokenExp = refreshTokenJsonObject.getString("exp");
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return exp;
+
     }
-    public static Boolean isValidToken(String expToken,String expRefreshToken)
-    {
-        Boolean isValid = Integer.parseInt(expToken) <= Integer.parseInt(expRefreshToken) ? true : false;
+
+    public  Boolean isValidToken() {
+        jwtDecode();
+        getExpiryDate();
+        Log.d(TAG, "isValidToken:  " +Long.parseLong(tokenExp) );
+        Log.d(TAG, "isValidToken:  " +java.time.Instant.now().getEpochSecond() );
+        Boolean isValid = Long.parseLong(tokenExp) - java.time.Instant.now().getEpochSecond() >=0 ? true : false;
         return isValid;
+
     }
 
 }
