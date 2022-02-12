@@ -137,17 +137,7 @@ public class NetworkModule {
                 .build();
     }
 
-    @Provides
-    @Singleton
-    @Named("RefreshToken")
-    public Retrofit provideRetrofitRefreshToken(GsonConverterFactory gsonConverterFactory, RxJava3CallAdapterFactory rxJava3CallAdapterFactory) {
 
-        return new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(gsonConverterFactory)
-                .addCallAdapterFactory(rxJava3CallAdapterFactory)
-                .build();
-    }
 
     @Provides
     @Singleton

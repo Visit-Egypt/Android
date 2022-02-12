@@ -29,11 +29,11 @@ public class HomeViewModel extends ViewModel {
             Log.d(TAG, "places retrieved");
             placesMutableLiveData.setValue(placePageResponse.getPlaces());
         }, throwable -> {
-            Log.e(TAG, "places retrieve error: " + throwable.getMessage()));
+            Log.e(TAG, "places retrieve error: " + throwable.getMessage());
             Error error = new Error();
             String errorMsg = error.errorType(throwable);
             Log.d(TAG, "error is:" + errorMsg);
-        }
+        });
 
     }
 }
