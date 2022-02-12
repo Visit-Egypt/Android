@@ -14,6 +14,7 @@ import com.visitegypt.domain.model.response.ItemPageResponse;
 import com.visitegypt.domain.usecase.GetItemsUseCase;
 import com.visitegypt.domain.usecase.GetPlaceDetailUseCase;
 import com.visitegypt.domain.usecase.SubmitReviewUseCase;
+import com.visitegypt.utils.Error;
 
 import org.json.JSONObject;
 
@@ -73,6 +74,7 @@ public class DetailViewModel extends ViewModel {
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Throwable {
+
                 Log.e(TAG, "error retrieving items: " + throwable.getMessage());
 
             }
@@ -141,21 +143,20 @@ public class DetailViewModel extends ViewModel {
             @Override
             public void accept(Throwable throwable) throws Throwable {
                 reviewSuccessState.setValue(true);
-                Log.d(TAG, "accept: i found error");
-                try {
-                    ResponseBody body = ((HttpException) throwable).response().errorBody();
-                    JSONObject jObjectError = new JSONObject(body.string());
-                    Log.d(TAG, "accept: submit error " +jObjectError.getJSONArray("errors").toString());
-                    if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
-
-
-                    }
-                } catch (Exception e) {
-                    Log.d("TAG", "accept catch: " + e.toString());
-                }
+//                Log.d(TAG, "accept: i found error");
+//                try {
+//                    ResponseBody body = ((HttpException) throwable).response().errorBody();
+//                    JSONObject jObjectError = new JSONObject(body.string());
+//                    Log.d(TAG, "accept: submit error " +jObjectError.getJSONArray("errors").toString());
+//                    if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
+//                    }
+//                } catch (Exception e) {
+//                    Log.d("TAG", "accept catch: " + e.toString());
+//                }
+                Error error = new Error();
+                String errorMsg = error.errorType(throwable);
+                Log.d(TAG,"error is:"+errorMsg);
             }
         });
     }
-
-
 }

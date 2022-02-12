@@ -9,15 +9,12 @@ import androidx.lifecycle.ViewModel;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.usecase.GetUserUseCase;
 import com.visitegypt.domain.usecase.LoginUserUseCase;
-
-import org.json.JSONObject;
+import com.visitegypt.utils.Error;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.functions.Consumer;
-import okhttp3.ResponseBody;
-import retrofit2.HttpException;
 
 @HiltViewModel
 public class SignInViewModel extends ViewModel {
@@ -26,6 +23,7 @@ public class SignInViewModel extends ViewModel {
     private LoginUserUseCase loginUserUseCase;
     private SharedPreferences sharedPreferences;
     private GetUserUseCase getUserUseCase;
+
 
     @Inject
     public SignInViewModel(LoginUserUseCase loginUserUseCase, SharedPreferences sharedPreferences, GetUserUseCase getUserUseCase) {
@@ -40,29 +38,21 @@ public class SignInViewModel extends ViewModel {
         loginUserUseCase.execute(new Consumer<User>() {
             @Override
             public void accept(User user) throws Throwable {
-                Log.d(TAG, "accept: Token " + user.getAccessToken());
-                Log.d(TAG, "accept: Token " + user.getRefreshToken());
+
+                Log.d(TAG, "acceptAccessToken: " + user.getAccessToken());
+                Log.d(TAG, "acceptRefreshToken: " + user.getRefreshToken());
                 loginUserUseCase.saveUserData(user);
                 saveUserData(user.getUserId(), email);
                 msgMutableLiveData.setValue("Your login done");
-
+                Log.e(TAG, "no error ");
             }
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Throwable {
-                try {
-                    ResponseBody body = ((HttpException) throwable).response().errorBody();
-                    JSONObject jObjectError = new JSONObject(body.string());
-                    Log.d(TAG, "accept try : " + jObjectError.getJSONArray("errors").toString());
-                    if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
-
-                        msgMutableLiveData.setValue(jObjectError.getJSONArray("errors").getJSONObject(0).getString("msg"));
-                    } else {
-                        msgMutableLiveData.setValue(jObjectError.getJSONArray("errors").toString());
-                    }
-                } catch (Exception e) {
-                    Log.d(TAG, "accept catch: " + e.toString());
-                }
+                Error error = new Error();
+                String errorMsg = error.errorType(throwable);
+                Log.d(TAG,"error is:"+errorMsg);
+                msgMutableLiveData.setValue(errorMsg);
             }
         });
     }
@@ -81,18 +71,10 @@ public class SignInViewModel extends ViewModel {
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Throwable {
-                try {
-                    ResponseBody body = ((HttpException) throwable).response().errorBody();
-                    JSONObject jObjectError = new JSONObject(body.string());
-                    Log.d(TAG, "accept try : " + jObjectError.getJSONArray("errors").toString());
-                    if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
-                        msgMutableLiveData.setValue(jObjectError.getJSONArray("errors").getJSONObject(0).getString("msg"));
-                    } else {
-                        msgMutableLiveData.setValue(jObjectError.getJSONArray("errors").toString());
-                    }
-                } catch (Exception e) {
-                    Log.d(TAG, "accept catch: " + e.toString());
-                }
+                Error error = new Error();
+                String errorMsg = error.errorType(throwable);
+                Log.d(TAG, "error is:" + errorMsg);
+                msgMutableLiveData.setValue(errorMsg);
             }
         });
     }

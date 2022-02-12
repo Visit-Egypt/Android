@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.usecase.GetPlacesUseCase;
+import com.visitegypt.utils.Error;
 
 import javax.inject.Inject;
 
@@ -27,7 +28,12 @@ public class HomeViewModel extends ViewModel {
         getPlacesUseCase.execute(placePageResponse -> {
             Log.d(TAG, "places retrieved");
             placesMutableLiveData.setValue(placePageResponse.getPlaces());
-        }, throwable -> Log.e(TAG, "places retrieve error: " + throwable.getMessage()));
+        }, throwable -> {
+            Log.e(TAG, "places retrieve error: " + throwable.getMessage()));
+            Error error = new Error();
+            String errorMsg = error.errorType(throwable);
+            Log.d(TAG, "error is:" + errorMsg);
+        }
 
     }
 }
