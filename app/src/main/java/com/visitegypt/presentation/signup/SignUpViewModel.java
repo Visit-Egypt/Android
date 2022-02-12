@@ -18,6 +18,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.functions.Consumer;
 import okhttp3.ResponseBody;
 import retrofit2.HttpException;
+import retrofit2.Response;
 
 @HiltViewModel
 public class SignUpViewModel extends ViewModel {
@@ -61,6 +62,7 @@ public class SignUpViewModel extends ViewModel {
                     public void accept(Throwable throwable) throws Throwable {
                         try {
                             ResponseBody body = ((HttpException) throwable).response().errorBody();
+
                             JSONObject jObjectError = new JSONObject(body.string());
                             Log.d("TAG", "accept try : " + jObjectError.getJSONArray("errors").toString());
                             if (jObjectError.getJSONArray("errors").toString().contains("msg")) {

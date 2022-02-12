@@ -151,6 +151,18 @@ public class NetworkModule {
 
     @Provides
     @Singleton
+    @Named("RefreshToken")
+    public Retrofit provideRetrofitRefreshToken(GsonConverterFactory gsonConverterFactory, RxJava3CallAdapterFactory rxJava3CallAdapterFactory) {
+
+        return new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(gsonConverterFactory)
+                .addCallAdapterFactory(rxJava3CallAdapterFactory)
+                .build();
+    }
+
+    @Provides
+    @Singleton
     public GsonConverterFactory provideGsonConverterFactory() {
         return GsonConverterFactory.create();
     }
@@ -173,6 +185,7 @@ public class NetworkModule {
     public UserRepository provideUserRepository(@Named("Normal") RetrofitService retrofitService) {
         return new UserRepositoryImp(retrofitService);
     }
+
 
     @Provides
     @Singleton
