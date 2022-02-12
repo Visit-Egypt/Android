@@ -88,12 +88,6 @@ public class SignInViewModel extends ViewModel {
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Throwable {
-                /*
-                    Error class
-                    * Error(Throwable t)
-                    * Bool  isError(void)
-                    * String getErrors(void)
-                 */
                 try {
                     ResponseBody body = ((HttpException) throwable).response().errorBody();
                     JSONObject jObjectError = new JSONObject(body.string());

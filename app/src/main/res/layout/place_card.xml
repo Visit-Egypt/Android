@@ -15,14 +15,14 @@
         android:orientation="vertical">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/placeCardImageView"
+            android:id="@+id/imgPlaceCard"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:scaleType="centerCrop"
             android:src="@drawable/test" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/placeCardTitleTextView"
+            android:id="@+id/txtPlaceCardTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -34,7 +34,7 @@
             android:textStyle="bold" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/placeCardDescriptionTextView"
+            android:id="@+id/txtPlaceCardDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

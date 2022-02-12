@@ -25,9 +25,8 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     private static final String TAG = "Home Adapter";
 
     public static String CHOSEN_PLACE_ID = "placeId";
-
-    private List<Place> placesList;
     private final Context context;
+    private List<Place> placesList;
 
     public HomeRecyclerViewAdapter(List<Place> placesList, Context context) {
         this.placesList = placesList;
@@ -53,25 +52,25 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull HomeRecyclerViewAdapter.ViewHolder holder, int position) {
-        holder.titleTextView.setText(placesList.get(position).getTitle());
+        holder.txtTitle.setText(placesList.get(position).getTitle());
         if (placesList.get(position).getTicketPrices() != null) {
             try {
                 int startingPrice = placesList.get(position).getTicketPrices().get(EGYPTIAN_STUDENT.toString());
-                holder.descriptionTextView.setText("Starting at " + startingPrice + " EGP");
+                holder.txtDescription.setText("Starting at " + startingPrice + " EGP");
             } catch (Exception e) {
                 Log.e(TAG, "couldn't load price text: " + e.getMessage());
-                holder.descriptionTextView.setVisibility(View.GONE);
+                holder.txtDescription.setVisibility(View.GONE);
             }
         } else {
-            holder.descriptionTextView.setVisibility(View.GONE);
+            holder.txtDescription.setVisibility(View.GONE);
         }
 
         if (placesList.get(position).getDefaultImage() != null) {
             Log.d(TAG, "default image found for: " + placesList.get(position).getTitle());
-            Picasso.get().load(placesList.get(position).getDefaultImage()).into(holder.placeImageView);
+            Picasso.get().load(placesList.get(position).getDefaultImage()).into(holder.imgPlace);
         } else if (placesList.get(position).getImageUrls() != null) {
             Log.d(TAG, "default image not found! loading first image instead for: " + placesList.get(position).getTitle());
-            Picasso.get().load(placesList.get(position).getImageUrls().get(0)).into(holder.placeImageView);
+            Picasso.get().load(placesList.get(position).getImageUrls().get(0)).into(holder.imgPlace);
         } else {
             Log.d(TAG, "no images found for: " + placesList.get(position).getTitle());
         }
@@ -87,15 +86,15 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private final ImageView placeImageView;
-        private final TextView titleTextView;
-        private final TextView descriptionTextView;
+        private final ImageView imgPlace;
+        private final TextView txtTitle;
+        private final TextView txtDescription;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            placeImageView = itemView.findViewById(R.id.placeCardImageView);
-            titleTextView = itemView.findViewById(R.id.placeCardTitleTextView);
-            descriptionTextView = itemView.findViewById(R.id.placeCardDescriptionTextView);
+            imgPlace = itemView.findViewById(R.id.imgPlaceCard);
+            txtTitle = itemView.findViewById(R.id.txtPlaceCardTitle);
+            txtDescription = itemView.findViewById(R.id.txtPlaceCardDescription);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

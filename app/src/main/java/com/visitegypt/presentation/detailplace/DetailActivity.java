@@ -48,6 +48,7 @@ import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.Slider;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
+import com.visitegypt.presentation.chatbot.ChatbotViewModel;
 import com.visitegypt.presentation.home.HomeRecyclerViewAdapter;
 import com.visitegypt.utils.Constants;
 
@@ -112,9 +113,18 @@ public class DetailActivity extends AppCompatActivity {
         } else {
             placeId = (String) savedInstanceState.getSerializable(HomeRecyclerViewAdapter.CHOSEN_PLACE_ID);
         }
+        Log.d(TAG, "Place ID: " + placeId);
         initViews();
         initViewModel(placeId);
-        chatBot();
+        addReviewButton = findViewById(R.id.writeReviewButton);
+//addReviewButton.setOnClickListener(new View.OnClickListener() {
+//    @Override
+//    public void onClick(View view) {
+//        Toast.makeText(DetailActivity.this,"alaa",Toast.LENGTH_SHORT).show();
+//        showDialog();
+//    }
+//});
+
     }
 
     private void initViews() {
@@ -132,7 +142,6 @@ public class DetailActivity extends AppCompatActivity {
         locationTextView = findViewById(R.id.locationTextView);
         noReviewsTextView = findViewById(R.id.noReviewsTextView);
 
-
         saturdayOpeningHours = findViewById(R.id.saturdayOpeningHoursTextView);
         sundayOpeningHours = findViewById(R.id.sundayOpeningHoursTextView);
         mondayOpeningHours = findViewById(R.id.mondayOpeningHoursTextView);
@@ -142,13 +151,21 @@ public class DetailActivity extends AppCompatActivity {
         fridayOpeningHours = findViewById(R.id.fridayOpeningHoursTextView);
 
         chatbotFloatingActionButton = findViewById(R.id.chatbotFloatingActionButton);
-        addReviewButton = findViewById(R.id.writeReviewButton);
 
+
+        chatbotFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DetailActivity.this, ChatbotActivity.class));
+            }
+        });
         sliderView = findViewById(R.id.sliderSliderView);
+
         itemsRecyclerView = findViewById(R.id.itemsRecyclerView);
         itemsRecyclerViewAdapter = new ItemsRecyclerViewAdapter(this);
         itemsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         itemsRecyclerView.setAdapter(itemsRecyclerViewAdapter);
+
         reviewsRecyclerView = findViewById(R.id.reviewsRecyclerView);
         reviewsRecyclerViewAdapter = new ReviewsRecyclerViewAdapter(this);
         reviewsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -197,13 +214,18 @@ public class DetailActivity extends AppCompatActivity {
                 stopShimmerAnimation();
                 setLayoutVisible();
                 setShimmersGone();
+
+                Log.d(TAG, "onChanged title: " + place.getTitle());
+
                 if (place.getImageUrls() != null) {
+                    Log.d(TAG, "images found: " + place.getImageUrls().toString());
                     for (String url : place.getImageUrls()) {
                         sliderArrayList.add(new Slider(url));
                     }
                     sliderAdapter.updateArrayList(sliderArrayList);
                 } else if (place.getDefaultImage() != null) {
                     sliderArrayList.add(new Slider(place.getDefaultImage()));
+                    Log.d(TAG, "not image urls found, using default image instead");
                 } else {
                     Log.e(TAG, "no images found");
                 }
@@ -321,10 +343,11 @@ public class DetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 TextInputEditText textInputEditText = (TextInputEditText) addReviewDialog.findViewById(R.id.reviewEditText);
                 String reviewText = textInputEditText.getText().toString().trim();
-                float numStars = ((RatingBar) addReviewDialog.findViewById(R.id.ratingBar)).getRating();
+                float numStars = ((RatingBar) addReviewDialog.findViewById(R.id.ratingBar)).getNumStars();
                 Log.d(TAG, "onClick: " + reviewText);
                 if (reviewText.isEmpty()) {
                     textInputEditText.setError("Review can't be empty");
+//                    Toast.makeText(DetailActivity.this, "empty", Toast.LENGTH_SHORT).show();
                 } else {
 
                     String firstName = sharedPreferences.getString(Constants.SHARED_PREF_FIRST_NAME, "");
@@ -334,15 +357,26 @@ public class DetailActivity extends AppCompatActivity {
                     Log.d(TAG, "submitting review from: " + firstName + " " + lastName);
 
                     Review review = new Review(numStars, reviewText, firstName + " " + lastName, userId);
+
                     //.makeText(DetailActivity.this, " " + userId, Toast.LENGTH_SHORT).show();
                     detailViewModel.submitReview(placeId, review);
-                    detailViewModel.reviewMutableLiveData.observe(DetailActivity.this, new Observer<List<Review>>() {
+
+                    detailViewModel.reviewSuccessState.observe(DetailActivity.this, new Observer<Boolean>() {
                         @Override
-                        public void onChanged(List<Review> reviews) {
-                            addReviewDialog.dismiss();
-                            reviewsRecyclerViewAdapter.setReviewsArrayList(reviews);
+                        public void onChanged(Boolean aBoolean) {
+                            if (aBoolean) {
+                                Log.d(TAG, "onChanged: this submit is done");
+
+                                addReviewDialog.dismiss();
+                                finish();
+                                startActivity(getIntent());
+                            }
+
+
                         }
+
                     });
+
                 }
             }
 
@@ -351,14 +385,5 @@ public class DetailActivity extends AppCompatActivity {
 
     public void addReview(View view) {
         showDialog();
-    }
-
-    private void chatBot() {
-        chatbotFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(DetailActivity.this, ChatbotActivity.class));
-            }
-        });
     }
 }

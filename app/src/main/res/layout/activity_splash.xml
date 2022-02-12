@@ -16,7 +16,7 @@
         tools:layout_editor_absoluteY="0dp" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/getStartedButton"
+        android:id="@+id/btnGetStarted"
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:background="@drawable/brown_rounded_button"

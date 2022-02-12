@@ -21,7 +21,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/signInTransferButton"
+        android:id="@+id/btnSignInTransfer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/gold"
@@ -63,7 +63,7 @@
         app:layout_constraintVertical_bias="0.284" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txtFisrtName"
+        android:id="@+id/txtFirstName"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
         app:layout_constraintBottom_toTopOf="@+id/txtEmail"
         app:layout_constraintEnd_toEndOf="@+id/view7"
         app:layout_constraintStart_toStartOf="@+id/view7"
-        app:layout_constraintTop_toBottomOf="@+id/txtFisrtName"
+        app:layout_constraintTop_toBottomOf="@+id/txtFirstName"
         app:layout_goneMarginTop="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -194,7 +194,7 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/signUpButton"
+        android:id="@+id/btnSignUp"
         android:layout_width="342dp"
         android:layout_height="wrap_content"
         android:background="@drawable/input_button"

@@ -194,7 +194,7 @@ public class HomeActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.navFragment, selectedFragment).commit();
                     break;
                 case R.id.ar:
-
+                    openAR();
                     break;
 
             }
@@ -202,4 +202,22 @@ public class HomeActivity extends AppCompatActivity {
         }
     };
 
+    private void openAR(){
+        if (ContextCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+        } else {
+
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 0) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            } else {
+                Toast.makeText(getApplicationContext(), "Error in permissions", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 }
