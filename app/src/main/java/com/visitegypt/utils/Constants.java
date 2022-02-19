@@ -1,5 +1,7 @@
 package com.visitegypt.utils;
 
+import java.util.SplittableRandom;
+
 public class Constants {
     public static final String BASE_URL = "https://visit-egypt.herokuapp.com/";
     public static final String SHARED_PREF_USER_ACCESS_TOKEN = "accessToken";
@@ -10,6 +12,7 @@ public class Constants {
     public static final String SHARED_PREF_FIRST_NAME = "firstName";
     public static final String SHARED_PREF_LAST_NAME = "lastName";
     public static final String SHARED_PREF_PHONE_NUMBER = "phoneNumber";
+    public static  final String SHARED_PREF_NAME = "secret_shared_prefs";
 
     public enum CustomerType {
         FOREIGNER_STUDENT("Foreigner Student"),

@@ -13,7 +13,6 @@ import org.json.JSONObject;
 import java.util.Base64;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-
 public class JWT extends Token {
     private static final String TAG = "Cannot invoke method length() on null object";
 

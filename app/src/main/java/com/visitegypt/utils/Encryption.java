@@ -27,9 +27,12 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.inject.Inject;
 
+
 public class Encryption {
+    private static final String TAG = "Encryption ";
     private static String accessToken;
     private static String salt = "ASsadads52dsfds4fds2fsd@";
+
     public Encryption(String accessToken) {
         this.accessToken = accessToken;
     }
@@ -37,13 +40,12 @@ public class Encryption {
     public Encryption() {
     }
 
-    public void getAccessToken(String accessToken)
-    {
+    public void getAccessToken(String accessToken) {
         this.accessToken = accessToken;
+        Log.d(TAG, "getAccessToken: is ok  ");
     }
 
-    public static SecretKey generateKey(String password)
-    {
+    public static SecretKey generateKey(String password) {
         SecretKeyFactory factory = null;
         try {
             factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
@@ -59,28 +61,30 @@ public class Encryption {
         }
         return originalKey;
     }
-    public static SecretKey generateKey()
-          {
-              SecretKeyFactory factory = null;
-              try {
-                  factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-              } catch (NoSuchAlgorithmException e) {
-                  e.printStackTrace();
-              }
-              KeySpec spec = new PBEKeySpec(accessToken.toCharArray(), salt.getBytes(), 65536, 256);
-              SecretKey originalKey = null;
-              try {
-                  originalKey = new SecretKeySpec(factory.generateSecret(spec).getEncoded(), "AES");
-              } catch (InvalidKeySpecException e) {
-                  e.printStackTrace();
-              }
 
-              return originalKey;
+    public static SecretKey generateKey() {
+        SecretKeyFactory factory = null;
+        try {
+            factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        KeySpec spec = new PBEKeySpec(accessToken.toCharArray(), salt.getBytes(), 65536, 256);
+        SecretKey originalKey = null;
+        try {
+            originalKey = new SecretKeySpec(factory.generateSecret(spec).getEncoded(), "AES");
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        }
+
+        return originalKey;
     }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static String encrypt(SecretKey secretKey) throws BadPaddingException, IllegalBlockSizeException {
+    public static String encrypt() throws BadPaddingException, IllegalBlockSizeException {
         byte[] iv = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         IvParameterSpec ivspec = new IvParameterSpec(iv);
+        SecretKey secretKey = generateKey();
         Cipher cipher = null;
         String password = null;
         try {
@@ -98,9 +102,9 @@ public class Encryption {
             e.printStackTrace();
         }
 
-            return Base64
-                    .getEncoder()
-                    .encodeToString(cipher.doFinal(accessToken.getBytes(StandardCharsets.UTF_8)));
+        return Base64
+                .getEncoder()
+                .encodeToString(cipher.doFinal(accessToken.getBytes(StandardCharsets.UTF_8)));
 
     }
 
@@ -111,6 +115,7 @@ public class Encryption {
         String encodedKey = Base64.getEncoder().encodeToString(rawData);
         return encodedKey;
     }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static SecretKey convertStringToSecretKey(String encodedKey) {
         byte[] decodedKey = Base64.getDecoder().decode(encodedKey);
@@ -119,7 +124,7 @@ public class Encryption {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static  String decrypt(SecretKey secretKey , String strToDecrypt) throws BadPaddingException, IllegalBlockSizeException {
+    public static String decrypt(SecretKey secretKey, String strToDecrypt) throws BadPaddingException, IllegalBlockSizeException {
         Cipher cipher = null;
         byte[] iv = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         IvParameterSpec ivspec = new IvParameterSpec(iv);
@@ -131,7 +136,7 @@ public class Encryption {
             e.printStackTrace();
         }
         try {
-            cipher.init(Cipher.DECRYPT_MODE,secretKey,ivspec);
+            cipher.init(Cipher.DECRYPT_MODE, secretKey, ivspec);
         } catch (InvalidAlgorithmParameterException e) {
             e.printStackTrace();
         } catch (InvalidKeyException e) {

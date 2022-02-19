@@ -24,11 +24,9 @@ import com.visitegypt.domain.repository.ItemRepository;
 import com.visitegypt.domain.repository.PlaceRepository;
 import com.visitegypt.domain.repository.PostsRepository;
 import com.visitegypt.domain.repository.UserRepository;
-import com.visitegypt.utils.Constants;
 import com.visitegypt.utils.JWT;
 
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -71,7 +69,7 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public OkHttpClient provideOkHttpClient(OkHttpClient.Builder httpClient, HttpLoggingInterceptor logging, SharedPreferences sharedPreferences, @Named("RefreshToken") UserRepository userRepository, JWT jwt) {
+    public OkHttpClient provideOkHttpClient(OkHttpClient.Builder httpClient, HttpLoggingInterceptor logging, SharedPreferences sharedPreferences, @Named("RefreshToken") UserRepository userRepository) {
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         httpClient.addInterceptor(logging);
         httpClient.addInterceptor(new Interceptor() {
@@ -80,17 +78,14 @@ public class NetworkModule {
             public Response intercept(@NonNull Chain chain) throws IOException {
                 String token = sharedPreferences.getString(SHARED_PREF_USER_ACCESS_TOKEN, "");
                 String refreshToken = sharedPreferences.getString(SHARED_PREF_USER_REFRESH_TOKEN, "");
-                Log.d("TAG", "intercept:  Token before call" + token);
                 Request request = chain.request().newBuilder()
                         .addHeader("Authorization", "Bearer " + token)
                         .build();
                 Response response = chain.proceed(request);
                 if (response.code() == 403 || response.code() == 401) {
-                    Log.d("TAG", "intercept: I still here ");
                     response.close();
                     getNewToken(userRepository, sharedPreferences);
                     token = sharedPreferences.getString(SHARED_PREF_USER_ACCESS_TOKEN, "");
-                    Log.d("TAG", "intercept:  Token after call" + token);
 
                     Request newRequest = chain.request().newBuilder()
                             .addHeader("Authorization", "Bearer " + token)
@@ -136,7 +131,6 @@ public class NetworkModule {
                 .client(client)
                 .build();
     }
-
 
 
     @Provides
@@ -214,13 +208,6 @@ public class NetworkModule {
         return null;
     }
 
-    private int responseCount(Response response) {
-        int result = 1;
-        while ((response = response.priorResponse()) != null) {
-            result++;
-        }
-        return result;
-    }
 
     public void getNewToken(@Named("RefreshToken") UserRepository userRepository, SharedPreferences sharedPreferences) {
         Log.d("TAG", "getNewToken: welcome ");
