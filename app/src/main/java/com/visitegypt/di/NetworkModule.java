@@ -10,6 +10,7 @@ import android.util.Log;
 
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 
 import com.visitegypt.data.repository.ChatbotRepositoryImp;
 import com.visitegypt.data.repository.ItemRepositoryImp;
@@ -19,11 +20,13 @@ import com.visitegypt.data.repository.UserRepositoryImp;
 import com.visitegypt.data.source.remote.RetrofitService;
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.repository.CallBack;
 import com.visitegypt.domain.repository.ChatbotRepository;
 import com.visitegypt.domain.repository.ItemRepository;
 import com.visitegypt.domain.repository.PlaceRepository;
 import com.visitegypt.domain.repository.PostsRepository;
 import com.visitegypt.domain.repository.UserRepository;
+import com.visitegypt.domain.usecase.GetRefreshTokenUseCase;
 import com.visitegypt.utils.JWT;
 
 import java.io.IOException;
@@ -43,13 +46,18 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 @InstallIn(SingletonComponent.class)
-public class NetworkModule {
+public class NetworkModule implements CallBack {
+    private String token;
+    private String newToken;
+    private boolean flag = true;
+
     public NetworkModule() {
 
     }
@@ -69,14 +77,14 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public OkHttpClient provideOkHttpClient(OkHttpClient.Builder httpClient, HttpLoggingInterceptor logging, SharedPreferences sharedPreferences, @Named("RefreshToken") UserRepository userRepository) {
+    public OkHttpClient provideOkHttpClient(OkHttpClient.Builder httpClient, HttpLoggingInterceptor logging, SharedPreferences sharedPreferences, GetRefreshTokenUseCase userRepository) {
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         httpClient.addInterceptor(logging);
         httpClient.addInterceptor(new Interceptor() {
             @NonNull
             @Override
             public Response intercept(@NonNull Chain chain) throws IOException {
-                String token = sharedPreferences.getString(SHARED_PREF_USER_ACCESS_TOKEN, "");
+                token = sharedPreferences.getString(SHARED_PREF_USER_ACCESS_TOKEN, "");
                 String refreshToken = sharedPreferences.getString(SHARED_PREF_USER_REFRESH_TOKEN, "");
                 Request request = chain.request().newBuilder()
                         .addHeader("Authorization", "Bearer " + token)
@@ -85,13 +93,15 @@ public class NetworkModule {
                 if (response.code() == 403 || response.code() == 401) {
                     response.close();
                     getNewToken(userRepository, sharedPreferences);
-                    token = sharedPreferences.getString(SHARED_PREF_USER_ACCESS_TOKEN, "");
 
+                    while (flag) ;
                     Request newRequest = chain.request().newBuilder()
-                            .addHeader("Authorization", "Bearer " + token)
+                            .addHeader("Authorization", "Bearer " + newToken)
                             .build();
-                    return chain.proceed(newRequest);
+                    flag = true;
+                    Log.d("TAG", "callBack: new token  " + newToken+ " " +flag);
 
+                    return chain.proceed(newRequest);
 
                 }
 
@@ -208,24 +218,28 @@ public class NetworkModule {
         return null;
     }
 
-
-    public void getNewToken(@Named("RefreshToken") UserRepository userRepository, SharedPreferences sharedPreferences) {
-        Log.d("TAG", "getNewToken: welcome ");
-        String token = sharedPreferences.getString(SHARED_PREF_USER_ACCESS_TOKEN, "");
-        String refreshToken = sharedPreferences.getString(SHARED_PREF_USER_REFRESH_TOKEN, "");
-        Single<User> myUser = userRepository.refreshUserToken(new Token(token, refreshToken))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-        myUser.subscribe(user -> {
-            Log.d("TAG", "getNewToken: HIIIII ");
-            sharedPreferences.edit()
-                    .putString(SHARED_PREF_USER_ACCESS_TOKEN, user.getAccessToken())
-                    .putString(SHARED_PREF_USER_REFRESH_TOKEN, user.getRefreshToken())
-                    .apply();
-        }, throwable -> {
-            Log.d("TAG", "getNewToken: error" + throwable.getMessage());
-        });
+    @Provides
+    @Singleton
+    public GetRefreshTokenUseCase provideGetRefreshToken(@Named("RefreshToken") UserRepository userRepository, SharedPreferences sharedPreferences) {
+        return new GetRefreshTokenUseCase(userRepository, sharedPreferences);
     }
 
 
+    private void getNewToken(GetRefreshTokenUseCase getRefreshTokenUseCase, SharedPreferences sharedPreferences) throws IOException {
+        Log.d("TAG", "Threads: " + Thread.currentThread());
+        token = sharedPreferences.getString(SHARED_PREF_USER_ACCESS_TOKEN, "");
+        String refreshToken = sharedPreferences.getString(SHARED_PREF_USER_REFRESH_TOKEN, "");
+        getRefreshTokenUseCase.setToken(new Token(token, refreshToken));
+        getRefreshTokenUseCase.setCallBack(this::callBack);
+        getRefreshTokenUseCase.getNewToken();
+
+    }
+
+
+    @Override
+    public void callBack(String token) {
+        Log.d("TAG", "callBack: " + token);
+        newToken = token;
+       flag = false;
+    }
 }
