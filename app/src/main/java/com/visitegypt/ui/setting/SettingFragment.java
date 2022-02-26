@@ -61,6 +61,7 @@ public class SettingFragment extends Fragment {
     SettingViewModel settingViewModel;
     private static final int PHOTO_SELECTED = 1;
     private static final int PICK_FROM_GALLERY = 0;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -80,7 +81,16 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 settingViewModel.logOut();
-                redirect();
+                settingViewModel.isLoged.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+                    @Override
+                    public void onChanged(Boolean aBoolean) {
+                        if (!aBoolean)
+                        {
+                            redirect();
+                        }
+                    }
+                });
+
 
             }
         });
@@ -96,13 +106,13 @@ public class SettingFragment extends Fragment {
 
                 if (userFirstName != null && !userFirstName.isEmpty())
                     userUpdateRequest.setFirstName(userFirstName);
-                if(userLastName != null && !userLastName.isEmpty())
+                if (userLastName != null && !userLastName.isEmpty())
                     userUpdateRequest.setLastName(userLastName);
-                if(userPhoneNumber != null && !userPhoneNumber.isEmpty())
+                if (userPhoneNumber != null && !userPhoneNumber.isEmpty())
                     userUpdateRequest.setPhoneNumber(userPhoneNumber);
-                if(userPassword != null && !userPassword.isEmpty())
+                if (userPassword != null && !userPassword.isEmpty())
                     userUpdateRequest.setPassword(userPassword);
-                if(userEmail != null && !userEmail.isEmpty())
+                if (userEmail != null && !userEmail.isEmpty())
                     userUpdateRequest.setEmail(userEmail);
 
                 settingViewModel.updateUser(userUpdateRequest);
@@ -116,6 +126,7 @@ public class SettingFragment extends Fragment {
         });
         return settingFragment;
     }
+
     private void selectPhoto() {
         final CharSequence[] options = {"Choose from Gallery", "Cancel"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -156,8 +167,7 @@ public class SettingFragment extends Fragment {
         userImageView = settingFragment.findViewById(R.id.userImageView);
     }
 
-    private void getUserData()
-    {
+    private void getUserData() {
         settingViewModel.getUserData();
         settingViewModel.mutableLiveDataUser.observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
@@ -166,7 +176,7 @@ public class SettingFragment extends Fragment {
                 lastName.setText(user.getLastName());
                 email.setText(user.getEmail());
                 phone.setText(user.getPhoneNumber());
-                if (user.getPhotoUrl() != null && !user.getPhotoUrl().isEmpty()){
+                if (user.getPhotoUrl() != null && !user.getPhotoUrl().isEmpty()) {
                     Glide.with(requireContext())
                             .load(user.getPhotoUrl())
                             .fitCenter()
@@ -203,7 +213,7 @@ public class SettingFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK && requestCode == PHOTO_SELECTED && data != null){
+        if (resultCode == RESULT_OK && requestCode == PHOTO_SELECTED && data != null) {
             Uri selectedImage = data.getData();
             String filePath = UploadUtils.getPath(selectedImage, requireContext());
             String mimeType = requireActivity().getContentResolver().getType(selectedImage);
@@ -214,7 +224,6 @@ public class SettingFragment extends Fragment {
             // settingViewModel.uploadUserProfilePhoto(userPhotoFile, mimeType);
         }
     }
-
 
 
     @Override
@@ -230,8 +239,8 @@ public class SettingFragment extends Fragment {
             }
         }
     }
-    private  void redirect()
-    {
+
+    private void redirect() {
 
         Intent intent = new Intent(getContext(), SignInActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

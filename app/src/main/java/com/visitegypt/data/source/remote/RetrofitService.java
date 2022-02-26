@@ -62,8 +62,8 @@ public interface RetrofitService {
     @PUT("api/user/{user_id}")
     public Single<User> updateUser(@Path("user_id") String userId,@Body UserUpdateRequest user);
 
-    @DELETE("api/user/:id")
-    public void deleteUser(int id);
+    @POST("api/user/logout/{user_id}")
+    public Single<String> logOut(@Path("user_id") String userId);
 
     @GET("api/user/{id}/upload-photo")
     public Single<UploadResponse> uploadUserPhoto(@Path("id") String id, @Query("content_type") String contentType);

@@ -48,6 +48,11 @@ public class UserRepositoryImp implements UserRepository {
     }
 
     @Override
+    public Single<String> logOut(String userId) {
+        return retrofitService.logOut(userId);
+    }
+
+    @Override
     public Single<User> updateUser(String userId, UserUpdateRequest user) {
         return retrofitService.updateUser(userId, user);
     }

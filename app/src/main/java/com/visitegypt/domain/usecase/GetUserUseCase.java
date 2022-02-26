@@ -42,11 +42,7 @@ public class GetUserUseCase extends SingleUseCase<User> {
                 .putString(Constants.SHARED_PREF_EMAIL,email)
                 .apply();
     }
-    //this is not right
-    public void logOut()
-    {
-        sharedPreferences.edit().clear().commit();
-    }
+
 
     @Override
     protected Single<User> buildSingleUseCase() {

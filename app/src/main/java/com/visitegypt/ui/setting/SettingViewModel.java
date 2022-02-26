@@ -1,5 +1,7 @@
 package com.visitegypt.ui.setting;
 
+import static com.visitegypt.utils.Constants.SHARED_PREF_USER_ID;
+
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -11,6 +13,7 @@ import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.response.UploadResponse;
 import com.visitegypt.domain.model.response.UploadedFilesResponse;
 import com.visitegypt.domain.usecase.GetUserUseCase;
+import com.visitegypt.domain.usecase.LogOutUseCase;
 import com.visitegypt.domain.usecase.UpdateUserUseCase;
 import com.visitegypt.domain.usecase.UploadUserPhotoUseCase;
 import com.visitegypt.utils.Constants;
@@ -31,20 +34,23 @@ public class SettingViewModel extends ViewModel {
     private static final String TAG = "Setting View Model";
     GetUserUseCase getUserUseCase;
     UpdateUserUseCase updateUserUseCase;
+    LogOutUseCase logOutUseCase;
     SharedPreferences sharedPreferences;
+    MutableLiveData<Boolean> isLoged = new MutableLiveData<>();
     MutableLiveData<User> mutableLiveDataUser = new MutableLiveData<>();
     @Inject
-    public SettingViewModel(GetUserUseCase getUserUseCase, SharedPreferences sharedPreferences,UpdateUserUseCase updateUserUseCase) {
+    public SettingViewModel(GetUserUseCase getUserUseCase, SharedPreferences sharedPreferences,UpdateUserUseCase updateUserUseCase,LogOutUseCase logOutUseCase) {
         this.getUserUseCase = getUserUseCase;
         this.sharedPreferences = sharedPreferences;
         this.updateUserUseCase = updateUserUseCase;
+        this.logOutUseCase = logOutUseCase;
         // this.uploadUserPhotoUseCase = uploadUserPhotoUseCase;
 
     }
 
     public void getUserData(){
 
-        getUserUseCase.setUser(sharedPreferences.getString(Constants.SHARED_PREF_USER_ID,null),
+        getUserUseCase.setUser(sharedPreferences.getString(SHARED_PREF_USER_ID,null),
                 sharedPreferences.getString(Constants.SHARED_PREF_EMAIL,null));
         getUserUseCase.execute(new Consumer<User>() {
             @Override
@@ -91,7 +97,14 @@ public class SettingViewModel extends ViewModel {
         */
     public void logOut()
     {
-        getUserUseCase.logOut();
+       logOutUseCase.setUserId(sharedPreferences.getString(SHARED_PREF_USER_ID,null));
+       logOutUseCase.execute(s -> {
+           sharedPreferences.edit().clear().commit();
+           isLoged.setValue(false);
+       },throwable -> {
+           Log.d(TAG, "logOut: " + throwable.getMessage());
+
+       });
     }
     public void updateUser(UserUpdateRequest userUpdateRequest) {
         updateUserUseCase.setUser(userUpdateRequest);
@@ -124,9 +137,8 @@ public class SettingViewModel extends ViewModel {
     public void saveNewData(User user)
     {
         sharedPreferences.edit()
-                .putString(Constants.SHARED_PREF_USER_ID, user.getUserId())
+                .putString(SHARED_PREF_USER_ID, user.getUserId())
                 .putString(Constants.SHARED_PREF_FIRST_NAME, user.getFirstName() + " " + user.getLastName())
                 .apply();
     }
 }
-

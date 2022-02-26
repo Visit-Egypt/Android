@@ -28,6 +28,7 @@ public interface UserRepository {
     Single<User> loginUser(User user);
     Single<User> refreshUserToken(Token token);
     Single<User> getUser(String userId,String email);
+    Single<String> logOut(String userId);
     Single<User> updateUser(String userId, UserUpdateRequest user);
     Single<UploadResponse> uploadUserPhoto(String userId, String contentType);
     Single<ResponseBody> genericUpload(String uploadUrl, UploadFields uploadFields, MultipartBody.Part file);
