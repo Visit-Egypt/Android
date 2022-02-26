@@ -1,4 +1,4 @@
-package com.visitegypt.ui.setting;
+package com.visitegypt.presentation.setting;
 
 import static com.visitegypt.utils.Constants.SHARED_PREF_USER_ID;
 
@@ -10,17 +10,12 @@ import androidx.lifecycle.ViewModel;
 
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
-import com.visitegypt.domain.model.response.UploadResponse;
-import com.visitegypt.domain.model.response.UploadedFilesResponse;
 import com.visitegypt.domain.usecase.GetUserUseCase;
 import com.visitegypt.domain.usecase.LogOutUseCase;
 import com.visitegypt.domain.usecase.UpdateUserUseCase;
-import com.visitegypt.domain.usecase.UploadUserPhotoUseCase;
 import com.visitegypt.utils.Constants;
 
 import org.json.JSONObject;
-
-import java.io.File;
 
 import javax.inject.Inject;
 

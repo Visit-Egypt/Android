@@ -25,8 +25,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
-import com.visitegypt.ui.account.AccountFragment;
-import com.visitegypt.ui.setting.SettingFragment;
+import com.visitegypt.presentation.account.AccountFragment;
+import com.visitegypt.presentation.setting.SettingFragment;
 
 import java.util.ArrayList;
 import java.util.List;

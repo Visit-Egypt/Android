@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:importantForAutofill="noExcludeDescendants"
-    tools:context=".ui.account.AccountFragment">
+    tools:context=".presentation.account.AccountFragment">
 
     <View
         android:layout_width="match_parent"

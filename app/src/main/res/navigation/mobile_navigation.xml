@@ -5,13 +5,13 @@
 
     <fragment
         android:id="@+id/account"
-        android:name="com.visitegypt.ui.account.AccountFragment"
+        android:name="com.visitegypt.presentation.account.AccountFragment"
         android:label="@string/title_account"
         tools:layout="@layout/fragment_account" />
 
     <fragment
         android:id="@+id/setting"
-        android:name="com.visitegypt.ui.setting.SettingFragment"
+        android:name="com.visitegypt.presentation.setting.SettingFragment"
         android:label="@string/title_setting"
         tools:layout="@layout/fragment_setting" />
 </navigation>

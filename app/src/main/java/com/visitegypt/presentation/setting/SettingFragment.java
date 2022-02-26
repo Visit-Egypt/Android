@@ -1,4 +1,4 @@
-package com.visitegypt.ui.setting;
+package com.visitegypt.presentation.setting;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -9,13 +9,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.FileUtils;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,15 +32,10 @@ import com.visitegypt.R;
 import com.visitegypt.databinding.FragmentSettingBinding;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
-import com.visitegypt.domain.model.response.UploadedFilesResponse;
-import com.visitegypt.presentation.home.HomeActivity;
 import com.visitegypt.presentation.signin.SignInActivity;
-import com.visitegypt.presentation.signup.SignUpActivity;
-import com.visitegypt.ui.account.AccountViewModel;
 import com.visitegypt.utils.UploadUtils;
 
 import java.io.File;
-import java.util.Objects;
 
 import dagger.hilt.android.AndroidEntryPoint;
 

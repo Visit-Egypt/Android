@@ -1,6 +1,4 @@
-package com.visitegypt.ui.account;
-
-import static com.visitegypt.utils.Constants.SHARED_PREF_FIRST_NAME;
+package com.visitegypt.presentation.account;
 
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -8,17 +6,13 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.visitegypt.data.repository.PostRepositoryImp;
 import com.visitegypt.domain.model.Post;
 import com.visitegypt.domain.model.PostPage;
-import com.visitegypt.domain.model.converters.PostConverter;
-import com.visitegypt.domain.usecase.GetPostUseCase;
 import com.visitegypt.domain.usecase.GetPostsByUser;
 import com.visitegypt.utils.Constants;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
