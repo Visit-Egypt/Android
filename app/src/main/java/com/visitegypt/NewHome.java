@@ -1,5 +1,6 @@
 package com.visitegypt;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +24,8 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.visitegypt.databinding.ActivityNewHomeBinding;
+import com.visitegypt.presentation.chatbot.ChatbotActivity;
+import com.visitegypt.presentation.signin.SignInActivity;
 
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -43,8 +46,11 @@ public class NewHome extends AppCompatActivity {
         binding.appBarNewHome.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(NewHome.this, ChatbotActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                //finish();
+
             }
         });
         navigation = binding.appBarNewHome.navigation;

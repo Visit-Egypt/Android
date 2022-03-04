@@ -89,7 +89,7 @@
         android:layout_marginBottom="16dp"
         app:layout_anchor="@id/navigation"
         app:layout_anchorGravity="top|end"
-        app:srcCompat="@android:drawable/ic_dialog_email"
+        app:srcCompat="@drawable/ic_chatbot"
         tools:ignore="SpeakableTextPresentCheck" />
 
 
