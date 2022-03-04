@@ -57,7 +57,7 @@ public class SettingFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         settingFragment = inflater.inflate(R.layout.fragment_setting, container, false);
 
         settingViewModel =

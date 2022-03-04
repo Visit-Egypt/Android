@@ -46,7 +46,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     @NonNull
     @Override
     public HomeRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.place_card, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.places_card, parent, false);
         return new ViewHolder(view);
     }
 
@@ -56,13 +56,13 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         if (placesList.get(position).getTicketPrices() != null) {
             try {
                 int startingPrice = placesList.get(position).getTicketPrices().get(EGYPTIAN_STUDENT.toString());
-                holder.txtDescription.setText("Starting at " + startingPrice + " EGP");
+//                holder.txtDescription.setText("Starting at " + startingPrice + " EGP");
             } catch (Exception e) {
                 Log.e(TAG, "couldn't load price text: " + e.getMessage());
-                holder.txtDescription.setVisibility(View.GONE);
+//                holder.txtDescription.setVisibility(View.GONE);
             }
         } else {
-            holder.txtDescription.setVisibility(View.GONE);
+//            holder.txtDescription.setVisibility(View.GONE);
         }
 
         if (placesList.get(position).getDefaultImage() != null) {
@@ -88,13 +88,12 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView imgPlace;
         private final TextView txtTitle;
-        private final TextView txtDescription;
+//        private final TextView txtDescription;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imgPlace = itemView.findViewById(R.id.imgPlaceCard);
-            txtTitle = itemView.findViewById(R.id.txtPlaceCardTitle);
-            txtDescription = itemView.findViewById(R.id.txtPlaceCardDescription);
+            txtTitle = itemView.findViewById(R.id.txtPlaceCardNewCity);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

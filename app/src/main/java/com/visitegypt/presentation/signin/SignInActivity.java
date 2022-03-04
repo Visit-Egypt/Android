@@ -16,9 +16,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.visitegypt.NewHome;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.User;
-import com.visitegypt.presentation.home.HomeActivity;
 import com.visitegypt.presentation.signup.SignUpActivity;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -55,7 +55,7 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onChanged(String s) {
                 if (s.equals("Your login done")) {
-                    Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
+                    Intent intent = new Intent(SignInActivity.this, NewHome.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     finish();
@@ -152,7 +152,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void redirectHome() {
-        Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
+        Intent intent = new Intent(SignInActivity.this, NewHome.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
