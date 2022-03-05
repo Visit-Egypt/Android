@@ -1,4 +1,4 @@
-package com.visitegypt.presentation.detailplace;
+package com.visitegypt.presentation.detail;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +28,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
 
     @Override
     public SliderAdapterViewHolder onCreateViewHolder(ViewGroup parent) {
-        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.slide_layout, null);
+        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.detail_slide_layout, null);
         return new SliderAdapterViewHolder(inflate);
     }
 
@@ -56,7 +56,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
 
         public SliderAdapterViewHolder(View itemView) {
             super(itemView);
-            imageViewBackground = itemView.findViewById(R.id.myimage);
+            imageViewBackground = itemView.findViewById(R.id.imgImageView);
             this.itemView = itemView;
         }
     }

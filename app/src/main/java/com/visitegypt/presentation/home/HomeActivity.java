@@ -42,7 +42,7 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-            LinearLayout homeLinearLayout = (LinearLayout) findViewById(R.id.homeLinearLayout);
+            LinearLayout homeLinearLayout = findViewById(R.id.homeLinearLayout);
 
             switch (item.getItemId()) {
                 case R.id.home:

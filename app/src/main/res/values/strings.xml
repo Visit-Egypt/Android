@@ -56,7 +56,7 @@
     <string name="no_reviews">No Reviews</string>
     <string name="know_this_place">Know this place?</string>
     <string name="opening_hours">Opening Hours</string>
-    <string name="prices">Prices</string>
+    <string name="prices">Ticket Price</string>
     <string name="title_activity_navigation">NavigationActivity</string>
     <string name="title_home">Home</string>
     <string name="title_account">Account</string>

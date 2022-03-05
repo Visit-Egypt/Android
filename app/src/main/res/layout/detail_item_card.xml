@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TableRow>
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:id="@+id/itemCardImageView"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:src="@drawable/ic_baseline_person_24" />
+            </TableRow>
+
+            <TableRow>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/itemCardTitleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:fontFamily="@font/montserrat_light"
+                    android:gravity="center"
+                    android:maxWidth="25dp"
+                    android:singleLine="false"
+                    android:text="Dead Head"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+            </TableRow>
+        </TableLayout>
+    </HorizontalScrollView>
+</LinearLayout>

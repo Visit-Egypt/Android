@@ -1,4 +1,4 @@
-package com.visitegypt.presentation.detailplace;
+package com.visitegypt.presentation.detail;
 
 import android.content.Context;
 import android.view.LayoutInflater;
