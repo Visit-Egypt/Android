@@ -31,6 +31,8 @@ public class ChatbotActivity extends AppCompatActivity {
     private ArrayList<Chatbot> chatbotArrayList;
     private ChatRecyclerViewAdapter ChatRecyclerViewAdapter;
     private ChatbotViewModel chatbotViewModel;
+//    public String s;
+//    public String x;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,4 +1,4 @@
-package com.visitegypt.presentation.home;
+package com.visitegypt.ui.home.child.discover;
 
 import android.util.Log;
 
@@ -14,13 +14,14 @@ import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
 @HiltViewModel
-public class HomeViewModel extends ViewModel {
+public class DiscoverChildViewModel extends ViewModel {
+    // TODO: Implement the ViewModel
     private static final String TAG = "Home View Model";
     MutableLiveData placesMutableLiveData = new MutableLiveData<Place>();
     private GetPlacesUseCase getPlacesUseCase;
 
     @Inject
-    public HomeViewModel(GetPlacesUseCase getPlacesUseCase) {
+    public DiscoverChildViewModel(GetPlacesUseCase getPlacesUseCase) {
         this.getPlacesUseCase = getPlacesUseCase;
     }
 

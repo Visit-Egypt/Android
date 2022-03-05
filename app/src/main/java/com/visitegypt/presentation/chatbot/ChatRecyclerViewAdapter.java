@@ -17,12 +17,13 @@ import java.util.ArrayList;
 public class ChatRecyclerViewAdapter extends RecyclerView.Adapter {
 
     private final ArrayList<Chatbot> chatbotArrayList;
-    private final Context context;
 
     public ChatRecyclerViewAdapter(ArrayList<Chatbot> chatbotArrayList, Context context) {
         this.chatbotArrayList = chatbotArrayList;
         this.context = context;
     }
+
+    private final Context context;
 
     @NonNull
     @Override
