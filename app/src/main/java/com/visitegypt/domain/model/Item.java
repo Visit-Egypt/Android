@@ -5,7 +5,7 @@ import androidx.room.TypeConverters;
 import com.google.gson.annotations.SerializedName;
 import com.visitegypt.domain.model.converters.ImageUrlsConverter;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Item {
     private String title;
@@ -14,7 +14,7 @@ public class Item {
     private String description;
     @TypeConverters(ImageUrlsConverter.class)
     @SerializedName("list_of_images")
-    private List<String> imageUrls;
+    private ArrayList<String> imageUrls;
 
     @SerializedName("place_id")
     private String placeId;
@@ -23,10 +23,11 @@ public class Item {
 
     }
 
-    public Item(String title, String description, List<String> imageUrls) {
+    public Item(String title, String description, ArrayList<String> imageUrls) {
         this.title = title;
         this.description = description;
         this.imageUrls = imageUrls;
+
     }
 
     public Item(String title, String description) {
@@ -50,11 +51,11 @@ public class Item {
         this.description = description;
     }
 
-    public List<String> getImageUrls() {
+    public ArrayList<String> getImageUrls() {
         return imageUrls;
     }
 
-    public void setImageUrl(List<String> imageUrls) {
+    public void setImageUrl(ArrayList<String> imageUrls) {
         this.imageUrls = imageUrls;
     }
 

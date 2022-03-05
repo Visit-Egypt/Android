@@ -76,14 +76,14 @@ public class SettingFragment extends Fragment {
                 selectPhoto();
             }
         });
-        logOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                settingViewModel.logOut();
-                redirect();
-
-            }
-        });
+//        logOutButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                settingViewModel.logOut();
+//                redirect();
+//
+//            }
+//        });
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -151,7 +151,7 @@ public class SettingFragment extends Fragment {
         password = settingFragment.findViewById(R.id.passwordTextInputEditText);
         saveButton = settingFragment.findViewById(R.id.saveButton);
         cancelButton = settingFragment.findViewById(R.id.cancelButton);
-        logOutButton = settingFragment.findViewById(R.id.logOutButton);
+//        logOutButton = settingFragment.findViewById(R.id.logOutButton);
         changeImageView = settingFragment.findViewById(R.id.changeImageView);
         userImageView = settingFragment.findViewById(R.id.userImageView);
     }

@@ -4,12 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    tools:context=".presentation.detailplace.DetailActivity">
+    tools:context=".presentation.detail.DetailActivity">
 
     <com.smarteist.autoimageslider.SliderView
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="200dp"
         android:background="@color/gray"
         app:sliderAnimationDuration="600"
         app:sliderAutoCycleDirection="back_and_forth"
@@ -22,7 +21,5 @@
         app:sliderIndicatorRadius="2dp"
         app:sliderIndicatorSelectedColor="@color/brown"
         app:sliderIndicatorUnselectedColor="@color/gray"
-        app:sliderScrollTimeInSec="1"
-        tools:ignore="MissingClass,MissingConstraints" />
-
+        app:sliderScrollTimeInSec="1" />
 </LinearLayout>
