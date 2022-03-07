@@ -15,7 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
-import com.visitegypt.presentation.detailplace.DetailActivity;
+import com.visitegypt.presentation.detail.DetailActivity;
+
 
 import java.util.List;
 

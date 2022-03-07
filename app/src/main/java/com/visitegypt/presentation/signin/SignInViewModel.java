@@ -29,6 +29,7 @@ import retrofit2.HttpException;
 public class SignInViewModel extends ViewModel {
     private static final String TAG = "Sign in view model test";
     MutableLiveData<String> msgMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<User> userMutable = new MutableLiveData<>();
     private LoginUserUseCase loginUserUseCase;
     private SharedPreferences sharedPreferences;
     private GetUserUseCase getUserUseCase;
@@ -50,6 +51,7 @@ public class SignInViewModel extends ViewModel {
                 Log.d("TAG", "accept: Token "+user.getRefreshToken());
                 loginUserUseCase.saveUserData(user);
                 saveUserData(user.getUserId(),email);
+                userMutable.setValue(user);
                 msgMutableLiveData.setValue("Your login done");
 
             }

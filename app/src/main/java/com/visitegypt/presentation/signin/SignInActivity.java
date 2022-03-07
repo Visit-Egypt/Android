@@ -16,10 +16,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.visitegypt.NewHome;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.signup.SignUpActivity;
+import com.visitegypt.ui.home.parent.Home;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -27,6 +27,8 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class SignInActivity extends AppCompatActivity {
     private static final String TAG = "Sign In Activity";
+    private static final String USER_NAME = "user_name";
+    private static final String USER_EMAIL = "user_email";
     TextInputLayout txtEmail, txtPassword;
     AppCompatButton btnSignIn;
     View loadingLayout;
@@ -55,14 +57,22 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onChanged(String s) {
                 if (s.equals("Your login done")) {
-                    Intent intent = new Intent(SignInActivity.this, NewHome.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
+
                 } else {
                     hideLoading();
                     Toast.makeText(SignInActivity.this, s, Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+        signInViewModel.userMutable.observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                Intent intent = new Intent(SignInActivity.this, Home.class);
+                intent.putExtra(USER_NAME,user.getFirstName()+" " + user.getLastName());
+                intent.putExtra(USER_EMAIL,user.getEmail());
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -152,7 +162,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void redirectHome() {
-        Intent intent = new Intent(SignInActivity.this, NewHome.class);
+        Intent intent = new Intent(SignInActivity.this, Home.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();

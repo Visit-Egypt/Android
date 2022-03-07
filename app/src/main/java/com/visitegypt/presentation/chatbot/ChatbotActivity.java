@@ -49,6 +49,7 @@ public class ChatbotActivity extends AppCompatActivity {
         ChatRecyclerViewAdapter = new ChatRecyclerViewAdapter(chatbotArrayList, this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatbotActivity.this, RecyclerView.VERTICAL, false);
         chatbotRecyclerView.setLayoutManager(linearLayoutManager);
+        linearLayoutManager.setStackFromEnd(true);
         chatbotRecyclerView.setAdapter(ChatRecyclerViewAdapter);
         chatbotViewModel = new ViewModelProvider(this).get(ChatbotViewModel.class);
 

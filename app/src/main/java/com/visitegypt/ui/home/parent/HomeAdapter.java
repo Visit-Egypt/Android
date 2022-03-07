@@ -8,8 +8,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-
-import com.visitegypt.presentation.setting.SettingFragment;
 import com.visitegypt.ui.activities.ActivitiesFragment;
 import com.visitegypt.ui.home.child.activity.ActivitiyChild;
 import com.visitegypt.ui.home.child.discover.DiscoverChild;

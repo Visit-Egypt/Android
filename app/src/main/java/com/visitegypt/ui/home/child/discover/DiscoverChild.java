@@ -21,6 +21,7 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.smarteist.autoimageslider.SliderView;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.ui.home.parent.Home;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -174,6 +175,7 @@ public class DiscoverChild extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        ((Home)getActivity()).setActionBarTitle("Discover");
         startShimmerAnimation();
     }
 

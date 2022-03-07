@@ -13,6 +13,7 @@ import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.usecase.GetUserUseCase;
 import com.visitegypt.domain.usecase.LogOutUseCase;
 import com.visitegypt.domain.usecase.UpdateUserUseCase;
+import com.visitegypt.presentation.chatbot.SingleLiveEvent;
 import com.visitegypt.utils.Constants;
 
 import org.json.JSONObject;
@@ -32,7 +33,7 @@ public class SettingViewModel extends ViewModel {
     LogOutUseCase logOutUseCase;
     SharedPreferences sharedPreferences;
     MutableLiveData<Boolean> isLoged = new MutableLiveData<>();
-    MutableLiveData<User> mutableLiveDataUser = new MutableLiveData<>();
+    public MutableLiveData<User> mutableLiveDataUser = new MutableLiveData<>();
     @Inject
     public SettingViewModel(GetUserUseCase getUserUseCase, SharedPreferences sharedPreferences,UpdateUserUseCase updateUserUseCase,LogOutUseCase logOutUseCase) {
         this.getUserUseCase = getUserUseCase;

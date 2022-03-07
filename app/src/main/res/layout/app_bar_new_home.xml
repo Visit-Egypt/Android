@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".NewHome">
+    tools:context=".ui.home.Home">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -16,6 +16,7 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
+
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -33,6 +34,7 @@
                     android:id="@+id/label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_alternates_medium"
                     android:gravity="center"
                     android:text="Explore"
                     android:textColor="#222222"
@@ -77,6 +79,7 @@
         android:layout_height="wrap_content"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
         android:layout_gravity="bottom"
+        app:labelVisibilityMode="unlabeled"
         android:background="?android:attr/windowBackground"
         app:menu="@menu/bottom_nav_menu" />
 

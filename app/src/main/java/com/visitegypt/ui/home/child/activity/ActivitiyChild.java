@@ -11,9 +11,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.visitegypt.R;
+import com.visitegypt.ui.home.parent.Home;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -40,4 +40,9 @@ public class ActivitiyChild extends Fragment {
         // TODO: Use the ViewModel
     }
 
+    @Override
+    public void onResume() {
+        ((Home)getActivity()).setActionBarTitle("Activity");
+        super.onResume();
+    }
 }
