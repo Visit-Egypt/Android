@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:importantForAutofill="noExcludeDescendants"
     tools:context=".presentation.setting.SettingFragment">
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/materialTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/gray"
-            android:gravity="left"
-            android:padding="15dp"
-            android:text="Personal info"
-            android:textColor="@color/black"
-            android:textSize="30dp" />
+<!--        <com.google.android.material.textview.MaterialTextView-->
+<!--            android:id="@+id/materialTextView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@color/gray"-->
+<!--            android:gravity="left"-->
+<!--            android:padding="15dp"-->
+<!--            android:text="Personal info"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="30dp" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -212,26 +216,26 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/saveButton"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
+                android:layout_width="1dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
-                android:background="@drawable/boarder"
+                android:background="@drawable/button_shape"
                 android:onClick="buttonOnClick"
                 android:text="SAVE"
                 android:textAlignment="center"
-                android:textColor="@color/gold" />
+                android:textColor="@color/white" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/cancelButton"
-                android:layout_width="150dp"
+                android:layout_width="1dp"
                 android:layout_marginStart="8dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_weight="1"
-                android:background="@drawable/boarder"
+                android:background="@drawable/button_shape"
                 android:onClick="buttonOnClick"
                 android:text="CANCEL"
                 android:textAlignment="center"
-                android:textColor="@color/gold" />
+                android:textColor="@color/white" />
         </LinearLayout>
         <!--    <androidx.appcompat.widget.AppCompatButton-->
         <!--        android:id="@+id/logOutButton"-->
@@ -249,4 +253,6 @@
 
 
     </LinearLayout>
-</ScrollView>
+
+    </ScrollView>
+</LinearLayout>

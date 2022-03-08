@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation2"
+    app:startDestination="@+id/nav_discover">
+    <fragment
+        android:id="@+id/nav_discover"
+        android:label="Explore"
+        android:name="com.visitegypt.ui.home.parent.HomeFragment"
+        tools:layout="@layout/fragment_home_parent">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_near_me"
+        android:label="@string/menu_near_me"
+        android:name="com.visitegypt.ui.nearMe.NearMeFragment"
+        tools:layout="@layout/fragment_near_me" />
+
+    <fragment
+        android:id="@+id/nav_activities"
+        android:label="@string/menu_activities"
+        android:name="com.visitegypt.ui.activities.ActivitiesFragment"
+        tools:layout="@layout/fragment_activities" />
+    <fragment
+        android:id="@+id/nav_map"
+        android:label="@string/menu_map"
+        android:name="com.visitegypt.ui.map.MapFragment"
+        tools:layout="@layout/fragment_map" />
+    <fragment
+        android:id="@+id/nav_booking"
+        android:label="@string/menu_booking"
+        android:name="com.visitegypt.ui.booking.BookingFragment"
+        tools:layout="@layout/fragment_booking" />
+    <fragment
+        android:id="@+id/nav_subscription"
+        android:label="@string/menu_subscription"
+        android:name="com.visitegypt.ui.subscription.SubscriptionFragment"
+        tools:layout="@layout/fragment_subscription" />
+    <fragment
+        android:id="@+id/setting"
+        android:label="@string/setting"
+        android:name="com.visitegypt.presentation.setting.SettingFragment"
+        tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/account"
+        android:name="com.visitegypt.presentation.account.AccountFragment"
+        android:label="@string/title_account"
+        tools:layout="@layout/fragment_account" />
+
+
+</navigation>

@@ -24,7 +24,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.ScrollView;
@@ -48,10 +47,10 @@ import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.Slider;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
-import com.visitegypt.presentation.home.HomeActivity;
 import com.visitegypt.presentation.home.HomeRecyclerViewAdapter;
 import com.visitegypt.presentation.review.ReviewActivity;
 import com.visitegypt.presentation.review.ReviewViewModel;
+import com.visitegypt.ui.home.parent.Home;
 import com.visitegypt.utils.Constants;
 
 import java.util.ArrayList;
@@ -350,6 +349,6 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void backPlace() {
-        startActivity(new Intent(DetailActivity.this, HomeActivity.class));
+        startActivity(new Intent(DetailActivity.this, Home.class));
     }
 }

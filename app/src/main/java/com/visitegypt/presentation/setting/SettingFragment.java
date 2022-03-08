@@ -1,4 +1,4 @@
-package com.visitegypt.ui.setting;
+package com.visitegypt.presentation.setting;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -31,8 +31,8 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
-import com.visitegypt.presentation.setting.SettingViewModel;
 import com.visitegypt.presentation.signin.SignInActivity;
+import com.visitegypt.ui.home.parent.Home;
 import com.visitegypt.utils.UploadUtils;
 
 import java.io.File;
@@ -56,7 +56,7 @@ public class SettingFragment extends Fragment {
     private static final int PICK_FROM_GALLERY = 0;
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         settingFragment = inflater.inflate(R.layout.fragment_setting, container, false);
 
         settingViewModel =
@@ -230,5 +230,17 @@ public class SettingFragment extends Fragment {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((Home)getActivity()).setActionBarTitle("Setting");
+        ((Home)getActivity()).hideChatBot();
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((Home)getActivity()).showChatBot();
     }
 }

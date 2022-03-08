@@ -3,49 +3,96 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/drawable/detail_item_background.xml" value="0.2703125" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.13541666666666666" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/drawable/ic_thumbs.xml" value="0.21510416666666668" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/drawable/input_background.xml" value="0.20677083333333332" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/drawable/input_button.xml" value="0.2703125" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/drawable/likes_background.xml" value="0.2703125" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/layout/activity_chatbot.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/layout/activity_detail.xml" value="0.22736418511066397" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/layout/activity_home.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/layout/activity_item.xml" value="0.14098837209302326" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/layout/activity_review.xml" value="0.2" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/layout/card_shimmer_placeholder.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/layout/detail_box_shimmer_placeholder_layout.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/layout/detail_button_shimmer_placeholder_layout.xml" value="0.1765625" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/layout/detail_item_card.xml" value="0.264" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/layout/detail_item_description.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/layout/detail_review_circles.xml" value="0.1765625" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/layout/detail_slide_layout.xml" value="0.1765625" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/layout/detail_slider_shimmer_placeholder_layout.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/layout/detail_table_shimmer_placeholder_layout.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/layout/fragment_setting.xml" value="0.2" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/layout/item_card.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/layout/loading.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/layout/place_card.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/layout/review_card.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/layout/slide_layout.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Androiddesign/app/src/main/res/layout/user_message.xml" value="0.13385416666666666" />
-        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/layout/activity_detail.xml" value="0.3273073263558516" />
-        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/layout/activity_gamification.xml" value="0.3625" />
-        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/layout/activity_home.xml" value="0.35833333333333334" />
-        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/layout/card_shimmer_placeholder.xml" value="0.35833333333333334" />
-        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/layout/content_gamification.xml" value="0.33" />
-        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/layout/detail_box_shimmer_placeholder_layout.xml" value="0.35833333333333334" />
-        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/layout/detail_item_card.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/layout/detail_slide_layout.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/layout/fragment_setting.xml" value="0.33" />
-        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/layout/gamification_activity_card.xml" value="0.35833333333333334" />
-        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/layout/place_card.xml" value="0.35833333333333334" />
-        <entry key="..\:/Users/a7mad/AndroidStudioProjects/VisitEgypt3/app/src/main/res/layout/review_card.xml" value="0.16666666666666666" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/boarder.xml" value="0.1984375" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/bot_msg.xml" value="0.15260416666666668" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/brown_rounded_button.xml" value="0.2703125" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/btn_shape.xml" value="0.2703125" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/button_shape.xml" value="0.1375" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/chatbot_header.xml" value="0.2703125" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/confirm_circle.xml" value="0.2234375" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/dot_shape.xml" value="0.2703125" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/ic_activities.xml" value="0.2234375" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/ic_base.xml" value="0.15260416666666668" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.18177083333333333" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/ic_booking.xml" value="0.1375" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/ic_bot_message.xml" value="0.15260416666666668" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/ic_chatbot.xml" value="0.2703125" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/ic_chatbotbackground.xml" value="0.15260416666666668" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/ic_comment.xml" value="0.2703125" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/ic_discover.xml" value="0.22708333333333333" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/ic_logout.xml" value="0.2703125" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/ic_map.xml" value="0.22708333333333333" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/ic_menu_camera.xml" value="0.2703125" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.2703125" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.2703125" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/ic_near_me.xml" value="0.2703125" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/ic_notification.xml" value="0.2234375" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.2234375" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/ic_search.xml" value="0.2234375" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/ic_setting.xml" value="0.1375" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/ic_star.xml" value="0.2703125" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/information_background.xml" value="0.2703125" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/input_background.xml" value="0.2703125" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/input_button.xml" value="0.2703125" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/likes_background.xml" value="0.2703125" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/setting_bg.xml" value="0.2703125" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/side_nav_bar.xml" value="0.2703125" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/drawable/user_msg.xml" value="0.15260416666666668" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/font/montserrat.xml" value="0.284375" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/font/montserrat_alternates_medium.xml" value="0.284375" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/activitiy_child_fragment.xml" value="0.1242393509127789" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/activity_chatbot.xml" value="0.4" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/activity_detail.xml" value="0.23749166110740494" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/activity_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/activity_new_home.xml" value="0.22643343051506318" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/activity_sign_up.xml" value="0.4" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/activity_splash.xml" value="0.25416666666666665" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/app_bar_new_home.xml" value="0.2" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/booking_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/bot_message.xml" value="0.536" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/card_shimmer_placeholder.xml" value="0.25416666666666665" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/content_new_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/custom_toolbar.xml" value="0.25416666666666665" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/detail_box_shimmer_placeholder_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/detail_button_shimmer_placeholder_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/detail_slider_shimmer_placeholder_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/dialog_add_review.xml" value="0.25416666666666665" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/discover_child_fragment.xml" value="0.176" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/fragment_account.xml" value="0.12135416666666667" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/fragment_activities.xml" value="0.264" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/fragment_booking.xml" value="0.18645833333333334" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/fragment_gallery.xml" value="0.13020833333333334" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/fragment_home.xml" value="0.13020833333333334" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/fragment_home_parent.xml" value="0.25416666666666665" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/fragment_map.xml" value="0.13489583333333333" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/fragment_near_me.xml" value="0.12135416666666667" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/fragment_setting.xml" value="0.176" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/fragment_slideshow.xml" value="0.13020833333333334" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/fragment_subscription.xml" value="0.25416666666666665" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/home_slider_shimmer_placeholder_layout.xml" value="0.18541666666666667" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/item_card.xml" value="0.25416666666666665" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/loading.xml" value="0.12916666666666668" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/map_fragment.xml" value="0.12135416666666667" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/nav_header_new_home.xml" value="0.176" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/place_card.xml" value="0.15989583333333332" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/places_card.xml" value="0.4" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/places_card_shimmer.xml" value="0.25416666666666665" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/recommendation_card.xml" value="0.4" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/recommendation_card_shimmer.xml" value="0.25416666666666665" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/review_card.xml" value="0.15989583333333332" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/slide_layout.xml" value="0.15989583333333332" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/slider_item.xml" value="0.22135416666666666" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/user_message.xml" value="0.5560821484992101" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/menu/activity_main_drawer.xml" value="0.264" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/menu/bottom_nav_menu.xml" value="0.13020833333333334" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/menu/home_navigation_menu.xml" value="0.13020833333333334" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/menu/new_home.xml" value="0.536" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.22708333333333333" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.18177083333333333" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

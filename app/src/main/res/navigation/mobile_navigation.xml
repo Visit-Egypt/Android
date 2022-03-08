@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_discover">
+    <fragment
+        android:id="@+id/nav_discover"
+        android:name="com.visitegypt.ui.home.parent.HomeFragment"
+        tools:layout="@layout/fragment_home_parent" />
 
     <fragment
         android:id="@+id/account"
@@ -14,4 +20,5 @@
         android:name="com.visitegypt.presentation.setting.SettingFragment"
         android:label="@string/title_setting"
         tools:layout="@layout/fragment_setting" />
+
 </navigation>

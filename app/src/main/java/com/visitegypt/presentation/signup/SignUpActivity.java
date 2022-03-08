@@ -16,8 +16,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 import com.visitegypt.R;
 import com.visitegypt.domain.usecase.UserValidation;
-import com.visitegypt.presentation.home.HomeActivity;
 import com.visitegypt.presentation.signin.SignInActivity;
+import com.visitegypt.ui.home.parent.Home;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -68,7 +68,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onChanged(String s) {
 
                 if (s.equals("Your account was created successfully")) {
-                    Intent intent = new Intent(SignUpActivity.this, HomeActivity.class);
+                    Intent intent = new Intent(SignUpActivity.this, Home.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     finish();
