@@ -24,9 +24,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
-import com.visitegypt.presentation.chatbot.ChatbotActivity;
 import com.visitegypt.presentation.account.AccountFragment;
-import com.visitegypt.presentation.setting.SettingFragment;
+import com.visitegypt.presentation.chatbot.ChatbotActivity;
+import com.visitegypt.ui.setting.SettingFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -211,6 +211,7 @@ public class HomeActivity extends AppCompatActivity {
 
         if (requestCode == 0) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // pass
             } else {
                 Toast.makeText(getApplicationContext(), "Error in permissions", Toast.LENGTH_LONG).show();
             }

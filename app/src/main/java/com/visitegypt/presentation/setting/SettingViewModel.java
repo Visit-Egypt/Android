@@ -32,7 +32,7 @@ public class SettingViewModel extends ViewModel {
     LogOutUseCase logOutUseCase;
     SharedPreferences sharedPreferences;
     MutableLiveData<Boolean> isLoged = new MutableLiveData<>();
-    MutableLiveData<User> mutableLiveDataUser = new MutableLiveData<>();
+    public MutableLiveData<User> mutableLiveDataUser = new MutableLiveData<>();
     @Inject
     public SettingViewModel(GetUserUseCase getUserUseCase, SharedPreferences sharedPreferences,UpdateUserUseCase updateUserUseCase,LogOutUseCase logOutUseCase) {
         this.getUserUseCase = getUserUseCase;

@@ -28,14 +28,14 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
 
     @Override
     public SliderAdapterViewHolder onCreateViewHolder(ViewGroup parent) {
-        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.detail_slide_layout, null);
+        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.detail_slide_layout, null, false);
         return new SliderAdapterViewHolder(inflate);
     }
 
     @Override
     public void onBindViewHolder(SliderAdapterViewHolder viewHolder, final int position) {
 
-        final Slider sliderItem = sliderList.get(position);
+        Slider sliderItem = sliderList.get(position);
 
         Glide.with(viewHolder.itemView)
                 .load(sliderItem.getImgUrl())
@@ -50,14 +50,12 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
         return sliderList.size();
     }
 
-    static class SliderAdapterViewHolder extends SliderViewAdapter.ViewHolder {
-        View itemView;
-        ImageView imageViewBackground;
+    public static class SliderAdapterViewHolder extends SliderViewAdapter.ViewHolder {
+        private ImageView imageViewBackground;
 
         public SliderAdapterViewHolder(View itemView) {
             super(itemView);
             imageViewBackground = itemView.findViewById(R.id.imgImageView);
-            this.itemView = itemView;
         }
     }
 }

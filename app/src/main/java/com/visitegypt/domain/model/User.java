@@ -5,6 +5,8 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 @Entity
 public class User {
     @PrimaryKey
@@ -27,6 +29,12 @@ public class User {
     private String refreshToken;
     @SerializedName("photo_link")
     private String photoUrl;
+
+    // gamification //
+    private ArrayList<Badge> badges;
+    private int xp;
+    private ProfileFrame frame;
+
     /*******************************************************************************/
     public User() {
 
@@ -135,6 +143,15 @@ public class User {
         this.refreshToken = refreshToken;
     }
 
-    public String getPhotoUrl(){return photoUrl;}
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
 
+    public ArrayList<Badge> getBadges() {
+        return badges;
+    }
+
+    public void setBadges(ArrayList<Badge> badges) {
+        this.badges = badges;
+    }
 }
