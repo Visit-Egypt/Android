@@ -1,4 +1,4 @@
-package com.visitegypt.ui.home.child.activity;
+package com.visitegypt.presentation.home.child.activity;
 
 import androidx.lifecycle.ViewModel;
 

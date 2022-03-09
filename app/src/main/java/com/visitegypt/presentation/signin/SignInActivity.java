@@ -19,7 +19,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.signup.SignUpActivity;
-import com.visitegypt.ui.home.parent.Home;
+import com.visitegypt.presentation.home.parent.Home;
 
 import dagger.hilt.android.AndroidEntryPoint;
 

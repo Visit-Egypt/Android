@@ -59,14 +59,4 @@
         <item name="tint">@color/black</item>
     </style>
 
-
-    <style name="Theme.VisitEgypt.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="Theme.VisitEgypt.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.VisitEgypt.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
 </resources>

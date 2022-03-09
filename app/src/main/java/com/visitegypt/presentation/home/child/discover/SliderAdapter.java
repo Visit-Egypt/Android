@@ -1,4 +1,4 @@
-package com.visitegypt.ui.home.child.discover;
+package com.visitegypt.presentation.home.child.discover;
 
 import android.view.LayoutInflater;
 import android.view.View;

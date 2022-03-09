@@ -1,4 +1,4 @@
-package com.visitegypt.ui.home.child.activity;
+package com.visitegypt.presentation.home.child.activity;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.visitegypt.R;
-import com.visitegypt.ui.home.parent.Home;
+import com.visitegypt.presentation.home.parent.Home;
 
 import dagger.hilt.android.AndroidEntryPoint;
 

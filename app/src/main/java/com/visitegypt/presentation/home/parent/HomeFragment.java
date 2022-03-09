@@ -1,4 +1,4 @@
-package com.visitegypt.ui.home.parent;
+package com.visitegypt.presentation.home.parent;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

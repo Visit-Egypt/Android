@@ -6,7 +6,7 @@
     app:startDestination="@+id/nav_discover">
     <fragment
         android:id="@+id/nav_discover"
-        android:name="com.visitegypt.ui.home.parent.HomeFragment"
+        android:name="com.visitegypt.presentation.home.parent.HomeFragment"
         tools:layout="@layout/fragment_home_parent" />
 
     <fragment

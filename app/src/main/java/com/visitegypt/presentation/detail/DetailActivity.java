@@ -48,9 +48,9 @@ import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.Slider;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
 import com.visitegypt.presentation.home.HomeRecyclerViewAdapter;
+import com.visitegypt.presentation.home.parent.Home;
 import com.visitegypt.presentation.review.ReviewActivity;
 import com.visitegypt.presentation.review.ReviewViewModel;
-import com.visitegypt.ui.home.parent.Home;
 import com.visitegypt.utils.Constants;
 
 import java.util.ArrayList;

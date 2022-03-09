@@ -17,7 +17,7 @@ import com.google.android.material.textview.MaterialTextView;
 import com.visitegypt.R;
 import com.visitegypt.domain.usecase.UserValidation;
 import com.visitegypt.presentation.signin.SignInActivity;
-import com.visitegypt.ui.home.parent.Home;
+import com.visitegypt.presentation.home.parent.Home;
 
 import dagger.hilt.android.AndroidEntryPoint;
 

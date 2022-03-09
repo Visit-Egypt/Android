@@ -1,4 +1,4 @@
-package com.visitegypt.ui.home.child.discover;
+package com.visitegypt.presentation.home.child.discover;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -21,7 +21,7 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.smarteist.autoimageslider.SliderView;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
-import com.visitegypt.ui.home.parent.Home;
+import com.visitegypt.presentation.home.parent.Home;
 
 import java.util.ArrayList;
 import java.util.List;

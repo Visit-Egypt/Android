@@ -1,17 +1,13 @@
-package com.visitegypt.ui.home.parent;
+package com.visitegypt.presentation.home.parent;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -24,7 +20,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.visitegypt.R;
 import com.visitegypt.databinding.ActivityNewHomeBinding;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
-import com.visitegypt.presentation.setting.SettingFragment;
 import com.visitegypt.presentation.signin.SignInActivity;
 
 import dagger.hilt.android.AndroidEntryPoint;

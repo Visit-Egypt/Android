@@ -1,4 +1,4 @@
-package com.visitegypt.ui.home.parent;
+package com.visitegypt.presentation.home.parent;
 
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel;
 
 import static com.visitegypt.utils.Constants.SHARED_PREF_EMAIL;
 import static com.visitegypt.utils.Constants.SHARED_PREF_FIRST_NAME;
-import static com.visitegypt.utils.Constants.SHARED_PREF_LAST_NAME;
 import static com.visitegypt.utils.Constants.SHARED_PREF_USER_ID;
 
 import com.visitegypt.domain.usecase.LogOutUseCase;

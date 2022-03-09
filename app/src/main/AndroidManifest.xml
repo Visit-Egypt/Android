@@ -48,11 +48,6 @@
 
         </activity>
         <activity
-            android:name=".presentation.home.HomeActivity"
-            android:exported="true">
-
-        </activity>
-        <activity
             android:name=".presentation.gamification.GamificationActivity"
             android:exported="true">
 

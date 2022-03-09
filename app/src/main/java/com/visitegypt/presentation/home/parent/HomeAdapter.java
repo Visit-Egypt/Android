@@ -1,4 +1,4 @@
-package com.visitegypt.ui.home.parent;
+package com.visitegypt.presentation.home.parent;
 
 import android.util.Log;
 
@@ -8,11 +8,9 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-import com.visitegypt.ui.activities.ActivitiesFragment;
-import com.visitegypt.ui.home.child.activity.ActivitiyChild;
-import com.visitegypt.ui.home.child.discover.DiscoverChild;
 
-import dagger.hilt.android.AndroidEntryPoint;
+import com.visitegypt.presentation.home.child.activity.ActivitiyChild;
+import com.visitegypt.presentation.home.child.discover.DiscoverChild;
 
 public class HomeAdapter extends FragmentStateAdapter {
     public HomeAdapter(@NonNull FragmentActivity fragmentActivity) {

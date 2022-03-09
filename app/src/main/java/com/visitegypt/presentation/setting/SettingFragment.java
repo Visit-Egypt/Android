@@ -31,8 +31,9 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
+import com.visitegypt.presentation.home.parent.Home;
 import com.visitegypt.presentation.signin.SignInActivity;
-import com.visitegypt.ui.home.parent.Home;
+
 import com.visitegypt.utils.UploadUtils;
 
 import java.io.File;
