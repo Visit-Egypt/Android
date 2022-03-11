@@ -107,10 +107,10 @@ public class DetailActivity extends AppCompatActivity {
         } else {
             placeId = (String) savedInstanceState.getSerializable(HomeRecyclerViewAdapter.CHOSEN_PLACE_ID);
         }
-        if(placeId == null){
+        if (placeId == null) {
             placeIdToReview = placeIdFromReview;
-            placeId=placeIdFromReview;
-        }else {
+            placeId = placeIdFromReview;
+        } else {
             placeIdToReview = placeId;
         }
 

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/chatbotbackground3"
     android:layout_gravity="center"
+    android:background="@drawable/chatbot_background"
     tools:context=".presentation.chatbot.ChatbotActivity">
 
     <View
@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@drawable/chatbot_header"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,9 +23,7 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/view1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view1"
-
-        >
+        app:layout_constraintTop_toTopOf="@+id/view1">
 
         <View
             android:layout_width="0dp"
@@ -37,11 +34,10 @@
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="30dp"
             android:orientation="vertical"
             tools:ignore="MissingConstraints">
-
 
             <TextView
                 android:layout_width="wrap_content"
@@ -61,25 +57,22 @@
             android:layout_weight="1" />
 
         <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/imageView"
+            android:id="@+id/userImageImageView"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="20dp"
             android:contentDescription="@string/nav_header_desc"
             app:layout_constraintVertical_bias="1.0"
-
             app:srcCompat="@drawable/anubis1" />
 
     </LinearLayout>
-
 
     <RelativeLayout
         android:id="@+id/chatbotRelativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="60dp"
-
         app:layout_constraintTop_toBottomOf="@+id/view1">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -93,7 +86,6 @@
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="0dp" />
-
 
         <RelativeLayout
             android:id="@+id/chatbotRelativeLayout2"
@@ -113,9 +105,8 @@
                 android:layout_toLeftOf="@+id/sendMessageFAButton"
                 android:hint="Enter Message"
                 android:singleLine="true"
-                android:text=""
                 android:textColor="@color/white"
-                android:textColorHint="@color/gray" />
+                android:textColorHint="@color/white" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/sendMessageFAButton"
@@ -125,7 +116,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="4dp"
-                android:backgroundTint="@color/gold"
+                android:backgroundTint="?attr/colorPrimary"
                 android:src="@drawable/ic_send"
                 android:tint="@color/semiwhite"
                 app:fabCustomSize="45dp" />

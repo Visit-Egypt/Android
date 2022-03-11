@@ -2,18 +2,21 @@
     <!-- Base application theme. -->
     <style name="Theme.VisitEgypt" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/camel</item>
-        <item name="colorPrimaryVariant">@color/darkCamel</item>
+        <item name="colorPrimary">@color/gold</item>
+        <!--        <item name="colorPrimary">@color/camel</item>-->
+        <item name="colorPrimaryVariant">@color/darkGray</item>
+        <!--        <item name="colorPrimaryVariant">@color/darkCamel</item>-->
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/darkCamel</item>
-        <item name="colorSecondaryVariant">@color/darkCamel</item>
+        <item name="colorSecondaryVariant">@color/gray</item>
         <item name="colorOnSecondary">@color/black</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
     <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
         <item name="color">@android:color/black</item>
@@ -23,12 +26,13 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
     <style name="tabLayoutTextStyle">
         <item name="android:textStyle">bold|italic</item>
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="Theme.VisitEgypt.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
+    <style name="Theme.VisitEgypt.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="colorPrimary">@color/semiwhite</item>
         <item name="colorPrimaryVariant">@color/darkCamel</item>
         <item name="colorOnPrimary">@color/white</item>
@@ -42,7 +46,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorOnPrimary</item>
     </style>
 
-    <style name="Theme.VisitEgypt.AppBarOverlayCamel" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
+    <style name="Theme.VisitEgypt.AppBarOverlayCamel" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="colorPrimary">@color/camel</item>
         <item name="colorPrimaryVariant">@color/darkCamel</item>
         <item name="colorOnPrimary">@color/white</item>
@@ -54,7 +58,9 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorOnPrimary</item>
     </style>
+
     <style name="Theme.VisitEgypt.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="OverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
         <item name="tint">@color/black</item>
     </style>

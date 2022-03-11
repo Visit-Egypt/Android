@@ -31,7 +31,6 @@
             android:icon="@drawable/ic_subscreption"
             android:title="@string/menu_subscription" />
 
-
     </group>
     <group
         android:id="@+id/menu_setting_id"

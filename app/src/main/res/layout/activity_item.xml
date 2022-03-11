@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -30,18 +31,17 @@
                 app:sliderIndicatorOrientation="horizontal"
                 app:sliderIndicatorPadding="3dp"
                 app:sliderIndicatorRadius="2dp"
-                app:sliderIndicatorSelectedColor="@color/gold"
-                app:sliderIndicatorUnselectedColor="@color/gray"
+                app:sliderIndicatorSelectedColor="?attr/colorPrimary"
+                app:sliderIndicatorUnselectedColor="?attr/colorSecondaryVariant"
                 app:sliderScrollTimeInSec="1">
 
                 <com.mikhaellopez.circularimageview.CircularImageView
                     android:id="@+id/backArrowCircularImageButton"
-                    android:layout_margin="10dp"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_margin="10dp"
                     android:src="@drawable/ic_baseline_arrow_back_24" />
             </com.smarteist.autoimageslider.SliderView>
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -53,8 +53,7 @@
             android:fontFamily="@font/prata_regular"
             android:gravity="center"
             android:paddingVertical="10dp"
-            android:text="Dead Head"
-            android:textColor="@color/black"
+            android:text="Not Found"
             android:textSize="25dp"
             android:textStyle="bold" />
 
@@ -64,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:fontFamily="@font/montserrat_light"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mauris augue, egestas eget mauris quis, tincidunt lobortis sapien. Mauris eget."
+            android:text="No details"
             android:textSize="17dp"
             android:textStyle="bold" />
 

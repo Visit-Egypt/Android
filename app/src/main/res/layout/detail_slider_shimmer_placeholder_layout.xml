@@ -9,7 +9,7 @@
     <com.smarteist.autoimageslider.SliderView
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@color/gray"
+        android:background="?attr/colorSecondaryVariant"
         app:sliderAnimationDuration="600"
         app:sliderAutoCycleDirection="back_and_forth"
         app:sliderIndicatorAnimationDuration="600"
@@ -19,7 +19,7 @@
         app:sliderIndicatorOrientation="horizontal"
         app:sliderIndicatorPadding="3dp"
         app:sliderIndicatorRadius="2dp"
-        app:sliderIndicatorSelectedColor="@color/brown"
-        app:sliderIndicatorUnselectedColor="@color/gray"
+        app:sliderIndicatorSelectedColor="?attr/colorPrimary"
+        app:sliderIndicatorUnselectedColor="?attr/colorSecondaryVariant"
         app:sliderScrollTimeInSec="1" />
 </LinearLayout>

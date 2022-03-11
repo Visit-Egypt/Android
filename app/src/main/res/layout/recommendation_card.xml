@@ -31,7 +31,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/txtPlaceCardName"
+            android:id="@+id/placeCardNameTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -47,7 +47,7 @@
             android:orientation="horizontal">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txtPlaceState"
+                android:id="@+id/stateTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -65,7 +65,7 @@
                 android:background="@drawable/dot_shape" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txtPlacCity"
+                android:id="@+id/cityTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
@@ -93,7 +93,6 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:layout_marginTop="0dp"
                     android:fontFamily="@font/montserrat_alternates_bold"
                     android:text="25\u00b0"
@@ -132,7 +131,5 @@
                     android:textSize="16sp" />
             </TableRow>
         </TableLayout>
-
-
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

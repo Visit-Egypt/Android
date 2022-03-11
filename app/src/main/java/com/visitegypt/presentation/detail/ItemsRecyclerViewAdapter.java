@@ -63,7 +63,7 @@ public class ItemsRecyclerViewAdapter extends RecyclerView.Adapter<ItemsRecycler
                         .fitCenter()
                         .into(holder.itemImage);
             } else {
-                holder.itemImage.setVisibility(View.GONE);
+//                holder.itemImage.setVisibility(View.GONE);
             }
         } else {
             holder.itemImage.setVisibility(View.GONE);

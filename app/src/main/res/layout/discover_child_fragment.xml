@@ -8,11 +8,12 @@
     tools:context=".presentation.home.child.discover.DiscoverChild">
 
     <LinearLayout
+        android:id="@+id/shimmerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:id="@+id/shimmerLayout"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -47,9 +48,9 @@
                         android:layout_gravity="center_vertical"
                         android:fontFamily="@font/montserrat_alternates_medium"
                         android:gravity="center"
-                        android:shadowColor="@color/gray"
+                        android:shadowColor="?attr/colorSecondaryVariant"
                         android:text="@string/Recommendation"
-                        android:textColor="#444444"
+                        android:textColor="?attr/colorPrimaryVariant"
                         android:textSize="24sp"
                         android:textStyle="normal" />
 
@@ -64,7 +65,7 @@
                         android:layout_marginRight="20dp"
                         android:background="@drawable/button_shape"
                         android:gravity="center"
-                        android:shadowColor="@color/gray"
+                        android:shadowColor="?attr/colorSecondaryVariant"
                         android:text="See all >"
                         android:textAllCaps="false"
                         app:backgroundTint="@null"
@@ -109,9 +110,9 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:shadowColor="@color/gray"
+                    android:shadowColor="?attr/colorSecondaryVariant"
                     android:text="@string/places_to_visit"
-                    android:textColor="#444444"
+                    android:textColor="?attr/colorPrimaryVariant"
                     android:textSize="30sp"
                     android:textStyle="normal" />
 
@@ -121,7 +122,6 @@
                     android:layout_height="wrap_content">
 
                     <include layout="@layout/detail_table_shimmer_placeholder_layout" />
-
 
                 </com.facebook.shimmer.ShimmerFrameLayout>
 
@@ -152,12 +152,11 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/discoverlayout"
+        android:id="@+id/discoverLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -175,7 +174,6 @@
                     app:cardCornerRadius="6dp">
 
                     <com.smarteist.autoimageslider.SliderView
-
                         android:id="@+id/sliderSliderView"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
@@ -188,11 +186,10 @@
                         app:sliderIndicatorOrientation="horizontal"
                         app:sliderIndicatorPadding="3dp"
                         app:sliderIndicatorRadius="2dp"
-                        app:sliderIndicatorSelectedColor="@color/white"
-                        app:sliderIndicatorUnselectedColor="@color/gray"
+                        app:sliderIndicatorSelectedColor="?attr/colorOnPrimary"
+                        app:sliderIndicatorUnselectedColor="?attr/colorSecondaryVariant"
                         app:sliderScrollTimeInSec="1"
-                        app:sliderStartAutoCycle="true"></com.smarteist.autoimageslider.SliderView>
-
+                        app:sliderStartAutoCycle="true" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -209,9 +206,9 @@
                         android:layout_gravity="center_vertical"
                         android:fontFamily="@font/montserrat_alternates_medium"
                         android:gravity="center"
-                        android:shadowColor="@color/gray"
+                        android:shadowColor="?attr/colorSecondaryVariant"
                         android:text="@string/Recommendation"
-                        android:textColor="#444444"
+                        android:textColor="?attr/colorPrimaryVariant"
                         android:textSize="24sp"
                         android:textStyle="normal" />
 
@@ -226,7 +223,7 @@
                         android:layout_marginRight="20dp"
                         android:background="@drawable/button_shape"
                         android:gravity="center"
-                        android:shadowColor="@color/gray"
+                        android:shadowColor="?attr/colorSecondaryVariant"
                         android:text="See all >"
                         android:textAllCaps="false"
                         app:backgroundTint="@null"
@@ -245,9 +242,9 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:shadowColor="@color/gray"
+                    android:shadowColor="?attr/colorSecondaryVariant"
                     android:text="@string/places_to_visit"
-                    android:textColor="#444444"
+                    android:textColor="?attr/colorPrimaryVariant"
                     android:textSize="30sp"
                     android:textStyle="normal" />
 

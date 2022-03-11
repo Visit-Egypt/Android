@@ -5,24 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.home.Home">
+    tools:context=".presentation.home.parent.Home">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:theme="@style/Theme.VisitEgypt.AppBarOverlay"
         app:elevation="0dp">
+        <!--        android:theme="@style/Theme.VisitEgypt.AppBarOverlay"-->
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="?attr/colorOnPrimary"
             android:gravity="center"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/Theme.VisitEgypt.PopupOverlay">
+            app:popupTheme="@style/Theme.VisitEgypt.PopupOverlay"
+            app:titleTextColor="?attr/colorOnSecondary">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -37,26 +37,26 @@
                     android:fontFamily="@font/montserrat_alternates_medium"
                     android:gravity="center"
                     android:text="Explore"
-                    android:textColor="#222222"
+                    android:textColor="?attr/colorOnSecondary"
                     android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/notification"
+                    app:layout_constraintRight_toLeftOf="@+id/notificationImageButton"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/notification"
+                    android:id="@+id/notificationImageButton"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/ic_notification"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/search"
+                    app:layout_constraintEnd_toStartOf="@+id/searchImageButton"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="InvalidId,SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/search"
+                    android:id="@+id/searchImageButton"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginRight="20dp"
@@ -77,10 +77,10 @@
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
         android:layout_gravity="bottom"
-        app:labelVisibilityMode="unlabeled"
         android:background="?android:attr/windowBackground"
+        app:labelVisibilityMode="unlabeled"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
         app:menu="@menu/bottom_nav_menu" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -94,6 +94,5 @@
         app:layout_anchorGravity="top|end"
         app:srcCompat="@drawable/ic_chatbot"
         tools:ignore="SpeakableTextPresentCheck" />
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

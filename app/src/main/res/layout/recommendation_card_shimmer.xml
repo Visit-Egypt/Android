@@ -23,23 +23,22 @@
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imgPlaceCard"
                 android:layout_width="150dp"
-                android:background="@color/gray"
-                android:backgroundTint="@color/gray"
                 android:layout_height="150dp"
                 android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                />
+                android:background="?attr/colorSecondaryVariant"
+                android:backgroundTint="?attr/colorSecondaryVariant"
+                android:scaleType="centerCrop" />
 
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/txtPlaceCardName"
+            android:id="@+id/placeCardNameTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="0dp"
+            android:background="?attr/colorSecondaryVariant"
             android:fontFamily="@font/montserrat_alternates_bold"
-            android:background="@color/gray"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -49,15 +48,14 @@
             android:orientation="horizontal">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txtPlaceState"
+                android:id="@+id/stateTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
+                android:background="?attr/colorSecondaryVariant"
+                android:backgroundTint="?attr/colorSecondaryVariant"
                 android:fontFamily="@font/montserrat_alternates_medium"
-                android:text="              "
-                android:backgroundTint="@color/gray"
-                android:background="@color/gray"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -69,14 +67,13 @@
                 android:background="@drawable/dot_shape" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txtPlacCity"
+                android:id="@+id/cityTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:background="?attr/colorSecondaryVariant"
+                android:backgroundTint="?attr/colorSecondaryVariant"
                 android:fontFamily="@font/montserrat_alternates_medium"
-                android:text="         "
-                android:backgroundTint="@color/gray"
-                android:background="@color/gray"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -94,18 +91,15 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
-                    android:background="@color/gray"
-                    android:backgroundTint="@color/gray"
-                    />
+                    android:background="?attr/colorSecondaryVariant"
+                    android:backgroundTint="?attr/colorSecondaryVariant" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:layout_marginTop="0dp"
-                    android:background="@color/gray"
+                    android:background="?attr/colorSecondaryVariant"
                     android:fontFamily="@font/montserrat_alternates_bold"
-                    android:text="    "
                     android:textSize="18sp" />
             </TableRow>
 
@@ -118,9 +112,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="0dp"
+                    android:background="?attr/colorSecondaryVariant"
                     android:fontFamily="@font/montserrat_alternates_semibold"
-                    android:text="     "
-                    android:background="@color/gray"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -137,13 +130,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="1dp"
+                    android:background="?attr/colorSecondaryVariant"
                     android:fontFamily="@font/montserrat_alternates_medium"
-                    android:text="    "
-                    android:background="@color/gray"
                     android:textSize="16sp" />
             </TableRow>
         </TableLayout>
-
-
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

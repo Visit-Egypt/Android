@@ -14,9 +14,8 @@
             android:id="@+id/titleTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/gray"
+            android:background="?attr/colorSecondaryVariant"
             android:fontFamily="@font/prata_regular"
-            android:text=""
             android:textAlignment="center"
             android:textSize="18sp"
             android:textStyle="bold" />

@@ -47,7 +47,7 @@ public class SignInActivity extends AppCompatActivity {
         }
         btnSignIn = findViewById(R.id.btnSignIn);
         loadingLayout = findViewById(R.id.loadingLayout);
-        txtEmail = findViewById(R.id.txtEmail);
+        txtEmail = findViewById(R.id.emailTextView);
         txtPassword = findViewById(R.id.txtPassword);
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();

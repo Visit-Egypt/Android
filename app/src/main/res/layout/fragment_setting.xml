@@ -3,256 +3,250 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:importantForAutofill="noExcludeDescendants"
+    android:orientation="vertical"
     tools:context=".presentation.setting.SettingFragment">
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-<!--        <com.google.android.material.textview.MaterialTextView-->
-<!--            android:id="@+id/materialTextView"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@color/gray"-->
-<!--            android:gravity="left"-->
-<!--            android:padding="15dp"-->
-<!--            android:text="Personal info"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="30dp" />-->
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:orientation="horizontal"
-            android:paddingLeft="20dp">
+            android:orientation="vertical">
 
-            <com.mikhaellopez.circularimageview.CircularImageView
-                android:id="@+id/userImageView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_baseline_account_circle_24" />
+            <!--        <com.google.android.material.textview.MaterialTextView-->
+            <!--            android:id="@+id/materialTextView"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:background="?attr/colorSecondaryVariant"-->
+            <!--            android:gravity="left"-->
+            <!--            android:padding="15dp"-->
+            <!--            android:text="Personal info"-->
+            <!--            android:textColor="?attr/colorOnSecondary"-->
+            <!--            android:textSize="30dp" />-->
 
-            <TextView
-                style="bold"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="10dp"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp">
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:id="@+id/userImageView"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/ic_baseline_account_circle_24" />
+
+                <TextView
+                    style="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="20dp"
+                    android:text="Profile picture"
+                    android:textSize="20dp" />
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:id="@+id/changeImageView"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="80dp"
+                    android:src="@drawable/ic_baseline_edit_24" />
+
+            </LinearLayout>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="?attr/colorSecondaryVariant" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
-                android:text="Profile picture"
-                android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:layout_marginVertical="10dp"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp">
 
-            <com.mikhaellopez.circularimageview.CircularImageView
-                android:id="@+id/changeImageView"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="80dp"
-                android:src="@drawable/ic_baseline_edit_24" />
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="First Name"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
-        </LinearLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/firstNameTextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:lines="1" />
+            </LinearLayout>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="15dp"
-            android:background="@color/gray" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginHorizontal="15dp"
+                android:background="?attr/colorSecondaryVariant" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginVertical="10dp"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="First Name"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:textStyle="bold" />
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/firstNameTextInputEditText"
+            <LinearLayout
+                android:id="@+id/linearLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:lines="1" />
-        </LinearLayout>
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="10dp"
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginHorizontal="15dp"
-            android:background="@color/gray" />
+                android:orientation="horizontal"
+                android:paddingLeft="10dp">
 
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginVertical="10dp"
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Last Name"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
-            android:orientation="horizontal"
-            android:paddingLeft="10dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/lastNameTextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:lines="1" />
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="Last Name"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:textStyle="bold" />
+            </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/lastNameTextInputEditText"
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="?attr/colorSecondaryVariant" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:lines="1" />
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="10dp"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp">
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Email"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="15dp"
-            android:background="@color/gray" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailTextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:lines="1" />
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginVertical="10dp"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp">
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="?attr/colorSecondaryVariant" />
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="@string/Email"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:textStyle="bold" />
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/emailTextInputEditText"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:lines="1" />
-        </LinearLayout>
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="10dp"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="15dp"
-            android:background="@color/gray" />
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Phone"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginVertical="10dp"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phoneTextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="11"
+                    android:inputType="phone" />
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="Phone"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:textStyle="bold" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="?attr/colorSecondaryVariant" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/phoneTextInputEditText"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="11"
-                android:inputType="phone" />
-        </LinearLayout>
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="10dp"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="15dp"
-            android:background="@color/gray" />
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Password"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginVertical="10dp"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passwordTextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:text="" />
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="Password"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:textStyle="bold" />
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/passwordTextInputEditText"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:text="" />
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/saveButton"
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_shape"
+                    android:onClick="buttonOnClick"
+                    android:text="SAVE"
+                    android:textAlignment="center"
+                    android:textColor="?attr/colorOnPrimary" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/cancelButton"
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_shape"
+                    android:onClick="buttonOnClick"
+                    android:text="CANCEL"
+                    android:textAlignment="center"
+                    android:textColor="?attr/colorOnPrimary" />
+            </LinearLayout>
+            <!--            <androidx.appcompat.widget.AppCompatButton-->
+            <!--                android:id="@+id/logOutButton"-->
+            <!--                android:layout_width="165dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:background="@drawable/input_button"-->
+            <!--                android:onClick="buttonOnClick"-->
+            <!--                android:text="@string/logOut"-->
+            <!--                android:textAlignment="center"-->
+            <!--                android:textColor="?attr/colorOnPrimary"-->
+            <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--        app:layout_constraintEnd_toEndOf="parent"-->
+            <!--        app:layout_constraintStart_toStartOf="parent"-->
+            <!--        app:layout_constraintTop_toBottomOf="@+id/cancelButton" />-->
+
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/saveButton"
-                android:layout_width="1dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/button_shape"
-                android:onClick="buttonOnClick"
-                android:text="SAVE"
-                android:textAlignment="center"
-                android:textColor="@color/white" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/cancelButton"
-                android:layout_width="1dp"
-                android:layout_marginStart="8dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/button_shape"
-                android:onClick="buttonOnClick"
-                android:text="CANCEL"
-                android:textAlignment="center"
-                android:textColor="@color/white" />
-        </LinearLayout>
-        <!--    <androidx.appcompat.widget.AppCompatButton-->
-        <!--        android:id="@+id/logOutButton"-->
-        <!--        android:layout_width="165dp"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:background="@drawable/input_button"-->
-        <!--        android:onClick="buttonOnClick"-->
-        <!--        android:text="@string/logOut"-->
-        <!--        android:textAlignment="center"-->
-        <!--        android:textColor="@color/white"-->
-        <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--        app:layout_constraintEnd_toEndOf="parent"-->
-        <!--        app:layout_constraintStart_toStartOf="parent"-->
-        <!--        app:layout_constraintTop_toBottomOf="@+id/cancelButton" />-->
-
-
-    </LinearLayout>
 
     </ScrollView>
 </LinearLayout>

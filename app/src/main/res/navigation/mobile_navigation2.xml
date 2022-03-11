@@ -6,42 +6,42 @@
     app:startDestination="@+id/nav_discover">
     <fragment
         android:id="@+id/nav_discover"
-        android:label="Explore"
         android:name="com.visitegypt.presentation.home.parent.HomeFragment"
+        android:label="Explore"
         tools:layout="@layout/fragment_home_parent">
 
     </fragment>
 
     <fragment
         android:id="@+id/nav_near_me"
-        android:label="@string/menu_near_me"
         android:name="com.visitegypt.ui.nearMe.NearMeFragment"
+        android:label="@string/menu_near_me"
         tools:layout="@layout/fragment_near_me" />
 
     <fragment
         android:id="@+id/nav_activities"
-        android:label="@string/menu_activities"
         android:name="com.visitegypt.ui.activities.ActivitiesFragment"
+        android:label="@string/menu_activities"
         tools:layout="@layout/fragment_activities" />
     <fragment
         android:id="@+id/nav_map"
-        android:label="@string/menu_map"
         android:name="com.visitegypt.ui.map.MapFragment"
+        android:label="@string/menu_map"
         tools:layout="@layout/fragment_map" />
     <fragment
         android:id="@+id/nav_booking"
-        android:label="@string/menu_booking"
         android:name="com.visitegypt.ui.booking.BookingFragment"
+        android:label="@string/menu_booking"
         tools:layout="@layout/fragment_booking" />
     <fragment
         android:id="@+id/nav_subscription"
-        android:label="@string/menu_subscription"
         android:name="com.visitegypt.ui.subscription.SubscriptionFragment"
+        android:label="@string/menu_subscription"
         tools:layout="@layout/fragment_subscription" />
     <fragment
         android:id="@+id/setting"
-        android:label="@string/setting"
         android:name="com.visitegypt.presentation.setting.SettingFragment"
+        android:label="@string/setting"
         tools:layout="@layout/fragment_setting" />
     <fragment
         android:id="@+id/account"

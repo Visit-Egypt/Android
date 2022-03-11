@@ -80,9 +80,9 @@ public class RecommendationPlaceAdapter extends RecyclerView.Adapter<Recommendat
         public RecommendPlaceViewHolder(@NonNull View itemView) {
             super(itemView);
             imgPlace = itemView.findViewById(R.id.imgPlaceCard);
-            txtCityTitle = itemView.findViewById(R.id.txtPlacCity);
-            txtPlaceTitle = itemView.findViewById(R.id.txtPlaceCardName);
-            txtState = itemView.findViewById(R.id.txtPlaceState);
+            txtCityTitle = itemView.findViewById(R.id.cityTextView);
+            txtPlaceTitle = itemView.findViewById(R.id.placeCardNameTextView);
+            txtState = itemView.findViewById(R.id.stateTextView);
             txtTotalRate = itemView.findViewById(R.id.txtPlaceCardRating);
         }
     }

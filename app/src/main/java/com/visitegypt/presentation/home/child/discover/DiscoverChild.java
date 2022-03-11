@@ -86,7 +86,7 @@ public class DiscoverChild extends Fragment {
         };
         /************************************************/
         //init discoverLayOut
-        discoverVerticalLayOut = discoverLayOut.findViewById(R.id.discoverlayout);
+        discoverVerticalLayOut = discoverLayOut.findViewById(R.id.discoverLinearLayout);
         /***********************************************/
         //slider adapter init
         sliderView = discoverLayOut.findViewById(R.id.sliderSliderView);

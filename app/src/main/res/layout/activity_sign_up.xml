@@ -24,7 +24,7 @@
         android:id="@+id/btnSignInTransfer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/gold"
+        android:background="?attr/colorPrimary"
         android:onClick="signInButton"
         android:text="@string/signIn"
         android:textColor="#99FFFFFF"
@@ -40,10 +40,10 @@
         android:id="@+id/signUpTransferButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/gold"
+        android:background="?attr/colorPrimary"
 
         android:text="@string/signUp"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimary"
         app:layout_constraintBottom_toTopOf="@+id/view7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.712"
@@ -101,7 +101,7 @@
         app:boxCornerRadiusTopEnd="8dp"
         app:boxCornerRadiusTopStart="8dp"
         app:errorEnabled="true"
-        app:layout_constraintBottom_toTopOf="@+id/txtEmail"
+        app:layout_constraintBottom_toTopOf="@+id/emailTextView"
         app:layout_constraintEnd_toEndOf="@+id/view7"
         app:layout_constraintStart_toStartOf="@+id/view7"
         app:layout_constraintTop_toBottomOf="@+id/txtFirstName"
@@ -116,7 +116,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txtEmail"
+        android:id="@+id/emailTextView"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -157,7 +157,7 @@
         app:layout_constraintBottom_toTopOf="@+id/txtPassword"
         app:layout_constraintEnd_toEndOf="@+id/view7"
         app:layout_constraintStart_toStartOf="@+id/view7"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail"
+        app:layout_constraintTop_toBottomOf="@+id/emailTextView"
         app:layout_goneMarginTop="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -199,16 +199,17 @@
         android:layout_height="wrap_content"
         android:background="@drawable/input_button"
         android:text="@string/signUp"
-        android:textColor="#FFFFFF"
+        android:textColor="?attr/colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view7"
         app:layout_constraintVertical_bias="0.233"
-        app:strokeColor="#FFFFFF"
+        app:strokeColor="?attr/colorOnPrimary"
         app:strokeWidth="2dp"
         tools:ignore="DuplicateSpeakableTextCheck,OnClick" />
+
     <include
         android:id="@+id/loadingLayout"
         layout="@layout/loading"

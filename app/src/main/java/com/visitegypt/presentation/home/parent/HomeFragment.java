@@ -27,7 +27,7 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeParentBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         viewPager = binding.viewPager;
-        tabLayout = binding.tablayout;
+        tabLayout = binding.tabLayout;
         viewPager.setAdapter(new HomeAdapter(this));
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> {

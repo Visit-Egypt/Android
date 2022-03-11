@@ -8,26 +8,27 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
-            android:theme="@style/Theme.VisitEgypt.AppBarOverlayCamel"
-            app:elevation="0dp">
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tablayout"
+
+            <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
-                app:layout_scrollFlags="scroll|enterAlways|snap"
                 android:layout_height="wrap_content"
-                >
-            </com.google.android.material.tabs.TabLayout>
+                android:theme="@style/Theme.VisitEgypt.AppBarOverlayCamel"
+                app:elevation="0dp"
+                app:layout_scrollFlags="scroll|enterAlways|snap">
 
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_scrollFlags="scroll|enterAlways|snap" />
 
-        </com.google.android.material.appbar.AppBarLayout>
+            </com.google.android.material.appbar.AppBarLayout>
+
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
@@ -36,6 +37,5 @@
         </LinearLayout>
 
     </FrameLayout>
-
 
 </androidx.core.widget.NestedScrollView>

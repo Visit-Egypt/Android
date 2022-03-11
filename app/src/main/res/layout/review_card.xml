@@ -50,7 +50,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/prata_regular"
                             android:text="John"
-                            android:textColor="@color/black"
+                            android:textColor="?attr/colorOnSecondary"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -76,7 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_marginLeft="100dp"
-                    android:background="@color/gray" />
+                    android:background="?attr/colorSecondaryVariant" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/reviewCardTextView"
@@ -86,7 +86,7 @@
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/montserrat_light"
                     android:text="Nice Place"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -94,7 +94,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/gray" />
+                android:background="?attr/colorSecondaryVariant" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

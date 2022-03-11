@@ -124,8 +124,8 @@ public class Home extends AppCompatActivity {
         /**************************************************/
         setSupportActionBar(binding.appBarNewHome.toolbar);
         header = navigationView.getHeaderView(0);
-        txtName = header.findViewById(R.id.txtName);
-        txtEmail = header.findViewById(R.id.txtEmail);
+        txtName = header.findViewById(R.id.nameNavHeaderTextView);
+        txtEmail = header.findViewById(R.id.emailTextView);
         /**********************************************/
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 

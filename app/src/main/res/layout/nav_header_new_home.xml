@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     android:background="@drawable/side_nav_bar"
-    android:backgroundTint="@color/nav_drawer_color"
+    android:backgroundTint="?attr/colorSecondaryVariant"
     android:gravity="bottom"
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -17,47 +17,45 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-
-        >
+        android:layout_marginTop="10dp">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/userImageImageView"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/ic_baseline_account_circle_24" />
+            android:src="@drawable/ic_baseline_person_24" />
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/okImageView"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_alignRight="@+id/imageView"
-            android:layout_alignBottom="@+id/imageView"
+            android:layout_alignRight="@+id/userImageImageView"
+            android:layout_alignBottom="@+id/userImageImageView"
             android:contentDescription="@string/nav_header_desc"
             app:srcCompat="@drawable/confirm_circle" />
 
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/txtName"
+        android:id="@+id/nameNavHeaderTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="@font/montserrat_alternates_medium"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:textSize="14sp"
         android:text="@string/nav_header_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#444444" />
+        android:textColor="?attr/colorPrimaryVariant"
+        android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/txtEmail"
+        android:id="@+id/emailTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="@font/montserrat_alternates_bold"
         android:text="@string/nav_header_subtitle"
-        android:textColor="#888888" />
+        android:textColor="?attr/colorPrimaryVariant" />
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="80dp"
@@ -65,12 +63,9 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:background="@drawable/button_shape"
-        android:shadowColor="@color/gray"
+        android:shadowColor="?attr/colorSecondaryVariant"
         android:text="Edit"
-        app:backgroundTint="@null"
-        app:cornerRadius="60dp"
-
-        >
+        app:cornerRadius="60dp">
 
     </com.google.android.material.button.MaterialButton>
 </LinearLayout>

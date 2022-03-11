@@ -49,7 +49,7 @@
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:textAlignment="center"
-                        android:textColor="@color/white"
+                        android:textColor="?attr/colorOnPrimary"
                         android:textSize="18dp"
                         android:textStyle="bold" />
 
@@ -58,7 +58,7 @@
                         android:layout_height="wrap_content"
                         android:text="LIKES"
                         android:textAlignment="center"
-                        android:textColor="@color/gray"
+                        android:textColor="?attr/colorSecondaryVariant"
                         android:textSize="15dp" />
 
                 </LinearLayout>
@@ -75,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:textAlignment="center"
-                        android:textColor="@color/white"
+                        android:textColor="?attr/colorOnPrimary"
                         android:textSize="18dp"
                         android:textStyle="bold" />
 
@@ -84,7 +84,7 @@
                         android:layout_height="wrap_content"
                         android:text="FOLLOWING"
                         android:textAlignment="center"
-                        android:textColor="@color/gray"
+                        android:textColor="?attr/colorSecondaryVariant"
                         android:textSize="15dp" />
 
                 </LinearLayout>
@@ -101,7 +101,7 @@
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:textAlignment="center"
-                        android:textColor="@color/white"
+                        android:textColor="?attr/colorOnPrimary"
                         android:textSize="18dp"
                         android:textStyle="bold" />
 
@@ -110,7 +110,7 @@
                         android:layout_height="wrap_content"
                         android:text="FOLLOWERS"
                         android:textAlignment="center"
-                        android:textColor="@color/gray"
+                        android:textColor="?attr/colorSecondaryVariant"
                         android:textSize="15dp" />
 
                 </LinearLayout>
@@ -145,9 +145,8 @@
                 android:id="@+id/nameTextView"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="?attr/colorOnSecondary"
                 android:textSize="18dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -163,7 +162,7 @@
                 android:layout_height="wrap_content"
                 android:text="Egypt"
                 android:textAlignment="center"
-                android:textColor="#99000000"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -202,9 +201,8 @@
                             android:id="@+id/postNameTextView"
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
-
                             android:textAlignment="textStart"
-                            android:textColor="@color/white"
+                            android:textColor="?attr/colorOnPrimary"
                             android:textSize="18dp"
                             android:textStyle="bold" />
 
@@ -212,9 +210,8 @@
                             android:id="@+id/postDateTextView"
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:text="15 July"
                             android:textAlignment="textStart"
-                            android:textColor="@color/gray"
+                            android:textColor="?attr/colorSecondaryVariant"
                             android:textSize="18dp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -229,7 +226,7 @@
                     android:inputType="textLongMessage"
                     android:maxLines="3"
                     android:textAlignment="textStart"
-                    android:textColor="@color/gray"
+                    android:textColor="?attr/colorSecondaryVariant"
                     android:textSize="18dp" />
 
                 <ImageView

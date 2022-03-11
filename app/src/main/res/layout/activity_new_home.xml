@@ -19,11 +19,11 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:itemIconPadding="25dp"
-        app:itemIconTint="#AAAAAA"
-        app:itemTextColor="@color/icon_title"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_new_home"
+        app:itemIconPadding="25dp"
+        app:itemIconTint="?attr/colorSecondaryVariant"
+        app:itemTextColor="@color/icon_title"
         app:menu="@menu/activity_main_drawer" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

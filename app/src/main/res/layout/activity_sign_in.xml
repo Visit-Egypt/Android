@@ -24,9 +24,9 @@
         android:id="@+id/btnSignInTransfer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/gold"
+        android:background="?attr/colorPrimary"
         android:text="@string/signIn"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimary"
         app:layout_constraintBottom_toTopOf="@+id/container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.248"
@@ -38,7 +38,7 @@
         android:id="@+id/signUpTransferButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/gold"
+        android:background="?attr/colorPrimary"
         android:onClick="signUpButton"
         android:text="@string/signUp"
         android:textColor="#99FFFFFF"
@@ -62,7 +62,7 @@
         app:layout_constraintVertical_bias="0.284" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txtEmail"
+        android:id="@+id/emailTextView"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/container"
         app:layout_constraintEnd_toEndOf="@+id/container"
         app:layout_constraintStart_toStartOf="@+id/container"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail"
+        app:layout_constraintTop_toBottomOf="@+id/emailTextView"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -116,7 +116,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:text="@string/forgetPassword"
-        android:textColor="#827717"
+        android:textColor="?attr/colorPrimary"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/btnSignIn"
         app:layout_constraintEnd_toEndOf="@+id/container"
@@ -132,14 +132,14 @@
         android:background="@drawable/input_button"
         android:onClick="buttonOnClick"
         android:text="@string/signIn"
-        android:textColor="#FFFFFF"
+        android:textColor="?attr/colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/container"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/container"
         app:layout_constraintTop_toBottomOf="@+id/forgetPassword"
         app:layout_constraintVertical_bias="0.638"
-        app:strokeColor="#FFFFFF"
+        app:strokeColor="?attr/colorOnPrimary"
         app:strokeWidth="2dp"
         tools:ignore="DuplicateSpeakableTextCheck" />
 

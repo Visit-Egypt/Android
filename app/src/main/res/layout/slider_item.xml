@@ -2,12 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <ImageView
+        android:id="@+id/image_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
         android:adjustViewBounds="true"
-        android:id="@+id/image_view"
-        />
+        android:scaleType="centerCrop" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

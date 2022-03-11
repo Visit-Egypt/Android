@@ -39,8 +39,6 @@ hilt {
 }
 
 dependencies {
-
-    implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
@@ -67,9 +65,9 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
 
-
     implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
 
+    implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
 
     implementation "com.google.dagger:hilt-android:2.38.1"
     annotationProcessor "com.google.dagger:hilt-compiler:2.38.1"
