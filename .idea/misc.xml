@@ -4,8 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/GraduationProject/VisitEgypt/app/src/main/res/drawable/boarder.xml" value="0.19114583333333332" />
+        <entry key="..\:/GraduationProject/VisitEgypt/app/src/main/res/drawable/gamifi.xml" value="0.25" />
         <entry key="..\:/GraduationProject/VisitEgypt/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.19114583333333332" />
         <entry key="..\:/GraduationProject/VisitEgypt/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.23697916666666666" />
+        <entry key="..\:/GraduationProject/VisitEgypt/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.25" />
         <entry key="..\:/GraduationProject/VisitEgypt/app/src/main/res/drawable/ic_chatbot.xml" value="0.19114583333333332" />
         <entry key="..\:/GraduationProject/VisitEgypt/app/src/main/res/drawable/ic_near_me.xml" value="0.20208333333333334" />
         <entry key="..\:/GraduationProject/VisitEgypt/app/src/main/res/layout/activitiy_child_fragment.xml" value="0.175" />
@@ -38,6 +40,7 @@
         <entry key="..\:/GraduationProject/VisitEgypt/app/src/main/res/layout/fragment_home_parent.xml" value="0.25416666666666665" />
         <entry key="..\:/GraduationProject/VisitEgypt/app/src/main/res/layout/fragment_map.xml" value="0.25416666666666665" />
         <entry key="..\:/GraduationProject/VisitEgypt/app/src/main/res/layout/fragment_near_me.xml" value="0.25416666666666665" />
+        <entry key="..\:/GraduationProject/VisitEgypt/app/src/main/res/layout/fragment_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/GraduationProject/VisitEgypt/app/src/main/res/layout/fragment_setting.xml" value="0.175" />
         <entry key="..\:/GraduationProject/VisitEgypt/app/src/main/res/layout/fragment_subscription.xml" value="0.25416666666666665" />
         <entry key="..\:/GraduationProject/VisitEgypt/app/src/main/res/layout/gamification_activity_card.xml" value="0.25416666666666665" />

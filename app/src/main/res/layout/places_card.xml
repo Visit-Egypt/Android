@@ -51,21 +51,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:orientation="horizontal">
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:weightSum="9">
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
                     android:background="@drawable/ic_pin" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtPlaceCardNewCity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="2"
                     android:fontFamily="@font/montserrat_alternates_medium"
                     android:text="City"
                     android:textSize="16sp" />
@@ -74,15 +79,17 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
                     android:background="@drawable/ic_comment" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtPlaceCardComment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="25dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="2"
                     android:fontFamily="@font/montserrat_alternates_medium"
                     android:text="755"
                     android:textSize="16sp" />
@@ -91,15 +98,17 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
                     android:background="@drawable/ic_star" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtPlaceCardCommentx"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="5dp"
+                    android:layout_weight="2"
                     android:fontFamily="@font/montserrat_alternates_medium"
                     android:text="4.5"
                     android:textSize="16sp" />

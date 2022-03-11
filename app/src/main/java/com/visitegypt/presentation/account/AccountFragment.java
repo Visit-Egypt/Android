@@ -34,7 +34,7 @@ public class AccountFragment extends Fragment {
         likesNumberTextView = accountView.findViewById(R.id.likesNumberTextView);
         followingNumberTextView = accountView.findViewById(R.id.followingNumberTextView);
         followersNumberTextView = accountView.findViewById(R.id.followersNumberTextView);
-        postNameTextView = accountView.findViewById(R.id.postNameTextView);
+        postNameTextView = accountView.findViewById(R.id.userNamePostTextView);
         postCaptionTextView = accountView.findViewById(R.id.postCaptionTextView);
 
 
