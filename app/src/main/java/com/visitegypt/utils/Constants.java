@@ -4,6 +4,7 @@ import java.util.SplittableRandom;
 
 public class Constants {
     public static final String BASE_URL = "https://visit-egypt.herokuapp.com/";
+    public static final String WEB_SOCKET_URL = "ws://visit-egypt.herokuapp.com/api/place/ws";
     public static final String SHARED_PREF_USER_ACCESS_TOKEN = "accessToken";
     public static final String SHARED_PREF_USER_ID = "userId";
     public static final String SHARED_PREF_TOKEN_TYPE = "tokenType";

@@ -16,57 +16,42 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VisitEgypt">
-
+        <activity
+            android:name=".presentation.search.Search"
+            android:exported="true" />
         <activity
             android:name=".presentation.signup.SignUpActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".presentation.review.ReviewActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".presentation.item.ItemActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".presentation.detail.DetailActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".presentation.splash.SplashActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
+        <activity
+            android:name=".presentation.home.parent.Home"
+            android:exported="true"></activity>
         <activity
             android:name=".presentation.chatbot.ChatbotActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".presentation.gamification.GamificationActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".presentation.signin.SignInActivity"
             android:exported="true">
-
-        </activity>
-        <activity
-            android:name=".presentation.home.parent.Home"
-            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
     </application>
 
 </manifest>

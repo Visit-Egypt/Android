@@ -20,6 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.visitegypt.R;
 import com.visitegypt.databinding.ActivityNewHomeBinding;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
+import com.visitegypt.presentation.search.Search;
 import com.visitegypt.presentation.signin.SignInActivity;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -34,6 +35,7 @@ public class Home extends AppCompatActivity {
     private View header;
     private TextView txtName, txtEmail;
     HomeViewModel homeViewModel;
+    private static final String TAG = "Home";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,7 @@ public class Home extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     private void startChatBot() {
@@ -156,5 +159,12 @@ public class Home extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         homeViewModel.getUserInfo();
+    }
+
+    public void searchOnClick(View view) {
+        Log.d(TAG, "searchOnClick: this is my click ");
+        Intent intent = new Intent(this, Search.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }
