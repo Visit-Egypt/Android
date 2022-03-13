@@ -53,13 +53,13 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
 
     @Override
     public void onBindViewHolder(@NonNull SearchRecyclerViewAdapter.ViewHolder holder, int position) {
-//        holder.txtTitle.setText(placesList.get(position).getTitle());
-//        if (placesList.get(position).getDefaultImage() != null) {
-//            Log.d(TAG, "default image found for: " + placesList.get(position).getTitle());
-//            Picasso.get().load(placesList.get(position).getDefaultImage()).into(holder.imgPlace);
-//        }else {
-//            Log.d(TAG, "no images found for: " + placesList.get(position).getTitle());
-//        }
+        holder.txtTitle.setText(placesList.get(position).getTitle());
+        if (placesList.get(position).getDefault_image() != null) {
+            Log.d(TAG, "default image found for: " + placesList.get(position).getTitle());
+            Picasso.get().load(placesList.get(position).getDefault_image()).into(holder.imgPlace);
+        }else {
+            Log.d(TAG, "no images found for: " + placesList.get(position).getTitle());
+        }
     }
 
     @Override

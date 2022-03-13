@@ -4,6 +4,8 @@ package com.visitegypt.presentation.search;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -33,16 +35,47 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class Search extends AppCompatActivity {
     private SearchViewModel searchViewModel;
-    private TextInputEditText text;
+    private TextInputLayout txtSearch;
+    private RecyclerView recyclerView;
+    private ArrayList<SearchPlace> searchPlaces;
+    private SearchRecyclerViewAdapter searchRecyclerViewAdapter;
     private static final String TAG = "Search";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        searchViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
-        TextInputLayout txtEmail = findViewById(R.id.emailTextView);
-        txtEmail.getEditText().addTextChangedListener(new TextWatcher() {
+        initViews();
+        searchViewModel.webSocketConnet();
+        startSearch();
+        searchResult();
+    }
+
+    private void searchResult() {
+        searchViewModel.mutableLiveDataText.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Log.d(TAG, "Web sockets Test onChanged: " + s);
+                if (!s.contains("errors")) {
+                    Gson gson = new Gson();
+                    Type listType = new TypeToken<List<SearchPlace>>() {
+                    }.getType();
+                    searchPlaces = gson.fromJson(s, listType);
+                    searchRecyclerViewAdapter.updatePlacesList(searchPlaces);
+                }
+                if (txtSearch.getEditText().getText().toString().isEmpty())
+                {
+                    searchPlaces.clear();
+                    searchRecyclerViewAdapter.updatePlacesList(searchPlaces);
+                }
+
+
+            }
+        });
+    }
+
+    private void startSearch() {
+        txtSearch.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -50,8 +83,8 @@ public class Search extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(!txtEmail.getEditText().getText().toString().isEmpty())
-                searchViewModel.search(txtEmail.getEditText().getText().toString());
+                if (!txtSearch.getEditText().getText().toString().isEmpty())
+                    searchViewModel.search(txtSearch.getEditText().getText().toString());
             }
 
             @Override
@@ -59,38 +92,20 @@ public class Search extends AppCompatActivity {
 
             }
         });
-        searchViewModel.start();
-        searchViewModel.mutableLiveDataText.observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String  s) {
-                Log.d(TAG, "Web sockets Test onChanged: "+s);
-                //String userJson = "{\"id\": \"616f2746b817807a7a6c7167\", \"title\": \"The Egyptian Museum In Cairo\", \"default_image\": \"https://res.cloudinary.com/zagazig/image/upload/t1hj3r6todq6qdwz1iwp.jpg\"}";
-                Gson gson = new Gson();
-//                Type userListType = new TypeToken<ArrayList<SearchPlace>>(){}.getType();
-
-//                try
-//                {
-////                    ArrayList<SearchPlace> userArray = gson.fromJson(userJson, userListType);
-//                    SearchPlace userArray = gson.fromJson(userJson,SearchPlace.class);
-//                    Log.d(TAG, "onChanged: "+userArray.getTitle());
-//                }
-//                catch (IllegalStateException | JsonSyntaxException exception)
-//                {
-//                    exception.printStackTrace();
-//                }
-//                try {
-//                    JSONArray jsonarray = new JSONArray(s);
-//                    JSONObject jsonobject = jsonarray.getJSONObject(0);
-//                    String code = jsonobject.getString("title");
-//                    Log.d(TAG, "onChanged: code" + code);
-//
-//                    } catch (JSONException jsonException) {
-//                    jsonException.printStackTrace();
-//                }
-
-            }
-        });
     }
 
+    private void initViews() {
+        searchViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
+        txtSearch = findViewById(R.id.search);
+        recyclerView = findViewById(R.id.searchRecyclerView);
+        searchRecyclerViewAdapter = new SearchRecyclerViewAdapter(searchPlaces,this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        recyclerView.setAdapter(searchRecyclerViewAdapter);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
 }

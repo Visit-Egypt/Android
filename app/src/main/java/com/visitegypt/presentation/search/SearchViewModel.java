@@ -29,13 +29,17 @@ public class SearchViewModel extends ViewModel {
         this.okHttpClient = okHttpClient;
         this.request = request;
     }
-    public void start() {
+    public void webSocketConnet() {
         webSocket = okHttpClient.newWebSocket(request, echoWebSocketListener);
-        okHttpClient.dispatcher().executorService().shutdown();
+//        okHttpClient.dispatcher().executorService().shutdown();
     }
     public void search(String text)
     {
         webSocket.send(text);
+    }
+    public void onResume()
+    {
+
     }
 
 
