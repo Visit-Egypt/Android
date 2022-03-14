@@ -30,17 +30,14 @@ public class SearchViewModel extends ViewModel {
         this.request = request;
     }
     public void webSocketConnet() {
+        Log.d("TAG", "webSocketConnet: ");
         webSocket = okHttpClient.newWebSocket(request, echoWebSocketListener);
-//        okHttpClient.dispatcher().executorService().shutdown();
     }
     public void search(String text)
     {
         webSocket.send(text);
     }
-    public void onResume()
-    {
 
-    }
 
 
     private class EchoWebSocketListener  extends WebSocketListener {

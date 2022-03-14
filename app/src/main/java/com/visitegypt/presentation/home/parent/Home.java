@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import androidx.appcompat.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,7 +18,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,7 +29,6 @@ import com.visitegypt.R;
 import com.visitegypt.databinding.ActivityNewHomeBinding;
 import com.visitegypt.domain.model.SearchPlace;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
-import com.visitegypt.presentation.search.Search;
 import com.visitegypt.presentation.signin.SignInActivity;
 
 import java.lang.reflect.Type;
@@ -50,7 +49,6 @@ public class Home extends AppCompatActivity {
     HomeViewModel homeViewModel;
     private SearchRecyclerViewAdapter searchRecyclerViewAdapter;
     private RecyclerView searchRecyclerView;
-    @NonNull
     private ArrayList<SearchPlace> searchPlaces = new ArrayList<>();
     private static final String TAG = "Home";
     private TextView txtNotFound;
@@ -62,8 +60,8 @@ public class Home extends AppCompatActivity {
         binding = ActivityNewHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         initView();
-        navigationController();
         searchViewModel.webSocketConnet();
+        navigationController();
         startChatBot();
         searchResult();
         homeViewModel.getUserInfo();
@@ -193,13 +191,6 @@ public class Home extends AppCompatActivity {
         homeViewModel.getUserInfo();
     }
 
-    public void searchOnClick(View view) {
-        Log.d(TAG, "searchOnClick: this is my click ");
-        Intent intent = new Intent(this, Search.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_menu, menu);
@@ -207,15 +198,13 @@ public class Home extends AppCompatActivity {
         MenuItem menuItemNotification = menu.findItem(R.id.notification);
         SearchView searchView = (SearchView) menuItemSearch.getActionView();
         searchView.setQueryHint("Search on visit egypt");
-        searchView.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: hi ");
-            }
-        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+                if (s.isEmpty()) {
+                    searchPlaces.clear();
+                    searchRecyclerViewAdapter.updatePlacesList(searchPlaces);
+                }
 
                 return false;
             }
@@ -223,15 +212,13 @@ public class Home extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String s) {
                 if (!s.isEmpty()) {
+                    Log.d(TAG, "onQueryTextChange: "+s);
                     searchViewModel.search(s);
-                }
-
-                if (s.isEmpty()) {
+                }else
+                {
                     searchPlaces.clear();
-                    Log.d(TAG, "onQueryTextChange: size " + searchPlaces.size());
                     searchRecyclerViewAdapter.updatePlacesList(searchPlaces);
                 }
-
 
                 return false;
             }
@@ -271,16 +258,12 @@ public class Home extends AppCompatActivity {
                     }.getType();
                     searchPlaces = gson.fromJson(s, listType);
                     searchRecyclerViewAdapter.updatePlacesList(searchPlaces);
-
-                    if (s.isEmpty()) {
-                        searchPlaces.clear();
-                        searchRecyclerViewAdapter.updatePlacesList(searchPlaces);
-                    }
                 } else {
                     txtNotFound.setVisibility(View.VISIBLE);
                     searchPlaces.clear();
                     searchRecyclerViewAdapter.updatePlacesList(searchPlaces);
                 }
+
 
 
             }
