@@ -3,9 +3,12 @@ package com.visitegypt.presentation.home.parent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
@@ -14,14 +17,24 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.visitegypt.R;
 import com.visitegypt.databinding.ActivityNewHomeBinding;
+import com.visitegypt.domain.model.SearchPlace;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
 import com.visitegypt.presentation.search.Search;
 import com.visitegypt.presentation.signin.SignInActivity;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -32,10 +45,16 @@ public class Home extends AppCompatActivity {
     private ActivityNewHomeBinding binding;
     private NavigationView navigationView;
     private NavController navController;
-    private View header;
+    private View header, searchViewLayout, homeViewLayout;
     private TextView txtName, txtEmail;
     HomeViewModel homeViewModel;
+    private SearchRecyclerViewAdapter searchRecyclerViewAdapter;
+    private RecyclerView searchRecyclerView;
+    @NonNull
+    private ArrayList<SearchPlace> searchPlaces = new ArrayList<>();
     private static final String TAG = "Home";
+    private TextView txtNotFound;
+    private SearchViewModel searchViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +63,14 @@ public class Home extends AppCompatActivity {
         setContentView(binding.getRoot());
         initView();
         navigationController();
+        searchViewModel.webSocketConnet();
         startChatBot();
+        searchResult();
         homeViewModel.getUserInfo();
         homeViewModel.userEmailMutable.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                Log.d("TAG", "onChanged:  String"+s);
+                Log.d("TAG", "onChanged:  String" + s);
                 txtEmail.setText(s);
             }
         });
@@ -67,8 +88,7 @@ public class Home extends AppCompatActivity {
         homeViewModel.isLoged.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                if (!aBoolean)
-                {
+                if (!aBoolean) {
                     redirect();
                 }
             }
@@ -129,8 +149,20 @@ public class Home extends AppCompatActivity {
         header = navigationView.getHeaderView(0);
         txtName = header.findViewById(R.id.nameNavHeaderTextView);
         txtEmail = header.findViewById(R.id.emailTextView);
+
         /**********************************************/
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        /**************************************************************/
+        homeViewLayout = findViewById(R.id.home_layout);
+        searchViewLayout = findViewById(R.id.search_layout);
+        txtNotFound = searchViewLayout.findViewById(R.id.not_found);
+        /*********************************************************/
+        searchViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
+        searchRecyclerView = searchViewLayout.findViewById(R.id.searchRecyclerView);
+        searchRecyclerViewAdapter = new SearchRecyclerViewAdapter(searchPlaces, this);
+        searchRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        searchRecyclerView.setAdapter(searchRecyclerViewAdapter);
+
 
     }
 
@@ -167,4 +199,92 @@ public class Home extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home_menu, menu);
+        MenuItem menuItemSearch = menu.findItem(R.id.search);
+        MenuItem menuItemNotification = menu.findItem(R.id.notification);
+        SearchView searchView = (SearchView) menuItemSearch.getActionView();
+        searchView.setQueryHint("Search on visit egypt");
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: hi ");
+            }
+        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                if (!s.isEmpty()) {
+                    searchViewModel.search(s);
+                }
+
+                if (s.isEmpty()) {
+                    searchPlaces.clear();
+                    Log.d(TAG, "onQueryTextChange: size " + searchPlaces.size());
+                    searchRecyclerViewAdapter.updatePlacesList(searchPlaces);
+                }
+
+
+                return false;
+            }
+        });
+        menuItemSearch.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                menuItemNotification.setVisible(false);
+                menuItemSearch.setVisible(false);
+                homeViewLayout.setVisibility(View.GONE);
+                searchViewLayout.setVisibility(View.VISIBLE);
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                menuItemNotification.setVisible(true);
+                menuItemSearch.setVisible(true);
+                homeViewLayout.setVisibility(View.VISIBLE);
+                searchViewLayout.setVisibility(View.GONE);
+                return true;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private void searchResult() {
+        searchViewModel.mutableLiveDataText.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Log.d(TAG, "Web sockets Test onChanged: " + s);
+                if (!s.contains("errors")) {
+                    txtNotFound.setVisibility(View.GONE);
+                    Gson gson = new Gson();
+                    Type listType = new TypeToken<List<SearchPlace>>() {
+                    }.getType();
+                    searchPlaces = gson.fromJson(s, listType);
+                    searchRecyclerViewAdapter.updatePlacesList(searchPlaces);
+
+                    if (s.isEmpty()) {
+                        searchPlaces.clear();
+                        searchRecyclerViewAdapter.updatePlacesList(searchPlaces);
+                    }
+                } else {
+                    txtNotFound.setVisibility(View.VISIBLE);
+                    searchPlaces.clear();
+                    searchRecyclerViewAdapter.updatePlacesList(searchPlaces);
+                }
+
+
+            }
+        });
+    }
+
 }

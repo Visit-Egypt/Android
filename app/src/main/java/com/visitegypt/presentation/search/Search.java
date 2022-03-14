@@ -12,22 +12,16 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.SearchPlace;
-import com.visitegypt.domain.model.User;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.visitegypt.presentation.home.parent.SearchRecyclerViewAdapter;
+import com.visitegypt.presentation.home.parent.SearchViewModel;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -52,26 +46,26 @@ public class Search extends AppCompatActivity {
     }
 
     private void searchResult() {
-        searchViewModel.mutableLiveDataText.observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                Log.d(TAG, "Web sockets Test onChanged: " + s);
-                if (!s.contains("errors")) {
-                    Gson gson = new Gson();
-                    Type listType = new TypeToken<List<SearchPlace>>() {
-                    }.getType();
-                    searchPlaces = gson.fromJson(s, listType);
-                    searchRecyclerViewAdapter.updatePlacesList(searchPlaces);
-                }
-                if (txtSearch.getEditText().getText().toString().isEmpty())
-                {
-                    searchPlaces.clear();
-                    searchRecyclerViewAdapter.updatePlacesList(searchPlaces);
-                }
-
-
-            }
-        });
+//        searchViewModel.mutableLiveDataText.observe(this, new Observer<String>() {
+//            @Override
+//            public void onChanged(String s) {
+//                Log.d(TAG, "Web sockets Test onChanged: " + s);
+//                if (!s.contains("errors")) {
+//                    Gson gson = new Gson();
+//                    Type listType = new TypeToken<List<SearchPlace>>() {
+//                    }.getType();
+//                    searchPlaces = gson.fromJson(s, listType);
+//                    searchRecyclerViewAdapter.updatePlacesList(searchPlaces);
+//                }
+//                if (txtSearch.getEditText().getText().toString().isEmpty())
+//                {
+//                    searchPlaces.clear();
+//                    searchRecyclerViewAdapter.updatePlacesList(searchPlaces);
+//                }
+//
+//
+//            }
+//        });
     }
 
     private void startSearch() {
@@ -96,9 +90,9 @@ public class Search extends AppCompatActivity {
 
     private void initViews() {
         searchViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
-        txtSearch = findViewById(R.id.search);
+//        txtSearch = findViewById(R.id.search);
         recyclerView = findViewById(R.id.searchRecyclerView);
-        searchRecyclerViewAdapter = new SearchRecyclerViewAdapter(searchPlaces,this);
+        searchRecyclerViewAdapter = new SearchRecyclerViewAdapter(searchPlaces, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         recyclerView.setAdapter(searchRecyclerViewAdapter);
     }

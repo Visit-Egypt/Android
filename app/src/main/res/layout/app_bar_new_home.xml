@@ -24,7 +24,7 @@
             app:popupTheme="@style/Theme.VisitEgypt.PopupOverlay"
             app:titleTextColor="?attr/colorOnSecondary">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -41,38 +41,22 @@
                     android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/notificationImageButton"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/notificationImageButton"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/ic_notification"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/searchImageButton"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="InvalidId,SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/searchImageButton"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginRight="20dp"
-                    android:onClick="searchOnClick"
-                    android:background="@drawable/ic_search"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="InvalidId,TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
 
-    <include layout="@layout/content_new_home" />
+    <include
+        android:id="@+id/home_layout"
+        layout="@layout/content_new_home" />
+
+    <include
+        android:id="@+id/search_layout"
+        layout="@layout/activity_search"
+        android:visibility="gone" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"

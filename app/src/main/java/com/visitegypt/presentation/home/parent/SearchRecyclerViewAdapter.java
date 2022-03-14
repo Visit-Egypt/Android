@@ -1,6 +1,4 @@
-package com.visitegypt.presentation.search;
-
-import static com.visitegypt.utils.Constants.CustomerType.EGYPTIAN_STUDENT;
+package com.visitegypt.presentation.home.parent;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
-import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.SearchPlace;
 import com.visitegypt.presentation.detail.DetailActivity;
 

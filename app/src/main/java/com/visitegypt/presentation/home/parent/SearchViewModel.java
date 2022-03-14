@@ -1,4 +1,4 @@
-package com.visitegypt.presentation.search;
+package com.visitegypt.presentation.home.parent;
 
 import android.util.Log;
 
@@ -80,6 +80,7 @@ public class SearchViewModel extends ViewModel {
 
         @Override
         public void onOpen(@NonNull WebSocket webSocket, @NonNull Response response) {
+            Log.d("TAG", "onOpen: socket is open ");
             super.onOpen(webSocket, response);
         }
     }

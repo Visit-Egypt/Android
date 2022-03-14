@@ -46,7 +46,7 @@
         <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/activity_detail.xml" value="0.23749166110740494" />
         <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/activity_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/activity_new_home.xml" value="0.22643343051506318" />
-        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/activity_search.xml" value="0.486159169550173" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/activity_search.xml" value="0.176" />
         <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/activity_sign_in.xml" value="0.13020833333333334" />
         <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/activity_sign_up.xml" value="0.4" />
         <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/activity_splash.xml" value="0.25416666666666665" />
@@ -89,6 +89,7 @@
         <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/layout/user_message.xml" value="0.5560821484992101" />
         <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/menu/activity_main_drawer.xml" value="0.264" />
         <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/menu/bottom_nav_menu.xml" value="0.13020833333333334" />
+        <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/menu/home_menu.xml" value="0.264" />
         <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/menu/home_navigation_menu.xml" value="0.13020833333333334" />
         <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/menu/new_home.xml" value="0.536" />
         <entry key="..\:/Work/Visit Egypt/Visit Egypt/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.22708333333333333" />
