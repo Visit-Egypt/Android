@@ -9,9 +9,12 @@ public class Badge {
     private int id;
     @SerializedName("image_url")
     private String imageUrl;
+    int progress;
     private boolean owned;
     private int type;
     private int xp;
+    @SerializedName("badge_frame_image_url")
+    private String badgeImageFrame;
 
 
     public Badge(int id, String imageUrl, boolean owned, int type, int xp) {
@@ -68,5 +71,13 @@ public class Badge {
 
     public void setXp(int xp) {
         this.xp = xp;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
     }
 }

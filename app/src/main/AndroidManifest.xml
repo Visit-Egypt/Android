@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
     <application
         android:name=".MainApplication"
@@ -15,8 +16,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.VisitEgypt">
+        <activity
+            android:name=".presentation.gamification.GamificationCitiesActivity"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
+
         <activity
             android:name=".presentation.signup.SignUpActivity"
             android:exported="true"></activity>
@@ -33,17 +41,10 @@
             android:name=".presentation.splash.SplashActivity"
             android:exported="true"></activity>
         <activity
-            android:name=".presentation.home.parent.Home"
-            android:windowSoftInputMode="adjustPan"
-            android:exported="true"></activity>
-        <activity
             android:name=".presentation.chatbot.ChatbotActivity"
             android:exported="true"></activity>
         <activity
             android:name=".presentation.gamification.GamificationActivity"
-            android:exported="true" />
-        <activity
-            android:name=".presentation.signin.SignInActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,6 +52,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".presentation.signin.SignInActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".presentation.home.parent.Home"
+            android:exported="true"></activity>
     </application>
 
 </manifest>

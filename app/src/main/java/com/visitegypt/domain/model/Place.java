@@ -30,7 +30,7 @@ public class Place {
 
     private String locationDescription;
     private double longitude;
-    private double altitude;
+    private double latitude;
     private String city;
 
     @SerializedName("default_image")
@@ -123,12 +123,12 @@ public class Place {
         this.longitude = longitude;
     }
 
-    public double getAltitude() {
-        return altitude;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setAltitude(double altitude) {
-        this.altitude = altitude;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
     public String getCity() {

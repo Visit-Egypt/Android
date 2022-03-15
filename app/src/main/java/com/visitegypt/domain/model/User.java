@@ -33,6 +33,7 @@ public class User {
     // gamification //
     private ArrayList<Badge> badges;
     private int xp;
+    private int level;
     private ProfileFrame frame;
 
     /*******************************************************************************/
@@ -153,5 +154,33 @@ public class User {
 
     public void setBadges(ArrayList<Badge> badges) {
         this.badges = badges;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public void setXp(int xp) {
+        this.xp = xp;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public ProfileFrame getFrame() {
+        return frame;
+    }
+
+    public void setFrame(ProfileFrame frame) {
+        this.frame = frame;
     }
 }
