@@ -7,6 +7,7 @@ import androidx.room.TypeConverters;
 
 import com.google.gson.annotations.SerializedName;
 import com.visitegypt.domain.model.converters.CategoriesConverter;
+import com.visitegypt.domain.model.converters.HintsConverter;
 import com.visitegypt.domain.model.converters.ImageUrlsConverter;
 import com.visitegypt.domain.model.converters.ItemsTypeConverter;
 import com.visitegypt.domain.model.converters.OpeningHoursConverter;
@@ -53,6 +54,9 @@ public class Place {
 
     @TypeConverters(ReviewsConverter.class)
     private List<Review> reviews;
+
+    @TypeConverters(HintsConverter.class)
+    private List<Hint> hints;
 
     public Place() {
     }
@@ -201,5 +205,13 @@ public class Place {
 
     public void setShortDescription(String shortDescription) {
         this.shortDescription = shortDescription;
+    }
+
+    public List<Hint> getHints() {
+        return hints;
+    }
+
+    public void setHints(List<Hint> hints) {
+        this.hints = hints;
     }
 }

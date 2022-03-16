@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VisitEgypt">
         <activity
+            android:name=".presentation.gamification.CitiesActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.gamification.GamificationCitiesActivity"
             android:exported="false" />
 
@@ -27,22 +30,22 @@
 
         <activity
             android:name=".presentation.signup.SignUpActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".presentation.review.ReviewActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".presentation.item.ItemActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".presentation.detail.DetailActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".presentation.splash.SplashActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".presentation.chatbot.ChatbotActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".presentation.gamification.GamificationActivity"
             android:exported="true">
@@ -54,10 +57,10 @@
         </activity>
         <activity
             android:name=".presentation.signin.SignInActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".presentation.home.parent.Home"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>

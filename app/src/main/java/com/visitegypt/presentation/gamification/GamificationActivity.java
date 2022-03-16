@@ -4,7 +4,10 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -13,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -31,8 +35,16 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textview.MaterialTextView;
+import com.jackandphantom.circularprogressbar.CircleProgressbar;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
+import com.visitegypt.domain.model.BadgeTask;
+import com.visitegypt.domain.model.Explore;
+import com.visitegypt.domain.model.Hint;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.utils.GamificationRules;
@@ -40,6 +52,7 @@ import com.visitegypt.utils.GamificationRules;
 import java.util.ArrayList;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 @AndroidEntryPoint
 public class GamificationActivity extends AppCompatActivity implements LocationListener, OnMapReadyCallback {
@@ -63,6 +76,8 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
 
     private Place place;
 
+    private Explore dummyExplore;
+
     private Boolean mapLoaded = false, userLocationLoaded = false, placeLoaded = false;
 
     @Override
@@ -73,7 +88,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
 
         initViewModels();
         initPermissions();
-        initViews(savedInstanceState);
+        initViews();
         initDummyData();
     }
 
@@ -96,7 +111,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     }
 
     @SuppressLint("MissingPermission")
-    private void initViews(Bundle b) {
+    private void initViews() {
         placeActivities = new ArrayList<>();
         recyclerView = findViewById(R.id.gamificationActivitiesRecyclerView);
         badges = new ArrayList<>();
@@ -104,9 +119,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         recyclerView.setAdapter(badgesSliderViewAdapter);
 
         claimButton = findViewById(R.id.gamificationActivityClaimButton);
-        claimButton.setOnClickListener(view -> {
-            showLocationDialog(b);
-        });
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
@@ -120,23 +132,82 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         }
     }
 
-    private void showLocationDialog(Bundle b) {
+    private void showExploreDialog(Explore explore) {
         Dialog dialog = new Dialog(this);
-        View v = LayoutInflater.from(this).inflate(R.layout.dialog_confirm_location_gamification, null, false);
-        mapView = v.findViewById(R.id.mapView);
-        mapView.getMapAsync(GamificationActivity.this);
+        View v = LayoutInflater.from(this).inflate(R.layout.dialog_ar_explore, null, false);
+
+        ImageView zoomableImageView = v.findViewById(R.id.gamificationHintDialogZoomableImageView);
+
+        MaterialTextView materialTextView = v.findViewById(R.id.gamificationHintDialogTitle);
+        materialTextView.setText(explore.getTitle());
+
+        Picasso.get().load(explore.getImageUrl()).into(zoomableImageView, new Callback() {
+            @Override
+            public void onSuccess() {
+                // TODO ADD PROGRESSBAR
+                PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher(zoomableImageView);
+                photoViewAttacher.update();
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+        });
+
+
+        GamificationHintRecyclerViewAdapter adapter = new GamificationHintRecyclerViewAdapter(explore.getHints());
+        RecyclerView recyclerView = v.findViewById(R.id.gamificationHintDialogRecyclerView);
+        recyclerView.setAdapter(adapter);
+
         dialog.setContentView(v);
-        mapView.onCreate(b);
+        dialog.show();
 
-        /* v.findViewById(R.id.confirmLocationButtonGamificationDialog).setOnClickListener(view -> {
+        Window window = dialog.getWindow();
+        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+    }
 
-        }); */
+    private void showBadgeDialog(Badge badge) {
+        Dialog dialog = new Dialog(this);
+        View v = LayoutInflater.from(this).inflate(R.layout.dialog_badge_gamification, null, false);
+
+        MaterialTextView titleTextView = v.findViewById(R.id.badgeDialogTitleTextView);
+        titleTextView.setText(badge.getTitle());
+
+        MaterialTextView descriptionTextView = v.findViewById(R.id.badgeDialogDescriptionTextView);
+        descriptionTextView.setText(badge.getDescription());
+
+
+        CircleProgressbar circleProgressbar = v.findViewById(R.id.badgeDialogCircleProgressBar);
+        Log.d(TAG, "showLocationDialog: " + badge.getMaxProgress() + " " + badge.getProgress());
+        circleProgressbar.setMaxProgress(badge.getMaxProgress());
+        circleProgressbar.setProgress(badge.getProgress());
+        Target target = new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                circleProgressbar.setBackground(new BitmapDrawable(getResources(), bitmap));
+            }
+
+            @Override
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+            }
+        };
+        Picasso.get().load(badge.getImageUrl()).into(target);
+
+        RecyclerView recyclerView = v.findViewById(R.id.dialogBadgeRecyclerView);
+        GamificationBadgesDialogRecyclerViewAdapter gamificationBadgesDialogRecyclerViewAdapter = new GamificationBadgesDialogRecyclerViewAdapter(badge.getBadgeTasks());
+        recyclerView.setAdapter(gamificationBadgesDialogRecyclerViewAdapter);
+        dialog.setContentView(v);
 
         dialog.show();
 
         Window window = dialog.getWindow();
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        dialog.setOnDismissListener(dialogInterface -> mapView.onPause());
     }
 
     private void initDummyData() {
@@ -146,13 +217,33 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         placeActivities.add(new PlaceActivity(100, PlaceActivity.ASK_CHAT_BOT, "Ask the chat bot", "Tell the bot \"What do you know about Luxor\""));
         placeActivities.add(new PlaceActivity(100, PlaceActivity.GENERAL, "General", "Dance or something"));
 
-        badges.add(new Badge(0, "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", false, Badge.PLACE, 120));
-        badges.add(new Badge(0, "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", true, Badge.PLACE, 120));
-        badges.add(new Badge(0, "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", false, Badge.PLACE, 120));
-        badges.add(new Badge(0, "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", true, Badge.PLACE, 120));
-        badges.add(new Badge(0, "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", false, Badge.PLACE, 120));
+        badges.add(new Badge(0, "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", false, Badge.Type.PLACE, 120));
+        badges.add(new Badge(0, "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", true, Badge.Type.PLACE, 120));
+        badges.add(new Badge(0, "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", false, Badge.Type.PLACE, 120));
+        badges.add(new Badge(0, "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", true, Badge.Type.PLACE, 120));
+        badges.add(new Badge(0, "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", false, Badge.Type.PLACE, 120));
+
+        BadgeTask badgeTask = new BadgeTask("https://www.citypng.com/public/uploads/preview/-1216105642094jeazr60ms.png", "Review the place", 3, 5);
+        ArrayList<BadgeTask> badgeTasks = new ArrayList<>();
+        badgeTasks.add(badgeTask);
+
+        badges.get(0).setTitle("Amazing badge");
+        badges.get(0).setDescription("an amazing badge for an amazing person");
+        badges.get(0).setBadgeTasks(badgeTasks);
+
+
+        ArrayList<Hint> hints = new ArrayList<>();
+        hints.add(new Hint("He is super handsome"));
+        hints.add(new Hint("Okay he's ugly, we lied", "https://file1.science-et-vie.com/var/scienceetvie/storage/images/1/0/4/104445/et-momie-revela-ses-secrets.jpg"));
+        dummyExplore = new Explore("Tout Ankha Amon", "https://images.lpcdn.ca/924x615/201002/13/147005-momie-toutankhamon.jpg", hints);
+
+        claimButton.setOnClickListener(view -> {
+            //showBadgeDialog(badges.get(0));
+            showExploreDialog(dummyExplore);
+        });
 
         badgesSliderViewAdapter.setBadges(badges);
+
     }
 
     @Override

@@ -96,6 +96,10 @@ dependencies {
     //circular img view
     implementation 'com.mikhaellopez:circularimageview:3.2.0'
 
+    implementation 'com.jackandphantom.android:circularprogressbar:1.2.0'
+
+    implementation 'com.commit451:PhotoView:1.2.4'
+
     //seeMore,seeLess
     implementation 'com.borjabravo:readmoretextview:2.1.0'
 
