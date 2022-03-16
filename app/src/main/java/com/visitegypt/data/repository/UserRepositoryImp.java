@@ -4,18 +4,12 @@ import com.visitegypt.data.source.remote.RetrofitService;
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
-import com.visitegypt.domain.model.response.UploadFields;
 import com.visitegypt.domain.model.response.UploadResponse;
 import com.visitegypt.domain.repository.UserRepository;
 
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Single;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
 
 public class UserRepositoryImp implements UserRepository {
 
@@ -44,7 +38,7 @@ public class UserRepositoryImp implements UserRepository {
 
     @Override
     public Single<User> getUser(String userId, String email) {
-        return retrofitService.getUser(userId,email);
+        return retrofitService.getUser(userId, email);
     }
 
     @Override
@@ -58,12 +52,12 @@ public class UserRepositoryImp implements UserRepository {
     }
 
     @Override
-    public Single<UploadResponse> uploadUserPhoto(String userId, String contentType){
-        return retrofitService.uploadUserPhoto(userId, contentType);
+    public Single<UploadResponse> getPreSigendUrl(String userId, String contentType) {
+        return retrofitService.getPreSigendUrl(userId, contentType);
     }
 
-    @Override
-    public Single<ResponseBody> genericUpload (String uploadUrl, UploadFields uploadFields, MultipartBody.Part file){
-        return retrofitService.genericUpload(uploadUrl, uploadFields, file);
-    }
+
+
+
+
 }

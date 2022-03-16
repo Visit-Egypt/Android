@@ -10,18 +10,15 @@ import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.response.ItemPageResponse;
 import com.visitegypt.domain.model.response.PlacePageResponse;
-import com.visitegypt.domain.model.response.UploadFields;
+
 import com.visitegypt.domain.model.response.UploadResponse;
+import com.visitegypt.domain.model.response.UploadedFilesResponse;
 
 import java.util.List;
-import java.util.Map;
 
 import io.reactivex.rxjava3.core.Single;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -32,7 +29,6 @@ import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
 
 
@@ -60,17 +56,26 @@ public interface RetrofitService {
     public Single<User> getUser(@Query("user_id") String userId, @Query("user_email") String email);
 
     @PUT("api/user/{user_id}")
-    public Single<User> updateUser(@Path("user_id") String userId,@Body UserUpdateRequest user);
+    public Single<User> updateUser(@Path("user_id") String userId, @Body UserUpdateRequest user);
 
     @POST("api/user/logout/{user_id}")
     public Single<String> logOut(@Path("user_id") String userId);
 
     @GET("api/user/{id}/upload-photo")
-    public Single<UploadResponse> uploadUserPhoto(@Path("id") String id, @Query("content_type") String contentType);
+    public Single<UploadResponse> getPreSigendUrl(@Path("id") String id, @Query("content_type") String contentType);
+//
+//    @Multipart
+//    @POST
+//    Single<UploadedFilesResponse> uploadToS3(
+//            @Url String url,
+//            @Part("acl") RequestBody acl,
+//            @Part("Content-Type") RequestBody content_type,
+//            @Part("key") RequestBody key,
+//            @Part("AWSAccessKeyId") RequestBody aws,
+//            @Part("policy") RequestBody policy,
+//            @Part("signature") RequestBody signature,
+//            @Part MultipartBody.Part file);
 
-    @Multipart
-    @POST
-    Single<ResponseBody> genericUpload(@Url String url, @Part("fields") UploadFields uploadFields, @Part MultipartBody.Part file);
     /*******************************************************************/
     @GET("api/place/{id}")
     public Single<Place> getPlaceById(@Path("id") String id);

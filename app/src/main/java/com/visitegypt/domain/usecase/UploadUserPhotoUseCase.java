@@ -1,63 +1,107 @@
 package com.visitegypt.domain.usecase;
 
+import static com.visitegypt.utils.Constants.BASE_URL;
+import static com.visitegypt.utils.Constants.SHARED_PREF_USER_ID;
+import static com.visitegypt.utils.Constants.SHARED_PREF_USER_REFRESH_TOKEN;
+
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.visitegypt.domain.model.Review;
+import com.visitegypt.data.source.remote.ApiInterface;
+import com.visitegypt.domain.model.PreSignedURL;
+import com.visitegypt.domain.model.UploadFields;
 import com.visitegypt.domain.model.response.UploadResponse;
-import com.visitegypt.domain.model.response.UploadedFilesResponse;
+import com.visitegypt.domain.repository.UploadToS3Repository;
 import com.visitegypt.domain.repository.UserRepository;
-import com.visitegypt.domain.usecase.base.SingleUseCase;
 import com.visitegypt.utils.Constants;
 
+
 import java.io.File;
-import java.util.List;
 
-import javax.inject.Inject;
-
-import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.functions.Consumer;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
-public class UploadUserPhotoUseCase extends SingleUseCase<UploadedFilesResponse> {
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+
+public class UploadUserPhotoUseCase{
     private SharedPreferences sharedPreferences;
     private UserRepository userRepository;
+//    private UploadToS3Repository uploadToS3Repository;
     private String contentType;
     private File userFile;
+    ApiInterface apiInterface;
+
     @Inject
-    public UploadUserPhotoUseCase (UserRepository userRepository, SharedPreferences sharedPreferences){
-        this.userRepository = userRepository;
+    public UploadUserPhotoUseCase(SharedPreferences sharedPreferences, @Named("Normal") UserRepository userRepository) {
         this.sharedPreferences = sharedPreferences;
+        this.userRepository = userRepository;
     }
+
     public void setContentType(String contentType) {
         this.contentType = contentType;
     }
+
     public void setUserFile(File userFile) {
         this.userFile = userFile;
     }
-    @Override
-    protected Single<UploadedFilesResponse> buildSingleUseCase() {
+
+    public void upload() {
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), userFile);
         MultipartBody.Part body = MultipartBody.Part.createFormData("uploaded_file", userFile.getName(), requestFile);
-
         final String userId = this.sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
-        final UploadResponse uploadResponse = userRepository.uploadUserPhoto(userId, contentType).blockingGet();
+        final UploadResponse uploadResponse = userRepository.getPreSigendUrl(userId, contentType).blockingGet();
+        String awsUrl = uploadResponse.getUrl();
+        UploadFields uploadFields = uploadResponse.getFields();
+        realUpload(awsUrl,uploadFields);
 
-        // RequestBody requestFields = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), );
-        // Upload Photo to the server.
-        userRepository.genericUpload(uploadResponse.getUrl(), uploadResponse.getFields(), body).subscribe(new Consumer<ResponseBody>() {
-            @Override
-            public void accept(ResponseBody response) throws Throwable {
-                // if(response.code() == 204){
-                // Successfull Upload
-                Log.d("upload: suu", String.valueOf(response.string()));
-
-            }
-        });
-        return null;
     }
+
+    private void realUpload(String url, UploadFields uploadFields){
+        if (userFile != null && userFile.exists()){
+
+            Retrofit retrofit1 = new Retrofit.Builder()
+                    .baseUrl("https://visitegypt-media-bucket.s3.amazonaws.com/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), userFile);
+            RequestBody acl = RequestBody.create(MediaType.parse("text/plain"), uploadFields.getAcl());
+            RequestBody contentType = RequestBody.create(MediaType.parse("text/plain"),uploadFields.getContentType());
+            RequestBody key = RequestBody.create(uploadFields.getKey(),MediaType.parse("text/plain"));
+            Log.d("TAG", "realUpload: key  " +key);
+            RequestBody AWSAccessKeyId = RequestBody.create(MediaType.parse("text/plain"), uploadFields.getAWSAccessKeyId());
+            RequestBody policy = RequestBody.create(MediaType.parse("text/plain"), uploadFields.getPolicy());
+            RequestBody signature = RequestBody.create(MediaType.parse("text/plain"), uploadFields.getSignature());
+
+            MultipartBody.Part rProfilePicture = MultipartBody.Part.createFormData("file", userFile.getName(), requestFile);
+            ApiInterface apiInterface1 = retrofit1.create(ApiInterface.class);
+            Call<ResponseBody> call = apiInterface1.uploadToS3("", acl, contentType, key, AWSAccessKeyId, policy, signature, rProfilePicture);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    Log.d("Upload:  suuuuuuu", response.toString());
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    //   Log.d(TAG, );
+                    t.printStackTrace();
+                }
+            });
+
+        }
+    }
+
 }
+

@@ -1,14 +1,21 @@
 package com.visitegypt.presentation.setting;
 
+import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
-import android.app.AlertDialog;
+import android.app.Activity;
+import android.content.ContentUris;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +25,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -37,6 +45,8 @@ import com.visitegypt.presentation.signin.SignInActivity;
 import com.visitegypt.utils.UploadUtils;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -53,8 +63,11 @@ public class SettingFragment extends Fragment {
     CircularImageView userImageView;
     View settingFragment;
     SettingViewModel settingViewModel;
+    File file = null;
     private static final int PHOTO_SELECTED = 1;
+    public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
     private static final int PICK_FROM_GALLERY = 0;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,6 +81,7 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 selectPhoto();
+
             }
         });
 //        logOutButton.setOnClickListener(new View.OnClickListener() {
@@ -90,13 +104,13 @@ public class SettingFragment extends Fragment {
 
                 if (userFirstName != null && !userFirstName.isEmpty())
                     userUpdateRequest.setFirstName(userFirstName);
-                if(userLastName != null && !userLastName.isEmpty())
+                if (userLastName != null && !userLastName.isEmpty())
                     userUpdateRequest.setLastName(userLastName);
-                if(userPhoneNumber != null && !userPhoneNumber.isEmpty())
+                if (userPhoneNumber != null && !userPhoneNumber.isEmpty())
                     userUpdateRequest.setPhoneNumber(userPhoneNumber);
-                if(userPassword != null && !userPassword.isEmpty())
+                if (userPassword != null && !userPassword.isEmpty())
                     userUpdateRequest.setPassword(userPassword);
-                if(userEmail != null && !userEmail.isEmpty())
+                if (userEmail != null && !userEmail.isEmpty())
                     userUpdateRequest.setEmail(userEmail);
 
                 settingViewModel.updateUser(userUpdateRequest);
@@ -124,7 +138,7 @@ public class SettingFragment extends Fragment {
                         ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
                     } else {
                         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        // intent.setType("image/*");
+                         //intent.setType("image/*");
                         startActivityForResult(intent, PHOTO_SELECTED);
                     }
 
@@ -150,8 +164,7 @@ public class SettingFragment extends Fragment {
         userImageView = settingFragment.findViewById(R.id.userImageView);
     }
 
-    private void getUserData()
-    {
+    private void getUserData() {
         settingViewModel.getUserData();
         settingViewModel.mutableLiveDataUser.observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
@@ -160,7 +173,7 @@ public class SettingFragment extends Fragment {
                 lastName.setText(user.getLastName());
                 email.setText(user.getEmail());
                 phone.setText(user.getPhoneNumber());
-                if (user.getPhotoUrl() != null && !user.getPhotoUrl().isEmpty()){
+                if (user.getPhotoUrl() != null && !user.getPhotoUrl().isEmpty()) {
                     Glide.with(requireContext())
                             .load(user.getPhotoUrl())
                             .fitCenter()
@@ -193,7 +206,7 @@ public class SettingFragment extends Fragment {
 
  */
     }
-
+/***************************************************************************************************/
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -205,27 +218,25 @@ public class SettingFragment extends Fragment {
             Log.d("upload: picUri", selectedImage.toString());
             Log.d("upload: filePath", filePath);
             Log.d("upload: contetType", mimeType);
-            // settingViewModel.uploadUserProfilePhoto(userPhotoFile, mimeType);
+             settingViewModel.uploadUserProfilePhoto(userPhotoFile, mimeType);
         }
     }
-
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PICK_FROM_GALLERY) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                // intent.setType("image/*");
+                // intent.setType("image/*");a
                 startActivityForResult(intent, PHOTO_SELECTED);
             } else {
                 Toast.makeText(requireContext(), "You have to grant permissions to open the gallery", Toast.LENGTH_LONG).show();
             }
         }
     }
-    private  void redirect()
-    {
+
+    /********************************************************/
+    private void redirect() {
 
         Intent intent = new Intent(getContext(), SignInActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -236,12 +247,14 @@ public class SettingFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((Home)getActivity()).setActionBarTitle("Setting");
-        ((Home)getActivity()).hideChatBot();
+        ((Home) getActivity()).setActionBarTitle("Setting");
+        ((Home) getActivity()).hideChatBot();
     }
+
     @Override
     public void onStop() {
         super.onStop();
-        ((Home)getActivity()).showChatBot();
+        ((Home) getActivity()).showChatBot();
     }
+
 }
