@@ -3,12 +3,10 @@
     <style name="Theme.VisitEgypt" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/gold</item>
-        <!--        <item name="colorPrimary">@color/camel</item>-->
         <item name="colorPrimaryVariant">@color/darkGray</item>
-        <!--        <item name="colorPrimaryVariant">@color/darkCamel</item>-->
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/darkCamel</item>
+        <item name="colorSecondary">@color/darkGray</item>
         <item name="colorSecondaryVariant">@color/gray</item>
         <item name="colorOnSecondary">@color/black</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
