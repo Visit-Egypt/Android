@@ -15,6 +15,9 @@ public class Constants {
     public static final String SHARED_PREF_LAST_NAME = "lastName";
     public static final String SHARED_PREF_PHONE_NUMBER = "phoneNumber";
     public static  final String SHARED_PREF_NAME = "secret_shared_prefs";
+    private static final int PHOTO_SELECTED = 1;
+    public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
+    private static final int PICK_FROM_GALLERY = 0;
 
     public enum CustomerType {
         FOREIGNER_STUDENT("Foreigner Student"),

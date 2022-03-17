@@ -1,5 +1,6 @@
 package com.visitegypt.data.source.remote;
 
+import com.visitegypt.domain.model.ConfirmUploadModel;
 import com.visitegypt.domain.model.Message;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.Post;
@@ -14,11 +15,13 @@ import com.visitegypt.domain.model.response.PlacePageResponse;
 import com.visitegypt.domain.model.response.UploadResponse;
 import com.visitegypt.domain.model.response.UploadedFilesResponse;
 
+import java.util.Calendar;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -63,18 +66,8 @@ public interface RetrofitService {
 
     @GET("api/user/{id}/upload-photo")
     public Single<UploadResponse> getPreSigendUrl(@Path("id") String id, @Query("content_type") String contentType);
-//
-//    @Multipart
-//    @POST
-//    Single<UploadedFilesResponse> uploadToS3(
-//            @Url String url,
-//            @Part("acl") RequestBody acl,
-//            @Part("Content-Type") RequestBody content_type,
-//            @Part("key") RequestBody key,
-//            @Part("AWSAccessKeyId") RequestBody aws,
-//            @Part("policy") RequestBody policy,
-//            @Part("signature") RequestBody signature,
-//            @Part MultipartBody.Part file);
+    @POST("api/upload/confirm-upload")
+    public Call<String> confirmUpload(@Body ConfirmUploadModel confirmUploadModel);
 
     /*******************************************************************/
     @GET("api/place/{id}")

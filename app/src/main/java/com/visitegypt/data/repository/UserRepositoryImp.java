@@ -1,6 +1,7 @@
 package com.visitegypt.data.repository;
 
 import com.visitegypt.data.source.remote.RetrofitService;
+import com.visitegypt.domain.model.ConfirmUploadModel;
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
@@ -10,6 +11,7 @@ import com.visitegypt.domain.repository.UserRepository;
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Single;
+import retrofit2.Call;
 
 public class UserRepositoryImp implements UserRepository {
 
@@ -56,8 +58,10 @@ public class UserRepositoryImp implements UserRepository {
         return retrofitService.getPreSigendUrl(userId, contentType);
     }
 
-
-
+    @Override
+    public Call<String> confirmUpload(ConfirmUploadModel confirmUploadModel) {
+        return retrofitService.confirmUpload(confirmUploadModel);
+    }
 
 
 }

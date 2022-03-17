@@ -1,12 +1,16 @@
 package com.visitegypt.presentation.home.parent;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,8 +33,11 @@ import com.visitegypt.R;
 import com.visitegypt.databinding.ActivityNewHomeBinding;
 import com.visitegypt.domain.model.SearchPlace;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
+import com.visitegypt.presentation.setting.SettingViewModel;
 import com.visitegypt.presentation.signin.SignInActivity;
+import com.visitegypt.utils.UploadUtils;
 
+import java.io.File;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -160,6 +167,7 @@ public class Home extends AppCompatActivity {
         searchRecyclerViewAdapter = new SearchRecyclerViewAdapter(searchPlaces, this);
         searchRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         searchRecyclerView.setAdapter(searchRecyclerViewAdapter);
+        /********************************************************/
 
 
     }
@@ -212,10 +220,9 @@ public class Home extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String s) {
                 if (!s.isEmpty()) {
-                    Log.d(TAG, "onQueryTextChange: "+s);
+                    Log.d(TAG, "onQueryTextChange: " + s);
                     searchViewModel.search(s);
-                }else
-                {
+                } else {
                     searchPlaces.clear();
                     searchRecyclerViewAdapter.updatePlacesList(searchPlaces);
                 }
@@ -263,7 +270,6 @@ public class Home extends AppCompatActivity {
                     searchPlaces.clear();
                     searchRecyclerViewAdapter.updatePlacesList(searchPlaces);
                 }
-
 
 
             }

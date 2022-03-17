@@ -3,6 +3,10 @@ package com.visitegypt.presentation.setting;
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
+import static com.visitegypt.utils.UploadUtils.checkAndRequestPermissions;
+import static com.visitegypt.utils.UploadUtils.getRealPathFromUri;
+import static com.visitegypt.utils.UploadUtils.setContext;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.ContentUris;
@@ -72,7 +76,7 @@ public class SettingFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         settingFragment = inflater.inflate(R.layout.fragment_setting, container, false);
-
+        setContext(getContext());
         settingViewModel =
                 new ViewModelProvider(this).get(SettingViewModel.class);
         init();
@@ -80,8 +84,9 @@ public class SettingFragment extends Fragment {
         changeImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectPhoto();
-
+                if(checkAndRequestPermissions(getActivity())){
+                    chooseImage(getContext());
+                }
             }
         });
 //        logOutButton.setOnClickListener(new View.OnClickListener() {
@@ -124,31 +129,7 @@ public class SettingFragment extends Fragment {
         });
         return settingFragment;
     }
-    private void selectPhoto() {
-        final CharSequence[] options = {"Choose from Gallery", "Cancel"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Upload Photo!");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Choose from Gallery")) {
 
-
-                    if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
-                    } else {
-                        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                         //intent.setType("image/*");
-                        startActivityForResult(intent, PHOTO_SELECTED);
-                    }
-
-                } else if (options[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }
-            }
-        });
-        builder.show();
-    }
 
 
     private void init() {
@@ -183,57 +164,10 @@ public class SettingFragment extends Fragment {
                 }
             }
         });
-/*
-        settingViewModel.mutableLiveDataUploadedFiles.observe(getViewLifecycleOwner(), new Observer<UploadedFilesResponse>() {
-            @Override
-            public void onChanged(UploadedFilesResponse uploadedFilesResponse) {
-                if(uploadedFilesResponse != null && uploadedFilesResponse.getFilesUrls().size() > 0){
-                    if(!uploadedFilesResponse.getFilesUrls().get(0).isEmpty()){
-                        Glide.with(requireContext())
-                                .load(uploadedFilesResponse.getFilesUrls().get(0))
-                                .fitCenter()
-                                .placeholder(R.drawable.ic_baseline_account_circle_24)
-                                .error(R.drawable.ic_baseline_account_circle_24)
-                                .into(userImageView);
-                    }
-                }
-            }
-        });
 
-        settingViewModel.error.observe(getViewLifecycleOwner(), s -> {
-            Toast.makeText(requireContext(), s, Toast.LENGTH_LONG).show();
-        });
-
- */
     }
 /***************************************************************************************************/
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK && requestCode == PHOTO_SELECTED && data != null){
-            Uri selectedImage = data.getData();
-            String filePath = UploadUtils.getPath(selectedImage, requireContext());
-            String mimeType = requireActivity().getContentResolver().getType(selectedImage);
-            File userPhotoFile = new File(selectedImage.getPath());
-            Log.d("upload: picUri", selectedImage.toString());
-            Log.d("upload: filePath", filePath);
-            Log.d("upload: contetType", mimeType);
-             settingViewModel.uploadUserProfilePhoto(userPhotoFile, mimeType);
-        }
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PICK_FROM_GALLERY) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                // intent.setType("image/*");a
-                startActivityForResult(intent, PHOTO_SELECTED);
-            } else {
-                Toast.makeText(requireContext(), "You have to grant permissions to open the gallery", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
+
 
     /********************************************************/
     private void redirect() {
@@ -256,5 +190,92 @@ public class SettingFragment extends Fragment {
         super.onStop();
         ((Home) getActivity()).showChatBot();
     }
+    private void chooseImage(Context context){
 
+        final CharSequence[] optionsMenu = {"Take Photo", "Choose from Gallery", "Exit" }; // create a menuOption Array
+
+        // create a dialog for showing the optionsMenu
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        // set the items in builder
+
+        builder.setItems(optionsMenu, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                if(optionsMenu[i].equals("Take Photo")){
+
+                    // Open the camera and get the photo
+
+                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(takePicture, 0);
+                }
+                else if(optionsMenu[i].equals("Choose from Gallery")){
+
+                    // choose from  external storage
+
+                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(pickPhoto , 1);
+
+                }
+                else if (optionsMenu[i].equals("Exit")) {
+                    dialogInterface.dismiss();
+                }
+
+            }
+        });
+        builder.show();
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_ID_MULTIPLE_PERMISSIONS:
+                if (ContextCompat.checkSelfPermission(getContext(),
+                        Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getContext(),
+                            "FlagUp Requires Access to Camara.", Toast.LENGTH_SHORT)
+                            .show();
+
+                } else if (ContextCompat.checkSelfPermission(getContext(),
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getContext(),
+                            "FlagUp Requires Access to Your Storage.",
+                            Toast.LENGTH_SHORT).show();
+
+                } else {
+                    chooseImage(getContext());
+                }
+                break;
+        }
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_CANCELED) {
+            switch (requestCode) {
+                case 0:
+                    if (resultCode == RESULT_OK && data != null) {
+
+                    }
+                    break;
+                case 1:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Uri selectedImage = data.getData();
+                        if (selectedImage != null) {
+                            Log.d("TAG", selectedImage.toString());
+                            String filePath = getRealPathFromUri(selectedImage);
+                            String mimeType = requireActivity().getContentResolver().getType(selectedImage);
+                            if (filePath != null && !filePath.isEmpty())
+                                file = new File(filePath);
+                                if (file.exists() && file != null)
+                                settingViewModel.uploadUserProfilePhoto(file,mimeType);
+                        }
+
+                    }
+                    break;
+            }
+        }
+    }
 }

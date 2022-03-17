@@ -1,11 +1,13 @@
 package com.visitegypt.domain.repository;
 
+import com.visitegypt.domain.model.ConfirmUploadModel;
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.response.UploadResponse;
 
 import io.reactivex.rxjava3.core.Single;
+import retrofit2.Call;
 
 public interface UserRepository {
     /**
@@ -31,5 +33,6 @@ public interface UserRepository {
     Single<User> updateUser(String userId, UserUpdateRequest user);
 
     Single<UploadResponse> getPreSigendUrl(String userId, String contentType);
+    Call<String> confirmUpload(ConfirmUploadModel confirmUploadModel);
 
 }
