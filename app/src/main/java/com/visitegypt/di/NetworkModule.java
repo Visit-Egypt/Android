@@ -19,6 +19,7 @@ import com.visitegypt.data.repository.PostRepositoryImp;
 import com.visitegypt.data.repository.UploadToS3Imp;
 import com.visitegypt.data.repository.UserRepositoryImp;
 import com.visitegypt.data.source.remote.RetrofitService;
+import com.visitegypt.data.source.remote.RetrofitServiceUpload;
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.repository.CallBack;
 import com.visitegypt.domain.repository.ChatbotRepository;
@@ -127,9 +128,8 @@ public class NetworkModule implements CallBack {
     }
     @Provides
     @Singleton
-    @Named("Upload")
-    public RetrofitService getRetrofitServiceٌUpload(@Named("Upload") Retrofit retrofit) {
-        return retrofit.create(RetrofitService.class);
+    public RetrofitServiceUpload getRetrofitServiceٌUpload(@Named("Upload") Retrofit retrofit) {
+        return retrofit.create(RetrofitServiceUpload.class);
     }
 
     @Provides
@@ -137,23 +137,27 @@ public class NetworkModule implements CallBack {
     @Named("Normal")
     public Retrofit provideRetrofit(GsonConverterFactory gsonConverterFactory, RxJava3CallAdapterFactory rxJava3CallAdapterFactory, OkHttpClient client) {
 
-        return new Retrofit.Builder()
+        Retrofit retrofit =  new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(gsonConverterFactory)
                 .addCallAdapterFactory(rxJava3CallAdapterFactory)
                 .client(client)
                 .build();
+        Log.d("TAG", " Retrofit provideRetrofit: "+retrofit);
+        return retrofit;
     }
     @Provides
     @Singleton
     @Named("Upload")
     public Retrofit provideRetrofitUpload(GsonConverterFactory gsonConverterFactory, RxJava3CallAdapterFactory rxJava3CallAdapterFactory) {
-
-        return new Retrofit.Builder()
+        Log.d("TAG", "provideRetrofitUpload:  " + S3_URL);
+        Retrofit retrofit =  new Retrofit.Builder()
                 .baseUrl(S3_URL)
                 .addConverterFactory(gsonConverterFactory)
                 .addCallAdapterFactory(rxJava3CallAdapterFactory)
                 .build();
+        Log.d("TAG", " Retrofit provideRetrofitUpload: "+retrofit);
+        return retrofit;
     }
 
 
@@ -162,11 +166,13 @@ public class NetworkModule implements CallBack {
     @Named("RefreshToken")
     public Retrofit provideRetrofitRefreshToken(GsonConverterFactory gsonConverterFactory, RxJava3CallAdapterFactory rxJava3CallAdapterFactory) {
 
-        return new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(gsonConverterFactory)
                 .addCallAdapterFactory(rxJava3CallAdapterFactory)
                 .build();
+        Log.d("TAG", " Retrofit provideRetrofitRefreshToken: "+retrofit);
+        return retrofit;
     }
 
     @Provides
@@ -208,11 +214,12 @@ public class NetworkModule implements CallBack {
     public ItemRepository provideItemRepository(@Named("Normal") RetrofitService retrofitService) {
         return new ItemRepositoryImp(retrofitService);
     }
-//    @Provides
-//    @Singleton
-//    public UploadToS3Repository provideUploadToS3Repository(@Named("Upload") RetrofitService retrofitService) {
-//        return new UploadToS3Imp(retrofitService);
-//    }
+    @Provides
+    @Singleton
+    public UploadToS3Repository provideUploadToS3Repository(RetrofitServiceUpload retrofitServiceUpload) {
+
+        return new UploadToS3Imp(retrofitServiceUpload);
+    }
 
     @Provides
     @Singleton

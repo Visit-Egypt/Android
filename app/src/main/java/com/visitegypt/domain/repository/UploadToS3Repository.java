@@ -9,12 +9,12 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 
 public interface UploadToS3Repository {
-    Single<UploadedFilesResponse> uploadToS3(String url,
-                                             RequestBody acl,
-                                             RequestBody contentType,
-                                             RequestBody key,
-                                             RequestBody aws,
-                                             RequestBody policy,
-                                             RequestBody signature,
-                                             MultipartBody.Part file);
+    Call<ResponseBody> uploadToS3(String url,
+                                  RequestBody acl,
+                                  RequestBody contentType,
+                                  RequestBody key,
+                                  RequestBody aws,
+                                  RequestBody policy,
+                                  RequestBody signature,
+                                  MultipartBody.Part file);
 }
