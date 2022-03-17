@@ -1,6 +1,7 @@
 package com.visitegypt.domain.model.response;
 
 import com.google.gson.annotations.SerializedName;
+import com.visitegypt.domain.model.UploadFields;
 
 import java.util.List;
 

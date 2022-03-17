@@ -10,13 +10,17 @@ import androidx.lifecycle.ViewModel;
 
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
+import com.visitegypt.domain.model.response.UploadedFilesResponse;
 import com.visitegypt.domain.usecase.GetUserUseCase;
 import com.visitegypt.domain.usecase.LogOutUseCase;
 import com.visitegypt.domain.usecase.UpdateUserUseCase;
+import com.visitegypt.domain.usecase.UploadUserPhotoUseCase;
 import com.visitegypt.presentation.chatbot.SingleLiveEvent;
 import com.visitegypt.utils.Constants;
 
 import org.json.JSONObject;
+
+import java.io.File;
 
 import javax.inject.Inject;
 
@@ -32,22 +36,25 @@ public class SettingViewModel extends ViewModel {
     UpdateUserUseCase updateUserUseCase;
     LogOutUseCase logOutUseCase;
     SharedPreferences sharedPreferences;
+    UploadUserPhotoUseCase uploadUserPhotoUseCase;
+
     MutableLiveData<Boolean> isLoged = new MutableLiveData<>();
     public MutableLiveData<User> mutableLiveDataUser = new MutableLiveData<>();
+
     @Inject
-    public SettingViewModel(GetUserUseCase getUserUseCase, SharedPreferences sharedPreferences,UpdateUserUseCase updateUserUseCase,LogOutUseCase logOutUseCase) {
+    public SettingViewModel(GetUserUseCase getUserUseCase, SharedPreferences sharedPreferences, UpdateUserUseCase updateUserUseCase, LogOutUseCase logOutUseCase, UploadUserPhotoUseCase uploadUserPhotoUseCase) {
         this.getUserUseCase = getUserUseCase;
         this.sharedPreferences = sharedPreferences;
         this.updateUserUseCase = updateUserUseCase;
         this.logOutUseCase = logOutUseCase;
-        // this.uploadUserPhotoUseCase = uploadUserPhotoUseCase;
+        this.uploadUserPhotoUseCase = uploadUserPhotoUseCase;
 
     }
 
-    public void getUserData(){
+    public void getUserData() {
 
-        getUserUseCase.setUser(sharedPreferences.getString(SHARED_PREF_USER_ID,null),
-                sharedPreferences.getString(Constants.SHARED_PREF_EMAIL,null));
+        getUserUseCase.setUser(sharedPreferences.getString(SHARED_PREF_USER_ID, null),
+                sharedPreferences.getString(Constants.SHARED_PREF_EMAIL, null));
         getUserUseCase.execute(new Consumer<User>() {
             @Override
             public void accept(User user) throws Throwable {
@@ -74,34 +81,25 @@ public class SettingViewModel extends ViewModel {
         });
     }
 
-    /*
-        public void uploadUserProfilePhoto(File userPhoto, String contentType){
-            uploadUserPhotoUseCase.setContentType(contentType);
-            uploadUserPhotoUseCase.setUserFile(userPhoto);
-            uploadUserPhotoUseCase.execute(new Consumer<UploadedFilesResponse>() {
-                @Override
-                public void accept(UploadedFilesResponse uploadedFilesResponse) throws Throwable {
-                    mutableLiveDataUploadedFiles.setValue(uploadedFilesResponse);
-                }
-            }, new Consumer<Throwable>() {
-                @Override
-                public void accept(Throwable throwable) throws Throwable {
-                    error.setValue(throwable.toString());
-                }
-            });
-        }
-        */
-    public void logOut()
-    {
-       logOutUseCase.setUserId(sharedPreferences.getString(SHARED_PREF_USER_ID,null));
-       logOutUseCase.execute(s -> {
-           sharedPreferences.edit().clear().commit();
-           isLoged.setValue(false);
-       },throwable -> {
-           Log.d(TAG, "logOut: " + throwable.getMessage());
 
-       });
+    public void uploadUserProfilePhoto(File userPhoto, String contentType) {
+        uploadUserPhotoUseCase.setContentType(contentType);
+        uploadUserPhotoUseCase.setUserFile(userPhoto);
+        uploadUserPhotoUseCase.upload();
+
     }
+
+    public void logOut() {
+        logOutUseCase.setUserId(sharedPreferences.getString(SHARED_PREF_USER_ID, null));
+        logOutUseCase.execute(s -> {
+            sharedPreferences.edit().clear().commit();
+            isLoged.setValue(false);
+        }, throwable -> {
+            Log.d(TAG, "logOut: " + throwable.getMessage());
+
+        });
+    }
+
     public void updateUser(UserUpdateRequest userUpdateRequest) {
         updateUserUseCase.setUser(userUpdateRequest);
         updateUserUseCase.execute(new Consumer<User>() {
@@ -130,8 +128,8 @@ public class SettingViewModel extends ViewModel {
         });
 
     }
-    public void saveNewData(User user)
-    {
+
+    public void saveNewData(User user) {
         sharedPreferences.edit()
                 .putString(SHARED_PREF_USER_ID, user.getUserId())
                 .putString(Constants.SHARED_PREF_FIRST_NAME, user.getFirstName() + " " + user.getLastName())
