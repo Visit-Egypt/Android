@@ -25,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -45,17 +46,19 @@ import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.Explore;
 import com.visitegypt.domain.model.Hint;
+import com.visitegypt.domain.model.Item;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.utils.GamificationRules;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 @AndroidEntryPoint
-public class GamificationActivity extends AppCompatActivity implements LocationListener, OnMapReadyCallback {
+public class GamificationActivityy extends AppCompatActivity implements LocationListener, OnMapReadyCallback {
 
     private static final String TAG = "Gamification Activity";
 
@@ -64,6 +67,10 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private BadgesSliderViewAdapter badgesSliderViewAdapter;
     private RecyclerView recyclerView;
     private MaterialButton claimButton;
+
+
+    private ArtifactsRecyclerViewAdapter artifactsRecyclerViewAdapter;
+    private RecyclerView artifactsRecyclerView;
 
     private MapView mapView;
     private GoogleMap googleMap;
@@ -96,12 +103,29 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private void initViewModels() {
         gamificationViewModel = new ViewModelProvider(this).get(GamificationViewModel.class);
         gamificationViewModel.setPlaceId("616f2746b817807a7a6c7167"); // TODO
+
+
+        gamificationViewModel.setPlaceId("616f2746b817807a7a6c7167");
+        gamificationViewModel.getItemsByPlaceId("616f2746b817807a7a6c7167");
+
+
+        gamificationViewModel.itemMutableLiveData.observe(this, new Observer<List<Item>>() {
+            @Override
+            public void onChanged(List<Item> items) {
+                Log.d(TAG, "setting items to recycler view...");
+                artifactsRecyclerViewAdapter.setItemsArrayList(items);
+            }
+        });
+        artifactsRecyclerView = findViewById(R.id.itemsRecyclerView);
+        artifactsRecyclerViewAdapter = new ArtifactsRecyclerViewAdapter(this);
+        artifactsRecyclerView.setLayoutManager(new LinearLayoutManager(GamificationActivityy.this, LinearLayoutManager.HORIZONTAL, true));
+        artifactsRecyclerView.setAdapter(artifactsRecyclerViewAdapter);
         try {
             gamificationViewModel.getPlaceDetail();
             gamificationViewModel.placesMutableLiveData.observe(this, new Observer<Place>() {
                 @Override
                 public void onChanged(Place place) {
-                    GamificationActivity.this.place = place;
+                    GamificationActivityy.this.place = place;
                     placeLoaded = true;
                 }
             });
@@ -125,8 +149,8 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     }
 
     private void initPermissions() {
-        if (ActivityCompat.checkSelfPermission(GamificationActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(GamificationActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(GamificationActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        if (ActivityCompat.checkSelfPermission(GamificationActivityy.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(GamificationActivityy.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(GamificationActivityy.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         } else {
             Log.d(TAG, "initPermissions: already granted");
         }

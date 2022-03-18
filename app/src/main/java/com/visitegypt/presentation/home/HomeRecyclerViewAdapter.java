@@ -98,6 +98,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Log.d(TAG, "onClick: xxxxxxxxxxxxxxxxxxxxx");
                     Intent intent = new Intent(context, DetailActivity.class);
                     intent.putExtra(CHOSEN_PLACE_ID, placesList.get(getAdapterPosition()).getId());
                     context.startActivity(intent);
