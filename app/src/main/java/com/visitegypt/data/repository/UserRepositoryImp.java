@@ -2,6 +2,7 @@ package com.visitegypt.data.repository;
 
 import com.visitegypt.data.source.remote.RetrofitService;
 import com.visitegypt.domain.model.ConfirmUploadModel;
+import com.visitegypt.domain.model.ConfirmUploadResponse;
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
@@ -59,7 +60,7 @@ public class UserRepositoryImp implements UserRepository {
     }
 
     @Override
-    public Call<String> confirmUpload(ConfirmUploadModel confirmUploadModel) {
+    public Call<ConfirmUploadResponse> confirmUpload(ConfirmUploadModel confirmUploadModel) {
         return retrofitService.confirmUpload(confirmUploadModel);
     }
 

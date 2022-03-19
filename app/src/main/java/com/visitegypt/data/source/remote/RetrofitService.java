@@ -1,6 +1,7 @@
 package com.visitegypt.data.source.remote;
 
 import com.visitegypt.domain.model.ConfirmUploadModel;
+import com.visitegypt.domain.model.ConfirmUploadResponse;
 import com.visitegypt.domain.model.Message;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.Post;
@@ -66,8 +67,9 @@ public interface RetrofitService {
 
     @GET("api/user/{id}/upload-photo")
     public Single<UploadResponse> getPreSigendUrl(@Path("id") String id, @Query("content_type") String contentType);
+
     @POST("api/upload/confirm-upload")
-    public Call<String> confirmUpload(@Body ConfirmUploadModel confirmUploadModel);
+    public Call<ConfirmUploadResponse> confirmUpload(@Body ConfirmUploadModel confirmUploadModel);
 
     /*******************************************************************/
     @GET("api/place/{id}")
@@ -81,6 +83,12 @@ public interface RetrofitService {
 
     @POST("api/place/review/{place_id}")
     public Single<List<Review>> submitReview(@Path("place_id") String placeId, @Body Review review);
+
+    @GET("api/place/city/{city_name}")
+    public Single<PlacePageResponse> getPlacesOfCity(@Path("city_name") String cityName);
+
+    @GET("api/place/cities/all")
+    public Single<List<String>> getAllCities();
 
     /******************************************************
      * this Retrofit services for Posts

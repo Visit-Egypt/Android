@@ -1,6 +1,7 @@
 package com.visitegypt.domain.repository;
 
 import com.visitegypt.domain.model.ConfirmUploadModel;
+import com.visitegypt.domain.model.ConfirmUploadResponse;
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
@@ -33,6 +34,6 @@ public interface UserRepository {
     Single<User> updateUser(String userId, UserUpdateRequest user);
 
     Single<UploadResponse> getPreSigendUrl(String userId, String contentType);
-    Call<String> confirmUpload(ConfirmUploadModel confirmUploadModel);
+    Call<ConfirmUploadResponse> confirmUpload(ConfirmUploadModel confirmUploadModel);
 
 }

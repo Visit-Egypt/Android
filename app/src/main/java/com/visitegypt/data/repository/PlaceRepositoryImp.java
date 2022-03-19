@@ -34,4 +34,14 @@ public class PlaceRepositoryImp implements PlaceRepository {
     public Single<List<Review>> submitReview(String placeId, Review review) {
         return retrofitService.submitReview(placeId, review);
     }
+
+    @Override
+    public Single<PlacePageResponse> getPlacesOfCity(String cityName) {
+        return retrofitService.getPlacesOfCity(cityName);
+    }
+
+    @Override
+    public Single<List<String>> getAllCities() {
+        return retrofitService.getAllCities();
+    }
 }
