@@ -8,11 +8,12 @@ import java.util.ArrayList;
 
 public class Badge {
     private static final String TAG = "badge model";
-    private int progress;
 
-    private int id;
+    private String id;
+    private int progress;
     @SerializedName("image_url")
     private String imageUrl;
+    @SerializedName("max_progress")
     private int maxProgress;
     private String title;
     private boolean owned;
@@ -22,9 +23,13 @@ public class Badge {
     @SerializedName("badge_tasks")
     private ArrayList<BadgeTask> badgeTasks;
     @SerializedName("badge_frame_image_url")
-    private String badgeImageFrame;
+    private boolean pinned;
+    private String placeId;
 
-    public Badge(int id, String imageUrl, boolean owned, Type type, int xp) {
+    @Deprecated
+    private String badgeFrameUrl;
+
+    public Badge(String id, String imageUrl, boolean owned, Type type, int xp) {
         this.id = id;
         this.imageUrl = imageUrl;
         this.owned = owned;
@@ -44,11 +49,11 @@ public class Badge {
 
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -134,10 +139,34 @@ public class Badge {
         this.badgeTasks = badgeTasks;
     }
 
+    public boolean isPinned() {
+        return pinned;
+    }
+
+    public void setPinned(boolean pinned) {
+        this.pinned = pinned;
+    }
+
+    public String getBadgeFrameUrl() {
+        return badgeFrameUrl;
+    }
+
+    public void setBadgeFrameUrl(String badgeFrameUrl) {
+        this.badgeFrameUrl = badgeFrameUrl;
+    }
+
+    public String getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
+    }
+
     public enum Type {
         PLACE,
         CITY,
         REGION,
-        GENERAL
+        GENERAL,
     }
 }

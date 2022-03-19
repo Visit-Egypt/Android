@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.gamification.GamificationActivityy">
+    tools:context=".presentation.gamification.GamificationActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,11 +19,13 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:layout_margin="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:scaleType="centerCrop"
                     android:id="@+id/placeImageGamificationActivityImageView"
                     android:layout_width="150dp"
                     android:layout_height="match_parent"
@@ -58,7 +60,7 @@
 
 
                     <com.google.android.material.progressindicator.LinearProgressIndicator
-                        android:id="@+id/placeRemainingProgressGamificationActivityTextView"
+                        android:id="@+id/placeRemainingProgressGamificationActivityProgressIndicator"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
@@ -82,464 +84,516 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp"
-                android:text="Achievements"
-                android:textSize="20dp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/achievementsGamificationActivityRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false" />
-
-<!--            <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:id="@+id/achievementsGamificationActivityRecyclerView"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_margin="8dp"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:padding="8dp"-->
-<!--                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />-->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="3">
+                android:layout_margin="16dp"
+                android:orientation="vertical">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_marginVertical="8dp"
+                    android:text="Achievements"
+                    android:textSize="20dp" />
 
-                    <ImageView
-                        android:id="@+id/storyGamificationActivityImageView"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:background="?attr/colorSecondary"
-                        android:src="@drawable/story"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:layout_marginTop="8dp"
-                        android:text="Story"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="20dp"
-                        app:layout_constraintEnd_toEndOf="@+id/storyGamificationActivityImageView"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="@+id/storyGamificationActivityImageView"
-                        app:layout_constraintTop_toTopOf="@+id/storyGamificationActivityImageView" />
-
-                    <TextView
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:layout_marginTop="8dp"
-                        android:text="4"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="20dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/storyGamificationActivityImageView"
-                        app:layout_constraintEnd_toEndOf="@+id/storyGamificationActivityImageView"
-                        app:layout_constraintHorizontal_bias="0.824"
-                        app:layout_constraintStart_toStartOf="@+id/storyGamificationActivityImageView"
-                        app:layout_constraintTop_toTopOf="@+id/storyGamificationActivityImageView"
-                        app:layout_constraintVertical_bias="1.0" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:layout_marginTop="8dp"
-                        android:text="Xp"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="10dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/storyGamificationActivityImageView"
-                        app:layout_constraintEnd_toEndOf="@+id/storyGamificationActivityImageView"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toStartOf="@+id/storyGamificationActivityImageView"
-                        app:layout_constraintTop_toTopOf="@+id/storyGamificationActivityImageView"
-                        app:layout_constraintVertical_bias="1.0" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/achievementsGamificationActivityRecyclerView"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <ImageView
-                        android:id="@+id/postGamificationActivityImageView"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:background="?attr/colorSecondary"
-                        android:src="@drawable/post"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:layout_marginTop="8dp"
-                        android:text="Post"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="20dp"
-                        app:layout_constraintEnd_toEndOf="@+id/postGamificationActivityImageView"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="@+id/postGamificationActivityImageView"
-                        app:layout_constraintTop_toTopOf="@+id/postGamificationActivityImageView" />
-
-                    <TextView
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:layout_marginTop="8dp"
-                        android:text="3"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="20dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/postGamificationActivityImageView"
-                        app:layout_constraintEnd_toEndOf="@+id/postGamificationActivityImageView"
-                        app:layout_constraintHorizontal_bias="0.824"
-                        app:layout_constraintStart_toStartOf="@+id/postGamificationActivityImageView"
-                        app:layout_constraintTop_toTopOf="@+id/postGamificationActivityImageView"
-                        app:layout_constraintVertical_bias="1.0" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:layout_marginTop="8dp"
-                        android:text="Xp"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="10dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/postGamificationActivityImageView"
-                        app:layout_constraintEnd_toEndOf="@+id/postGamificationActivityImageView"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toStartOf="@+id/postGamificationActivityImageView"
-                        app:layout_constraintTop_toTopOf="@+id/postGamificationActivityImageView"
-                        app:layout_constraintVertical_bias="1.0" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:onClick="addReview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <ImageView
-                        android:id="@+id/reviewGamificationActivityImageView"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:background="?attr/colorSecondary"
-                        android:src="@drawable/review"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:layout_marginTop="8dp"
-                        android:text="Review"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="20dp"
-                        app:layout_constraintEnd_toEndOf="@+id/reviewGamificationActivityImageView"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="@+id/reviewGamificationActivityImageView"
-                        app:layout_constraintTop_toTopOf="@+id/reviewGamificationActivityImageView" />
-
-                    <TextView
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:layout_marginTop="8dp"
-                        android:text="5"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="20dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/reviewGamificationActivityImageView"
-                        app:layout_constraintEnd_toEndOf="@+id/reviewGamificationActivityImageView"
-                        app:layout_constraintHorizontal_bias="0.824"
-                        app:layout_constraintStart_toStartOf="@+id/reviewGamificationActivityImageView"
-                        app:layout_constraintTop_toTopOf="@+id/reviewGamificationActivityImageView"
-                        app:layout_constraintVertical_bias="1.0" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:layout_marginTop="8dp"
-                        android:text="Xp"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="10dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/reviewGamificationActivityImageView"
-                        app:layout_constraintEnd_toEndOf="@+id/reviewGamificationActivityImageView"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toStartOf="@+id/reviewGamificationActivityImageView"
-                        app:layout_constraintTop_toTopOf="@+id/reviewGamificationActivityImageView"
-                        app:layout_constraintVertical_bias="1.0" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:nestedScrollingEnabled="false" />
             </LinearLayout>
+            <!--            <androidx.recyclerview.widget.RecyclerView-->
+            <!--                android:id="@+id/achievementsGamificationActivityRecyclerView"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_margin="8dp"-->
+            <!--                android:orientation="horizontal"-->
+            <!--                android:padding="8dp"-->
+            <!--                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />-->
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_margin="16dp"
+                android:orientation="vertical">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="8dp"
                     android:layout_weight="1"
-                    android:text="Visit Place"
+                    android:text="Social Activities"
                     android:textSize="20dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="8dp"
-                    android:text="10"
-                    android:textColor="@color/gold"
-                    android:textSize="20dp" />
+                    android:orientation="horizontal"
+                    android:weightSum="3">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginBottom="5dp"
-                    android:text="Xp"
-                    android:textColor="@color/gold"
-                    android:textSize="10dp" />
-            </LinearLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1">
 
-            <com.google.android.gms.maps.MapView
-                android:id="@+id/mapViewGamificationActivity"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/map" />
+                        <ImageButton
+                            android:id="@+id/postStoryGamificationActivityImageButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:background="?attr/colorSecondary"
+                            android:foreground="?android:selectableItemBackground"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/story"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/awayGamificationActivityTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="You are 20Km away" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="12dp"
+                            android:text="Story"
+                            android:textColor="?attr/colorPrimary"
+                            android:textSize="20dp"
+                            app:layout_constraintEnd_toEndOf="@+id/postStoryGamificationActivityImageButton"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="@+id/postStoryGamificationActivityImageButton"
+                            app:layout_constraintTop_toTopOf="@+id/postStoryGamificationActivityImageButton" />
 
-            <Button
-                android:id="@+id/confirmLocationGamificationActivityButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/mapView"
-                android:layout_gravity="center"
-                android:layout_margin="16dp"
-                android:background="@drawable/input_button"
-                android:text="Confirm Location" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/storyXpNumberGamificationActivity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:layout_marginTop="8dp"
+                            android:text="4"
+                            android:textColor="?attr/colorPrimary"
+                            android:textSize="20dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/postStoryGamificationActivityImageButton"
+                            app:layout_constraintEnd_toEndOf="@+id/postStoryGamificationActivityImageButton"
+                            app:layout_constraintHorizontal_bias="0.824"
+                            app:layout_constraintStart_toStartOf="@+id/postStoryGamificationActivityImageButton"
+                            app:layout_constraintTop_toTopOf="@+id/postStoryGamificationActivityImageButton"
+                            app:layout_constraintVertical_bias="1.0" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp"
-                android:text="Adventure"
-                android:textSize="20dp" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Xp"
+                            android:textColor="?attr/colorPrimary"
+                            android:textSize="10dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/postStoryGamificationActivityImageButton"
+                            app:layout_constraintEnd_toEndOf="@+id/postStoryGamificationActivityImageButton"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="@+id/postStoryGamificationActivityImageButton"
+                            app:layout_constraintTop_toTopOf="@+id/postStoryGamificationActivityImageButton"
+                            app:layout_constraintVertical_bias="1.0" />
 
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:id="@+id/adventureGamificationActivityProgress"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="left"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="8dp"
-                android:max="100"
-                android:progress="80"
-                android:visibility="visible"
-                app:trackCornerRadius="10dp"
-                app:trackThickness="20dp" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/itemsGamificationActivityRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layoutDirection="rtl" />
+                        <ImageButton
+                            android:id="@+id/postGamificationActivityImageButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:background="?attr/colorSecondary"
+                            android:foreground="?android:selectableItemBackground"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/post"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0" />
 
-            <Button
-                android:id="@+id/startExploringGamificationActivityButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="16dp"
-                android:background="@drawable/input_button"
-                android:text="Start Exploring" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="12dp"
+                            android:text="Post"
+                            android:textColor="?attr/colorPrimary"
+                            android:textSize="20dp"
+                            app:layout_constraintEnd_toEndOf="@id/postGamificationActivityImageButton"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="@+id/postGamificationActivityImageButton"
+                            app:layout_constraintTop_toTopOf="@+id/postGamificationActivityImageButton" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp"
-                android:text="Ask Anubis"
-                android:textSize="20dp" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/postXpNumberGamificationActivity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:layout_marginTop="8dp"
+                            android:text="3"
+                            android:textColor="?attr/colorPrimary"
+                            android:textSize="20dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/postGamificationActivityImageButton"
+                            app:layout_constraintEnd_toEndOf="@+id/postGamificationActivityImageButton"
+                            app:layout_constraintHorizontal_bias="0.824"
+                            app:layout_constraintStart_toStartOf="@+id/postGamificationActivityImageButton"
+                            app:layout_constraintTop_toTopOf="@+id/postGamificationActivityImageButton"
+                            app:layout_constraintVertical_bias="1.0" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Xp"
+                            android:textColor="?attr/colorPrimary"
+                            android:textSize="10dp"
+                            app:layout_constraintBottom_toBottomOf="@id/postGamificationActivityImageButton"
+                            app:layout_constraintEnd_toEndOf="@id/postGamificationActivityImageButton"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="@id/postGamificationActivityImageButton"
+                            app:layout_constraintTop_toTopOf="@id/postGamificationActivityImageButton"
+                            app:layout_constraintVertical_bias="1.0" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1">
+
+                        <ImageButton
+                            android:id="@+id/reviewGamificationActivityImageButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:background="?attr/colorSecondary"
+                            android:foreground="?android:selectableItemBackground"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/review"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="12dp"
+                            android:text="Review"
+                            android:textColor="?attr/colorPrimary"
+                            android:textSize="20dp"
+                            app:layout_constraintEnd_toEndOf="@+id/reviewGamificationActivityImageButton"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="@+id/reviewGamificationActivityImageButton"
+                            app:layout_constraintTop_toTopOf="@+id/reviewGamificationActivityImageButton" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/reviewXpNumberGamificationActivity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:layout_marginTop="8dp"
+                            android:text="5"
+                            android:textColor="?attr/colorPrimary"
+                            android:textSize="20dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/reviewGamificationActivityImageButton"
+                            app:layout_constraintEnd_toEndOf="@+id/reviewGamificationActivityImageButton"
+                            app:layout_constraintHorizontal_bias="0.824"
+                            app:layout_constraintStart_toStartOf="@+id/reviewGamificationActivityImageButton"
+                            app:layout_constraintTop_toTopOf="@+id/reviewGamificationActivityImageButton"
+                            app:layout_constraintVertical_bias="1.0" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Xp"
+                            android:textColor="?attr/colorPrimary"
+                            android:textSize="10dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/reviewGamificationActivityImageButton"
+                            app:layout_constraintEnd_toEndOf="@+id/reviewGamificationActivityImageButton"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="@+id/reviewGamificationActivityImageButton"
+                            app:layout_constraintTop_toTopOf="@+id/reviewGamificationActivityImageButton"
+                            app:layout_constraintVertical_bias="1.0" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
+                android:layout_margin="16dp"
+                android:orientation="vertical">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:id="@+id/askAnubisGamificationActivityImageView"
-                        android:layout_width="150dp"
-                        android:layout_height="140dp"
-                        android:background="?attr/colorSecondary"
-                        android:src="@drawable/ask_anubis"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:layout_marginTop="8dp"
-                        android:text="Isights"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="20dp"
-                        app:layout_constraintEnd_toEndOf="@+id/askAnubisGamificationActivityImageView"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="@+id/askAnubisGamificationActivityImageView"
-                        app:layout_constraintTop_toTopOf="@+id/askAnubisGamificationActivityImageView" />
+                        android:layout_marginVertical="8dp"
+                        android:layout_weight="1"
+                        android:text="Visit Place"
+                        android:textSize="20dp" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/visitPlaceXpNumberGamificationActivity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginVertical="8dp"
                         android:text="10"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="20dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/askAnubisGamificationActivityImageView"
-                        app:layout_constraintEnd_toEndOf="@+id/askAnubisGamificationActivityImageView"
-                        app:layout_constraintHorizontal_bias="0.869"
-                        app:layout_constraintStart_toStartOf="@+id/askAnubisGamificationActivityImageView"
-                        app:layout_constraintTop_toTopOf="@+id/askAnubisGamificationActivityImageView"
-                        app:layout_constraintVertical_bias="1.0" />
+                        android:textColor="@color/gold"
+                        android:textSize="20dp" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="5dp"
                         android:text="Xp"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="10dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/askAnubisGamificationActivityImageView"
-                        app:layout_constraintEnd_toEndOf="@+id/askAnubisGamificationActivityImageView"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toStartOf="@+id/askAnubisGamificationActivityImageView"
-                        app:layout_constraintTop_toTopOf="@+id/askAnubisGamificationActivityImageView"
-                        app:layout_constraintVertical_bias="1.0" />
+                        android:textColor="@color/gold"
+                        android:textSize="10dp" />
+                </LinearLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/mapViewGamificationActivity"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="@drawable/map" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/awayGamificationActivityTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_gravity="right"
+                    android:text=""
+                    android:textStyle="bold" />
 
-                    <ImageView
-                        android:id="@+id/askAboutArtifactGamificationActivityImageView"
-                        android:layout_width="150dp"
-                        android:layout_height="140dp"
-                        android:background="?attr/colorSecondary"
-                        android:src="@drawable/ask_about_artifact"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:layout_marginTop="8dp"
-                        android:text="Artifacts"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="20dp"
-                        app:layout_constraintEnd_toEndOf="@+id/askAboutArtifactGamificationActivityImageView"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="@+id/askAboutArtifactGamificationActivityImageView"
-                        app:layout_constraintTop_toTopOf="@+id/askAboutArtifactGamificationActivityImageView" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:layout_marginTop="8dp"
-                        android:text="8"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="20dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/askAboutArtifactGamificationActivityImageView"
-                        app:layout_constraintEnd_toEndOf="@+id/askAboutArtifactGamificationActivityImageView"
-                        app:layout_constraintHorizontal_bias="0.869"
-                        app:layout_constraintStart_toStartOf="@+id/askAboutArtifactGamificationActivityImageView"
-                        app:layout_constraintTop_toTopOf="@+id/askAboutArtifactGamificationActivityImageView"
-                        app:layout_constraintVertical_bias="1.0" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:layout_marginTop="8dp"
-                        android:text="Xp"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="10dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/askAboutArtifactGamificationActivityImageView"
-                        app:layout_constraintEnd_toEndOf="@+id/askAboutArtifactGamificationActivityImageView"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toStartOf="@+id/askAboutArtifactGamificationActivityImageView"
-                        app:layout_constraintTop_toTopOf="@+id/askAboutArtifactGamificationActivityImageView"
-                        app:layout_constraintVertical_bias="1.0" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/confirmLocationGamificationActivityButton"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/mapView"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="4dp"
+                    android:text="Confirm Location"
+                    app:icon="@drawable/ic_map"
+                    app:iconGravity="textStart"
+                    app:iconSize="28dp" />
             </LinearLayout>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Adventure"
+                    android:textSize="20sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Find all the artifacts"
+                    android:textSize="16sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/itemsGamificationActivityRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/adventureGamificationActivityProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="8dp"
+                    android:max="100"
+                    android:progress="80"
+                    android:visibility="visible"
+                    app:trackCornerRadius="10dp"
+                    app:trackThickness="20dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/startExploringGamificationActivityButton"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="4dp"
+                    android:text="Start Exploring"
+                    app:icon="@drawable/ar_icon"
+                    app:iconGravity="textStart"
+                    app:iconSize="28dp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:text="Ask Anubis"
+                    android:textSize="20dp" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <ImageButton
+                            android:id="@+id/askAnubisGamificationActivityImageButton"
+                            android:layout_width="150dp"
+                            android:layout_height="140dp"
+                            android:background="?attr/colorSecondary"
+                            android:foreground="?android:selectableItemBackground"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ask_anubis"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="16dp"
+                            android:text="Insights"
+                            android:textColor="?attr/colorPrimary"
+                            android:textSize="20dp"
+                            app:layout_constraintEnd_toEndOf="@+id/askAnubisGamificationActivityImageButton"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="@+id/askAnubisGamificationActivityImageButton"
+                            app:layout_constraintTop_toTopOf="@+id/askAnubisGamificationActivityImageButton" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/insightsXpNumberGamificationActivity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:layout_marginTop="8dp"
+                            android:text="10"
+                            android:textColor="?attr/colorPrimary"
+                            android:textSize="20dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/askAnubisGamificationActivityImageButton"
+                            app:layout_constraintEnd_toEndOf="@+id/askAnubisGamificationActivityImageButton"
+                            app:layout_constraintHorizontal_bias="0.869"
+                            app:layout_constraintStart_toStartOf="@+id/askAnubisGamificationActivityImageButton"
+                            app:layout_constraintTop_toTopOf="@+id/askAnubisGamificationActivityImageButton"
+                            app:layout_constraintVertical_bias="1.0" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Xp"
+                            android:textColor="?attr/colorPrimary"
+                            android:textSize="10dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/askAnubisGamificationActivityImageButton"
+                            app:layout_constraintEnd_toEndOf="@+id/askAnubisGamificationActivityImageButton"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="@+id/askAnubisGamificationActivityImageButton"
+                            app:layout_constraintTop_toTopOf="@+id/askAnubisGamificationActivityImageButton"
+                            app:layout_constraintVertical_bias="1.0" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <ImageButton
+                            android:id="@+id/askAboutArtifactGamificationActivityImageButton"
+                            android:layout_width="150dp"
+                            android:layout_height="140dp"
+                            android:background="?attr/colorSecondary"
+                            android:foreground="?android:selectableItemBackground"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ask_about_artifact"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="16dp"
+                            android:text="Artifacts"
+                            android:textColor="?attr/colorPrimary"
+                            android:textSize="20dp"
+                            app:layout_constraintEnd_toEndOf="@+id/askAboutArtifactGamificationActivityImageButton"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="@+id/askAboutArtifactGamificationActivityImageButton"
+                            app:layout_constraintTop_toTopOf="@+id/askAboutArtifactGamificationActivityImageButton" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/artifactsXpNumberGamificationActivity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:layout_marginTop="8dp"
+                            android:text="8"
+                            android:textColor="?attr/colorPrimary"
+                            android:textSize="20dp"
+                            app:layout_constraintBottom_toBottomOf="@id/askAboutArtifactGamificationActivityImageButton"
+                            app:layout_constraintEnd_toEndOf="@id/askAboutArtifactGamificationActivityImageButton"
+                            app:layout_constraintHorizontal_bias="0.869"
+                            app:layout_constraintStart_toStartOf="@id/askAboutArtifactGamificationActivityImageButton"
+                            app:layout_constraintTop_toTopOf="@id/askAboutArtifactGamificationActivityImageButton"
+                            app:layout_constraintVertical_bias="1.0" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Xp"
+                            android:textColor="?attr/colorPrimary"
+                            android:textSize="10dp"
+                            app:layout_constraintBottom_toBottomOf="@id/askAboutArtifactGamificationActivityImageButton"
+                            app:layout_constraintEnd_toEndOf="@id/askAboutArtifactGamificationActivityImageButton"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="@id/askAboutArtifactGamificationActivityImageButton"
+                            app:layout_constraintTop_toTopOf="@id/askAboutArtifactGamificationActivityImageButton"
+                            app:layout_constraintVertical_bias="1.0" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
         </LinearLayout>
     </ScrollView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="16dp"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

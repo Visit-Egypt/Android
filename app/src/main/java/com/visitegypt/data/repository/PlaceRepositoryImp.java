@@ -9,7 +9,6 @@ import com.visitegypt.domain.repository.PlaceRepository;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.core.SingleSource;
 
 
 public class PlaceRepositoryImp implements PlaceRepository {
@@ -43,5 +42,10 @@ public class PlaceRepositoryImp implements PlaceRepository {
     @Override
     public Single<List<String>> getAllCities() {
         return retrofitService.getAllCities();
+    }
+
+    @Override
+    public Single<List<String>> getAllAvailableCities() {
+        return retrofitService.getAllAvailableCities();
     }
 }

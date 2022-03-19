@@ -1,5 +1,7 @@
 package com.visitegypt.domain.model;
 
+import com.visitegypt.utils.GamificationRules;
+
 import java.util.ArrayList;
 
 public class PlaceActivity {
@@ -7,12 +9,14 @@ public class PlaceActivity {
     public static final int VISIT_LOCATION = 0, POST_STORY = 1, POST_POST = 2, ASK_CHAT_BOT = 3, POST_REVIEW = 4, GENERAL = 5;
 
     private int progress;
+    boolean customXp = false;
     private int xp;
     private int type;
     private boolean finished;
     private String title;
     private String description;
     private int duration;
+    private int maxProgress;
 
     private ArrayList<Integer> badgeIds;
 
@@ -101,5 +105,29 @@ public class PlaceActivity {
 
     public void setExpanded(boolean expanded) {
         this.expanded = expanded;
+    }
+
+    public int getMaxProgress() {
+        if (!customXp) {
+            switch (type) {
+                case VISIT_LOCATION:
+                    return GamificationRules.XP_VISIT_LOCATION;
+                case POST_STORY:
+                    return GamificationRules.XP_POST_STORY;
+                case POST_POST:
+                    return GamificationRules.XP_POST_POST;
+                case POST_REVIEW:
+                    return GamificationRules.XP_POST_REVIEW;
+                case ASK_CHAT_BOT:
+                    return GamificationRules.XP_ASK_CHAT_BOT;
+                case GENERAL:
+                    return GamificationRules.XP_GENERAL;
+            }
+        }
+        return maxProgress;
+    }
+
+    public void setMaxProgress(int maxProgress) {
+        this.maxProgress = maxProgress;
     }
 }

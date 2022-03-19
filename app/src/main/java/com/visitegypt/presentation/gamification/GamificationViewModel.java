@@ -43,18 +43,6 @@ public class GamificationViewModel extends ViewModel {
         });
     }
 
-//    public void getPlace(String placeId) {
-//        getPlaceDetailUseCase.setPlaceId(placeId);
-//        getPlaceDetailUseCase.execute(
-//                place -> {
-//                    placesMutableLiveData.setValue(place);
-//                }
-//                , throwable -> {
-//                    Log.e(TAG, "place detail retrieve failed", throwable);
-//                }
-//        );
-//    }
-
     public void setPlaceId(String placeId) {
         this.placeId = placeId;
     }

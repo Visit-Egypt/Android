@@ -12,28 +12,20 @@ import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.response.ItemPageResponse;
 import com.visitegypt.domain.model.response.PlacePageResponse;
-
 import com.visitegypt.domain.model.response.UploadResponse;
-import com.visitegypt.domain.model.response.UploadedFilesResponse;
 
-import java.util.Calendar;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import retrofit2.http.Url;
 
 
 public interface RetrofitService {
@@ -89,6 +81,9 @@ public interface RetrofitService {
 
     @GET("api/place/cities/all")
     public Single<List<String>> getAllCities();
+
+    @GET("api/place/cities/all")
+    public Single<List<String>> getAllAvailableCities();
 
     /******************************************************
      * this Retrofit services for Posts

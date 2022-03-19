@@ -15,8 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
-import com.visitegypt.presentation.detail.DetailActivity;
-import com.visitegypt.presentation.gamification.GamificationActivityy;
+import com.visitegypt.presentation.gamification.GamificationActivity;
 
 import java.util.List;
 
@@ -82,7 +81,7 @@ public class DiscoverPlaceAdapter extends RecyclerView.Adapter<DiscoverPlaceAdap
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, GamificationActivityy.class);
+                    Intent intent = new Intent(context, GamificationActivity.class);
                     intent.putExtra(CHOSEN_PLACE_ID, placesList.get(getAdapterPosition()).getId());
                     context.startActivity(intent);
                 }

@@ -11,7 +11,7 @@ import com.google.android.material.textview.MaterialTextView;
 
 public class CitiesGamificationRecyclerViewAdapter extends RecyclerView.Adapter<CitiesGamificationRecyclerViewAdapter.ViewHolder> {
 
-
+    private String cityName;
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

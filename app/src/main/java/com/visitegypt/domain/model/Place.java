@@ -7,13 +7,16 @@ import androidx.room.TypeConverters;
 
 import com.google.gson.annotations.SerializedName;
 import com.visitegypt.domain.model.converters.CategoriesConverter;
+import com.visitegypt.domain.model.converters.ExploresConverter;
 import com.visitegypt.domain.model.converters.HintsConverter;
 import com.visitegypt.domain.model.converters.ImageUrlsConverter;
 import com.visitegypt.domain.model.converters.ItemsTypeConverter;
 import com.visitegypt.domain.model.converters.OpeningHoursConverter;
+import com.visitegypt.domain.model.converters.PlaceActivityConverter;
 import com.visitegypt.domain.model.converters.ReviewsConverter;
 import com.visitegypt.domain.model.converters.TicketPricesConverter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -57,6 +60,15 @@ public class Place {
 
     @TypeConverters(HintsConverter.class)
     private List<Hint> hints;
+
+    @TypeConverters(ExploresConverter.class)
+    private List<Explore> explores;
+
+    @TypeConverters(PlaceActivityConverter.class)
+    private ArrayList<PlaceActivity> placeActivities;
+
+    private int progress;
+    private int maxProgress;
 
     public Place() {
     }
@@ -213,5 +225,51 @@ public class Place {
 
     public void setHints(List<Hint> hints) {
         this.hints = hints;
+    }
+
+    public List<Explore> getExplores() {
+        return explores;
+    }
+
+    public void setExplores(ArrayList<Explore> explores) {
+        this.explores = explores;
+    }
+
+    public ArrayList<PlaceActivity> getPlaceActivities() {
+        return placeActivities;
+    }
+
+    public void setPlaceActivities(ArrayList<PlaceActivity> placeActivities) {
+        this.placeActivities = placeActivities;
+    }
+
+    public int getMaxProgress() {
+        int sum = 0;
+        if (placeActivities != null) {
+            for (int i = 0; i < placeActivities.size(); i++) {
+                sum += placeActivities.get(i).getMaxProgress();
+            }
+        }
+        return sum;
+    }
+
+    @Deprecated
+    public void setMaxProgress(int maxProgress) {
+        this.maxProgress = maxProgress;
+    }
+
+    public int getProgress() {
+        int sum = 0;
+        if (placeActivities != null) {
+            for (int i = 0; i < placeActivities.size(); i++) {
+                sum += placeActivities.get(i).getProgress();
+            }
+        }
+        return sum;
+    }
+
+    @Deprecated
+    public void setProgress(int progress) {
+        this.progress = progress;
     }
 }

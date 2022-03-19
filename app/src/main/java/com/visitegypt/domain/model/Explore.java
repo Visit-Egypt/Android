@@ -3,6 +3,7 @@ package com.visitegypt.domain.model;
 import java.util.ArrayList;
 
 public class Explore {
+    private String id;
     private String title;
     private String imageUrl;
     private ArrayList<Hint> hints;
@@ -40,5 +41,13 @@ public class Explore {
 
     public void setHints(ArrayList<Hint> hints) {
         this.hints = hints;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

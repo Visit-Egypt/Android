@@ -18,7 +18,6 @@ import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.presentation.detail.DetailActivity;
-import com.visitegypt.presentation.gamification.GamificationActivityy;
 
 import java.util.List;
 

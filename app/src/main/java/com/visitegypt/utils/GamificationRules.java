@@ -4,6 +4,14 @@ public class GamificationRules {
     public static final int CONFIRM_LOCATION_CIRCLE_RADIUS = 500;
     public static final int MAX_LEVEL = 20;
 
+    public static final int XP_POST_STORY = 20;
+    public static final int XP_POST_POST = 20;
+    public static final int XP_VISIT_LOCATION = 100;
+    public static final int XP_ASK_CHAT_BOT = 10;
+    public static final int XP_POST_REVIEW = 20;
+    public static final int XP_GENERAL = 5;
+
+
     public static final int BRONZE_BADGE_XP = 30;
     public static final int SILVER_BADGE_XP = 70;
     public static final int GOLD_BADGE_XP = 300;

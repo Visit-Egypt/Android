@@ -4,7 +4,7 @@ public class BadgeTask {
     private String imageUrl;
     private String taskTitle;
     private int progress;
-    private int maxProgress = 0;
+    private int maxProgress;
 
     public BadgeTask(String imageUrl, String taskTitle, int maxProgress) {
         this.imageUrl = imageUrl;
