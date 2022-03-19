@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:alpha="0.7"
-            android:background="@drawable/luxor"
+            android:background="@drawable/luxor2"
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout

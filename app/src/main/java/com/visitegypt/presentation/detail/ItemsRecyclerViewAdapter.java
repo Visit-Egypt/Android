@@ -62,6 +62,7 @@ public class ItemsRecyclerViewAdapter extends RecyclerView.Adapter<ItemsRecycler
                         .load(currentItem.getImageUrls().get(0))
                         .fitCenter()
                         .into(holder.itemImage);
+
             } else {
             }
         } else {

@@ -62,6 +62,7 @@ public interface RetrofitService {
 
     @POST("api/upload/confirm-upload")
     public Call<ConfirmUploadResponse> confirmUpload(@Body ConfirmUploadModel confirmUploadModel);
+//    public Call<ConfirmUploadModel> confirmUpload(@Body ConfirmUploadModel confirmUploadModel);
 
     /*******************************************************************/
     @GET("api/place/{id}")

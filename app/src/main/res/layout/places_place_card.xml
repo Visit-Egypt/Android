@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/relativelayout"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_margin="8dp">
+
+        <ImageView
+            android:id="@+id/placeInCityImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/luxor2" />
+
+        <TextView
+            android:id="@+id/placesInCityRemainingTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/placeInCityImageView"
+            android:layout_alignTop="@id/placeInCityImageView"
+            android:layout_alignRight="@id/placeInCityImageView"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="5 remaining activities"
+            android:textColor="@color/white"
+            android:textSize="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/placeInCityImageView"
+            android:layout_alignRight="@id/placeInCityImageView"
+            android:layout_alignBottom="@id/placeInCityImageView"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/placeInCityTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginBottom="30dp"
+                android:text="Zag"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/placeInCityRemainingProgressTextView"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:max="100"
+                android:progress="24"
+                android:visibility="visible"
+                app:trackCornerRadius="10dp"
+                app:trackThickness="20dp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

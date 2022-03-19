@@ -52,14 +52,25 @@
             android:name=".presentation.signin.SignInActivity"
             android:exported="true"></activity>
         <activity
-            android:name=".presentation.home.parent.Home"
+            android:name=".presentation.gamification.CitiesActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".presentation.home.parent.Home"
+            android:exported="true">
+
+
+        </activity>
+        <activity
+            android:name=".presentation.place.PlacesActivity"
+            android:exported="true">
+
+
         </activity>
     </application>
 
