@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.visitegypt.data.source.remote.RetrofitServiceUpload;
 import com.visitegypt.domain.model.ConfirmUploadModel;
+import com.visitegypt.domain.model.ConfirmUploadResponse;
 import com.visitegypt.domain.model.UploadFields;
 import com.visitegypt.domain.model.response.PlacePageResponse;
 import com.visitegypt.domain.model.response.UploadResponse;
@@ -42,6 +43,12 @@ public class UploadUserPhotoUseCase {
     private UserRepository userRepository;
     private String contentType;
     private File userFile;
+    uploadPhotoApiCallBack uploadPhotoApiCallBack;
+
+    public void setUploadPhotoApiCallBack(UploadUserPhotoUseCase.uploadPhotoApiCallBack uploadPhotoApiCallBack) {
+        this.uploadPhotoApiCallBack = uploadPhotoApiCallBack;
+    }
+
     UploadToS3Repository uploadToS3Repository;
 
     @Inject
@@ -63,11 +70,11 @@ public class UploadUserPhotoUseCase {
         final String userId = this.sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
         final UploadResponse uploadResponse = userRepository.getPreSigendUrl(userId, contentType).blockingGet();
         UploadFields uploadFields = uploadResponse.getFields();
-        realUpload(uploadFields,userId);
+        realUpload(uploadFields, userId);
 
     }
 
-    private void realUpload(UploadFields uploadFields,String userId) {
+    private void realUpload(UploadFields uploadFields, String userId) {
         if (userFile != null && userFile.exists()) {
             ArrayList<String> imagesKes = new ArrayList<>();
 
@@ -80,27 +87,25 @@ public class UploadUserPhotoUseCase {
                         imagesKes.clear();
                         errorKes.clear();
                         imagesKes.add(S3_URL + uploadFields.getKey());
-                        errorKes.add("");
 
                     } else {
-                        imagesKes.clear();
-                        errorKes.clear();
-                        imagesKes.add("");
-                        errorKes.add(S3_URL + uploadFields.getKey());
+
                     }
-                    ConfirmUploadModel confirmUploadModel =new ConfirmUploadModel(imagesKes,errorKes,userId);
-                    Call<String> confirmCall = userRepository.confirmUpload(confirmUploadModel);
-                    confirmCall.enqueue(new Callback<String>() {
+                    ConfirmUploadModel confirmUploadModel = new ConfirmUploadModel(imagesKes, userId);
+                    Call<ConfirmUploadResponse> confirmCall = userRepository.confirmUpload(confirmUploadModel);
+                    confirmCall.enqueue(new Callback<ConfirmUploadResponse>() {
                         @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
-                            Log.d("TAG", "onResponse: " + response + " " +response.code());
+                        public void onResponse(Call<ConfirmUploadResponse> call, Response<ConfirmUploadResponse> response) {
+                            Log.d("TAG", "onResponse: status code  " + response.code());
+                            uploadPhotoApiCallBack.confirmUpload(response.code());
                         }
 
                         @Override
-                        public void onFailure(Call<String> call, Throwable t) {
-                            Log.d("TAG", "onFailure: " + t.getMessage());
+                        public void onFailure(Call<ConfirmUploadResponse> call, Throwable t) {
+
                         }
                     });
+
 
                 }
 
@@ -110,8 +115,11 @@ public class UploadUserPhotoUseCase {
                 }
             });
 
-
         }
+    }
+
+    public interface uploadPhotoApiCallBack {
+        void confirmUpload(int code);
     }
 
 }

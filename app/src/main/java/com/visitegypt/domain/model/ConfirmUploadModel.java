@@ -13,28 +13,28 @@ public class ConfirmUploadModel {
     @TypeConverters(ImageKeysConverter.class)
     @SerializedName("images_keys")
     private List<String> imagesKeys;
-    @TypeConverters(ErrorKeysConverter.class)
-    @SerializedName("error_images")
-    private List<String> errorKeys;
+//    @TypeConverters(ErrorKeysConverter.class)
+//    @SerializedName("error_images")
+//    private List<String> errorKeys;
     @SerializedName("user_id")
     private String userId;
 
-    public ConfirmUploadModel(List<String> imagesKeys, List<String> errorKeys, String userId) {
+    public ConfirmUploadModel(List<String> imagesKeys, String userId) {
         this.imagesKeys = imagesKeys;
-        this.errorKeys = errorKeys;
+//        this.errorKeys = errorKeys;
         this.userId = userId;
     }
 
     public ConfirmUploadModel() {
     }
 
-    public List<String> getErrorKeys() {
-        return errorKeys;
-    }
-
-    public void setErrorKeys(List<String> errorKeys) {
-        this.errorKeys = errorKeys;
-    }
+//    public List<String> getErrorKeys() {
+//        return errorKeys;
+//    }
+//
+//    public void setErrorKeys(List<String> errorKeys) {
+//        this.errorKeys = errorKeys;
+//    }
 
     public String getUserId() {
         return userId;
