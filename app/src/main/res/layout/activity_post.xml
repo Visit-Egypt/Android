@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/postLayout"
+    tools:context=".presentation.post.PostActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_alternates_bold"
+            android:text="cancel"
+            android:onClick="cancelOnClick"
+            android:textSize="20sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:background="@drawable/button_shape"
+            android:onClick="postOnClick"
+            android:text="Post" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/post_Text"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/userImageImageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_baseline_person_24" />
+
+        <EditText
+            android:id="@+id/postTextView"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#00000000"
+            android:fontFamily="@font/montserrat_alternates_medium"
+            android:gravity="top|left"
+            android:textSize="18sp"
+            android:hint="What's happening?"
+            android:inputType="textLongMessage|textMultiLine"
+            android:textColor="?attr/colorOnSecondary"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp" />
+
+        />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayOutId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom"
+        android:background="@drawable/post_photo_shape"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/imageButtonArrow"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+           android:layout_margin="8dp"
+            android:onClick="selectPhotoOnClick"
+            android:background="@drawable/ic_baseline_image_24" />
+        
+    </LinearLayout>
+
+
+
+</LinearLayout>

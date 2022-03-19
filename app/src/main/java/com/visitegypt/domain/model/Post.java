@@ -15,7 +15,13 @@ public class Post {
         this.userName = userName;
         this.likes = likes;
     }
-
+    public Post(String caption, List<String> listOfImages, String placeId, String userId, String userName) {
+        this.caption = caption;
+        this.listOfImages = listOfImages;
+        this.placeId = placeId;
+        this.userId = userId;
+        this.userName = userName;
+    }
     public Post() {
     }
     /*****************************************************************************************************/

@@ -19,6 +19,7 @@ import com.visitegypt.utils.Constants;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -45,6 +46,7 @@ public class UploadUserPhotoUseCase {
     private File userFile;
     uploadPhotoApiCallBack uploadPhotoApiCallBack;
 
+
     public void setUploadPhotoApiCallBack(UploadUserPhotoUseCase.uploadPhotoApiCallBack uploadPhotoApiCallBack) {
         this.uploadPhotoApiCallBack = uploadPhotoApiCallBack;
     }
@@ -67,7 +69,8 @@ public class UploadUserPhotoUseCase {
     }
 
     public void upload() {
-        final String userId = this.sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
+        final String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
+        Log.d("TAG", "upload: "+ userId);
         final UploadResponse uploadResponse = userRepository.getPreSigendUrl(userId, contentType).blockingGet();
         UploadFields uploadFields = uploadResponse.getFields();
         realUpload(uploadFields, userId);
@@ -97,7 +100,7 @@ public class UploadUserPhotoUseCase {
                         @Override
                         public void onResponse(Call<ConfirmUploadResponse> call, Response<ConfirmUploadResponse> response) {
                             Log.d("TAG", "onResponse: status code  " + response.code());
-                            uploadPhotoApiCallBack.confirmUpload(response.code());
+                            uploadPhotoApiCallBack.confirmUpload(response.code(),imagesKes);
                         }
 
                         @Override
@@ -119,7 +122,7 @@ public class UploadUserPhotoUseCase {
     }
 
     public interface uploadPhotoApiCallBack {
-        void confirmUpload(int code);
+        void confirmUpload(int code, List<String> url);
     }
 
 }

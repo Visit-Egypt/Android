@@ -13,9 +13,9 @@ public class ConfirmUploadModel {
     @TypeConverters(ImageKeysConverter.class)
     @SerializedName("images_keys")
     private List<String> imagesKeys;
-//    @TypeConverters(ErrorKeysConverter.class)
-//    @SerializedName("error_images")
-//    private List<String> errorKeys;
+    @TypeConverters(ErrorKeysConverter.class)
+    @SerializedName("error_images")
+    private List<String> errorKeys;
     @SerializedName("user_id")
     private String userId;
 
