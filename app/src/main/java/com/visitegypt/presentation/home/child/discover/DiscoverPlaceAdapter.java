@@ -16,14 +16,16 @@ import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.presentation.detail.DetailActivity;
-
+import com.visitegypt.presentation.gamification.GamificationActivityy;
 
 import java.util.List;
 
 public class DiscoverPlaceAdapter extends RecyclerView.Adapter<DiscoverPlaceAdapter.PlaceViewHolder> {
+    private static final String TAG = "Discover Place Adapter";
+    public static String CHOSEN_PLACE_ID = "placeId";
     private final Context context;
     private List<Place> placesList;
-    public static String CHOSEN_PLACE_ID = "placeId";
+
     public DiscoverPlaceAdapter(Context context, List<Place> placesList) {
         this.context = context;
         this.placesList = placesList;
@@ -32,15 +34,15 @@ public class DiscoverPlaceAdapter extends RecyclerView.Adapter<DiscoverPlaceAdap
     @NonNull
     @Override
     public PlaceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new PlaceViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.places_card,parent,false));
+        return new PlaceViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.places_card, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull PlaceViewHolder holder, int position) {
         if (placesList.get(position).getTitle() != null)
-        holder.txtPlaceName.setText(placesList.get(position).getTitle());
+            holder.txtPlaceName.setText(placesList.get(position).getTitle());
         if (placesList.get(position).getCity() != null)
-        holder.txtCityName.setText(placesList.get(position).getCity());
+            holder.txtCityName.setText(placesList.get(position).getCity());
         if (placesList.get(position).getDefaultImage() != null) {
             Log.d("TAG", "default image found for: " + placesList.get(position).getTitle());
             Picasso.get().load(placesList.get(position).getDefaultImage()).into(holder.imgPlace);
@@ -60,17 +62,18 @@ public class DiscoverPlaceAdapter extends RecyclerView.Adapter<DiscoverPlaceAdap
             return 0;
         return placesList.size();
     }
+
     public void updatePlacesList(List<Place> placesList) {
         this.placesList = placesList;
         notifyDataSetChanged();
     }
 
 
-
     public class PlaceViewHolder extends RecyclerView.ViewHolder {
-        private TextView txtPlaceName;
         private final ImageView imgPlace;
         private final TextView txtCityName;
+        private TextView txtPlaceName;
+
         public PlaceViewHolder(@NonNull View itemView) {
             super(itemView);
             txtPlaceName = itemView.findViewById(R.id.txtPlaceCardNewTitle);
@@ -79,7 +82,7 @@ public class DiscoverPlaceAdapter extends RecyclerView.Adapter<DiscoverPlaceAdap
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, DetailActivity.class);
+                    Intent intent = new Intent(context, GamificationActivityy.class);
                     intent.putExtra(CHOSEN_PLACE_ID, placesList.get(getAdapterPosition()).getId());
                     context.startActivity(intent);
                 }

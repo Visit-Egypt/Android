@@ -18,6 +18,7 @@ import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.presentation.detail.DetailActivity;
+import com.visitegypt.presentation.gamification.GamificationActivityy;
 
 import java.util.List;
 
@@ -56,15 +57,11 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         if (placesList.get(position).getTicketPrices() != null) {
             try {
                 int startingPrice = placesList.get(position).getTicketPrices().get(EGYPTIAN_STUDENT.toString());
-//                holder.txtDescription.setText("Starting at " + startingPrice + " EGP");
             } catch (Exception e) {
                 Log.e(TAG, "couldn't load price text: " + e.getMessage());
-//                holder.txtDescription.setVisibility(View.GONE);
             }
         } else {
-//            holder.txtDescription.setVisibility(View.GONE);
         }
-
         if (placesList.get(position).getDefaultImage() != null) {
             Log.d(TAG, "default image found for: " + placesList.get(position).getTitle());
             Picasso.get().load(placesList.get(position).getDefaultImage()).into(holder.imgPlace);
@@ -88,7 +85,6 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView imgPlace;
         private final TextView txtTitle;
-//        private final TextView txtDescription;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -98,6 +94,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     Intent intent = new Intent(context, DetailActivity.class);
                     intent.putExtra(CHOSEN_PLACE_ID, placesList.get(getAdapterPosition()).getId());
                     context.startActivity(intent);

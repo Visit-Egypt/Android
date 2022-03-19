@@ -63,7 +63,6 @@ public class ItemsRecyclerViewAdapter extends RecyclerView.Adapter<ItemsRecycler
                         .fitCenter()
                         .into(holder.itemImage);
             } else {
-//                holder.itemImage.setVisibility(View.GONE);
             }
         } else {
             holder.itemImage.setVisibility(View.GONE);
@@ -98,7 +97,7 @@ public class ItemsRecyclerViewAdapter extends RecyclerView.Adapter<ItemsRecycler
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private CircularImageView itemImage;
-        private MaterialTextView itemDescriptionTextView, itemTitleTextView;
+        private MaterialTextView itemTitleTextView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
