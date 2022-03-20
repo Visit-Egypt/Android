@@ -217,6 +217,9 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
 
     private void showPostPost() {
         // TODO
+        Intent intent = new Intent(this, PostActivity.class);
+        intent.putExtra(PLACE_ID, placeId);
+        startActivity(intent);
     }
 
     private void showPostStory() {
@@ -280,9 +283,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         postPostImageButton.setOnClickListener(view -> {
             // TODO
             showPostPost();
-            Intent intent = new Intent(this, PostActivity.class);
-            intent.putExtra(PLACE_ID, placeId);
-            startActivity(intent);
+
         });
         postStoryImageButton.setOnClickListener(view -> {
             // TODO

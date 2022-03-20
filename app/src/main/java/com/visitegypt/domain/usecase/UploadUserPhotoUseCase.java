@@ -70,10 +70,15 @@ public class UploadUserPhotoUseCase {
 
     public void upload() {
         final String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
-        Log.d("TAG", "upload: "+ userId);
-        final UploadResponse uploadResponse = userRepository.getPreSigendUrl(userId, contentType).blockingGet();
-        UploadFields uploadFields = uploadResponse.getFields();
-        realUpload(uploadFields, userId);
+        Log.d("TAG", "upload: " + userId);
+        try {
+            final UploadResponse uploadResponse = userRepository.getPreSigendUrl(userId, contentType).blockingGet();
+            UploadFields uploadFields = uploadResponse.getFields();
+            realUpload(uploadFields, userId);
+        } catch (Exception e) {
+            Log.d("TAG", "upload: " + e.toString());
+        }
+
 
     }
 
@@ -100,7 +105,7 @@ public class UploadUserPhotoUseCase {
                         @Override
                         public void onResponse(Call<ConfirmUploadResponse> call, Response<ConfirmUploadResponse> response) {
                             Log.d("TAG", "onResponse: status code  " + response.code());
-                            uploadPhotoApiCallBack.confirmUpload(response.code(),imagesKes);
+                            uploadPhotoApiCallBack.confirmUpload(response.code(), imagesKes);
                         }
 
                         @Override
