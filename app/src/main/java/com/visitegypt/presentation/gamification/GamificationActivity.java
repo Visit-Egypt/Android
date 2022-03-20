@@ -34,6 +34,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -77,7 +78,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     public static final String MSG_TYPE = "type";
     public static final String ARTIFACTS = "artifacts";
     public static final String INSIGHTS = "insights";
-    public static final String PLACE_TITLE = "placeTitle" ;
+    public static final String PLACE_TITLE = "placeTitle";
     @Inject
     public SharedPreferences sharedPreferences;
     String placeId;
@@ -101,7 +102,9 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private Explore dummyExplore;
     private Boolean mapLoaded = false, placeLoaded = false;
     private MutableLiveData<Boolean> userLocationLoaded;
-
+    private ShimmerFrameLayout sliderShimmerFrameLayout, claimPlaceShimmer, badgesShimmer;
+    private ShimmerFrameLayout socialActivitiesShimmer, mapShimmer, confirmLocation;
+    private ShimmerFrameLayout adventautreShimmer, barShimmer, startExploarShimmer, askAnubisShimmer;
     private ImageView placeImageView;
     private TextView placeTitleTextView, placeRemainingActivitiesTextView, placeXpTextView;
     private ImageButton reviewImageButton, postPostImageButton, postStoryImageButton;
@@ -111,6 +114,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private TextView distanceAwayTextView;
     private ImageButton askAboutInsightsImageButton, askAboutArtifactsImageButton;
     private LinearProgressIndicator placeProgressIndicator;
+    private LinearLayout shimmerLayout, gamificationLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,9 +132,9 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         }
         placeId = "616f2746b817807a7a6c7167";
 
+        initViews();
         initViewModels(placeId, savedInstanceState);
         initPermissions();
-        initViews();
         initClickListeners();
         initDummyData();
     }
@@ -153,6 +157,8 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                 GamificationActivity.this.place = place;
                 Log.d(TAG, "initViewModels: loaded place: " + place.getTitle());
                 placeLoaded = true;
+                stopShimmerAnimation();
+                setLayoutVisible();
                 mapView.getMapAsync(this);
                 mapView.onCreate(b);
             });
@@ -174,7 +180,21 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         badgesSliderViewAdapter = new BadgesSliderViewAdapter(badges, this);
         achievementsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         achievementsRecyclerView.setAdapter(badgesSliderViewAdapter);
-
+        /***********************************************************************/
+        sliderShimmerFrameLayout = findViewById(R.id.sliderShimmerFrameLayout);
+        claimPlaceShimmer = findViewById(R.id.claimPlaceShimmer);
+        badgesShimmer = findViewById(R.id.badgesShimmer);
+        socialActivitiesShimmer = findViewById(R.id.socialActivitiesShimmer);
+        mapShimmer = findViewById(R.id.mapShimmer);
+        confirmLocation = findViewById(R.id.confirmLocation);
+        adventautreShimmer = findViewById(R.id.adventautreShimmer);
+        barShimmer = findViewById(R.id.barShimmer);
+        startExploarShimmer = findViewById(R.id.startExploarShimmer);
+        askAnubisShimmer = findViewById(R.id.askAnubisShimmer);
+        shimmerLayout = findViewById(R.id.shimmerLayout);
+        gamificationLayout = findViewById(R.id.gamificationLayout);
+        startShimmerAnimation();
+        /*******************************************************************/
         claimButton = findViewById(R.id.startExploringGamificationActivityButton);
         confirmLocationButton = findViewById(R.id.confirmLocationGamificationActivityButton);
         confirmLocationButton.setOnClickListener(view -> {
@@ -209,6 +229,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
         userLocationLoaded = new MutableLiveData<>();
+
     }
 
     private void showReview() {
@@ -292,13 +313,13 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         });
         askAboutArtifactsImageButton.setOnClickListener(view -> {
             Intent intent = new Intent(this, ChatbotActivity.class);
-            intent.putExtra(PLACE_TITLE , place.getTitle());
+            intent.putExtra(PLACE_TITLE, place.getTitle());
             intent.putExtra(MSG_TYPE, ARTIFACTS);
             startActivity(intent);
         });
         askAboutInsightsImageButton.setOnClickListener(view -> {
             Intent intent = new Intent(this, ChatbotActivity.class);
-            intent.putExtra(PLACE_TITLE , place.getTitle());
+            intent.putExtra(PLACE_TITLE, place.getTitle());
             intent.putExtra(MSG_TYPE, INSIGHTS);
             startActivity(intent);
         });
@@ -530,6 +551,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
             Log.d(TAG, "onResume: map resumed");
             mapView.onResume();
         }
+        startShimmerAnimation();
     }
 
     @Override
@@ -538,5 +560,46 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         if (mapView != null && place != null) {
             mapView.onStop();
         }
+
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopShimmerAnimation();
+    }
+
+
+
+    private void startShimmerAnimation() {
+        claimPlaceShimmer.startShimmerAnimation();
+        sliderShimmerFrameLayout.startShimmerAnimation();
+        badgesShimmer.startShimmerAnimation();
+        socialActivitiesShimmer.startShimmerAnimation();
+        mapShimmer.startShimmerAnimation();
+        confirmLocation.startShimmerAnimation();
+        adventautreShimmer.startShimmerAnimation();
+        barShimmer.startShimmerAnimation();
+        startExploarShimmer.startShimmerAnimation();
+        askAnubisShimmer.startShimmerAnimation();
+
+    }
+
+    private void stopShimmerAnimation() {
+        claimPlaceShimmer.stopShimmerAnimation();
+        sliderShimmerFrameLayout.stopShimmerAnimation();
+        badgesShimmer.stopShimmerAnimation();
+        socialActivitiesShimmer.stopShimmerAnimation();
+        mapShimmer.stopShimmerAnimation();
+        confirmLocation.stopShimmerAnimation();
+        adventautreShimmer.stopShimmerAnimation();
+        barShimmer.stopShimmerAnimation();
+        startExploarShimmer.stopShimmerAnimation();
+        askAnubisShimmer.stopShimmerAnimation();
+
+    }
+
+    private void setLayoutVisible() {
+        gamificationLayout.setVisibility(View.VISIBLE);
+        shimmerLayout.setVisibility(View.GONE);
     }
 }
