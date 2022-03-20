@@ -1,15 +1,19 @@
 package com.visitegypt.domain.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class BadgeTask {
+    @SerializedName("badge_id")
+    private String badgeId;
     private String imageUrl;
     private String taskTitle;
     private int progress;
     private int maxProgress;
 
-    public BadgeTask(String imageUrl, String taskTitle, int maxProgress) {
-        this.imageUrl = imageUrl;
+    public BadgeTask(String badgeId, String taskTitle, int progress) {
+        this.badgeId = badgeId;
         this.taskTitle = taskTitle;
-        this.maxProgress = maxProgress;
+        this.progress = progress;
     }
 
     public BadgeTask(String imageUrl, String taskTitle, int progress, int maxProgress) {

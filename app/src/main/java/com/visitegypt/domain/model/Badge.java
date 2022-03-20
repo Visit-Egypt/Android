@@ -29,6 +29,12 @@ public class Badge {
     @Deprecated
     private String badgeFrameUrl;
 
+    public Badge(int progress, boolean owned, boolean pinned) {
+        this.progress = progress;
+        this.owned = owned;
+        this.pinned = pinned;
+    }
+
     public Badge(String id, String imageUrl, boolean owned, Type type, int xp) {
         this.id = id;
         this.imageUrl = imageUrl;

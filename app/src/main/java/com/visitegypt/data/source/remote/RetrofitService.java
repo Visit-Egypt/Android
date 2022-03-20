@@ -1,5 +1,7 @@
 package com.visitegypt.data.source.remote;
 
+import com.visitegypt.domain.model.Badge;
+import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.ConfirmUploadModel;
 import com.visitegypt.domain.model.ConfirmUploadResponse;
 import com.visitegypt.domain.model.Message;
@@ -62,7 +64,17 @@ public interface RetrofitService {
 
     @POST("api/upload/confirm-upload")
     public Call<ConfirmUploadResponse> confirmUpload(@Body ConfirmUploadModel confirmUploadModel);
-//    public Call<ConfirmUploadModel> confirmUpload(@Body ConfirmUploadModel confirmUploadModel);
+
+    //    public Call<ConfirmUploadModel> confirmUpload(@Body ConfirmUploadModel confirmUploadModel);
+    //with tasks
+    @GET("api/user/badges/{user_id}")
+    public Single<List<Badge>> getUserBadges(@Path("user_id") String userId);
+
+    @PUT("api/user/badge/task")
+    public Single<List<BadgeTask>> updateUserBadgeTaskProgress(@Body BadgeTask badgeTask);
+    //without Tasks
+    @PUT("api/user/badges/{badge_id}")
+    public Single<List<Badge>> updateUserBadge(@Path("badge_id") String badgeId,@Body Badge badge);
 
     /*******************************************************************/
     @GET("api/place/{id}")
@@ -128,5 +140,7 @@ public interface RetrofitService {
 
     @POST("/api/chatbot")
     public Single<Message> chatbotReceiveRequest(@Body Message message);
+    /************************************************************/
+
 
 }

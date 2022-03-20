@@ -1,6 +1,8 @@
 package com.visitegypt.data.repository;
 
 import com.visitegypt.data.source.remote.RetrofitService;
+import com.visitegypt.domain.model.Badge;
+import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.ConfirmUploadModel;
 import com.visitegypt.domain.model.ConfirmUploadResponse;
 import com.visitegypt.domain.model.Token;
@@ -8,6 +10,8 @@ import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.response.UploadResponse;
 import com.visitegypt.domain.repository.UserRepository;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -62,6 +66,21 @@ public class UserRepositoryImp implements UserRepository {
     @Override
     public Call<ConfirmUploadResponse> confirmUpload(ConfirmUploadModel confirmUploadModel) {
         return retrofitService.confirmUpload(confirmUploadModel);
+    }
+
+    @Override
+    public Single<List<BadgeTask>> updateUserBadgeTaskProgress(BadgeTask badgeTask) {
+        return retrofitService.updateUserBadgeTaskProgress(badgeTask);
+    }
+
+    @Override
+    public Single<List<Badge>> getUserBadges(String userId) {
+        return retrofitService.getUserBadges(userId);
+    }
+
+    @Override
+    public Single<List<Badge>> updateUserBadge(String badgeId,Badge badge) {
+        return retrofitService.updateUserBadge(badgeId,badge);
     }
 
 
