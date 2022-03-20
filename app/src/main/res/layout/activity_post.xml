@@ -50,6 +50,8 @@
             android:id="@+id/userImageImageView"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:padding="8dp"
+            android:layout_margin="8dp"
             android:src="@drawable/ic_baseline_person_24" />
 
         <EditText
@@ -58,6 +60,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#00000000"
+            android:padding="8dp"
+            android:layout_margin="8dp"
             android:fontFamily="@font/montserrat_alternates_medium"
             android:gravity="top|left"
             android:textSize="18sp"
