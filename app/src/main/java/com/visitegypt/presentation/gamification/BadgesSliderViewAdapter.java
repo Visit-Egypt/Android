@@ -1,17 +1,27 @@
 package com.visitegypt.presentation.gamification;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.view.Window;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.textview.MaterialTextView;
+import com.jackandphantom.circularprogressbar.CircleProgressbar;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
 
@@ -20,9 +30,11 @@ import java.util.ArrayList;
 public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderViewAdapter.SliderAdapterViewHolder> {
     private static final String TAG = "Badges RecyclerView adapter";
     private ArrayList<Badge> badges;
+    private Context context;
 
-    public BadgesSliderViewAdapter(ArrayList<Badge> badges) {
+    public BadgesSliderViewAdapter(ArrayList<Badge> badges, Context context) {
         this.badges = badges;
+        this.context = context;
     }
 
     @Override
@@ -40,42 +52,120 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
     @NonNull
     @Override
     public SliderAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.detail_item_card, null, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.gamification_achievements_badges_card, parent, false);
         return new SliderAdapterViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(SliderAdapterViewHolder viewHolder, final int position) {
-
-        Badge sliderItem = badges.get(position);
+        viewHolder.linearLayout.setOnClickListener(view -> showBadgeDialog(badges.get(position)));
 
         if (badges.get(position).isOwned()) {
-            // badge owned => color
-            Glide.with(viewHolder.itemView)
-                    .load(sliderItem.getImageUrl())
-                    .fitCenter()
-                    .into(viewHolder.imageView);
-        } else {
-            // badge not owned => gray
-            Glide.with(viewHolder.itemView)
-                    .load(sliderItem.getImageUrl())
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(viewHolder.imageView);
+            viewHolder.circleProgressbar.setMaxProgress(badges.get(position).getMaxProgress());
+            viewHolder.circleProgressbar.setProgress(badges.get(position).getMaxProgress());
 
+            // badge owned => color
+            Target target = new Target() {
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    viewHolder.circleProgressbar.setBackground(new BitmapDrawable(viewHolder.circleProgressbar.getResources(), bitmap));
+                }
+
+                @Override
+                public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+                }
+
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                }
+            };
+            Picasso.get().load(badges.get(position).getImageUrl()).into(target);
+        } else {
+            viewHolder.circleProgressbar.setMaxProgress(badges.get(position).getMaxProgress());
+            viewHolder.circleProgressbar.setProgress(badges.get(position).getProgress());
+
+            // badge not owned => gray
             ColorMatrix colorMatrix = new ColorMatrix();
             colorMatrix.setSaturation(0);
             ColorMatrixColorFilter filter = new ColorMatrixColorFilter(colorMatrix);
-            viewHolder.imageView.setColorFilter(filter);
+            Target target = new Target() {
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    Drawable drawable = new BitmapDrawable(viewHolder.circleProgressbar.getResources(), bitmap);
+                    drawable.setColorFilter(filter);
+                    viewHolder.circleProgressbar.setBackground(drawable);
+                }
+
+                @Override
+                public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+                }
+
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                }
+            };
+            Picasso.get().load(badges.get(position).getImageUrl()).into(target);
 
         }
     }
 
+    private void showBadgeDialog(@NonNull Badge badge) {
+        Dialog dialog = new Dialog(context);
+        View v = LayoutInflater.from(context).inflate(R.layout.dialog_badge_gamification, null, false);
+
+        MaterialTextView titleTextView = v.findViewById(R.id.badgeDialogTitleTextView);
+        titleTextView.setText(badge.getTitle());
+
+        MaterialTextView descriptionTextView = v.findViewById(R.id.badgeDialogDescriptionTextView);
+        descriptionTextView.setText(badge.getDescription());
+
+
+        CircleProgressbar circleProgressbar = v.findViewById(R.id.badgeDialogCircleProgressBar);
+        Log.d(TAG, "showLocationDialog: " + badge.getMaxProgress() + " " + badge.getProgress());
+        circleProgressbar.setMaxProgress(badge.getMaxProgress());
+        circleProgressbar.setProgress(badge.getProgress());
+        Target target = new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                circleProgressbar.setBackground(new BitmapDrawable(context.getResources(), bitmap));
+            }
+
+            @Override
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+            }
+        };
+        Picasso.get().load(badge.getImageUrl()).into(target);
+        dialog.setContentView(v);
+        dialog.show();
+
+        RecyclerView recyclerView = v.findViewById(R.id.dialogBadgeRecyclerView);
+        GamificationBadgesDialogRecyclerViewAdapter gamificationBadgesDialogRecyclerViewAdapter = new GamificationBadgesDialogRecyclerViewAdapter(badge.getBadgeTasks());
+        recyclerView.setAdapter(gamificationBadgesDialogRecyclerViewAdapter);
+
+
+        Window window = dialog.getWindow();
+        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+    }
+
     public class SliderAdapterViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
+        private CircleProgressbar circleProgressbar;
+        private TextView textView;
+        private LinearLayout linearLayout;
 
         public SliderAdapterViewHolder(View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.itemCardImageView);
+            circleProgressbar = itemView.findViewById(R.id.badgeGamificationCardCircleProgressBar);
+            textView = itemView.findViewById(R.id.badgeGamificationCardTitleTextView);
+            linearLayout = itemView.findViewById(R.id.badgeGamificationCardLinearLayout);
         }
     }
 }

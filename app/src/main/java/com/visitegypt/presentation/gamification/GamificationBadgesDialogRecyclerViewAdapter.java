@@ -66,6 +66,8 @@ public class GamificationBadgesDialogRecyclerViewAdapter extends RecyclerView.Ad
 
     @Override
     public int getItemCount() {
+        if (badgeTasks == null)
+            return 0;
         return badgeTasks.size();
     }
 

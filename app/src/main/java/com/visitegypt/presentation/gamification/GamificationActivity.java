@@ -9,10 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -48,10 +45,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
-import com.jackandphantom.circularprogressbar.CircleProgressbar;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.BadgeTask;
@@ -92,7 +87,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private ReviewViewModel reviewViewModel;
 
     private BadgesSliderViewAdapter badgesSliderViewAdapter;
-    private RecyclerView recyclerView;
+    private RecyclerView achievementsRecyclerView;
     private Button claimButton, confirmLocationButton;
     private ArtifactsRecyclerViewAdapter artifactsRecyclerViewAdapter;
     private RecyclerView artifactsRecyclerView;
@@ -106,6 +101,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private Explore dummyExplore;
     private Boolean mapLoaded = false, placeLoaded = false;
     private MutableLiveData<Boolean> userLocationLoaded;
+
     private ImageView placeImageView;
     private TextView placeTitleTextView, placeRemainingActivitiesTextView, placeXpTextView;
     private ImageButton reviewImageButton, postPostImageButton, postStoryImageButton;
@@ -115,7 +111,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private TextView distanceAwayTextView;
     private ImageButton askAboutInsightsImageButton, askAboutArtifactsImageButton;
     private LinearProgressIndicator placeProgressIndicator;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +127,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
             placeId = (String) savedInstanceState.getSerializable(HomeRecyclerViewAdapter.CHOSEN_PLACE_ID);
         }
         placeId = "616f2746b817807a7a6c7167";
+
         initViewModels(placeId, savedInstanceState);
         initPermissions();
         initViews();
@@ -156,7 +152,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
             gamificationViewModel.placesMutableLiveData.observe(this, place -> {
                 GamificationActivity.this.place = place;
                 Log.d(TAG, "initViewModels: loaded place: " + place.getTitle());
-
                 placeLoaded = true;
                 mapView.getMapAsync(this);
                 mapView.onCreate(b);
@@ -172,13 +167,13 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
 
         artifactsRecyclerView = findViewById(R.id.itemsGamificationActivityRecyclerView);
         artifactsRecyclerViewAdapter = new ArtifactsRecyclerViewAdapter(this);
-        artifactsRecyclerView.setLayoutManager(new LinearLayoutManager(GamificationActivity.this, LinearLayoutManager.HORIZONTAL, true));
         artifactsRecyclerView.setAdapter(artifactsRecyclerViewAdapter);
 
-        recyclerView = findViewById(R.id.achievementsGamificationActivityRecyclerView);
+        achievementsRecyclerView = findViewById(R.id.achievementsGamificationActivityRecyclerView);
         badges = new ArrayList<>();
-        badgesSliderViewAdapter = new BadgesSliderViewAdapter(badges);
-        recyclerView.setAdapter(badgesSliderViewAdapter);
+        badgesSliderViewAdapter = new BadgesSliderViewAdapter(badges, this);
+        achievementsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        achievementsRecyclerView.setAdapter(badgesSliderViewAdapter);
 
         claimButton = findViewById(R.id.startExploringGamificationActivityButton);
         confirmLocationButton = findViewById(R.id.confirmLocationGamificationActivityButton);
@@ -217,15 +212,16 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     }
 
     private void showReview() {
-
+        // TODO
     }
 
     private void showPostPost() {
-
+        // TODO
     }
 
     private void showPostStory() {
-
+        // TODO
+        Toast.makeText(this, "Stay tuned, coming soon...", Toast.LENGTH_SHORT).show();
     }
 
     private void initActivityLogic(Place place) {
@@ -235,9 +231,11 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
 
         try {
             ArrayList<PlaceActivity> placeActivities = place.getPlaceActivities();
-            int totalXp = 0;
+            int totalXp = 0, userProgress = 0, maxProgress = 0;
             for (PlaceActivity placeActivity : placeActivities) {
                 totalXp += placeActivity.getXp();
+                userProgress += placeActivity.getProgress();
+                maxProgress += placeActivity.getMaxProgress();
                 switch (placeActivity.getType()) {
                     case PlaceActivity.VISIT_LOCATION:
                         visitPlaceXpTextView.setText(placeActivity.getMaxProgress());
@@ -262,6 +260,8 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                         break;
                 }
             }
+            placeProgressIndicator.setMax(maxProgress);
+            placeProgressIndicator.setProgress(userProgress, true);
             placeRemainingActivitiesTextView.setText(totalXp + "xp remaining");
 
         } catch (Exception e) {
@@ -279,13 +279,15 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         });
         postPostImageButton.setOnClickListener(view -> {
             // TODO
+            showPostPost();
             Intent intent = new Intent(this, PostActivity.class);
             intent.putExtra(PLACE_ID, placeId);
             startActivity(intent);
         });
         postStoryImageButton.setOnClickListener(view -> {
             // TODO
-            Toast.makeText(this,"Stay tuned",Toast.LENGTH_LONG);
+            showPostStory();
+            Toast.makeText(this, "Stay tuned", Toast.LENGTH_LONG);
         });
         askAboutArtifactsImageButton.setOnClickListener(view -> {
             Intent intent = new Intent(this, ChatbotActivity.class);
@@ -373,52 +375,9 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                     addReviewDialog.dismiss();
                 }
             }
-
         });
     }
 
-    private void showBadgeDialog(Badge badge) {
-        Dialog dialog = new Dialog(this);
-        View v = LayoutInflater.from(this).inflate(R.layout.dialog_badge_gamification, null, false);
-
-        MaterialTextView titleTextView = v.findViewById(R.id.badgeDialogTitleTextView);
-        titleTextView.setText(badge.getTitle());
-
-        MaterialTextView descriptionTextView = v.findViewById(R.id.badgeDialogDescriptionTextView);
-        descriptionTextView.setText(badge.getDescription());
-
-
-        CircleProgressbar circleProgressbar = v.findViewById(R.id.badgeDialogCircleProgressBar);
-        Log.d(TAG, "showLocationDialog: " + badge.getMaxProgress() + " " + badge.getProgress());
-        circleProgressbar.setMaxProgress(badge.getMaxProgress());
-        circleProgressbar.setProgress(badge.getProgress());
-        Target target = new Target() {
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                circleProgressbar.setBackground(new BitmapDrawable(getResources(), bitmap));
-            }
-
-            @Override
-            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-            }
-        };
-        Picasso.get().load(badge.getImageUrl()).into(target);
-
-        RecyclerView recyclerView = v.findViewById(R.id.dialogBadgeRecyclerView);
-        GamificationBadgesDialogRecyclerViewAdapter gamificationBadgesDialogRecyclerViewAdapter = new GamificationBadgesDialogRecyclerViewAdapter(badge.getBadgeTasks());
-        recyclerView.setAdapter(gamificationBadgesDialogRecyclerViewAdapter);
-        dialog.setContentView(v);
-
-        dialog.show();
-
-        Window window = dialog.getWindow();
-        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-    }
 
     private void initDummyData() {
         placeActivities.add(new PlaceActivity(100, PlaceActivity.VISIT_LOCATION, "Visit Place", "Head there and open your location confirmation"));
@@ -440,7 +399,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         badges.get(0).setTitle("Amazing badge");
         badges.get(0).setDescription("an amazing badge for an amazing person");
         badges.get(0).setBadgeTasks(badgeTasks);
-
 
         ArrayList<Hint> hints = new ArrayList<>();
         hints.add(new Hint("He is super handsome"));
@@ -470,7 +428,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         latitude = location.getLatitude();
         longitude = location.getLongitude();
         userLocationLoaded.setValue(true);
-        ;
     }
 
     @Override
