@@ -74,11 +74,11 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 @AndroidEntryPoint
 public class GamificationActivity extends AppCompatActivity implements LocationListener, OnMapReadyCallback {
 
-    private static final String TAG = "Gamification Activity";
     public static final String MSG_TYPE = "type";
     public static final String ARTIFACTS = "artifacts";
     public static final String INSIGHTS = "insights";
     public static final String PLACE_TITLE = "placeTitle";
+    private static final String TAG = "Gamification Activity";
     @Inject
     public SharedPreferences sharedPreferences;
     String placeId;
@@ -547,11 +547,12 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     @Override
     protected void onResume() {
         super.onResume();
+        startShimmerAnimation();
         if (mapView != null && place != null) {
             Log.d(TAG, "onResume: map resumed");
             mapView.onResume();
         }
-        startShimmerAnimation();
+
     }
 
     @Override
@@ -562,12 +563,12 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         }
 
     }
+
     @Override
     public void onPause() {
         super.onPause();
         stopShimmerAnimation();
     }
-
 
 
     private void startShimmerAnimation() {
