@@ -12,9 +12,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.presentation.detail.DetailActivity;
 import com.visitegypt.presentation.gamification.GamificationActivity;
 
 import java.util.List;
@@ -72,13 +74,23 @@ public class DiscoverPlaceAdapter extends RecyclerView.Adapter<DiscoverPlaceAdap
         private final ImageView imgPlace;
         private final TextView txtCityName;
         private TextView txtPlaceName;
+        private CircularImageView gamificationInHomeActivityImageView;
 
         public PlaceViewHolder(@NonNull View itemView) {
             super(itemView);
             txtPlaceName = itemView.findViewById(R.id.txtPlaceCardNewTitle);
+            gamificationInHomeActivityImageView=itemView.findViewById(R.id.gamificationInHomeActivityImageView);
             imgPlace = itemView.findViewById(R.id.imgPlaceCardNew);
             txtCityName = itemView.findViewById(R.id.txtPlaceCardNewCity);
             itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, DetailActivity.class);
+                    intent.putExtra(CHOSEN_PLACE_ID, placesList.get(getAdapterPosition()).getId());
+                    context.startActivity(intent);
+                }
+            });
+            gamificationInHomeActivityImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, GamificationActivity.class);

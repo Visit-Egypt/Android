@@ -1,6 +1,7 @@
 package com.visitegypt.presentation.place;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,14 +16,15 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.presentation.gamification.GamificationActivity;
 
 import java.util.List;
 
 public class PlacesCityRecyclerViewAdapter extends RecyclerView.Adapter<com.visitegypt.presentation.place.PlacesCityRecyclerViewAdapter.ViewHolder> {
 
     private static final String TAG = "Places Adapter";
+    public static String CHOSEN_PLACE_ID = "placeId";
     private List<Place> placeList;
-
     private Context context;
 
     public PlacesCityRecyclerViewAdapter(Context context) {
@@ -89,6 +91,15 @@ public class PlacesCityRecyclerViewAdapter extends RecyclerView.Adapter<com.visi
             placesInCityRemainingTextView = itemView.findViewById(R.id.placesInCityRemainingTextView);
             placeInCityTextView = itemView.findViewById(R.id.placeInCityTextView);
             placeInCityRemainingProgressTextView = itemView.findViewById(R.id.placeInCityRemainingProgressTextView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, GamificationActivity.class);
+                    intent.putExtra(CHOSEN_PLACE_ID, placeList.get(getAdapterPosition()).getId());
+                    context.startActivity(intent);
+                }
+            });
+
         }
     }
 }

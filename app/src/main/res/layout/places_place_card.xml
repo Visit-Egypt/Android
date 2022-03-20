@@ -39,6 +39,8 @@
             android:layout_alignLeft="@id/placeInCityImageView"
             android:layout_alignRight="@id/placeInCityImageView"
             android:layout_alignBottom="@id/placeInCityImageView"
+            android:alpha=".6"
+            android:background="?attr/colorOnPrimary"
             android:orientation="vertical">
 
             <TextView
@@ -48,8 +50,9 @@
                 android:layout_margin="8dp"
                 android:layout_marginBottom="30dp"
                 android:text="Zag"
-                android:textColor="@color/white"
-                android:textSize="20dp" />
+                android:textColor="?attr/colorOnSecondary"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/placeInCityRemainingProgressTextView"
@@ -59,6 +62,8 @@
                 android:max="100"
                 android:progress="24"
                 android:visibility="visible"
+                app:indicatorColor="?attr/colorPrimary"
+                app:trackColor="?attr/colorOnSecondary"
                 app:trackCornerRadius="10dp"
                 app:trackThickness="20dp" />
         </LinearLayout>

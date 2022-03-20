@@ -126,7 +126,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
             placeId = (String) savedInstanceState.getSerializable(HomeRecyclerViewAdapter.CHOSEN_PLACE_ID);
         }
 
-
         initViewModels(placeId, savedInstanceState);
         initPermissions();
         initViews();

@@ -1,5 +1,6 @@
 package com.visitegypt.presentation.account;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.mikhaellopez.circularimageview.CircularImageView;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Post;
+import com.visitegypt.presentation.gamification.CitiesActivity;
 
 import java.util.List;
 
@@ -20,10 +23,12 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class AccountFragment extends Fragment {
+
     TextView userName, country;
     TextView likesNumberTextView, followingNumberTextView, followersNumberTextView;
     TextView postNameTextView, postDateTextView, postCaptionTextView, postImageView;
     AccountViewModel accountViewModel;
+    CircularImageView gamificationImageView;
 
     @Nullable
     @Override
@@ -35,11 +40,11 @@ public class AccountFragment extends Fragment {
         followingNumberTextView = accountView.findViewById(R.id.followingNumberTextView);
         followersNumberTextView = accountView.findViewById(R.id.followersNumberTextView);
         postNameTextView = accountView.findViewById(R.id.userNamePostTextView);
+        gamificationImageView = accountView.findViewById(R.id.gamificationImageView);
         postCaptionTextView = accountView.findViewById(R.id.postCaptionTextView);
 
 
-        accountViewModel =
-                new ViewModelProvider(this).get(AccountViewModel.class);
+        accountViewModel = new ViewModelProvider(this).get(AccountViewModel.class);
         //in this section we will get these data from db
         country.setText("UK");
         likesNumberTextView.setText("100");
@@ -64,7 +69,13 @@ public class AccountFragment extends Fragment {
             }
         });
 
-
+        gamificationImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CitiesActivity.class);
+                startActivity(intent);
+            }
+        });
         return accountView;
     }
 }
