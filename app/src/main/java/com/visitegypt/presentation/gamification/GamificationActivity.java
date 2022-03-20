@@ -1,5 +1,7 @@
 package com.visitegypt.presentation.gamification;
 
+import static com.visitegypt.utils.Constants.PLACE_ID;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -60,6 +62,7 @@ import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
 import com.visitegypt.presentation.home.HomeRecyclerViewAdapter;
+import com.visitegypt.presentation.post.PostActivity;
 import com.visitegypt.presentation.review.ReviewViewModel;
 import com.visitegypt.utils.Constants;
 import com.visitegypt.utils.GamificationRules;
@@ -76,6 +79,10 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 public class GamificationActivity extends AppCompatActivity implements LocationListener, OnMapReadyCallback {
 
     private static final String TAG = "Gamification Activity";
+    public static final String MSG_TYPE = "type";
+    public static final String ARTIFACTS = "artifacts";
+    public static final String INSIGHTS = "insights";
+    public static final String PLACE_TITLE = "placeTitle" ;
     @Inject
     public SharedPreferences sharedPreferences;
     String placeId;
@@ -99,7 +106,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private Explore dummyExplore;
     private Boolean mapLoaded = false, placeLoaded = false;
     private MutableLiveData<Boolean> userLocationLoaded;
-
     private ImageView placeImageView;
     private TextView placeTitleTextView, placeRemainingActivitiesTextView, placeXpTextView;
     private ImageButton reviewImageButton, postPostImageButton, postStoryImageButton;
@@ -125,7 +131,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         } else {
             placeId = (String) savedInstanceState.getSerializable(HomeRecyclerViewAdapter.CHOSEN_PLACE_ID);
         }
-
+        placeId = "616f2746b817807a7a6c7167";
         initViewModels(placeId, savedInstanceState);
         initPermissions();
         initViews();
@@ -150,6 +156,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
             gamificationViewModel.placesMutableLiveData.observe(this, place -> {
                 GamificationActivity.this.place = place;
                 Log.d(TAG, "initViewModels: loaded place: " + place.getTitle());
+
                 placeLoaded = true;
                 mapView.getMapAsync(this);
                 mapView.onCreate(b);
@@ -272,20 +279,24 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         });
         postPostImageButton.setOnClickListener(view -> {
             // TODO
+            Intent intent = new Intent(this, PostActivity.class);
+            intent.putExtra(PLACE_ID, placeId);
+            startActivity(intent);
         });
         postStoryImageButton.setOnClickListener(view -> {
             // TODO
+            Toast.makeText(this,"Stay tuned",Toast.LENGTH_LONG);
         });
         askAboutArtifactsImageButton.setOnClickListener(view -> {
             Intent intent = new Intent(this, ChatbotActivity.class);
-            intent.putExtra("placeId", placeId);
-            intent.putExtra("type", "artifacts");
+            intent.putExtra(PLACE_TITLE , place.getTitle());
+            intent.putExtra(MSG_TYPE, ARTIFACTS);
             startActivity(intent);
         });
         askAboutInsightsImageButton.setOnClickListener(view -> {
             Intent intent = new Intent(this, ChatbotActivity.class);
-            intent.putExtra("placeId", placeId);
-            intent.putExtra("type", "insights");
+            intent.putExtra(PLACE_TITLE , place.getTitle());
+            intent.putExtra(MSG_TYPE, INSIGHTS);
             startActivity(intent);
         });
 

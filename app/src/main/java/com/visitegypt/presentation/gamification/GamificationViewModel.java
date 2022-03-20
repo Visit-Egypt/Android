@@ -25,6 +25,7 @@ public class GamificationViewModel extends ViewModel {
     GetPlaceDetailUseCase getPlaceDetailUseCase;
     MutableLiveData<Place> placesMutableLiveData = new MutableLiveData<>();
     MutableLiveData<List<Item>> itemMutableLiveData = new MutableLiveData<>();
+
     private String placeId;
     private GetItemsUseCase getItemsUseCase;
 
@@ -51,6 +52,7 @@ public class GamificationViewModel extends ViewModel {
         getItemsUseCase.setPlaceId(placeId);
         getItemsUseCase.execute(itemPageResponse -> {
                     itemMutableLiveData.setValue(itemPageResponse.getItems());
+
                 }
                 ,
                 throwable -> {

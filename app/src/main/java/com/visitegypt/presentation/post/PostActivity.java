@@ -26,7 +26,9 @@ import android.widget.Toast;
 import com.visitegypt.R;
 import com.visitegypt.domain.usecase.GetAllCitiesUseCase;
 import com.visitegypt.domain.usecase.UploadUserPhotoUseCase;
+import com.visitegypt.presentation.gamification.GamificationActivity;
 import com.visitegypt.presentation.signin.SignInActivity;
+import com.visitegypt.utils.Constants;
 
 import java.io.File;
 import java.util.List;
@@ -39,38 +41,29 @@ public class PostActivity extends AppCompatActivity {
     PostsViewModel postsViewModel;
     private File file;
     private EditText postTxt;
+    private String placeId;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                placeId = null;
+            } else {
+                placeId = extras.getString(Constants.PLACE_ID);
+            }
+        } else {
+            placeId = (String) savedInstanceState.getSerializable(Constants.PLACE_ID);
+
+        }
         setContentView(R.layout.activity_post);
         setContext(this);
         postTxt = findViewById(R.id.postTextView);
         postsViewModel = new ViewModelProvider(this).get(PostsViewModel.class);
         postsViewModel.initCallBack();
-        postsViewModel.isImageUploaded.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                if (!aBoolean)
-                    Toast.makeText(PostActivity.this, "Upload Failed", Toast.LENGTH_LONG).show();
-
-            }
-        });
-        postsViewModel.isPostUploaded.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                if (aBoolean)
-                {
-                    Toast.makeText(PostActivity.this, "Your Post is Created ", Toast.LENGTH_LONG).show();
-                    postTxt.getText().clear();
-                }
-                else
-                {
-                    Toast.makeText(PostActivity.this, "Please,try again ", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+        liveDataObserev();
 
 
     }
@@ -90,7 +83,7 @@ public class PostActivity extends AppCompatActivity {
         if (postTxt.getText().toString() == null || postTxt.getText().toString().isEmpty()) {
             Toast.makeText(PostActivity.this, "You can't make empty post", Toast.LENGTH_LONG).show();
         } else {
-            String placeId = "616f2746b817807a7a6c7167";
+
             postsViewModel.setPostData(postTxt.getText().toString(), placeId);
             postsViewModel.addPost();
         }
@@ -102,6 +95,28 @@ public class PostActivity extends AppCompatActivity {
             chooseImage(this);
 
         }
+    }
+
+    private void liveDataObserev() {
+        postsViewModel.isImageUploaded.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (!aBoolean)
+                    Toast.makeText(PostActivity.this, "Upload Failed", Toast.LENGTH_LONG).show();
+
+            }
+        });
+        postsViewModel.isPostUploaded.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean) {
+                    Toast.makeText(PostActivity.this, "Your Post is Created ", Toast.LENGTH_LONG).show();
+                    postTxt.getText().clear();
+                } else {
+                    Toast.makeText(PostActivity.this, "Please,try again ", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     @Override

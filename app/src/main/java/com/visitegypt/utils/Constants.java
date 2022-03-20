@@ -17,6 +17,7 @@ public class Constants {
     public static  final String SHARED_PREF_NAME = "secret_shared_prefs";
     private static final int PHOTO_SELECTED = 1;
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
+    public static final String PLACE_ID = "placeId";
     private static final int PICK_FROM_GALLERY = 0;
 
     public enum CustomerType {
