@@ -5,12 +5,6 @@ import static com.visitegypt.utils.UploadUtils.checkAndRequestPermissions;
 import static com.visitegypt.utils.UploadUtils.getRealPathFromUri;
 import static com.visitegypt.utils.UploadUtils.setContext;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,22 +17,22 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.visitegypt.R;
-import com.visitegypt.domain.usecase.GetAllCitiesUseCase;
-import com.visitegypt.domain.usecase.UploadUserPhotoUseCase;
-import com.visitegypt.presentation.gamification.GamificationActivity;
-import com.visitegypt.presentation.signin.SignInActivity;
 import com.visitegypt.utils.Constants;
 
 import java.io.File;
-import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class PostActivity extends AppCompatActivity {
     private static final String TAG = "Posts Activity";
-    PostsViewModel postsViewModel;
+    private PostsViewModel postsViewModel;
     private File file;
     private EditText postTxt;
     private String placeId;
@@ -64,8 +58,6 @@ public class PostActivity extends AppCompatActivity {
         postsViewModel = new ViewModelProvider(this).get(PostsViewModel.class);
         postsViewModel.initCallBack();
         liveDataObserev();
-
-
     }
 
     public void cancelOnClick(View view) {
@@ -98,23 +90,17 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private void liveDataObserev() {
-        postsViewModel.isImageUploaded.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                if (!aBoolean)
-                    Toast.makeText(PostActivity.this, "Upload Failed", Toast.LENGTH_LONG).show();
+        postsViewModel.isImageUploaded.observe(this, aBoolean -> {
+            if (!aBoolean)
+                Toast.makeText(PostActivity.this, "Upload Failed", Toast.LENGTH_LONG).show();
 
-            }
         });
-        postsViewModel.isPostUploaded.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                if (aBoolean) {
-                    Toast.makeText(PostActivity.this, "Your Post is Created ", Toast.LENGTH_LONG).show();
-                    postTxt.getText().clear();
-                } else {
-                    Toast.makeText(PostActivity.this, "Please,try again ", Toast.LENGTH_LONG).show();
-                }
+        postsViewModel.isPostUploaded.observe(this, aBoolean -> {
+            if (aBoolean) {
+                Toast.makeText(PostActivity.this, "Your Post is Created ", Toast.LENGTH_LONG).show();
+                postTxt.getText().clear();
+            } else {
+                Toast.makeText(PostActivity.this, "Please,try again ", Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -6,4 +6,6 @@ import io.reactivex.rxjava3.core.Single;
 
 public interface BadgesRepository {
     public Single<BadgeResponse> getAllBadges();
+
+    public Single<BadgeResponse> getBadgesByPlace(String placeId);
 }

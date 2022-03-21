@@ -300,6 +300,7 @@
                     android:layout_marginHorizontal="15dp"
                     android:background="?attr/colorSecondaryVariant" />
 
+
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -423,6 +424,7 @@
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:id="@+id/writeReviewButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -456,7 +458,6 @@
                         android:layout_height="wrap_content">
 
                         <TableRow>
-
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/saturdayOpeningHoursTextView"
                                 android:layout_width="match_parent"
@@ -793,6 +794,44 @@
                     </TableRow>
                 </TableLayout>
 
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:layout_marginVertical="10dp"
+                    android:background="?attr/colorSecondaryVariant" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/prata_regular"
+                        android:padding="8dp"
+                        android:text="5 remaining activities"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:max="8"
+                        android:progress="3" />
+
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Start The Adventure"
+                        android:textSize="17sp"
+                        app:icon="@drawable/ic_gamepad"
+                        app:iconGravity="textStart" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
             </LinearLayout>
 
         </ScrollView>
@@ -803,7 +842,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
-        android:src="@drawable/ic_chatbot"
+        android:src="@drawable/ic_chat"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.9"

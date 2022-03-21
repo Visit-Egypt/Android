@@ -2,80 +2,101 @@ package com.visitegypt.presentation.account;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.mikhaellopez.circularimageview.CircularImageView;
 import com.visitegypt.R;
-import com.visitegypt.domain.model.Post;
+import com.visitegypt.domain.model.Badge;
+import com.visitegypt.presentation.gamification.BadgesSliderViewAdapter;
 import com.visitegypt.presentation.gamification.CitiesActivity;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class AccountFragment extends Fragment {
 
-    TextView userName, country;
-    TextView likesNumberTextView, followingNumberTextView, followersNumberTextView;
-    TextView postNameTextView, postDateTextView, postCaptionTextView, postImageView;
-    AccountViewModel accountViewModel;
-    CircularImageView gamificationImageView;
+    private static final String TAG = "Account Fragment";
+
+    private TextView userName, country;
+    private TextView likesNumberTextView, followingNumberTextView, followersNumberTextView;
+    private TextView postNameTextView, postDateTextView, postCaptionTextView, postImageView;
+    private AccountViewModel accountViewModel;
+    private Button gamificationStartPlayingButton;
+
+    private RecyclerView badgesRecyclerView;
+    private BadgesSliderViewAdapter badgesSliderViewAdapter;
+    private ArrayList<Badge> userBadges;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View accountView = inflater.inflate(R.layout.fragment_account, container, false);
+        initViews(accountView);
+        initViewModel();
+        // TODO fillData();
+        return accountView;
+    }
+
+    private void initViews(View accountView) {
         userName = accountView.findViewById(R.id.nameTextView);
         country = accountView.findViewById(R.id.countryTextView);
         likesNumberTextView = accountView.findViewById(R.id.likesNumberTextView);
         followingNumberTextView = accountView.findViewById(R.id.followingNumberTextView);
         followersNumberTextView = accountView.findViewById(R.id.followersNumberTextView);
         postNameTextView = accountView.findViewById(R.id.userNamePostTextView);
-        gamificationImageView = accountView.findViewById(R.id.gamificationImageView);
         postCaptionTextView = accountView.findViewById(R.id.postCaptionTextView);
 
+        gamificationStartPlayingButton = accountView.findViewById(R.id.startPlayingGamificationButtonAccountFragment);
+        gamificationStartPlayingButton.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), CitiesActivity.class);
+            startActivity(intent);
+        });
 
+        userBadges = new ArrayList<>();
+        badgesRecyclerView = accountView.findViewById(R.id.userBadgesRecyclerViewAccountFragment);
+        badgesRecyclerView.setLayoutManager(new LinearLayoutManager(accountView.getContext(), RecyclerView.HORIZONTAL, false));
+        badgesSliderViewAdapter = new BadgesSliderViewAdapter(userBadges, accountView.getContext());
+        badgesRecyclerView.setAdapter(badgesSliderViewAdapter);
+    }
+
+    private void fillData() {
+        // TODO String userLevel = GamificationRules.getTitleFromLevel(user.getLevel());
+        //userName.setText(userLevel);
+
+    }
+
+    private void initViewModel() {
         accountViewModel = new ViewModelProvider(this).get(AccountViewModel.class);
-        //in this section we will get these data from db
-        country.setText("UK");
-        likesNumberTextView.setText("100");
-        followingNumberTextView.setText("20");
-        followersNumberTextView.setText("100");
+        accountViewModel.mutableLiveDataName.observe(getViewLifecycleOwner(), s -> userName.setText(s));
+
         accountViewModel.getUserInformation();
-        accountViewModel.mutableLiveDataName.observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                userName.setText(s);
-            }
-        });
-        accountViewModel.mutableLiveDataMyPosts.observe(getViewLifecycleOwner(), new Observer<List<Post>>() {
-            @Override
-            public void onChanged(List<Post> posts) {
-                if (posts.get(0).getId() == null) {
-                    ;
-                } else {
-                    postNameTextView.setText(posts.get(0).getUserName());
-                    postCaptionTextView.setText(posts.get(0).getCaption());
-                }
+        accountViewModel.mutableLiveDataMyPosts.observe(getViewLifecycleOwner(), posts -> {
+            if (posts.get(0).getId() == null) {
+                ;
+            } else {
+                postNameTextView.setText(posts.get(0).getUserName());
+                postCaptionTextView.setText(posts.get(0).getCaption());
             }
         });
 
-        gamificationImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CitiesActivity.class);
-                startActivity(intent);
-            }
-        });
-        return accountView;
+        accountViewModel.getUserBadges();
+        accountViewModel.badgesMutableLiveData.observe(getViewLifecycleOwner(),
+                badges -> {
+                    Log.d(TAG, "initViewModel: ");
+                    badgesSliderViewAdapter.setBadges(badges);
+                }
+        );
     }
 }

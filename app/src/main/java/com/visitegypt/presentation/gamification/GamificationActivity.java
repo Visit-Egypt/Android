@@ -50,9 +50,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
-import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.Explore;
-import com.visitegypt.domain.model.Hint;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.model.Review;
@@ -102,9 +100,11 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private Explore dummyExplore;
     private Boolean mapLoaded = false, placeLoaded = false;
     private MutableLiveData<Boolean> userLocationLoaded;
+
     private ShimmerFrameLayout sliderShimmerFrameLayout, claimPlaceShimmer, badgesShimmer;
     private ShimmerFrameLayout socialActivitiesShimmer, mapShimmer, confirmLocation;
-    private ShimmerFrameLayout adventautreShimmer, barShimmer, startExploarShimmer, askAnubisShimmer;
+    private ShimmerFrameLayout adventureShimmer, barShimmer, startExploringShimmer, askAnubisShimmer;
+
     private ImageView placeImageView;
     private TextView placeTitleTextView, placeRemainingActivitiesTextView, placeXpTextView;
     private ImageButton reviewImageButton, postPostImageButton, postStoryImageButton;
@@ -165,6 +165,12 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         } catch (Exception e) {
             Toast.makeText(this, "Failed to load, try again later", Toast.LENGTH_SHORT).show();
         }
+
+        gamificationViewModel.setPlaceId(placeId);
+        gamificationViewModel.getPlaceBadges();
+        gamificationViewModel.badgesMutableLiveData.observe(this, badges -> {
+            this.badges = (ArrayList<Badge>) badges;
+        });
     }
 
     @SuppressLint("MissingPermission")
@@ -187,9 +193,9 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         socialActivitiesShimmer = findViewById(R.id.socialActivitiesShimmer);
         mapShimmer = findViewById(R.id.mapShimmer);
         confirmLocation = findViewById(R.id.confirmLocation);
-        adventautreShimmer = findViewById(R.id.adventautreShimmer);
+        adventureShimmer = findViewById(R.id.adventautreShimmer);
         barShimmer = findViewById(R.id.barShimmer);
-        startExploarShimmer = findViewById(R.id.startExploarShimmer);
+        startExploringShimmer = findViewById(R.id.startExploarShimmer);
         askAnubisShimmer = findViewById(R.id.askAnubisShimmer);
         shimmerLayout = findViewById(R.id.shimmerLayout);
         gamificationLayout = findViewById(R.id.gamificationLayout);
@@ -302,14 +308,10 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
             showReviewDialog();
         });
         postPostImageButton.setOnClickListener(view -> {
-            // TODO
             showPostPost();
-
         });
         postStoryImageButton.setOnClickListener(view -> {
-            // TODO
             showPostStory();
-            Toast.makeText(this, "Stay tuned", Toast.LENGTH_LONG);
         });
         askAboutArtifactsImageButton.setOnClickListener(view -> {
             Intent intent = new Intent(this, ChatbotActivity.class);
@@ -402,38 +404,37 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
 
 
     private void initDummyData() {
-        placeActivities.add(new PlaceActivity(100, PlaceActivity.VISIT_LOCATION, "Visit Place", "Head there and open your location confirmation"));
-        placeActivities.add(new PlaceActivity(150, PlaceActivity.POST_STORY, "Post a story", "Head there and post a story"));
-        placeActivities.add(new PlaceActivity(100, PlaceActivity.POST_POST, "Post a post", "Head there and open post a post"));
-        placeActivities.add(new PlaceActivity(100, PlaceActivity.ASK_CHAT_BOT, "Ask the chat bot", "Tell the bot \"What do you know about Luxor\""));
-        placeActivities.add(new PlaceActivity(100, PlaceActivity.GENERAL, "General", "Dance or something"));
-
-        badges.add(new Badge("0", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", false, Badge.Type.PLACE, 120));
-        badges.add(new Badge("0", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", true, Badge.Type.PLACE, 120));
-        badges.add(new Badge("0", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", false, Badge.Type.PLACE, 120));
-        badges.add(new Badge("1", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", true, Badge.Type.PLACE, 120));
-        badges.add(new Badge("2", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", false, Badge.Type.PLACE, 120));
-
-        BadgeTask badgeTask = new BadgeTask("https://www.citypng.com/public/uploads/preview/-1216105642094jeazr60ms.png", "Review the place", 3, 5);
-        ArrayList<BadgeTask> badgeTasks = new ArrayList<>();
-        badgeTasks.add(badgeTask);
-
-        badges.get(0).setTitle("Amazing badge");
-        badges.get(0).setDescription("an amazing badge for an amazing person");
-        badges.get(0).setBadgeTasks(badgeTasks);
-
-        ArrayList<Hint> hints = new ArrayList<>();
-        hints.add(new Hint("He is super handsome"));
-        hints.add(new Hint("Okay he's ugly, we lied", "https://file1.science-et-vie.com/var/scienceetvie/storage/images/1/0/4/104445/et-momie-revela-ses-secrets.jpg"));
-        dummyExplore = new Explore("Tout Ankha Amon", "https://images.lpcdn.ca/924x615/201002/13/147005-momie-toutankhamon.jpg", hints);
-
-        claimButton.setOnClickListener(view -> {
-            //showBadgeDialog(badges.get(0));
-            showExploreDialog(dummyExplore);
-        });
-
-        badgesSliderViewAdapter.setBadges(badges);
-
+//        placeActivities.add(new PlaceActivity(100, PlaceActivity.VISIT_LOCATION, "Visit Place", "Head there and open your location confirmation"));
+//        placeActivities.add(new PlaceActivity(150, PlaceActivity.POST_STORY, "Post a story", "Head there and post a story"));
+//        placeActivities.add(new PlaceActivity(100, PlaceActivity.POST_POST, "Post a post", "Head there and open post a post"));
+//        placeActivities.add(new PlaceActivity(100, PlaceActivity.ASK_CHAT_BOT, "Ask the chat bot", "Tell the bot \"What do you know about Luxor\""));
+//        placeActivities.add(new PlaceActivity(100, PlaceActivity.GENERAL, "General", "Dance or something"));
+//
+//        badges.add(new Badge("0", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", false, Badge.Type.PLACE, 120));
+//        badges.add(new Badge("0", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", true, Badge.Type.PLACE, 120));
+//        badges.add(new Badge("0", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", false, Badge.Type.PLACE, 120));
+//        badges.add(new Badge("1", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", true, Badge.Type.PLACE, 120));
+//        badges.add(new Badge("2", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", false, Badge.Type.PLACE, 120));
+//
+//        BadgeTask badgeTask = new BadgeTask("https://www.citypng.com/public/uploads/preview/-1216105642094jeazr60ms.png", "Review the place", 3, 5);
+//        ArrayList<BadgeTask> badgeTasks = new ArrayList<>();
+//        badgeTasks.add(badgeTask);
+//
+//        badges.get(0).setTitle("Amazing badge");
+//        badges.get(0).setDescription("an amazing badge for an amazing person");
+//        badges.get(0).setBadgeTasks(badgeTasks);
+//
+//        ArrayList<Hint> hints = new ArrayList<>();
+//        hints.add(new Hint("He is super handsome"));
+//        hints.add(new Hint("Okay he's ugly, we lied", "https://file1.science-et-vie.com/var/scienceetvie/storage/images/1/0/4/104445/et-momie-revela-ses-secrets.jpg"));
+//        dummyExplore = new Explore("Tout Ankha Amon", "https://images.lpcdn.ca/924x615/201002/13/147005-momie-toutankhamon.jpg", hints);
+//
+//        claimButton.setOnClickListener(view -> {
+//            //showBadgeDialog(badges.get(0));
+//            showExploreDialog(dummyExplore);
+//        });
+//
+//        badgesSliderViewAdapter.setBadges(badges);
     }
 
     @Override
@@ -578,9 +579,9 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         socialActivitiesShimmer.startShimmerAnimation();
         mapShimmer.startShimmerAnimation();
         confirmLocation.startShimmerAnimation();
-        adventautreShimmer.startShimmerAnimation();
+        adventureShimmer.startShimmerAnimation();
         barShimmer.startShimmerAnimation();
-        startExploarShimmer.startShimmerAnimation();
+        startExploringShimmer.startShimmerAnimation();
         askAnubisShimmer.startShimmerAnimation();
 
     }
@@ -592,9 +593,9 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         socialActivitiesShimmer.stopShimmerAnimation();
         mapShimmer.stopShimmerAnimation();
         confirmLocation.stopShimmerAnimation();
-        adventautreShimmer.stopShimmerAnimation();
+        adventureShimmer.stopShimmerAnimation();
         barShimmer.stopShimmerAnimation();
-        startExploarShimmer.stopShimmerAnimation();
+        startExploringShimmer.stopShimmerAnimation();
         askAnubisShimmer.stopShimmerAnimation();
 
     }

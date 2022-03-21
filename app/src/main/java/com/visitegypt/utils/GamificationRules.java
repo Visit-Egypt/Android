@@ -4,12 +4,26 @@ public class GamificationRules {
     public static final int CONFIRM_LOCATION_CIRCLE_RADIUS = 500;
     public static final int MAX_LEVEL = 20;
 
+    // ACTIVITIES XP
     public static final int XP_POST_STORY = 20;
     public static final int XP_POST_POST = 20;
     public static final int XP_VISIT_LOCATION = 100;
     public static final int XP_ASK_CHAT_BOT = 10;
     public static final int XP_POST_REVIEW = 20;
     public static final int XP_GENERAL = 5;
+
+    // TITLES LEVELS
+    public static final int EXPLORER_LEVEL = 3;
+    public static final int ADVENTURER_LEVEL = 7;
+    public static final int ADVANCED_TRAVELLER_LEVEL = 10;
+    public static final int PHAROS_LEVEL = 15;
+    public static final int ANUBIS_LEVEL = MAX_LEVEL - 1;
+
+    public static final int[] ALL_LEVELS = {EXPLORER_LEVEL,
+            ADVENTURER_LEVEL,
+            ADVANCED_TRAVELLER_LEVEL,
+            PHAROS_LEVEL,
+            ANUBIS_LEVEL};
 
 
     public static final int BRONZE_BADGE_XP = 30;
@@ -47,5 +61,21 @@ public class GamificationRules {
 
     public static long getLevelXp(int level) {
         return Math.round(0.04 * (level ^ 3) + 0.8 * (level ^ 2) + 1.7 * level);
+    }
+
+    public static final String getTitleFromLevel(int level) {
+        if (level <= EXPLORER_LEVEL) {
+            return "Explorer";
+        } else if (level <= ADVENTURER_LEVEL) {
+            return "Adventurer";
+        } else if (level <= ADVANCED_TRAVELLER_LEVEL) {
+            return "Advanced Traveler";
+        } else if (level <= PHAROS_LEVEL) {
+            return "Pharos";
+        } else if (level <= ANUBIS_LEVEL) {
+            return "Anusbis";
+        } else {
+            return "Off the Grid";
+        }
     }
 }

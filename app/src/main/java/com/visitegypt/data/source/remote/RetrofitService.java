@@ -141,7 +141,11 @@ public interface RetrofitService {
 
     @POST("/api/chatbot")
     public Single<Message> chatbotReceiveRequest(@Body Message message);
+
     /************************************************************/
     @GET("api/badge")
     public Single<BadgeResponse> getAllBadges();
+
+    @GET("api/badge")
+    public Single<BadgeResponse> getBadgesByPlace(@Query("filters") String placeId);
 }

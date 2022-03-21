@@ -13,7 +13,6 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
-import retrofit2.http.Path;
 
 public interface UserRepository {
     /**
@@ -38,7 +37,7 @@ public interface UserRepository {
 
     Single<User> updateUser(String userId, UserUpdateRequest user);
 
-    Single<UploadResponse> getPreSigendUrl(String userId, String contentType);
+    Single<UploadResponse> getPreSignedUrl(String userId, String contentType);
 
     Call<ConfirmUploadResponse> confirmUpload(ConfirmUploadModel confirmUploadModel);
 
@@ -46,6 +45,6 @@ public interface UserRepository {
 
     Single<List<Badge>> getUserBadges(String userId);
 
-    Single<List<Badge>> updateUserBadge(String badgeID,Badge badge);
+    Single<List<Badge>> updateUserBadge(String badgeID, Badge badge);
 
 }

@@ -9,7 +9,8 @@ import javax.inject.Inject;
 import io.reactivex.rxjava3.core.Single;
 
 public class BadgesRepositoryImp implements BadgesRepository {
-    RetrofitService retrofitService;
+    private RetrofitService retrofitService;
+
     @Inject
     public BadgesRepositoryImp(RetrofitService retrofitService) {
         this.retrofitService = retrofitService;
@@ -18,5 +19,10 @@ public class BadgesRepositoryImp implements BadgesRepository {
     @Override
     public Single<BadgeResponse> getAllBadges() {
         return retrofitService.getAllBadges();
+    }
+
+    @Override
+    public Single<BadgeResponse> getBadgesByPlace(String placeId) {
+        return retrofitService.getBadgesByPlace(placeId);
     }
 }

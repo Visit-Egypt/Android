@@ -403,7 +403,7 @@
                     </LinearLayout>
 
                     <com.google.android.material.button.MaterialButton
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Claim PLACE 200XP"
@@ -712,7 +712,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/confirmLocationGamificationActivityButton"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/mapView"
@@ -762,7 +762,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/startExploringGamificationActivityButton"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

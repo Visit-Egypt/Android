@@ -6,15 +6,15 @@ import static com.visitegypt.utils.Constants.SHARED_PREF_USER_ID;
 
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.EditText;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.visitegypt.domain.model.Badge;
+import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.Post;
 import com.visitegypt.domain.usecase.AddNewPostUseCase;
-import com.visitegypt.domain.usecase.GetAllCitiesUseCase;
-import com.visitegypt.domain.usecase.GetPlacesOfCityUseCase;
+import com.visitegypt.domain.usecase.UpdateBadgeOfUserUseCase;
 import com.visitegypt.domain.usecase.UploadUserPhotoUseCase;
 
 import java.io.File;
@@ -30,17 +30,27 @@ public class PostsViewModel extends ViewModel implements UploadUserPhotoUseCase.
     private static final String TAG = "Posts ViewModel";
     AddNewPostUseCase addNewPostUseCase;
     SharedPreferences sharedPreferences;
+
     private Post post;
     private List<String> imageList = new ArrayList<>();
+    MutableLiveData<List<Badge>> badgesMutableLiveData = new MutableLiveData<>();
+    private Badge badge;
     private UploadUserPhotoUseCase uploadUserPhotoUseCase;
+
     MutableLiveData<Boolean> isImageUploaded = new MutableLiveData<>();
     MutableLiveData<Boolean> isPostUploaded = new MutableLiveData<>();
+    private UpdateBadgeOfUserUseCase updateBadgeOfUserUseCase;
+
 
     @Inject
-    public PostsViewModel(AddNewPostUseCase addNewPostUseCase, SharedPreferences sharedPreferences, UploadUserPhotoUseCase uploadUserPhotoUseCase) {
+    public PostsViewModel(AddNewPostUseCase addNewPostUseCase,
+                          SharedPreferences sharedPreferences,
+                          UploadUserPhotoUseCase uploadUserPhotoUseCase,
+                          UpdateBadgeOfUserUseCase updateBadgeOfUserUseCase) {
         this.addNewPostUseCase = addNewPostUseCase;
         this.sharedPreferences = sharedPreferences;
         this.uploadUserPhotoUseCase = uploadUserPhotoUseCase;
+        this.updateBadgeOfUserUseCase = updateBadgeOfUserUseCase;
     }
 
     public void createFakePost() {
@@ -69,6 +79,7 @@ public class PostsViewModel extends ViewModel implements UploadUserPhotoUseCase.
     public void addPost() {
         addNewPostUseCase.execute(post1 -> {
             isPostUploaded.setValue(true);
+            updateUserBadge(badge);
         }, throwable -> {
             Log.d(TAG, "addPost: error" + throwable.getMessage());
         });
@@ -78,18 +89,36 @@ public class PostsViewModel extends ViewModel implements UploadUserPhotoUseCase.
         uploadUserPhotoUseCase.setContentType(contentType);
         uploadUserPhotoUseCase.setUserFile(userPhoto);
         uploadUserPhotoUseCase.upload();
-
     }
-    public void initCallBack()
-    {
+
+    public void initCallBack() {
         uploadUserPhotoUseCase.setUploadPhotoApiCallBack(this::confirmUpload);
     }
+
     @Override
     public void confirmUpload(int code, List<String> url) {
         if (code == 200) {
             isImageUploaded.setValue(true);
             imageList = url;
         }
+    }
 
+    public void setBadge(Badge badge) {
+        this.badge = badge;
+    }
+
+    public void updateUserBadge(Badge badge) {
+        for (BadgeTask badgeTask : badge.getBadgeTasks()) {
+            if (badgeTask.getType().equals(BadgeTask.SOCIAL_BUTTERFLY)) {
+                if (badgeTask.getProgress() < badgeTask.getMaxProgress())
+                    badgeTask.setProgress(badgeTask.getProgress() + 1);
+            }
+        }
+        updateBadgeOfUserUseCase.setBadge(badge);
+        updateBadgeOfUserUseCase.execute(badges -> {
+            badgesMutableLiveData.setValue(badges);
+        }, throwable -> {
+
+        });
     }
 }

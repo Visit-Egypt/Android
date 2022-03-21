@@ -16,12 +16,13 @@ public class UpdateBadgeOfUserUseCase extends SingleUseCase<List<Badge>> {
      * Please note that,Khaled
      * this use case returns list of badges without badge task
      */
-     UserRepository userRepository;
+    UserRepository userRepository;
     private String badgeId;
     //Badge Constructor Badge(int progress, boolean owned, boolean pinned)
-    private  Badge badge;
+    private Badge badge;
+
     @Inject
-    public UpdateBadgeOfUserUseCase(@Named("Normal")  UserRepository userRepository) {
+    public UpdateBadgeOfUserUseCase(@Named("Normal") UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -29,11 +30,15 @@ public class UpdateBadgeOfUserUseCase extends SingleUseCase<List<Badge>> {
         this.badgeId = badgeId;
     }
 
+    public void setBadge(Badge badge) {
+        this.badge = badge;
+    }
+
     @Override
     protected Single<List<Badge>> buildSingleUseCase() {
         badgeId = "623637b3da63f3494ba0ab2d";
-        badge = new Badge(5,true,true);
+        //badge = new Badge(5, true, true);
 
-        return userRepository.updateUserBadge(badgeId,badge);
+        return userRepository.updateUserBadge(badgeId, badge);
     }
 }

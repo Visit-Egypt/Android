@@ -1,9 +1,5 @@
 package com.visitegypt.domain.usecase.base;
 
-import com.visitegypt.domain.model.Review;
-
-import java.util.List;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Consumer;

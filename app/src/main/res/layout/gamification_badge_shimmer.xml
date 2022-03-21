@@ -18,7 +18,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            app:cpb_foregroundProgressColor="#1864c2"
+            app:cpb_foregroundProgressColor="@color/gray"
             app:cpb_foregroundProgressWidth="10"
             android:backgroundTint="?attr/colorSecondaryVariant"
             android:background="?attr/colorSecondaryVariant"

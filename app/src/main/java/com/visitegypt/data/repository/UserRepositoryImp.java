@@ -59,7 +59,7 @@ public class UserRepositoryImp implements UserRepository {
     }
 
     @Override
-    public Single<UploadResponse> getPreSigendUrl(String userId, String contentType) {
+    public Single<UploadResponse> getPreSignedUrl(String userId, String contentType) {
         return retrofitService.getPreSigendUrl(userId, contentType);
     }
 

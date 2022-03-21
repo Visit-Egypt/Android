@@ -7,8 +7,10 @@ public class BadgeTask {
     private String badgeId;
     private String imageUrl;
     private String taskTitle;
+    public static final String SOCIAL_BUTTERFLY = "social_badge";
     private int progress;
     private int maxProgress;
+    private String type;
 
     public BadgeTask(String badgeId, String taskTitle, int progress) {
         this.badgeId = badgeId;
@@ -53,6 +55,14 @@ public class BadgeTask {
 
     public void setMaxProgress(int maxProgress) {
         this.maxProgress = maxProgress;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public enum Type {

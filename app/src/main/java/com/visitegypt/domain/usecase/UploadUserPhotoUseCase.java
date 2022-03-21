@@ -1,42 +1,29 @@
 package com.visitegypt.domain.usecase;
 
-import static com.visitegypt.utils.Constants.BASE_URL;
 import static com.visitegypt.utils.Constants.S3_URL;
 
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.visitegypt.data.source.remote.RetrofitServiceUpload;
 import com.visitegypt.domain.model.ConfirmUploadModel;
 import com.visitegypt.domain.model.ConfirmUploadResponse;
 import com.visitegypt.domain.model.UploadFields;
-import com.visitegypt.domain.model.response.PlacePageResponse;
 import com.visitegypt.domain.model.response.UploadResponse;
 import com.visitegypt.domain.repository.UploadToS3Repository;
 import com.visitegypt.domain.repository.UserRepository;
 import com.visitegypt.utils.Constants;
 
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class UploadUserPhotoUseCase {
@@ -72,7 +59,7 @@ public class UploadUserPhotoUseCase {
         final String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
         Log.d("TAG", "upload: " + userId);
         try {
-            final UploadResponse uploadResponse = userRepository.getPreSigendUrl(userId, contentType).blockingGet();
+            final UploadResponse uploadResponse = userRepository.getPreSignedUrl(userId, contentType).blockingGet();
             UploadFields uploadFields = uploadResponse.getFields();
             realUpload(uploadFields, userId);
         } catch (Exception e) {

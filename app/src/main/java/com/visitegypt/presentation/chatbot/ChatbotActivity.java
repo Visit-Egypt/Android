@@ -1,14 +1,10 @@
 package com.visitegypt.presentation.chatbot;
 
-import static android.provider.Telephony.MmsSms.PendingMessages.MSG_TYPE;
-
 import static com.visitegypt.presentation.gamification.GamificationActivity.ARTIFACTS;
 import static com.visitegypt.presentation.gamification.GamificationActivity.INSIGHTS;
-import static com.visitegypt.presentation.gamification.GamificationActivity.PLACE_TITLE;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -22,13 +18,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Chatbot;
 import com.visitegypt.presentation.gamification.GamificationActivity;
-import com.visitegypt.presentation.home.HomeRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
-import dagger.hilt.android.AndroidEntryPoint;
-
-@AndroidEntryPoint
 public class ChatbotActivity extends AppCompatActivity {
     private static final String TAG = "Chatbot Activity";
     private final String USER_KEY = "user";
@@ -78,49 +70,44 @@ public class ChatbotActivity extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         chatbotRecyclerView.setAdapter(ChatRecyclerViewAdapter);
         chatbotViewModel = new ViewModelProvider(this).get(ChatbotViewModel.class);
-        if (type.equals(ARTIFACTS))
-        {
-            getResponse("Tell me artifacts of " + placeTitle);
-            chatbotViewModel.botResponseMutableLiveData.observe(ChatbotActivity.this, new Observer() {
-                @Override
-                public void onChanged(Object o) {
-                    Log.d(TAG, "Bot response deliveried: " + o);
-                    chatbotArrayList.add(new Chatbot(o.toString(), BOT_KEY));
-                    ChatRecyclerViewAdapter.notifyDataSetChanged();
-                }
-            });
-        }
-        if (type.equals(INSIGHTS))
-        {
-            getResponse("Tell me insights of " + placeTitle);
-            chatbotViewModel.botResponseMutableLiveData.observe(ChatbotActivity.this, new Observer() {
-                @Override
-                public void onChanged(Object o) {
-                    Log.d(TAG, "Bot response deliveried: " + o);
-                    chatbotArrayList.add(new Chatbot(o.toString(), BOT_KEY));
-                    ChatRecyclerViewAdapter.notifyDataSetChanged();
-                }
-            });
-        }
-
-        fBtnSendMessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (edtTxtMessage.getText().toString().isEmpty()) {
-                    Toast.makeText(ChatbotActivity.this, "Please enter your message..", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                getResponse(edtTxtMessage.getText().toString());
-                edtTxtMessage.setText("");
+        if (type != null) {
+            if (type.equals(ARTIFACTS)) {
+                getResponse("Tell me about the artifacts of " + placeTitle);
                 chatbotViewModel.botResponseMutableLiveData.observe(ChatbotActivity.this, new Observer() {
                     @Override
                     public void onChanged(Object o) {
-                        Log.d(TAG, "Bot response deliveried: " + o);
+                        Log.d(TAG, "Bot response delivered: " + o);
+                        chatbotArrayList.add(new Chatbot(o.toString(), BOT_KEY));
+                        ChatRecyclerViewAdapter.notifyDataSetChanged();
+                    }
+                });
+            } else if (type.equals(INSIGHTS)) {
+                getResponse("Tell me about the insights of " + placeTitle);
+                chatbotViewModel.botResponseMutableLiveData.observe(ChatbotActivity.this, new Observer() {
+                    @Override
+                    public void onChanged(Object o) {
+                        Log.d(TAG, "Bot response delivered: " + o);
                         chatbotArrayList.add(new Chatbot(o.toString(), BOT_KEY));
                         ChatRecyclerViewAdapter.notifyDataSetChanged();
                     }
                 });
             }
+        }
+        fBtnSendMessage.setOnClickListener(v -> {
+            if (edtTxtMessage.getText().toString().isEmpty()) {
+                Toast.makeText(ChatbotActivity.this, "Please enter your message..", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            getResponse(edtTxtMessage.getText().toString());
+            edtTxtMessage.setText("");
+            chatbotViewModel.botResponseMutableLiveData.observe(ChatbotActivity.this, new Observer() {
+                @Override
+                public void onChanged(Object o) {
+                    Log.d(TAG, "Bot response delivered: " + o);
+                    chatbotArrayList.add(new Chatbot(o.toString(), BOT_KEY));
+                    ChatRecyclerViewAdapter.notifyDataSetChanged();
+                }
+            });
         });
     }
 

@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?attr/colorOnPrimary"
     android:orientation="vertical">
 
@@ -11,46 +12,127 @@
         android:layout_marginVertical="10dp"
         android:orientation="vertical">
 
-        <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/circularAccountImageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/ic_baseline_account_circle_24" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/circularAccountImageView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_baseline_account_circle_24" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/levelTextViewAccountFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/circularAccountImageView"
+                android:layout_alignTop="@id/circularAccountImageView"
+                android:layout_alignRight="@id/circularAccountImageView"
+                android:layout_alignBottom="@id/circularAccountImageView"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="80dp"
+                android:background="@color/camel"
+                android:gravity="center"
+                android:text="LVL 7" />
+        </RelativeLayout>
         <TextView
             android:id="@+id/nameTextView"
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="xxx"
             android:textAlignment="center"
             android:textColor="?attr/colorOnSecondary"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/countryTextView"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Egypt"
+            android:text="Explorer"
             android:textAlignment="center"
             android:textColor="?attr/colorPrimaryVariant"
-            android:textSize="12dp" />
+            android:textSize="17sp" />
 
-        <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/gamificationImageView"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginVertical="4dp"
-            android:src="@drawable/gamifi" />
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/userLevelLinearProgressIndicationAccountFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:max="600"
+                    android:progress="560"
+                    app:trackCornerRadius="3dp"
+                    app:trackThickness="20dp" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/userLevelLinearProgressIndicationAccountFragment"
+                    android:layout_alignTop="@id/userLevelLinearProgressIndicationAccountFragment"
+                    android:layout_alignRight="@id/userLevelLinearProgressIndicationAccountFragment"
+                    android:layout_alignBottom="@id/userLevelLinearProgressIndicationAccountFragment">
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/userLevelLinearProgressIndicationTextViewAccountFragment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:background="#00000000"
+                        android:text="8" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:background="#00000000"
+                        android:text="9" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </RelativeLayout>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_weight="1"
+                    android:text="560/600" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="40XP to next level" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginHorizontal="16dp"
             android:orientation="horizontal"
             android:weightSum="3">
 
@@ -63,21 +145,23 @@
 
                 <TextView
                     android:id="@+id/likesNumberTextView"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="9k"
+                    android:layout_gravity="center"
+                    android:text="0"
                     android:textAlignment="center"
                     android:textColor="?attr/colorOnSecondary"
-                    android:textSize="18dp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_height="wrap_content"
-                    android:text="LIKES"
+                    android:text="VISITED CITIES"
                     android:textAlignment="center"
                     android:textColor="?attr/colorOnSecondary"
-                    android:textSize="15dp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -90,21 +174,23 @@
 
                 <TextView
                     android:id="@+id/followingNumberTextView"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="777"
+                    android:layout_gravity="center"
+                    android:text="0"
                     android:textAlignment="center"
                     android:textColor="?attr/colorOnSecondary"
-                    android:textSize="18dp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="FOLLOWING"
+                    android:layout_gravity="center"
                     android:textAlignment="center"
                     android:textColor="?attr/colorOnSecondary"
-                    android:textSize="15dp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -116,26 +202,40 @@
                 android:padding="5dp">
 
                 <TextView
+                    android:layout_width="wrap_content"
                     android:id="@+id/followersNumberTextView"
-                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
                     android:layout_height="wrap_content"
-                    android:text="111"
+                    android:text="0"
                     android:textAlignment="center"
                     android:textColor="?attr/colorOnSecondary"
-                    android:textSize="18dp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_height="wrap_content"
                     android:text="FOLLOWERS"
                     android:textAlignment="center"
                     android:textColor="?attr/colorOnSecondary"
-                    android:textSize="15dp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
+
         </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/startPlayingGamificationButtonAccountFragment"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Playing"
+            android:textSize="19sp"
+            app:icon="@drawable/ic_gamepad"
+            app:iconGravity="textStart" />
+
 
         <TableRow
             android:layout_width="match_parent"
@@ -146,7 +246,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
@@ -158,23 +258,13 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/button_shape"
-                android:gravity="center"
-                android:text="See all->"
-                android:textAllCaps="false"
-                android:textColor="?attr/colorOnSecondary" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/userBadgesRecyclerViewAccountFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
         </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/userBadgesRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layoutDirection="rtl" />
 
         <TableRow
             android:layout_width="match_parent"
@@ -196,20 +286,10 @@
                 android:text="Cities"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/button_shape"
-                android:gravity="center"
-                android:text="See all->"
-                android:textAllCaps="false"
-                android:textColor="?attr/colorOnSecondary" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/citiesRecyclerView"
+            android:id="@+id/citiesRecyclerViewAccountFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
