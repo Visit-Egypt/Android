@@ -12,6 +12,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.visitegypt.data.repository.BadgesRepositoryImp;
 import com.visitegypt.data.repository.ChatbotRepositoryImp;
 import com.visitegypt.data.repository.ItemRepositoryImp;
 import com.visitegypt.data.repository.PlaceRepositoryImp;
@@ -21,6 +22,8 @@ import com.visitegypt.data.repository.UserRepositoryImp;
 import com.visitegypt.data.source.remote.RetrofitService;
 import com.visitegypt.data.source.remote.RetrofitServiceUpload;
 import com.visitegypt.domain.model.Token;
+import com.visitegypt.domain.model.response.BadgeResponse;
+import com.visitegypt.domain.repository.BadgesRepository;
 import com.visitegypt.domain.repository.CallBack;
 import com.visitegypt.domain.repository.ChatbotRepository;
 import com.visitegypt.domain.repository.ItemRepository;
@@ -40,6 +43,7 @@ import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
+import io.reactivex.rxjava3.core.Single;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -191,6 +195,11 @@ public class NetworkModule implements CallBack {
     @Singleton
     public PlaceRepository providePlaceRepository(@Named("Normal") RetrofitService retrofitService) {
         return new PlaceRepositoryImp(retrofitService);
+    }
+    @Provides
+    @Singleton
+    public BadgesRepository provideBadgeRepository(@Named("Normal") RetrofitService retrofitService) {
+        return new BadgesRepositoryImp(retrofitService);
     }
 
     @Provides

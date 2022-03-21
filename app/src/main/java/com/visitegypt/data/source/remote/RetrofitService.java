@@ -12,6 +12,7 @@ import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
+import com.visitegypt.domain.model.response.BadgeResponse;
 import com.visitegypt.domain.model.response.ItemPageResponse;
 import com.visitegypt.domain.model.response.PlacePageResponse;
 import com.visitegypt.domain.model.response.UploadResponse;
@@ -141,6 +142,6 @@ public interface RetrofitService {
     @POST("/api/chatbot")
     public Single<Message> chatbotReceiveRequest(@Body Message message);
     /************************************************************/
-
-
+    @GET("api/badge")
+    public Single<BadgeResponse> getAllBadges();
 }
