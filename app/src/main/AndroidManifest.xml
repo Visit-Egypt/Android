@@ -15,6 +15,7 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
+        android:usesCleartextTraffic="true"
         android:name=".MainApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -61,7 +62,8 @@
         </activity>
         <activity
             android:name=".presentation.home.parent.Home"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan">>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
