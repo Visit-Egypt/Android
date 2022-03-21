@@ -101,7 +101,8 @@
                     android:layout_height="wrap_content">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="0dp"
                         android:layout_marginRight="0dp"
@@ -347,8 +348,7 @@
                             android:layout_width="150dp"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/luxor2" />
+                            android:scaleType="centerCrop" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -407,6 +407,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Claim PLACE 200XP"
+                        android:layout_marginHorizontal="8dp"
                         app:icon="@drawable/ic_flag"
                         app:iconGravity="textStart" />
                 </LinearLayout>

@@ -130,7 +130,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         } else {
             placeId = (String) savedInstanceState.getSerializable(HomeRecyclerViewAdapter.CHOSEN_PLACE_ID);
         }
-        placeId = "616f2746b817807a7a6c7167";
+        //placeId = "616f2746b817807a7a6c7167";
 
         initViews();
         initViewModels(placeId, savedInstanceState);
@@ -161,6 +161,9 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                 setLayoutVisible();
                 mapView.getMapAsync(this);
                 mapView.onCreate(b);
+                //placeTitleTextView.setText(place.getTitle());
+                initActivityLogic(place);
+
             });
         } catch (Exception e) {
             Toast.makeText(this, "Failed to load, try again later", Toast.LENGTH_SHORT).show();
@@ -255,9 +258,12 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     }
 
     private void initActivityLogic(Place place) {
-        Picasso.get().load(place.getImageUrls().get(0)).into(placeImageView);
         placeTitleTextView.setText(place.getTitle());
-        placeXpTextView.setText(place.getMaxProgress());
+        if (place.getDefaultImage() == null) {
+            Picasso.get().load(place.getImageUrls().get(0)).into(placeImageView);
+        } else {
+            Picasso.get().load(place.getDefaultImage()).into(placeImageView);
+        }
 
         try {
             ArrayList<PlaceActivity> placeActivities = place.getPlaceActivities();
@@ -539,7 +545,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                 }
             });
 
-
             mapLoaded = true;
             mapView.onResume();
         }
@@ -562,7 +567,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         if (mapView != null && place != null) {
             mapView.onStop();
         }
-
     }
 
     @Override
