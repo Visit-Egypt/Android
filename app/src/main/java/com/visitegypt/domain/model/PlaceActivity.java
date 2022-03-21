@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class PlaceActivity {
     // Types
     public static final int VISIT_LOCATION = 0, POST_STORY = 1, POST_POST = 2, ASK_CHAT_BOT = 3, POST_REVIEW = 4, GENERAL = 5;
-
+    private String id;
     private int progress;
     boolean customXp = false;
     private int xp;
@@ -33,6 +33,20 @@ public class PlaceActivity {
         this.title = title;
         this.description = description;
         this.expanded = false;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public PlaceActivity(String id, int progress, boolean finished) {
+        this.id = id;
+        this.progress = progress;
+        this.finished = finished;
     }
 
     public int getProgress() {

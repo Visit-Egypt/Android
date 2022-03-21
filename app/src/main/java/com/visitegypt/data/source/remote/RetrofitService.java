@@ -6,6 +6,7 @@ import com.visitegypt.domain.model.ConfirmUploadModel;
 import com.visitegypt.domain.model.ConfirmUploadResponse;
 import com.visitegypt.domain.model.Message;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.model.Post;
 import com.visitegypt.domain.model.PostPage;
 import com.visitegypt.domain.model.Review;
@@ -76,6 +77,11 @@ public interface RetrofitService {
     //without Tasks
     @PUT("api/user/badges/{badge_id}")
     public Single<List<Badge>> updateUserBadge(@Path("badge_id") String badgeId,@Body Badge badge);
+    @GET("api/user/actvity/{user_id}")
+    public Single<List<PlaceActivity>> getUserPlaceActivity(@Path("user_id") String userId);
+
+    @PUT("api/user/actvity/{activity_id}")
+    public Single<List<PlaceActivity>> updateUserPlaceActivity(@Path("activity_id") String activityId,@Body PlaceActivity placeActivity);
 
     /*******************************************************************/
     @GET("api/place/{id}")

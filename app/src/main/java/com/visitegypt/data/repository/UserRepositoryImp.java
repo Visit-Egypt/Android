@@ -5,6 +5,7 @@ import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.ConfirmUploadModel;
 import com.visitegypt.domain.model.ConfirmUploadResponse;
+import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
@@ -79,9 +80,18 @@ public class UserRepositoryImp implements UserRepository {
     }
 
     @Override
-    public Single<List<Badge>> updateUserBadge(String badgeId,Badge badge) {
-        return retrofitService.updateUserBadge(badgeId,badge);
+    public Single<List<Badge>> updateUserBadge(String badgeId, Badge badge) {
+        return retrofitService.updateUserBadge(badgeId, badge);
     }
 
+    @Override
+    public Single<List<PlaceActivity>> getUserPlaceActivity(String userId) {
+        return retrofitService.getUserPlaceActivity(userId);
+    }
+
+    @Override
+    public Single<List<PlaceActivity>> updateUserPlaceActivity(String activityId, PlaceActivity placeActivity) {
+        return retrofitService.updateUserPlaceActivity(activityId, placeActivity);
+    }
 
 }

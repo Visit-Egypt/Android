@@ -4,6 +4,7 @@ import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.ConfirmUploadModel;
 import com.visitegypt.domain.model.ConfirmUploadResponse;
+import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
@@ -13,6 +14,9 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface UserRepository {
     /**
@@ -46,5 +50,9 @@ public interface UserRepository {
     Single<List<Badge>> getUserBadges(String userId);
 
     Single<List<Badge>> updateUserBadge(String badgeID, Badge badge);
+
+    Single<List<PlaceActivity>> getUserPlaceActivity(String userId);
+
+    Single<List<PlaceActivity>> updateUserPlaceActivity(String activityId, PlaceActivity placeActivity);
 
 }
