@@ -21,6 +21,9 @@ import com.visitegypt.presentation.gamification.GamificationActivity;
 
 import java.util.ArrayList;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class ChatbotActivity extends AppCompatActivity {
     private static final String TAG = "Chatbot Activity";
     private final String USER_KEY = "user";
@@ -54,8 +57,8 @@ public class ChatbotActivity extends AppCompatActivity {
             type = (String) savedInstanceState.getSerializable(GamificationActivity.MSG_TYPE);
         }
 
-        Log.d(TAG, "onCreate: type "+type);
-        Log.d(TAG, "onCreate: title "+placeTitle);
+        Log.d(TAG, "onCreate: type " + type);
+        Log.d(TAG, "onCreate: title " + placeTitle);
         initViews();
     }
 

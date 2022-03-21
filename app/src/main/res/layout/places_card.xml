@@ -58,12 +58,7 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <com.mikhaellopez.circularimageview.CircularImageView
-                    android:id="@+id/gamificationInHomeActivityImageView"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="bottom"
-                    android:src="@drawable/ic_baseline_games_24" />
+
             </LinearLayout>
 
             <LinearLayout

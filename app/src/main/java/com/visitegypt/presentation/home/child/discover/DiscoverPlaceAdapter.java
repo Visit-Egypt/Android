@@ -21,6 +21,8 @@ import com.visitegypt.presentation.gamification.GamificationActivity;
 
 import java.util.List;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
 public class DiscoverPlaceAdapter extends RecyclerView.Adapter<DiscoverPlaceAdapter.PlaceViewHolder> {
     private static final String TAG = "Discover Place Adapter";
     public static String CHOSEN_PLACE_ID = "placeId";
@@ -74,12 +76,11 @@ public class DiscoverPlaceAdapter extends RecyclerView.Adapter<DiscoverPlaceAdap
         private final ImageView imgPlace;
         private final TextView txtCityName;
         private TextView txtPlaceName;
-        private CircularImageView gamificationInHomeActivityImageView;
+
 
         public PlaceViewHolder(@NonNull View itemView) {
             super(itemView);
             txtPlaceName = itemView.findViewById(R.id.txtPlaceCardNewTitle);
-            gamificationInHomeActivityImageView=itemView.findViewById(R.id.gamificationInHomeActivityImageView);
             imgPlace = itemView.findViewById(R.id.imgPlaceCardNew);
             txtCityName = itemView.findViewById(R.id.txtPlaceCardNewCity);
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -90,14 +91,7 @@ public class DiscoverPlaceAdapter extends RecyclerView.Adapter<DiscoverPlaceAdap
                     context.startActivity(intent);
                 }
             });
-            gamificationInHomeActivityImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, GamificationActivity.class);
-                    intent.putExtra(CHOSEN_PLACE_ID, placesList.get(getAdapterPosition()).getId());
-                    context.startActivity(intent);
-                }
-            });
+
         }
     }
 }

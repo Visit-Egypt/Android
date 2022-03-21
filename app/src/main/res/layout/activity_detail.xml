@@ -280,6 +280,7 @@
                             android:layout_height="40dp"
                             android:layout_margin="10dp"
                             android:src="@drawable/ic_baseline_arrow_back_24" />
+
                     </com.smarteist.autoimageslider.SliderView>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -424,8 +425,8 @@
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButton
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:id="@+id/writeReviewButton"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="40dp"
@@ -458,6 +459,7 @@
                         android:layout_height="wrap_content">
 
                         <TableRow>
+
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/saturdayOpeningHoursTextView"
                                 android:layout_width="match_parent"
@@ -823,6 +825,8 @@
                         android:progress="3" />
 
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/gamificationInDetailActivityImageView"
+
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -841,8 +845,11 @@
         android:id="@+id/fBtnChatbot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="?attr/colorSecondaryVariant"
         android:src="@drawable/ic_chat"
+        app:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.9"

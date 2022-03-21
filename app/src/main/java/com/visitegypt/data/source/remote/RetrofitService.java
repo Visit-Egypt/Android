@@ -83,6 +83,8 @@ public interface RetrofitService {
     @PUT("api/user/actvity/{activity_id}")
     public Single<List<PlaceActivity>> updateUserPlaceActivity(@Path("activity_id") String activityId,@Body PlaceActivity placeActivity);
 
+//    @GET("api/user/activity/{user_id}")
+
     /*******************************************************************/
     @GET("api/place/{id}")
     public Single<Place> getPlaceById(@Path("id") String id);

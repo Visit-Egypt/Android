@@ -47,6 +47,7 @@ import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.Slider;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
+import com.visitegypt.presentation.gamification.GamificationActivity;
 import com.visitegypt.presentation.home.HomeRecyclerViewAdapter;
 import com.visitegypt.presentation.home.parent.Home;
 import com.visitegypt.presentation.review.ReviewActivity;
@@ -73,7 +74,7 @@ public class DetailActivity extends AppCompatActivity {
             placeTitleTextView, saturdayOpeningHours, sundayOpeningHours, mondayOpeningHours,
             tuesdayOpeningHours, thursdayOpeningHours, wednesdayOpeningHours,
             fridayOpeningHours, foreignerVideoPriceTextView, foreignerPhotoPriceTextView, egyptianVideoPriceTextView, egyptianPhotoPriceTextView, childrenPriceTextView, locationTextView;
-    private MaterialButton addReviewButton;
+    private MaterialButton addReviewButton, gamificationInDetailActivityImageView;
     private FloatingActionButton chatbotFloatingActionButton;
 
     private DetailViewModel detailViewModel;
@@ -136,6 +137,7 @@ public class DetailActivity extends AppCompatActivity {
         descriptionTextView = findViewById(R.id.descriptionTextView);
         placeTitleTextView = findViewById(R.id.placeTitleTextView);
         backArrowCircularImageButton = findViewById(R.id.backArrowCircularImageButton);
+        gamificationInDetailActivityImageView = findViewById(R.id.gamificationInDetailActivityImageView);
 
         saturdayOpeningHours = findViewById(R.id.saturdayOpeningHoursTextView);
         sundayOpeningHours = findViewById(R.id.sundayOpeningHoursTextView);
@@ -201,6 +203,14 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
+        gamificationInDetailActivityImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DetailActivity.this, GamificationActivity.class);
+                intent.putExtra(HomeRecyclerViewAdapter.CHOSEN_PLACE_ID, placeId);
+                startActivity(intent);
+            }
+        });
         detailViewModel.placesMutableLiveData.observe(this, new Observer<Place>() {
             @Override
             public void onChanged(Place place) {
@@ -309,7 +319,7 @@ public class DetailActivity extends AppCompatActivity {
         addReviewDialog.findViewById(R.id.submitReviewButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TextInputEditText textInputEditText = (TextInputEditText) addReviewDialog.findViewById(R.id.reviewEditText);
+                TextInputEditText textInputEditText = addReviewDialog.findViewById(R.id.reviewEditText);
                 String reviewText = textInputEditText.getText().toString().trim();
                 float numStars = ((RatingBar) addReviewDialog.findViewById(R.id.ratingBar)).getRating();
                 Log.d(TAG, "onClick: " + reviewText);
@@ -351,4 +361,5 @@ public class DetailActivity extends AppCompatActivity {
     public void backPlace() {
         startActivity(new Intent(DetailActivity.this, Home.class));
     }
+
 }

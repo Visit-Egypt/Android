@@ -75,9 +75,11 @@
         android:layout_gravity="top"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="16dp"
+        android:backgroundTint="?attr/colorSecondaryVariant"
+        app:backgroundTint="?attr/colorSecondaryVariant"
         app:layout_anchor="@id/navigation"
         app:layout_anchorGravity="top|end"
-        app:srcCompat="@drawable/ic_chatbot"
+        app:srcCompat="@drawable/ic_chat"
         tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
