@@ -450,169 +450,209 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <HorizontalScrollView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="horizontal">
 
-                    <TableLayout
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/saturdayOpeningHoursTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/prata_regular"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="9 to 17"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="20dp" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/sundayOpeningHoursTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/prata_regular"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="9 to 17"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="20dp" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/mondayOpeningHoursTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/prata_regular"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="9 to 17"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="20dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="horizontal">
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/prata_regular"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="@string/saturday" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/prata_regular"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="@string/sunday" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/prata_regular"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="@string/monday" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="horizontal">
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tuesdayOpeningHoursTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/prata_regular"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="9 to 17"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="20dp" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/wednesdayOpeningHoursTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/prata_regular"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="9 to 17"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="20dp" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/thursdayOpeningHoursTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/prata_regular"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="9 to 17"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="20dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="horizontal">
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/prata_regular"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="@string/tuesday" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/prata_regular"
+                        android:gravity="center"
+                        android:paddingVertical="8dp"
+                        android:paddingLeft="10dp"
+                        android:text="@string/wednesday" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/prata_regular"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="@string/thursday" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/fridayOpeningHoursTextView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:fontFamily="@font/prata_regular"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="9 to 17"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="20dp" />
 
-                        <TableRow>
 
-                            <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/saturdayOpeningHoursTextView"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="10dp"
-                                android:fontFamily="@font/prata_regular"
-                                android:gravity="center"
-                                android:padding="8dp"
-                                android:text="9 to 17"
-                                android:textColor="?attr/colorPrimary"
-                                android:textSize="20dp" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/sundayOpeningHoursTextView"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="10dp"
-                                android:fontFamily="@font/prata_regular"
-                                android:gravity="center"
-                                android:padding="8dp"
-                                android:text="9 to 17"
-                                android:textColor="?attr/colorPrimary"
-                                android:textSize="20dp" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/mondayOpeningHoursTextView"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="10dp"
-                                android:fontFamily="@font/prata_regular"
-                                android:gravity="center"
-                                android:padding="8dp"
-                                android:text="9 to 17"
-                                android:textColor="?attr/colorPrimary"
-                                android:textSize="20dp" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/tuesdayOpeningHoursTextView"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="10dp"
-                                android:fontFamily="@font/prata_regular"
-                                android:gravity="center"
-                                android:padding="8dp"
-                                android:text="9 to 17"
-                                android:textColor="?attr/colorPrimary"
-                                android:textSize="20dp" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/wednesdayOpeningHoursTextView"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="10dp"
-                                android:fontFamily="@font/prata_regular"
-                                android:gravity="center"
-                                android:padding="8dp"
-                                android:text="9 to 17"
-                                android:textColor="?attr/colorPrimary"
-                                android:textSize="20dp" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/thursdayOpeningHoursTextView"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="10dp"
-                                android:fontFamily="@font/prata_regular"
-                                android:gravity="center"
-                                android:padding="8dp"
-                                android:text="9 to 17"
-                                android:textColor="?attr/colorPrimary"
-                                android:textSize="20dp" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/fridayOpeningHoursTextView"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="10dp"
-                                android:fontFamily="@font/prata_regular"
-                                android:gravity="center"
-                                android:padding="8dp"
-                                android:text="9 to 17"
-                                android:textColor="?attr/colorPrimary"
-                                android:textSize="20dp" />
-                        </TableRow>
-
-                        <TableRow>
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="10dp"
-                                android:fontFamily="@font/prata_regular"
-                                android:gravity="center"
-                                android:padding="8dp"
-                                android:text="@string/saturday" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="10dp"
-                                android:fontFamily="@font/prata_regular"
-                                android:gravity="center"
-                                android:padding="8dp"
-                                android:text="@string/sunday" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="10dp"
-                                android:fontFamily="@font/prata_regular"
-                                android:gravity="center"
-                                android:padding="8dp"
-                                android:text="@string/monday" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="10dp"
-                                android:fontFamily="@font/prata_regular"
-                                android:gravity="center"
-                                android:padding="8dp"
-                                android:text="@string/tuesday" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="10dp"
-                                android:fontFamily="@font/prata_regular"
-                                android:gravity="center"
-                                android:padding="8dp"
-                                android:text="@string/wednesday" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="10dp"
-                                android:fontFamily="@font/prata_regular"
-                                android:gravity="center"
-                                android:padding="8dp"
-                                android:text="@string/thursday" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="10dp"
-                                android:fontFamily="@font/prata_regular"
-                                android:gravity="center"
-                                android:padding="8dp"
-                                android:text="@string/friday" />
-                        </TableRow>
-
-                    </TableLayout>
-                </HorizontalScrollView>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:fontFamily="@font/prata_regular"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="@string/friday" />
+                </LinearLayout>
 
                 <TableRow
                     android:layout_width="match_parent"

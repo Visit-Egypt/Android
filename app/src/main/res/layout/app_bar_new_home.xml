@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         app:elevation="0dp">
-        <!--        android:theme="@style/Theme.VisitEgypt.AppBarOverlay"-->
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
