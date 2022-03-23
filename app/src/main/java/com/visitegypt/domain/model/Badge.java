@@ -25,6 +25,8 @@ public class Badge {
     @SerializedName("badge_frame_image_url")
     private boolean pinned;
     private String placeId;
+    @SerializedName("city")
+    private String city;
 
     @Deprecated
     private String badgeFrameUrl;
@@ -35,16 +37,13 @@ public class Badge {
         this.pinned = pinned;
     }
 
-    public Badge(String id, String imageUrl, boolean owned, Type type, int xp) {
+    public Badge(String id, String imageUrl, boolean owned, Type type, int xp, String city) {
         this.id = id;
         this.imageUrl = imageUrl;
         this.owned = owned;
         this.type = type.ordinal();
         this.xp = xp;
-    }
-
-    public String getTitle() {
-        return title;
+        this.city = city;
     }
 
     public Badge(String imageUrl) {
@@ -52,7 +51,14 @@ public class Badge {
     }
 
     public Badge() {
+    }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getId() {
@@ -61,6 +67,14 @@ public class Badge {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getImageUrl() {
@@ -93,10 +107,6 @@ public class Badge {
 
     public void setXp(int xp) {
         this.xp = xp;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getDescription() {
