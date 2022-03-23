@@ -10,12 +10,16 @@ import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.Item;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.usecase.GetBadgesOfPlaceUseCase;
 import com.visitegypt.domain.usecase.GetBadgesOfUserUseCase;
 import com.visitegypt.domain.usecase.GetItemsUseCase;
 import com.visitegypt.domain.usecase.GetPlaceDetailUseCase;
+import com.visitegypt.domain.usecase.GetUserPlaceActivityUseCase;
 import com.visitegypt.domain.usecase.UpdateBadgeOfUserUseCase;
 import com.visitegypt.domain.usecase.UpdateUserBadgeTaskProgUseCase;
+import com.visitegypt.domain.usecase.UpdateUserPlaceActivityUseCase;
+import com.visitegypt.utils.Constants;
 
 import java.util.List;
 
@@ -27,25 +31,34 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class GamificationViewModel extends ViewModel {
     private static final String TAG = "Gamification ViewModel";
-    SharedPreferences sharedPreferences;
-    GetPlaceDetailUseCase getPlaceDetailUseCase;
+
+    MutableLiveData<List<PlaceActivity>> userPlaceActivitiesMutableLiveData = new MutableLiveData<>();
+
     MutableLiveData<Place> placesMutableLiveData = new MutableLiveData<>();
     MutableLiveData<List<Item>> itemMutableLiveData = new MutableLiveData<>();
     MutableLiveData<List<Badge>> badgesMutableLiveData = new MutableLiveData<>();
+    private SharedPreferences sharedPreferences;
 
-    private String placeId;
     private GetItemsUseCase getItemsUseCase;
     private GetBadgesOfUserUseCase getBadgesOfUserUseCase;
     private UpdateUserBadgeTaskProgUseCase updateUserBadgeTaskProgUseCase;
     private UpdateBadgeOfUserUseCase updateBadgeOfUserUseCase;
     private GetBadgesOfPlaceUseCase getBadgesOfPlaceUseCase;
+    private UpdateUserPlaceActivityUseCase updateUserPlaceActivityUseCase;
+    private GetUserPlaceActivityUseCase getUserPlaceActivityUseCase;
+    private GetPlaceDetailUseCase getPlaceDetailUseCase;
+
+    private String placeId;
+    private PlaceActivity placeActivity;
 
     @Inject
     public GamificationViewModel(SharedPreferences sharedPreferences, GetPlaceDetailUseCase getPlaceDetailUseCase,
                                  GetItemsUseCase getItemsUseCase, UpdateBadgeOfUserUseCase updateBadgeOfUserUseCase,
                                  GetBadgesOfUserUseCase getBadgesOfUserUseCase,
                                  UpdateUserBadgeTaskProgUseCase updateUserBadgeTaskProgUseCase,
-                                 GetBadgesOfPlaceUseCase getBadgesOfPlaceUseCase) {
+                                 GetBadgesOfPlaceUseCase getBadgesOfPlaceUseCase,
+                                 UpdateUserPlaceActivityUseCase updateUserPlaceActivityUseCase,
+                                 GetUserPlaceActivityUseCase getUserPlaceActivityUseCase) {
         this.getPlaceDetailUseCase = getPlaceDetailUseCase;
         this.getItemsUseCase = getItemsUseCase;
         this.sharedPreferences = sharedPreferences;
@@ -53,6 +66,8 @@ public class GamificationViewModel extends ViewModel {
         this.updateUserBadgeTaskProgUseCase = updateUserBadgeTaskProgUseCase;
         this.updateBadgeOfUserUseCase = updateBadgeOfUserUseCase;
         this.getBadgesOfPlaceUseCase = getBadgesOfPlaceUseCase;
+        this.updateUserPlaceActivityUseCase = updateUserPlaceActivityUseCase;
+        this.getUserPlaceActivityUseCase = getUserPlaceActivityUseCase;
     }
 
 
@@ -65,6 +80,41 @@ public class GamificationViewModel extends ViewModel {
 
     public void setPlaceId(String placeId) {
         this.placeId = placeId;
+    }
+
+    public void setPlaceActivity(PlaceActivity placeActivity) {
+        this.placeActivity = placeActivity;
+    }
+
+    public void updatePlaceActivityForUser() throws Exception {
+        if (placeActivity == null) throw new Exception("must call setPlaceActivity");
+        if (placeActivity.getProgress() != placeActivity.getMaxProgress()) {
+            placeActivity.setProgress(placeActivity.getProgress() + 1);
+            updateUserPlaceActivityUseCase.setPlaceActivity(placeActivity);
+            updateUserPlaceActivityUseCase.execute(placeActivities -> {
+
+            }, throwable -> {
+                Log.e(TAG, "updatePlaceActivityForUser: failed to update activity progress" + throwable.getMessage());
+            });
+        }
+    }
+
+    private void getPlaceActivity() {
+
+    }
+
+    public void getUserPlaceActivity() {
+        // TODO getUserPlaceActivityUseCase.setUserId();
+        String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
+        if (userId.isEmpty()) {
+            Log.e(TAG, "getUserPlaceActivity: user not found");
+        }
+        getUserPlaceActivityUseCase.setUserId(userId);
+        getUserPlaceActivityUseCase.execute(placeActivities -> {
+            userPlaceActivitiesMutableLiveData.setValue(placeActivities);
+        }, throwable -> {
+            Log.e(TAG, "getUserPlaceActivity: failed to get place activities for the user: " + throwable.getMessage());
+        });
     }
 
     public void getItemsByPlaceId(String placeId) {

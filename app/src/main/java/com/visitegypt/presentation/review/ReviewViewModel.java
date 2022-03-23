@@ -5,16 +5,19 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.usecase.GetPlaceDetailUseCase;
 import com.visitegypt.domain.usecase.SubmitReviewUseCase;
+import com.visitegypt.domain.usecase.UpdateUserPlaceActivityUseCase;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import com.visitegypt.domain.model.Place;
+
 @HiltViewModel
 public class ReviewViewModel extends ViewModel {
 
@@ -25,11 +28,16 @@ public class ReviewViewModel extends ViewModel {
 
     private SubmitReviewUseCase submitReviewUseCase;
     private GetPlaceDetailUseCase getPlaceDetailUseCase;
+    private UpdateUserPlaceActivityUseCase updateUserPlaceActivityUseCase;
+    private PlaceActivity placeActivity;
 
     @Inject
-    public ReviewViewModel(GetPlaceDetailUseCase getPlaceDetailUseCase,SubmitReviewUseCase submitReviewUseCase) {
+    public ReviewViewModel(GetPlaceDetailUseCase getPlaceDetailUseCase,
+                           SubmitReviewUseCase submitReviewUseCase,
+                           UpdateUserPlaceActivityUseCase updateUserPlaceActivityUseCase) {
         this.getPlaceDetailUseCase = getPlaceDetailUseCase;
         this.submitReviewUseCase = submitReviewUseCase;
+        this.updateUserPlaceActivityUseCase = updateUserPlaceActivityUseCase;
     }
 
 
@@ -45,15 +53,32 @@ public class ReviewViewModel extends ViewModel {
         );
     }
 
+    public void setPlaceActivity(PlaceActivity placeActivity) {
+        this.placeActivity = placeActivity;
+    }
+
     public void submitReview(String placeId, Review review) {
+        if (placeActivity == null) {
+            Log.w(TAG, "submitReview: consider calling setPlaceActivity to update user progress");
+        }
         submitReviewUseCase.setPlaceId(placeId);
         submitReviewUseCase.setReview(review);
         submitReviewUseCase.execute(reviews -> {
             Log.d(TAG, "submitReview: Review is submitted");
             reviewMutableLiveData.setValue(reviews);
-
+            if (placeActivity != null) {
+                if (placeActivity.getProgress() != placeActivity.getMaxProgress()) {
+                    placeActivity.setProgress(placeActivity.getProgress() + 1);
+                }
+                updateUserPlaceActivityUseCase.setPlaceActivity(placeActivity);
+                updateUserPlaceActivityUseCase.execute(placeActivities -> {
+                    Log.d(TAG, "submitReview: updated user progress");
+                }, throwable -> {
+                    Log.e(TAG, "submitReview: " + throwable.getMessage());
+                });
+            }
         }, throwable -> {
-            Log.d(TAG, "submitReview: " + throwable.getMessage());
+            Log.e(TAG, "submitReview: " + throwable.getMessage());
         });
 
     }

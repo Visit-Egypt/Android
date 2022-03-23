@@ -15,12 +15,13 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnGetStarted"
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:background="@drawable/brown_rounded_button"
         android:text="GET STARTED "
+        android:foreground="?android:selectableItemBackground"
         android:textColor="?attr/colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

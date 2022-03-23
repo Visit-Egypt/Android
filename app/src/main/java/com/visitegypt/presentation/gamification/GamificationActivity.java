@@ -238,22 +238,15 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
         userLocationLoaded = new MutableLiveData<>();
-
-    }
-
-    private void showReview() {
-        // TODO
     }
 
     private void showPostPost() {
-        // TODO
         Intent intent = new Intent(this, PostActivity.class);
         intent.putExtra(PLACE_ID, placeId);
         startActivity(intent);
     }
 
     private void showPostStory() {
-        // TODO
         Toast.makeText(this, "Stay tuned, coming soon...", Toast.LENGTH_SHORT).show();
     }
 
@@ -267,10 +260,9 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
 
         try {
             ArrayList<PlaceActivity> placeActivities = place.getPlaceActivities();
-            int totalXp = 0, userProgress = 0, maxProgress = 0;
+            int totalXp = 0, maxProgress = 0;
             for (PlaceActivity placeActivity : placeActivities) {
                 totalXp += placeActivity.getXp();
-                userProgress += placeActivity.getProgress();
                 maxProgress += placeActivity.getMaxProgress();
                 switch (placeActivity.getType()) {
                     case PlaceActivity.VISIT_LOCATION:
@@ -290,20 +282,57 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                         storyXpTextView.setText(placeActivity.getMaxProgress());
                         break;
                     case PlaceActivity.GENERAL:
-                        // pass TODO
                         break;
                     default:
                         break;
                 }
             }
-            placeProgressIndicator.setMax(maxProgress);
-            placeProgressIndicator.setProgress(userProgress, true);
+            placeProgressIndicator.setMax(place.getMaxProgress());
             placeRemainingActivitiesTextView.setText(totalXp + "xp remaining");
 
         } catch (Exception e) {
             Log.e(TAG, "fillActivity: failed to get place activities xp", e);
         }
 
+
+        // set user progress TODO
+        gamificationViewModel.userPlaceActivitiesMutableLiveData.observe(this, placeActivities -> {
+            try {
+                int userProgress;
+                for (PlaceActivity placeActivity : placeActivities) {
+                    switch (placeActivity.getType()) {
+                        case PlaceActivity.VISIT_LOCATION:
+                            if (placeActivity.getProgress() == placeActivity.getMaxProgress())
+                                distanceAwayTextView.setText("Complete");
+                            break;
+                        case PlaceActivity.POST_REVIEW:
+                            if (placeActivity.getProgress() == placeActivity.getMaxProgress()) {
+                                // TODO user finished reviewing
+                            }
+                            break;
+                        case PlaceActivity.ASK_CHAT_BOT:
+                            if (placeActivity.getProgress() == placeActivity.getMaxProgress()) {
+                                // TODO user finsihed chatbot
+                            }
+                            break;
+                        case PlaceActivity.POST_POST:
+                            if (placeActivity.getProgress() == placeActivity.getMaxProgress()) {
+                                // TODO user finished posting
+                            }
+                            postXpTextView.setText(placeActivity.getMaxProgress());
+                            break;
+                        case PlaceActivity.POST_STORY:
+                            break;
+                        case PlaceActivity.GENERAL:
+                            // pass
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            } catch (Exception ignored) {
+            }
+        });
 
         // TODO: remaining from user progress
         //placeRemainingActivitiesTextView.setText(place);
@@ -334,8 +363,26 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
 
     }
 
+    // call whenever you want to increase an activity's progress
+    private void updatePlaceActivityProgress(PlaceActivity placeActivity) {
+        gamificationViewModel.setPlaceActivity(placeActivity);
+        try {
+            gamificationViewModel.updatePlaceActivityForUser();
+        } catch (Exception e) {
+            // TODO store offline
+            e.printStackTrace();
+        }
+    }
+
     private void confirmLocation() {
         //mapView.onResume();
+        if (placeActivities != null) {
+            for (PlaceActivity placeActivity : placeActivities) {
+                if (placeActivity.getType() == PlaceActivity.VISIT_LOCATION) {
+                    updatePlaceActivityProgress(placeActivity);
+                }
+            }
+        }
     }
 
     private void initPermissions() {
@@ -386,24 +433,20 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         addReviewDialog.setContentView(dialogLayout);
         addReviewDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         addReviewDialog.show();
-        addReviewDialog.findViewById(R.id.submitReviewButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TextInputEditText textInputEditText = (TextInputEditText) addReviewDialog.findViewById(R.id.reviewEditText);
-                String reviewText = textInputEditText.getText().toString().trim();
-                float numStars = ((RatingBar) addReviewDialog.findViewById(R.id.ratingBar)).getRating();
-                Log.d(TAG, "onClick: " + reviewText);
-                if (reviewText.isEmpty()) {
-                    textInputEditText.setError("Review can't be empty");
-                } else {
-
-                    String firstName = sharedPreferences.getString(Constants.SHARED_PREF_FIRST_NAME, "");
-                    String lastName = sharedPreferences.getString(Constants.SHARED_PREF_LAST_NAME, "");
-                    String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
-                    Review review = new Review(numStars, reviewText, firstName + " " + lastName, userId);
-                    reviewViewModel.submitReview(placeId, review);
-                    addReviewDialog.dismiss();
-                }
+        addReviewDialog.findViewById(R.id.submitReviewButton).setOnClickListener(view -> {
+            TextInputEditText textInputEditText = addReviewDialog.findViewById(R.id.reviewEditText);
+            String reviewText = textInputEditText.getText().toString().trim();
+            float numStars = ((RatingBar) addReviewDialog.findViewById(R.id.ratingBar)).getRating();
+            Log.d(TAG, "onClick: " + reviewText);
+            if (reviewText.isEmpty()) {
+                textInputEditText.setError("Review can't be empty");
+            } else {
+                String firstName = sharedPreferences.getString(Constants.SHARED_PREF_FIRST_NAME, "");
+                String lastName = sharedPreferences.getString(Constants.SHARED_PREF_LAST_NAME, "");
+                String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
+                Review review = new Review(numStars, reviewText, firstName + " " + lastName, userId);
+                reviewViewModel.submitReview(placeId, review);
+                addReviewDialog.dismiss();
             }
         });
     }

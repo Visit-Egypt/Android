@@ -14,7 +14,6 @@ import io.reactivex.rxjava3.core.Single;
 public class UpdateUserPlaceActivityUseCase extends SingleUseCase<List<PlaceActivity>> {
     UserRepository userRepository;
     private PlaceActivity placeActivity;
-    private String activityId;
 
     @Inject
     public UpdateUserPlaceActivityUseCase(@Named("Normal") UserRepository userRepository) {
@@ -29,16 +28,8 @@ public class UpdateUserPlaceActivityUseCase extends SingleUseCase<List<PlaceActi
         this.placeActivity = placeActivity;
     }
 
-    public String getActivityId() {
-        return activityId;
-    }
-
-    public void setActivityId(String activityId) {
-        this.activityId = activityId;
-    }
-
     @Override
     protected Single<List<PlaceActivity>> buildSingleUseCase() {
-        return userRepository.updateUserPlaceActivity(activityId, placeActivity);
+        return userRepository.updateUserPlaceActivity(placeActivity.getId(), placeActivity);
     }
 }

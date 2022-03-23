@@ -26,6 +26,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SplashActivity.this, SignInActivity.class));
+                finish();
             }
         });
     }

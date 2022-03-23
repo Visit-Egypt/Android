@@ -10,7 +10,6 @@
     app:cardCornerRadius="12dp">
 
     <com.google.android.gms.maps.MapView
-        android:id="@+id/mapViewGamificationActivity"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_alignParentStart="true"

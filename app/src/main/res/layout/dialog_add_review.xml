@@ -20,7 +20,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/reviewEditText"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="80dp"
             android:gravity="top"
             android:inputType="textCapSentences|textMultiLine"
             android:maxLength="2000"
@@ -39,6 +39,7 @@
         android:stepSize="0.5" />
 
     <com.google.android.material.button.MaterialButton
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:id="@+id/submitReviewButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

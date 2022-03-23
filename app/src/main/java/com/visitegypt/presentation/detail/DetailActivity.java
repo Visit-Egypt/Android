@@ -20,6 +20,7 @@ import static com.visitegypt.utils.Constants.Days.WEDNESDAY;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,7 +29,9 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -36,6 +39,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -63,7 +73,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 @AndroidEntryPoint
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String TAG = "Detail Activity";
 
@@ -91,6 +101,9 @@ public class DetailActivity extends AppCompatActivity {
     private LinearLayout detailLayout;
     private ScrollView shimmerScrollView;
     private CircularImageView backArrowCircularImageButton;
+    private MapView mapView;
+
+    private Place place;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,9 +130,9 @@ public class DetailActivity extends AppCompatActivity {
 
         initViews();
         if (placeIdFromReview != null) {
-            initViewModel(placeIdFromReview);
+            initViewModel(placeIdFromReview, savedInstanceState);
         } else {
-            initViewModel(placeId);
+            initViewModel(placeId, savedInstanceState);
         }
         chatBot();
     }
@@ -181,9 +194,11 @@ public class DetailActivity extends AppCompatActivity {
         sliderView.setAutoCycle(true);
         sliderView.startAutoCycle();
 
+        mapView = findViewById(R.id.detailActivityMapView);
+        mapView.getMapAsync(this);
     }
 
-    private void initViewModel(String placeId) {
+    private void initViewModel(String placeId, Bundle savedInstances) {
         detailViewModel = new ViewModelProvider(this).get(DetailViewModel.class);
         reviewViewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
         detailViewModel.getPlace(placeId);
@@ -211,58 +226,60 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        detailViewModel.placesMutableLiveData.observe(this, new Observer<Place>() {
-            @Override
-            public void onChanged(Place place) {
-                stopShimmerAnimation();
-                setLayoutVisible();
-                setShimmersGone();
-                if (place.getImageUrls() != null) {
-                    for (String url : place.getImageUrls()) {
-                        sliderArrayList.add(new Slider(url));
-                    }
-                    sliderAdapter.updateArrayList(sliderArrayList);
-                } else if (place.getDefaultImage() != null) {
-                    sliderArrayList.add(new Slider(place.getDefaultImage()));
-                } else {
-                    Log.e(TAG, "no images found");
-                }
-                if (place.getTicketPrices() != null) {
-                    try {
-                        foreignerAdultPriceTextView.setText(place.getTicketPrices().get(FOREIGNER_ADULT.toString()).toString());
-                        egyptianAdultPriceTextView.setText(place.getTicketPrices().get(EGYPTIAN_ADULT.toString()).toString());
-                        egyptianStudentTextView.setText(place.getTicketPrices().get(EGYPTIAN_STUDENT.toString()).toString());
-                        foreignerStudentPriceTextView.setText(place.getTicketPrices().get(FOREIGNER_STUDENT.toString()).toString());
-                        foreignerPhotoPriceTextView.setText(place.getTicketPrices().get(FOREIGNER_ADULT_PHOTO.toString()).toString());
-                        foreignerVideoPriceTextView.setText(place.getTicketPrices().get(FOREIGNER_ADULT_VIDEO.toString()).toString());
-                        egyptianVideoPriceTextView.setText(place.getTicketPrices().get(EGYPTIAN_VIDEO.toString()).toString());
-                        egyptianPhotoPriceTextView.setText(place.getTicketPrices().get(EGYPTIAN_PHOTO.toString()).toString());
-                        if (place.getTicketPrices().get(CHILDREN.toString()) == 0) {
-                            childrenPriceTextView.setText("FREE");
-                        } else {
-                            childrenPriceTextView.setText(place.getTicketPrices().get(CHILDREN.toString()).toString());
-                        }
-                    } catch (Exception e) {
-                        Log.e(TAG, "setting ticket prices failed: " + e.getMessage());
-                    }
-                }
-                if (place.getOpeningHours() != null) {
-                    try {
-                        saturdayOpeningHours.setText(place.getOpeningHours().get(SATURDAY));
-                        sundayOpeningHours.setText(place.getOpeningHours().get(SUNDAY));
-                        mondayOpeningHours.setText(place.getOpeningHours().get(MONDAY));
-                        tuesdayOpeningHours.setText(place.getOpeningHours().get(TUESDAY));
-                        wednesdayOpeningHours.setText(place.getOpeningHours().get(WEDNESDAY));
-                        thursdayOpeningHours.setText(place.getOpeningHours().get(THURSDAY));
-                        fridayOpeningHours.setText(place.getOpeningHours().get(FRIDAY));
+        detailViewModel.placesMutableLiveData.observe(this, place -> {
 
-                    } catch (Exception e) {
-                        Log.e(TAG, "setting opening hours failed: " + e.getMessage());
-                    }
+            DetailActivity.this.place = place;
+            stopShimmerAnimation();
+            setLayoutVisible();
+            setShimmersGone();
+
+            mapView.getMapAsync(DetailActivity.this);
+            mapView.onCreate(savedInstances);
+
+            if (place.getImageUrls() != null) {
+                for (String url : place.getImageUrls()) {
+                    sliderArrayList.add(new Slider(url));
                 }
-                placeTitleTextView.setText(place.getTitle());
-                descriptionTextView.setText(place.getLongDescription());
+                sliderAdapter.updateArrayList(sliderArrayList);
+            } else if (place.getDefaultImage() != null) {
+                sliderArrayList.add(new Slider(place.getDefaultImage()));
+            } else {
+                Log.e(TAG, "no images found");
             }
+            if (place.getTicketPrices() != null) {
+                try {
+                    foreignerAdultPriceTextView.setText(place.getTicketPrices().get(FOREIGNER_ADULT.toString()).toString());
+                    egyptianAdultPriceTextView.setText(place.getTicketPrices().get(EGYPTIAN_ADULT.toString()).toString());
+                    egyptianStudentTextView.setText(place.getTicketPrices().get(EGYPTIAN_STUDENT.toString()).toString());
+                    foreignerStudentPriceTextView.setText(place.getTicketPrices().get(FOREIGNER_STUDENT.toString()).toString());
+                    foreignerPhotoPriceTextView.setText(place.getTicketPrices().get(FOREIGNER_ADULT_PHOTO.toString()).toString());
+                    foreignerVideoPriceTextView.setText(place.getTicketPrices().get(FOREIGNER_ADULT_VIDEO.toString()).toString());
+                    egyptianVideoPriceTextView.setText(place.getTicketPrices().get(EGYPTIAN_VIDEO.toString()).toString());
+                    egyptianPhotoPriceTextView.setText(place.getTicketPrices().get(EGYPTIAN_PHOTO.toString()).toString());
+                    if (place.getTicketPrices().get(CHILDREN.toString()) == 0) {
+                        childrenPriceTextView.setText("FREE");
+                    } else {
+                        childrenPriceTextView.setText(place.getTicketPrices().get(CHILDREN.toString()).toString());
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "setting ticket prices failed: " + e.getMessage());
+                }
+            }
+            if (place.getOpeningHours() != null) {
+                try {
+                    saturdayOpeningHours.setText(place.getOpeningHours().get(SATURDAY));
+                    sundayOpeningHours.setText(place.getOpeningHours().get(SUNDAY));
+                    mondayOpeningHours.setText(place.getOpeningHours().get(MONDAY));
+                    tuesdayOpeningHours.setText(place.getOpeningHours().get(TUESDAY));
+                    wednesdayOpeningHours.setText(place.getOpeningHours().get(WEDNESDAY));
+                    thursdayOpeningHours.setText(place.getOpeningHours().get(THURSDAY));
+                    fridayOpeningHours.setText(place.getOpeningHours().get(FRIDAY));
+                } catch (Exception e) {
+                    Log.e(TAG, "setting opening hours failed: " + e.getMessage());
+                }
+            }
+            placeTitleTextView.setText(place.getTitle());
+            descriptionTextView.setText(place.getLongDescription());
         });
     }
 
@@ -302,12 +319,18 @@ public class DetailActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         startShimmerAnimation();
+        if (mapView != null && place != null) {
+            mapView.onResume();
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         stopShimmerAnimation();
+        if (mapView != null && place != null) {
+            mapView.onPause();
+        }
     }
 
     private void showDialog() {
@@ -362,4 +385,42 @@ public class DetailActivity extends AppCompatActivity {
         startActivity(new Intent(DetailActivity.this, Home.class));
     }
 
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+
+        int currentNightMode = this.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                // Night mode is not active on device
+                googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_light_style));
+                break;
+            case Configuration.UI_MODE_NIGHT_YES:
+                // Night mode is active on device
+                googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_night_style));
+                break;
+        }
+
+        if (place == null) {
+            Toast.makeText(this, "still loading...", Toast.LENGTH_SHORT).show();
+        } else {
+            googleMap.setMinZoomPreference(15);
+            googleMap.setMaxZoomPreference(20);
+
+            LatLng location = new LatLng(place.getLatitude(), place.getLongitude());
+            googleMap.addMarker(new MarkerOptions().position(location).title(place.getTitle()));
+//            // Instantiating CircleOptions to draw a circle around the marker
+//            CircleOptions locationCircle = new CircleOptions();
+//            LatLng latLng = new LatLng(place.getLatitude(), place.getLongitude());
+//            locationCircle.center(latLng);
+//            locationCircle.radius(GamificationRules.CONFIRM_LOCATION_CIRCLE_RADIUS);
+//            locationCircle.strokeColor(Color.YELLOW);
+//            locationCircle.fillColor(0x30ff0000);
+//            locationCircle.strokeWidth(2);
+//            googleMap.addCircle(locationCircle);
+            // move camera to place location
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+
+            mapView.onResume();
+        }
+    }
 }
