@@ -13,7 +13,6 @@
         app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbarShimmer"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorOnPrimary"
@@ -53,17 +52,18 @@
         android:orientation="vertical"
         android:padding="8dp">
 
-        <ProgressBar
+        <com.jackandphantom.circularprogressbar.CircleProgressbar
             android:id="@+id/cityBadgePlacesActivityProgressBar"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_margin="5dp"
-            android:indeterminate="false"
-            android:indeterminateOnly="false"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_gravity="center"
-            android:max="100"
-            android:progress="85"
-            android:progressDrawable="@drawable/circular_progressbar" />
+            android:layout_margin="10dp"
+            android:background="@drawable/badge"
+            app:cpb_foregroundProgressColor="#1864c2"
+            app:cpb_foregroundProgressWidth="10"
+            app:cpb_progress="50"
+            app:cpb_roundedCorner="true"
+            app:cpb_touchEnabled="true" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/cityXPlacesActivityTextView"

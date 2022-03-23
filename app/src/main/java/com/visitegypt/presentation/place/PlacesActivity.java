@@ -1,9 +1,11 @@
 package com.visitegypt.presentation.place;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -13,9 +15,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textview.MaterialTextView;
+import com.jackandphantom.circularprogressbar.CircleProgressbar;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.visitegypt.R;
+import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.Place;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -33,7 +40,8 @@ public class PlacesActivity extends AppCompatActivity {
     private RecyclerView placesPlacesActivityRecyclerView;
     private MaterialTextView placeNamePlacesActivityTextView, cityXPlacesActivityTextView;
     private LinearProgressIndicator cityRemainingProgressPlacesActivityProgressIndicator;
-    private ProgressBar cityBadgePlacesActivityProgressBar;
+    private CircleProgressbar cityBadgePlacesActivityProgressBar;
+    private ArrayList<Badge> badges;
 
 
     @Override
@@ -58,12 +66,13 @@ public class PlacesActivity extends AppCompatActivity {
         cityBadgePlacesActivityProgressBar = findViewById(R.id.cityBadgePlacesActivityProgressBar);
         cityXPlacesActivityTextView = findViewById(R.id.cityXPlacesActivityTextView);
 
+        badges = new ArrayList<>();
+
     }
 
     private void initViewModel(String cityName) {
         placesViewModel = new ViewModelProvider(this).get(PlacesViewModel.class);
         placesViewModel.getPlacesInCity(cityName);
-        Log.d(TAG, "initViewModel: placess done ");
 
         placesViewModel.placesMutableLiveData.observe(this, new Observer<List<Place>>() {
             @Override
@@ -73,6 +82,33 @@ public class PlacesActivity extends AppCompatActivity {
 
             }
         });
+
+        placesViewModel.getBadges();
+        placesViewModel.badgesMutableLiveData.observe(this, badges -> {
+            this.badges = (ArrayList<Badge>) badges;
+
+        });
+        for (int i = 0; i < badges.size(); i++) {
+            if (badges.get(i).getCity() == cityName) {
+                Target target = new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        cityBadgePlacesActivityProgressBar.setBackground(new BitmapDrawable(cityBadgePlacesActivityProgressBar.getResources(), bitmap));
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+                };
+                Picasso.get().load(badges.get(i).getImageUrl()).into(target);
+            }
+        }
 
 
     }

@@ -48,176 +48,186 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.cardview.widget.CardView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        app:cardCornerRadius="10dp">
+        android:layout_height="wrap_content">
 
-        <com.smarteist.autoimageslider.SliderView
-            android:id="@+id/slideCitiesActivitySliderView"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            app:sliderAnimationDuration="600"
-            app:sliderAutoCycleDirection="back_and_forth"
-            app:sliderAutoCycleEnabled="true"
-            app:sliderIndicatorAnimationDuration="600"
-            app:sliderIndicatorGravity="center_horizontal|bottom"
-            app:sliderIndicatorMargin="15dp"
-            app:sliderIndicatorOrientation="horizontal"
-            app:sliderIndicatorPadding="3dp"
-            app:sliderIndicatorRadius="2dp"
-            app:sliderIndicatorSelectedColor="?attr/colorOnPrimary"
-            app:sliderIndicatorUnselectedColor="?attr/colorSecondaryVariant"
-            app:sliderScrollTimeInSec="1"
-            app:sliderStartAutoCycle="true" />
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical">
+          <androidx.cardview.widget.CardView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginHorizontal="8dp"
+              app:cardCornerRadius="10dp">
 
-    </androidx.cardview.widget.CardView>
+              <com.smarteist.autoimageslider.SliderView
+                  android:id="@+id/slideCitiesActivitySliderView"
+                  android:layout_width="match_parent"
+                  android:layout_height="150dp"
+                  app:sliderAnimationDuration="600"
+                  app:sliderAutoCycleDirection="back_and_forth"
+                  app:sliderAutoCycleEnabled="true"
+                  app:sliderIndicatorAnimationDuration="600"
+                  app:sliderIndicatorGravity="center_horizontal|bottom"
+                  app:sliderIndicatorMargin="15dp"
+                  app:sliderIndicatorOrientation="horizontal"
+                  app:sliderIndicatorPadding="3dp"
+                  app:sliderIndicatorRadius="2dp"
+                  app:sliderIndicatorSelectedColor="?attr/colorOnPrimary"
+                  app:sliderIndicatorUnselectedColor="?attr/colorSecondaryVariant"
+                  app:sliderScrollTimeInSec="1"
+                  app:sliderStartAutoCycle="true" />
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:cardCornerRadius="10dp">
+          </androidx.cardview.widget.CardView>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/alsharkiaCityLayout"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@drawable/alsharkia">
+          <androidx.cardview.widget.CardView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="8dp"
+              app:cardCornerRadius="10dp">
 
-            <TextView
-                android:id="@+id/alsharkiaRemainingTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:background="@drawable/brown_rounded_button"
-                android:padding="10dp"
-                android:text="5/24"
-                android:textColor="@color/white"
-                android:textSize="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
+              <androidx.constraintlayout.widget.ConstraintLayout
+                  android:id="@+id/alsharkiaCityLayout"
+                  android:layout_width="match_parent"
+                  android:layout_height="150dp"
+                  android:background="@drawable/alsharkia">
 
-                app:layout_constraintTop_toTopOf="parent" />
+                  <TextView
+                      android:id="@+id/alsharkiaRemainingTextView"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_margin="8dp"
+                      android:background="@drawable/brown_rounded_button"
+                      android:padding="10dp"
+                      android:text="5/24"
+                      android:textColor="@color/white"
+                      android:textSize="16dp"
+                      app:layout_constraintEnd_toEndOf="parent"
 
-            <TextView
-                android:id="@+id/alsharkiaCityTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="Al-Sharkia"
-                android:textColor="@color/white"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                      app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                  <TextView
+                      android:id="@+id/alsharkiaCityTextView"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_margin="8dp"
+                      android:text="Al-Sharkia"
+                      android:textColor="@color/white"
+                      android:textSize="20dp"
+                      android:textStyle="bold"
+                      app:layout_constraintBottom_toBottomOf="parent"
+                      app:layout_constraintLeft_toLeftOf="parent" />
+
+              </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </androidx.cardview.widget.CardView>
+          </androidx.cardview.widget.CardView>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/alexCityLayout"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_margin="8dp"
-        android:background="@drawable/alex">
+          <androidx.constraintlayout.widget.ConstraintLayout
+              android:id="@+id/alexCityLayout"
+              android:layout_width="match_parent"
+              android:layout_height="150dp"
+              android:layout_margin="8dp"
+              android:background="@drawable/alex">
 
-        <TextView
-            android:id="@+id/alexRemainingTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="@drawable/brown_rounded_button"
-            android:padding="10dp"
-            android:text="5/24"
-            android:textColor="@color/white"
-            android:textSize="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
+              <TextView
+                  android:id="@+id/alexRemainingTextView"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_margin="8dp"
+                  android:background="@drawable/brown_rounded_button"
+                  android:padding="10dp"
+                  android:text="5/24"
+                  android:textColor="@color/white"
+                  android:textSize="16dp"
+                  app:layout_constraintEnd_toEndOf="parent"
 
-            app:layout_constraintTop_toTopOf="parent" />
+                  app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/alexCityTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="Alexandria"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent" />
+              <TextView
+                  android:id="@+id/alexCityTextView"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_margin="8dp"
+                  android:text="Alexandria"
+                  android:textColor="@color/white"
+                  android:textSize="20dp"
+                  android:textStyle="bold"
+                  app:layout_constraintBottom_toBottomOf="parent"
+                  app:layout_constraintLeft_toLeftOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+          </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cairoCityLayout"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_margin="8dp"
-        android:background="@drawable/cairo">
+          <androidx.constraintlayout.widget.ConstraintLayout
+              android:id="@+id/cairoCityLayout"
+              android:layout_width="match_parent"
+              android:layout_height="150dp"
+              android:layout_margin="8dp"
+              android:background="@drawable/cairo">
 
-        <TextView
-            android:id="@+id/cairoRemainingTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="@drawable/brown_rounded_button"
-            android:padding="10dp"
-            android:text="5/24"
-            android:textColor="@color/white"
-            android:textSize="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+              <TextView
+                  android:id="@+id/cairoRemainingTextView"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_margin="8dp"
+                  android:background="@drawable/brown_rounded_button"
+                  android:padding="10dp"
+                  android:text="5/24"
+                  android:textColor="@color/white"
+                  android:textSize="16dp"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/cairoCityTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="Cairo"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent" />
+              <TextView
+                  android:id="@+id/cairoCityTextView"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_margin="8dp"
+                  android:text="Cairo"
+                  android:textColor="@color/white"
+                  android:textSize="20dp"
+                  android:textStyle="bold"
+                  app:layout_constraintBottom_toBottomOf="parent"
+                  app:layout_constraintLeft_toLeftOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+          </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/luxorCityLayout"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_margin="8dp"
-        android:background="@drawable/luxor2">
+          <androidx.constraintlayout.widget.ConstraintLayout
+              android:id="@+id/luxorCityLayout"
+              android:layout_width="match_parent"
+              android:layout_height="150dp"
+              android:layout_margin="8dp"
+              android:background="@drawable/luxor2">
 
-        <TextView
-            android:id="@+id/luxorRemainingTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="@drawable/brown_rounded_button"
-            android:padding="10dp"
-            android:text="5/24"
-            android:textColor="@color/white"
-            android:textSize="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+              <TextView
+                  android:id="@+id/luxorRemainingTextView"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_margin="8dp"
+                  android:background="@drawable/brown_rounded_button"
+                  android:padding="10dp"
+                  android:text="5/24"
+                  android:textColor="@color/white"
+                  android:textSize="16dp"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/luxorCityTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="Luxor"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent" />
+              <TextView
+                  android:id="@+id/luxorCityTextView"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_margin="8dp"
+                  android:text="Luxor"
+                  android:textColor="@color/white"
+                  android:textSize="20dp"
+                  android:textStyle="bold"
+                  app:layout_constraintBottom_toBottomOf="parent"
+                  app:layout_constraintLeft_toLeftOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+          </androidx.constraintlayout.widget.ConstraintLayout>
+      </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
