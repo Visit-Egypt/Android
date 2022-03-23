@@ -7,7 +7,6 @@ import static com.visitegypt.utils.UploadUtils.setContext;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -174,36 +173,33 @@ public class PostActivity extends AppCompatActivity {
 
         // set the items in builder
 
-        builder.setItems(optionsMenu, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+        builder.setItems(optionsMenu, (dialogInterface, i) -> {
 
-                if (optionsMenu[i].equals("Take Photo")) {
+            if (optionsMenu[i].equals("Take Photo")) {
 
-                    // Open the camera and get the photo
+                // Open the camera and get the photo
 
-                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(takePicture, 0);
-                } else if (optionsMenu[i].equals("Choose from Gallery")) {
+                Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(takePicture, 0);
+            } else if (optionsMenu[i].equals("Choose from Gallery")) {
 
-                    // choose from  external storage
+                // choose from  external storage
 
-                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(pickPhoto, 1);
+                Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(pickPhoto, 1);
 
-                } else if (optionsMenu[i].equals("Exit")) {
-                    dialogInterface.dismiss();
-                }
-
+            } else if (optionsMenu[i].equals("Exit")) {
+                dialogInterface.dismiss();
             }
+
         });
         builder.show();
     }
-    private void setUserImageImageView()
-    {
-        String url = postsViewModel.getUserImage();
-        if(url != null)
-            Picasso.get().load(url).into(userImageView);
 
+    private void setUserImageImageView() {
+        String url = postsViewModel.getUserImage();
+        if (url != null)
+            if (!url.isEmpty())
+                Picasso.get().load(url).into(userImageView);
     }
 }

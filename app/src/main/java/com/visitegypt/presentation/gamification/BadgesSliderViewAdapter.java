@@ -59,8 +59,13 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
     @Override
     public void onBindViewHolder(SliderAdapterViewHolder viewHolder, final int position) {
         viewHolder.linearLayout.setOnClickListener(view -> showBadgeDialog(badges.get(position)));
+        viewHolder.circleProgressbar.setOnClickListener(view -> showBadgeDialog(badges.get(position)));
+        viewHolder.textView.setOnClickListener(view -> showBadgeDialog(badges.get(position)));
 
         if (badges.get(position).isOwned()) {
+            Log.d(TAG, "onBindViewHolder: owned badge");
+            Log.d(TAG, "onBindViewHolder: badge max progress: " + badges.get(position).getMaxProgress());
+            Log.d(TAG, "onBindViewHolder: badge progress: " + badges.get(position).getMaxProgress());
             viewHolder.circleProgressbar.setMaxProgress(badges.get(position).getMaxProgress());
             viewHolder.circleProgressbar.setProgress(badges.get(position).getMaxProgress());
 
@@ -83,6 +88,9 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
             };
             Picasso.get().load(badges.get(position).getImageUrl()).into(target);
         } else {
+            Log.d(TAG, "onBindViewHolder: unowned badge");
+            Log.d(TAG, "onBindViewHolder: badge max progress: " + badges.get(position).getMaxProgress());
+            Log.d(TAG, "onBindViewHolder: badge progress: " + badges.get(position).getProgress());
             viewHolder.circleProgressbar.setMaxProgress(badges.get(position).getMaxProgress());
             viewHolder.circleProgressbar.setProgress(badges.get(position).getProgress());
 
@@ -114,6 +122,7 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
     }
 
     private void showBadgeDialog(@NonNull Badge badge) {
+        Log.d(TAG, "showBadgeDialog called");
         Dialog dialog = new Dialog(context);
         View v = LayoutInflater.from(context).inflate(R.layout.dialog_badge_gamification, null, false);
 
@@ -125,7 +134,7 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
 
 
         CircleProgressbar circleProgressbar = v.findViewById(R.id.badgeDialogCircleProgressBar);
-        Log.d(TAG, "showLocationDialog: " + badge.getMaxProgress() + " " + badge.getProgress());
+        Log.d(TAG, "show badge dialog: " + badge.getTitle() + ", progress: " + badge.getProgress() + "/" + badge.getMaxProgress());
         circleProgressbar.setMaxProgress(badge.getMaxProgress());
         circleProgressbar.setProgress(badge.getProgress());
         Target target = new Target() {
@@ -150,7 +159,6 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
         RecyclerView recyclerView = v.findViewById(R.id.dialogBadgeRecyclerView);
         GamificationBadgesDialogRecyclerViewAdapter gamificationBadgesDialogRecyclerViewAdapter = new GamificationBadgesDialogRecyclerViewAdapter(badge.getBadgeTasks());
         recyclerView.setAdapter(gamificationBadgesDialogRecyclerViewAdapter);
-
 
         Window window = dialog.getWindow();
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);

@@ -17,7 +17,7 @@ public class Badge {
     private int maxProgress;
     private String title;
     private boolean owned;
-    private int type;
+    private String type;
     private int xp;
     private String description;
     @SerializedName("badge_tasks")
@@ -41,7 +41,7 @@ public class Badge {
         this.id = id;
         this.imageUrl = imageUrl;
         this.owned = owned;
-        this.type = type.ordinal();
+        this.type = Integer.toString(type.ordinal());
         this.xp = xp;
         this.city = city;
     }
@@ -93,11 +93,11 @@ public class Badge {
         this.owned = owned;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 

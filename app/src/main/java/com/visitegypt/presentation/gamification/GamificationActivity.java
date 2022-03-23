@@ -81,7 +81,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     public SharedPreferences sharedPreferences;
     String placeId;
     private ArrayList<PlaceActivity> placeActivities;
-    private ArrayList<Badge> badges;
+    private ArrayList<Badge> placeBadges;
     private Dialog addReviewDialog;
     private ReviewViewModel reviewViewModel;
 
@@ -172,7 +172,9 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         gamificationViewModel.setPlaceId(placeId);
         gamificationViewModel.getPlaceBadges();
         gamificationViewModel.badgesMutableLiveData.observe(this, badges -> {
-            this.badges = (ArrayList<Badge>) badges;
+            this.placeBadges = (ArrayList<Badge>) badges;
+            badgesSliderViewAdapter.setBadges((ArrayList<Badge>) badges);
+            Log.d(TAG, "initViewModels, badge: " + badges.get(0).getTitle());
         });
     }
 
@@ -185,8 +187,8 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         artifactsRecyclerView.setAdapter(artifactsRecyclerViewAdapter);
 
         achievementsRecyclerView = findViewById(R.id.achievementsGamificationActivityRecyclerView);
-        badges = new ArrayList<>();
-        badgesSliderViewAdapter = new BadgesSliderViewAdapter(badges, this);
+        placeBadges = new ArrayList<>();
+        badgesSliderViewAdapter = new BadgesSliderViewAdapter(placeBadges, this);
         achievementsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         achievementsRecyclerView.setAdapter(badgesSliderViewAdapter);
         /***********************************************************************/

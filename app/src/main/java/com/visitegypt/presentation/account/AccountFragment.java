@@ -93,7 +93,7 @@ public class AccountFragment extends Fragment {
                 postCaptionTextView.setText(posts.get(0).getCaption());
             }
         });
-        accountViewModel.mutableLiveDataUserImage.observe(getViewLifecycleOwner(),s -> {
+        accountViewModel.mutableLiveDataUserImage.observe(getViewLifecycleOwner(), s -> {
             if (s != null)
                 Picasso.get().load(s).into(circularAccountImageView);
         });

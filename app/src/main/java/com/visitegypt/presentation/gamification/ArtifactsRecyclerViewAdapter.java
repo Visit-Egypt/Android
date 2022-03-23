@@ -49,20 +49,13 @@ public class ArtifactsRecyclerViewAdapter extends RecyclerView.Adapter<com.visit
         Item currentItem = itemsArrayList.get(position);
         holder.itemTitleTextView.setText(currentItem.getTitle());
 
-        holder.itemTitleTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: kkkkkkkkk");
-                showHints(view, currentItem);
-            }
+        holder.itemTitleTextView.setOnClickListener(view -> {
+            Log.d(TAG, "onClick: kkkkkkkkk");
+            showHints(view, currentItem);
         });
-        holder.itemImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: ssssssssssssss");
-
-                showHints(view, currentItem);
-            }
+        holder.itemImage.setOnClickListener(view -> {
+            Log.d(TAG, "onClick: ssssssssssssss");
+            showHints(view, currentItem);
         });
         if (currentItem.getImageUrls() != null) {
             if (!currentItem.getImageUrls().isEmpty()) {

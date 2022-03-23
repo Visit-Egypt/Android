@@ -130,13 +130,18 @@ public class GamificationViewModel extends ViewModel {
 
     public void getPlaceBadges() {
         getBadgesOfPlaceUseCase.setPlaceId(placeId);
-        getBadgesOfPlaceUseCase.execute(badgeResponse -> badgesMutableLiveData.setValue(badgeResponse.getBadges()), throwable -> Log.e(TAG, "error retrieving badges: " + throwable.getMessage()));
+        getBadgesOfPlaceUseCase.execute(badgeResponse -> {
+                    badgesMutableLiveData.setValue(badgeResponse.getBadges());
+                },
+                throwable -> {
+                    Log.e(TAG, "error retrieving badges: " + throwable.getMessage());
+                });
 
-        getBadgesOfUserUseCase.execute(badges -> {
-            badgesMutableLiveData.setValue(badges);
-        }, throwable -> {
-            Log.e(TAG, "error getting user badges: " + throwable.getMessage());
-        });
+//        getBadgesOfUserUseCase.execute(badges -> {
+//            badgesMutableLiveData.setValue(badges);
+//        }, throwable -> {
+//            Log.e(TAG, "error getting user badges: " + throwable.getMessage());
+//        });
     }
 
     public void updateBadeTaskProgress(BadgeTask badgeTask) {
