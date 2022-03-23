@@ -3,6 +3,7 @@ package com.visitegypt.presentation.post;
 import static com.visitegypt.utils.Constants.SHARED_PREF_FIRST_NAME;
 import static com.visitegypt.utils.Constants.SHARED_PREF_LAST_NAME;
 import static com.visitegypt.utils.Constants.SHARED_PREF_USER_ID;
+import static com.visitegypt.utils.Constants.SHARED_PREF_USER_IMAGE;
 
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -30,7 +31,6 @@ public class PostsViewModel extends ViewModel implements UploadUserPhotoUseCase.
     private static final String TAG = "Posts ViewModel";
     AddNewPostUseCase addNewPostUseCase;
     SharedPreferences sharedPreferences;
-
     private Post post;
     private List<String> imageList = new ArrayList<>();
     MutableLiveData<List<Badge>> badgesMutableLiveData = new MutableLiveData<>();
@@ -120,5 +120,9 @@ public class PostsViewModel extends ViewModel implements UploadUserPhotoUseCase.
         }, throwable -> {
 
         });
+    }
+    public String getUserImage()
+    {
+        return sharedPreferences.getString(SHARED_PREF_USER_IMAGE,"");
     }
 }

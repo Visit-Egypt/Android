@@ -22,6 +22,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.mikhaellopez.circularimageview.CircularImageView;
+import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.utils.Constants;
 
@@ -36,6 +38,7 @@ public class PostActivity extends AppCompatActivity {
     private File file;
     private EditText postTxt;
     private String placeId;
+    private CircularImageView userImageView;
 
 
     @Override
@@ -57,8 +60,11 @@ public class PostActivity extends AppCompatActivity {
         postTxt = findViewById(R.id.postTextView);
         postsViewModel = new ViewModelProvider(this).get(PostsViewModel.class);
         postsViewModel.initCallBack();
+        userImageView = findViewById(R.id.userImageView);
+        setUserImageImageView();
         liveDataObserev();
     }
+
 
     public void cancelOnClick(View view) {
         onBackPressed();
@@ -192,5 +198,12 @@ public class PostActivity extends AppCompatActivity {
             }
         });
         builder.show();
+    }
+    private void setUserImageImageView()
+    {
+        String url = postsViewModel.getUserImage();
+        if(url != null)
+            Picasso.get().load(url).into(userImageView);
+
     }
 }

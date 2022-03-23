@@ -9,6 +9,7 @@ public class Constants {
     public static final String SHARED_PREF_USER_ACCESS_TOKEN = "accessToken";
     public static final String SHARED_PREF_USER_ID = "userId";
     public static final String SHARED_PREF_TOKEN_TYPE = "tokenType";
+    public static final String SHARED_PREF_USER_IMAGE = "userImage";
     public static final String SHARED_PREF_EMAIL = "email";
     public static final String SHARED_PREF_USER_REFRESH_TOKEN = "refreshToken";
     public static final String SHARED_PREF_FIRST_NAME = "firstName";

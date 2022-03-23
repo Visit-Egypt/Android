@@ -1,5 +1,7 @@
 package com.visitegypt.presentation.account;
 
+import static com.visitegypt.utils.Constants.SHARED_PREF_USER_IMAGE;
+
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -31,6 +33,7 @@ public class AccountViewModel extends ViewModel {
     SharedPreferences sharedPreferences;
     MutableLiveData<List<Post>> mutableLiveDataMyPosts = new MutableLiveData<>();
     MutableLiveData<String> mutableLiveDataName = new MutableLiveData<>();
+    MutableLiveData<String> mutableLiveDataUserImage = new MutableLiveData<>();
     MutableLiveData<ArrayList<Badge>> badgesMutableLiveData = new MutableLiveData<>();
     GetPostsByUser getPostsByUser;
     GetBadgesOfUserUseCase getBadgesOfUserUseCase;
@@ -44,6 +47,7 @@ public class AccountViewModel extends ViewModel {
 
     public void getUserInformation() {
         mutableLiveDataName.setValue(sharedPreferences.getString(Constants.SHARED_PREF_FIRST_NAME, null));
+        mutableLiveDataUserImage.setValue(sharedPreferences.getString(SHARED_PREF_USER_IMAGE,""));
         getUserPosts();
 
     }

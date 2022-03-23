@@ -8,13 +8,12 @@ import static com.visitegypt.utils.UploadUtils.getRealPathFromUri;
 import static com.visitegypt.utils.UploadUtils.setContext;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.ContentUris;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
+
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,7 +30,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -40,6 +38,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
@@ -67,6 +66,7 @@ public class SettingFragment extends Fragment {
     CircularImageView userImageView;
     View settingFragment;
     SettingViewModel settingViewModel;
+    private  String userImage ;
     File file = null;
     private static final int PHOTO_SELECTED = 1;
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
@@ -80,6 +80,7 @@ public class SettingFragment extends Fragment {
         settingViewModel =
                 new ViewModelProvider(this).get(SettingViewModel.class);
         init();
+        settingViewModel.initCallBack();
         getUserData();
         changeImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,14 +90,6 @@ public class SettingFragment extends Fragment {
                 }
             }
         });
-//        logOutButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                settingViewModel.logOut();
-//                redirect();
-//
-//            }
-//        });
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,6 +99,7 @@ public class SettingFragment extends Fragment {
                 String userPhoneNumber = phone.getText().toString();
                 String userEmail = email.getText().toString();
                 String userPassword = password.getText().toString();
+
 
                 if (userFirstName != null && !userFirstName.isEmpty())
                     userUpdateRequest.setFirstName(userFirstName);
@@ -117,6 +111,8 @@ public class SettingFragment extends Fragment {
                     userUpdateRequest.setPassword(userPassword);
                 if (userEmail != null && !userEmail.isEmpty())
                     userUpdateRequest.setEmail(userEmail);
+                if (userImage != null && !userImage.isEmpty())
+                    userUpdateRequest.setPhotoLink(userImage);
 
                 settingViewModel.updateUser(userUpdateRequest);
             }
@@ -124,6 +120,18 @@ public class SettingFragment extends Fragment {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+            }
+        });
+        settingViewModel.url.observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if (s != null)
+                {
+                    userImage = s;
+                    Picasso.get().load(s).into(userImageView);
+
+                }
 
             }
         });

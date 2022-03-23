@@ -11,11 +11,16 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -26,13 +31,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.databinding.ActivityNewHomeBinding;
 import com.visitegypt.domain.model.SearchPlace;
+import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
+import com.visitegypt.presentation.setting.SettingFragment;
 import com.visitegypt.presentation.setting.SettingViewModel;
 import com.visitegypt.presentation.signin.SignInActivity;
 import com.visitegypt.utils.UploadUtils;
@@ -60,6 +69,8 @@ public class Home extends AppCompatActivity {
     private static final String TAG = "Home";
     private TextView txtNotFound;
     private SearchViewModel searchViewModel;
+    private MaterialButton editButton;
+   private ImageView userImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,30 +83,14 @@ public class Home extends AppCompatActivity {
         startChatBot();
         searchResult();
         homeViewModel.getUserInfo();
-        homeViewModel.userEmailMutable.observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                Log.d("TAG", "onChanged:  String" + s);
-                txtEmail.setText(s);
-            }
-        });
-        homeViewModel.userNameMutable.observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
+        homeViewModel.getUserData();
+        ViewModelObserve();
+        logOut();
 
-                txtName.setText(s);
-            }
-        });
-        navigationView.getMenu().findItem(R.id.logout).setOnMenuItemClickListener(menuItem -> {
-            homeViewModel.logOut();
-            return false;
-        });
-        homeViewModel.isLoged.observe(this, new Observer<Boolean>() {
+        editButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(Boolean aBoolean) {
-                if (!aBoolean) {
-                    redirect();
-                }
+            public void onClick(View v) {
+                changeFragment(new SettingFragment());
             }
         });
 
@@ -137,6 +132,7 @@ public class Home extends AppCompatActivity {
         navigation = binding.appBarNewHome.navigation;
         DrawerLayout drawer = binding.drawerLayout;
         navigationView = binding.navView;
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_discover,
                 R.id.account,
@@ -154,6 +150,9 @@ public class Home extends AppCompatActivity {
         header = navigationView.getHeaderView(0);
         txtName = header.findViewById(R.id.nameNavHeaderTextView);
         txtEmail = header.findViewById(R.id.emailTextView);
+        userImageView = header.findViewById(R.id.userImageImageView);
+        editButton = header.findViewById(R.id.editButton);
+
 
         /**********************************************/
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
@@ -277,9 +276,45 @@ public class Home extends AppCompatActivity {
     }
 
 
-
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
 
+    public void changeFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.nav_host_fragment_content_new_home, fragment).commit();
+    }
+
+    private void ViewModelObserve() {
+
+
+        homeViewModel.isLoged.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (!aBoolean) {
+                    redirect();
+                }
+            }
+        });
+        homeViewModel.mutableLiveDataUser.observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                txtName.setText(user.getFirstName() + " " + user.getLastName());
+                txtEmail.setText(user.getEmail());
+                if (user.getPhotoUrl() != null )
+                {
+                    Log.d(TAG, "onChanged: "+user.getPhotoUrl());
+                    homeViewModel.saveUserImage(user.getPhotoUrl());
+                    Picasso.get().load(user.getPhotoUrl()).into(userImageView);
+                }
+
+            }
+        });
+    }
+    public void logOut()
+    {
+        navigationView.getMenu().findItem(R.id.logout).setOnMenuItemClickListener(menuItem -> {
+            homeViewModel.logOut();
+            return false;
+        });
+    }
 }

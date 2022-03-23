@@ -15,6 +15,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mikhaellopez.circularimageview.CircularImageView;
+import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.presentation.gamification.BadgesSliderViewAdapter;
@@ -34,7 +36,7 @@ public class AccountFragment extends Fragment {
     private TextView postNameTextView, postDateTextView, postCaptionTextView, postImageView;
     private AccountViewModel accountViewModel;
     private Button gamificationStartPlayingButton;
-
+    private CircularImageView circularAccountImageView;
     private RecyclerView badgesRecyclerView;
     private BadgesSliderViewAdapter badgesSliderViewAdapter;
     private ArrayList<Badge> userBadges;
@@ -57,6 +59,7 @@ public class AccountFragment extends Fragment {
         followersNumberTextView = accountView.findViewById(R.id.followersNumberTextView);
         postNameTextView = accountView.findViewById(R.id.userNamePostTextView);
         postCaptionTextView = accountView.findViewById(R.id.postCaptionTextView);
+        circularAccountImageView = accountView.findViewById(R.id.circularAccountImageView);
 
         gamificationStartPlayingButton = accountView.findViewById(R.id.startPlayingGamificationButtonAccountFragment);
         gamificationStartPlayingButton.setOnClickListener(view -> {
@@ -89,6 +92,10 @@ public class AccountFragment extends Fragment {
                 postNameTextView.setText(posts.get(0).getUserName());
                 postCaptionTextView.setText(posts.get(0).getCaption());
             }
+        });
+        accountViewModel.mutableLiveDataUserImage.observe(getViewLifecycleOwner(),s -> {
+            if (s != null)
+                Picasso.get().load(s).into(circularAccountImageView);
         });
 
         accountViewModel.getUserBadges();

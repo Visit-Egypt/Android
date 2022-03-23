@@ -1,6 +1,7 @@
 package com.visitegypt.presentation.setting;
 
 import static com.visitegypt.utils.Constants.SHARED_PREF_USER_ID;
+import static com.visitegypt.utils.Constants.SHARED_PREF_USER_IMAGE;
 
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -21,6 +22,7 @@ import com.visitegypt.utils.Constants;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -30,14 +32,14 @@ import okhttp3.ResponseBody;
 import retrofit2.HttpException;
 
 @HiltViewModel
-public class SettingViewModel extends ViewModel {
+public class SettingViewModel extends ViewModel implements UploadUserPhotoUseCase.uploadPhotoApiCallBack {
     private static final String TAG = "Setting View Model";
     GetUserUseCase getUserUseCase;
     UpdateUserUseCase updateUserUseCase;
     LogOutUseCase logOutUseCase;
     SharedPreferences sharedPreferences;
     UploadUserPhotoUseCase uploadUserPhotoUseCase;
-
+    MutableLiveData<String> url = new MutableLiveData<>();
     MutableLiveData<Boolean> isLoged = new MutableLiveData<>();
     public MutableLiveData<User> mutableLiveDataUser = new MutableLiveData<>();
 
@@ -106,6 +108,7 @@ public class SettingViewModel extends ViewModel {
             @Override
             public void accept(User user) throws Throwable {
                 saveNewData(user);
+
                 mutableLiveDataUser.setValue(user);
             }
         }, new Consumer<Throwable>() {
@@ -132,7 +135,20 @@ public class SettingViewModel extends ViewModel {
     public void saveNewData(User user) {
         sharedPreferences.edit()
                 .putString(SHARED_PREF_USER_ID, user.getUserId())
+                .putString(SHARED_PREF_USER_IMAGE,user.getPhotoUrl())
                 .putString(Constants.SHARED_PREF_FIRST_NAME, user.getFirstName() + " " + user.getLastName())
                 .apply();
+    }
+
+    @Override
+    public void confirmUpload(int code, List<String> url) {
+        if (code == 200) {
+            this.url.setValue(url.get(0));
+
+        }
+    }
+
+    public void initCallBack() {
+        uploadUserPhotoUseCase.setUploadPhotoApiCallBack(this::confirmUpload);
     }
 }

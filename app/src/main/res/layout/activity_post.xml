@@ -47,7 +47,7 @@
         android:padding="8dp">
 
         <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/userImageImageView"
+            android:id="@+id/userImageView"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="8dp"
