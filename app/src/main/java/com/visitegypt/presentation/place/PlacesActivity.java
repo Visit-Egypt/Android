@@ -10,6 +10,7 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -59,6 +60,8 @@ public class PlacesActivity extends AppCompatActivity {
         placesCityRecyclerViewAdapter = new PlacesCityRecyclerViewAdapter(this);
         placesPlacesActivityRecyclerView.setLayoutManager(new LinearLayoutManager(PlacesActivity.this, LinearLayoutManager.VERTICAL, true));
         placesPlacesActivityRecyclerView.setAdapter(placesCityRecyclerViewAdapter);
+        placesPlacesActivityRecyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+
         placeNamePlacesActivityTextView = findViewById(R.id.cityTitlePlacesActivityTextView);
         placeNamePlacesActivityTextView.setText(cityName);
 

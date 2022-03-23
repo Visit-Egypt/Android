@@ -52,6 +52,7 @@
         android:orientation="vertical"
         android:padding="8dp">
 
+
         <com.jackandphantom.circularprogressbar.CircleProgressbar
             android:id="@+id/cityBadgePlacesActivityProgressBar"
             android:layout_width="60dp"
@@ -88,6 +89,14 @@
             app:trackThickness="25dp" />
 
     </LinearLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Places to visit"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/placesPlacesActivityRecyclerView"

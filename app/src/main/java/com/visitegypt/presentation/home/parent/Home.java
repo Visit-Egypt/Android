@@ -310,8 +310,7 @@ public class Home extends AppCompatActivity {
             }
         });
     }
-    public void logOut()
-    {
+    public void logOut() {
         navigationView.getMenu().findItem(R.id.logout).setOnMenuItemClickListener(menuItem -> {
             homeViewModel.logOut();
             return false;

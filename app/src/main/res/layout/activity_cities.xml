@@ -56,6 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -92,7 +93,8 @@
                     android:id="@+id/alsharkiaCityLayout"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:background="@drawable/alsharkia">
+                    android:background="@drawable/alsharkia"
+                    android:foreground="?android:selectableItemBackground">
 
                     <TextView
                         android:id="@+id/alsharkiaRemainingTextView"
@@ -130,7 +132,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_margin="8dp"
-                android:background="@drawable/alex">
+                android:background="@drawable/alex"
+                android:foreground="?android:selectableItemBackground">
 
                 <TextView
                     android:id="@+id/alexRemainingTextView"
@@ -165,7 +168,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_margin="8dp"
-                android:background="@drawable/cairo">
+                android:background="@drawable/cairo"
+                android:foreground="?android:selectableItemBackground">
 
                 <TextView
                     android:id="@+id/cairoRemainingTextView"
@@ -199,7 +203,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_margin="8dp"
-                android:background="@drawable/luxor2">
+                android:background="@drawable/luxor2"
+                android:foreground="?android:selectableItemBackground">
 
                 <TextView
                     android:id="@+id/luxorRemainingTextView"
