@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?attr/colorOnPrimary"
     android:orientation="vertical">
 
@@ -38,6 +38,7 @@
                 android:gravity="center"
                 android:text="LVL 7" />
         </RelativeLayout>
+
         <TextView
             android:id="@+id/nameTextView"
             android:layout_width="wrap_content"
@@ -129,6 +130,7 @@
                     android:text="40XP to next level" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -156,8 +158,8 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="VISITED CITIES"
                     android:textAlignment="center"
                     android:textColor="?attr/colorOnSecondary"
@@ -186,8 +188,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="FOLLOWING"
                     android:layout_gravity="center"
+                    android:text="FOLLOWING"
                     android:textAlignment="center"
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="14sp" />
@@ -202,10 +204,10 @@
                 android:padding="5dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
                     android:id="@+id/followersNumberTextView"
-                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="0"
                     android:textAlignment="center"
                     android:textColor="?attr/colorOnSecondary"
@@ -214,8 +216,8 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="FOLLOWERS"
                     android:textAlignment="center"
                     android:textColor="?attr/colorOnSecondary"

@@ -5,69 +5,75 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/relativelayout"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_margin="8dp">
+        android:layout_margin="8dp"
+        app:cardCornerRadius="10dp">
 
-        <ImageView
-            android:id="@+id/placeInCityImageView"
+        <RelativeLayout
+            android:id="@+id/relativelayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/luxor2" />
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/placesInCityRemainingTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/placeInCityImageView"
-            android:layout_alignTop="@id/placeInCityImageView"
-            android:layout_alignRight="@id/placeInCityImageView"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="5 remaining activities"
-            android:textColor="@color/white"
-            android:textSize="16dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/placeInCityImageView"
-            android:layout_alignRight="@id/placeInCityImageView"
-            android:layout_alignBottom="@id/placeInCityImageView"
-            android:alpha=".6"
-            android:background="?attr/colorOnPrimary"
-            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/placeInCityImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/luxor2" />
 
             <TextView
-                android:id="@+id/placeInCityTextView"
+                android:id="@+id/placesInCityRemainingTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_marginBottom="30dp"
-                android:text="Zag"
-                android:textColor="?attr/colorOnSecondary"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:layout_alignLeft="@id/placeInCityImageView"
+                android:layout_alignTop="@id/placeInCityImageView"
+                android:layout_alignRight="@id/placeInCityImageView"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="5 remaining activities"
+                android:textColor="@color/white"
+                android:textSize="16dp" />
 
-            <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:id="@+id/placeInCityRemainingProgressTextView"
-                android:layout_width="200dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:max="100"
-                android:progress="24"
-                android:visibility="visible"
-                app:indicatorColor="?attr/colorPrimary"
-                app:trackColor="?attr/colorOnSecondary"
-                app:trackCornerRadius="10dp"
-                app:trackThickness="20dp" />
-        </LinearLayout>
+                android:layout_alignLeft="@id/placeInCityImageView"
+                android:layout_alignRight="@id/placeInCityImageView"
+                android:layout_alignBottom="@id/placeInCityImageView"
+                android:alpha=".6"
+                android:background="?attr/colorOnPrimary"
+                android:orientation="vertical">
 
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/placeInCityTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginBottom="30dp"
+                    android:text="Zag"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/placeInCityRemainingProgressTextView"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:max="100"
+                    android:progress="24"
+                    android:visibility="visible"
+                    app:indicatorColor="?attr/colorPrimary"
+                    app:trackColor="?attr/colorOnSecondary"
+                    app:trackCornerRadius="10dp"
+                    app:trackThickness="20dp" />
+            </LinearLayout>
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

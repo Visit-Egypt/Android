@@ -3,7 +3,7 @@ package com.visitegypt.presentation.place;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.android.material.textview.MaterialTextView;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
 
@@ -29,7 +31,10 @@ public class PlacesActivity extends AppCompatActivity {
     private String cityName;
     private PlacesCityRecyclerViewAdapter placesCityRecyclerViewAdapter;
     private RecyclerView placesPlacesActivityRecyclerView;
-    private TextView placeNamePlacesActivityTextView;
+    private MaterialTextView placeNamePlacesActivityTextView, cityXPlacesActivityTextView;
+    private LinearProgressIndicator cityRemainingProgressPlacesActivityProgressIndicator;
+    private ProgressBar cityBadgePlacesActivityProgressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +51,13 @@ public class PlacesActivity extends AppCompatActivity {
         placesCityRecyclerViewAdapter = new PlacesCityRecyclerViewAdapter(this);
         placesPlacesActivityRecyclerView.setLayoutManager(new LinearLayoutManager(PlacesActivity.this, LinearLayoutManager.VERTICAL, true));
         placesPlacesActivityRecyclerView.setAdapter(placesCityRecyclerViewAdapter);
-        placeNamePlacesActivityTextView = findViewById(R.id.placeNamePlacesActivityTextView);
+        placeNamePlacesActivityTextView = findViewById(R.id.cityTitlePlacesActivityTextView);
         placeNamePlacesActivityTextView.setText(cityName);
+
+        cityRemainingProgressPlacesActivityProgressIndicator = findViewById(R.id.cityRemainingProgressPlacesActivityProgressIndicator);
+        cityBadgePlacesActivityProgressBar = findViewById(R.id.cityBadgePlacesActivityProgressBar);
+        cityXPlacesActivityTextView = findViewById(R.id.cityXPlacesActivityTextView);
+
     }
 
     private void initViewModel(String cityName) {
@@ -60,7 +70,6 @@ public class PlacesActivity extends AppCompatActivity {
             public void onChanged(List<Place> placeActivities) {
                 Log.d(TAG, " getting places to recycler vieww");
                 placesCityRecyclerViewAdapter.setplaceList(placeActivities);
-
 
             }
         });
