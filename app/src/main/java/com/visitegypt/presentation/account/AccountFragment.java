@@ -55,7 +55,6 @@ public class AccountFragment extends Fragment {
         View accountView = inflater.inflate(R.layout.fragment_account, container, false);
         initViews(accountView);
         initViewModel();
-        fillData();
         return accountView;
     }
 
@@ -88,12 +87,6 @@ public class AccountFragment extends Fragment {
         badgesRecyclerView.setLayoutManager(new LinearLayoutManager(accountView.getContext(), RecyclerView.HORIZONTAL, false));
         badgesSliderViewAdapter = new BadgesSliderViewAdapter(placeBadges, accountView.getContext());
         badgesRecyclerView.setAdapter(badgesSliderViewAdapter);
-    }
-
-    private void fillData() {
-        // TODO String userLevel = GamificationRules.getTitleFromLevel(user.getLevel());
-        //accountViewModel.getUser();
-        //userName.setText(userLevel);
     }
 
     private void initViewModel() {

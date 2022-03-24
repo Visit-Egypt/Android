@@ -66,6 +66,14 @@ public class BadgeTask {
         this.type = type;
     }
 
+    public String getBadgeId() {
+        return badgeId;
+    }
+
+    public void setBadgeId(String badgeId) {
+        this.badgeId = badgeId;
+    }
+
     public enum Type {
         VISIT_PLACE,
         REVIEW,

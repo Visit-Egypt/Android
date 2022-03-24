@@ -31,6 +31,7 @@ public class GamificationRules {
     public static final int BRONZE_BADGE_XP = 30;
     public static final int SILVER_BADGE_XP = 70;
     public static final int GOLD_BADGE_XP = 300;
+    public static final String FIRST_SIGN_IN_BADGE_ID = "623c9aa3de3a6b3d7c407f63";
 
     private static final String TAG = "gamification rules";
 

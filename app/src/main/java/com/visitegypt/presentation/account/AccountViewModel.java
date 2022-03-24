@@ -75,7 +75,7 @@ public class AccountViewModel extends ViewModel {
                 }
                 ,
                 throwable -> {
-                    Log.e(TAG, "getUser: error retrieving user" + throwable.getMessage());
+                    Log.e(TAG, "getUser: error retrieving user: " + throwable.getMessage());
                 });
     }
 

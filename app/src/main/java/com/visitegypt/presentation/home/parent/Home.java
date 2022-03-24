@@ -1,26 +1,24 @@
 package com.visitegypt.presentation.home.parent;
 
+import android.app.Dialog;
 import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SearchView;
-
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -35,18 +33,19 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.jackandphantom.circularprogressbar.CircleProgressbar;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.visitegypt.R;
 import com.visitegypt.databinding.ActivityNewHomeBinding;
+import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.SearchPlace;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
 import com.visitegypt.presentation.setting.SettingFragment;
-import com.visitegypt.presentation.setting.SettingViewModel;
 import com.visitegypt.presentation.signin.SignInActivity;
-import com.visitegypt.utils.UploadUtils;
+import com.visitegypt.utils.GamificationRules;
 
-import java.io.File;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,14 +69,14 @@ public class Home extends AppCompatActivity {
     private TextView txtNotFound;
     private SearchViewModel searchViewModel;
     private MaterialButton editButton;
-   private ImageView userImageView;
+    private ImageView userImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityNewHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        initView();
+        initViews();
         searchViewModel.webSocketConnet();
         navigationController();
         startChatBot();
@@ -87,13 +86,103 @@ public class Home extends AppCompatActivity {
         ViewModelObserve();
         logOut();
 
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeFragment(new SettingFragment());
-            }
-        });
+        checkFirstLogIn();
 
+        editButton.setOnClickListener(v -> changeFragment(new SettingFragment()));
+
+    }
+
+    private void checkFirstLogIn() {
+        homeViewModel.getAllBadges();
+        homeViewModel.allBadgesMutableLiveData.observe(this, badges -> {
+            Log.d(TAG, "checkFirstLogIn: retrieved badges");
+
+            homeViewModel.mutableLiveDataUser.observe(this, user -> {
+                Log.d(TAG, "checkFirstLogIn: found user");
+                boolean firstSignIn = true;
+                if (user.getBadges() != null) {
+                    for (Badge badge : user.getBadges()) {
+                        Log.d(TAG, "checkFirstLogIn: checking badge with id: " + badge.getId());
+                        if (badge.getId().equals(GamificationRules.FIRST_SIGN_IN_BADGE_ID)) {
+                            Log.d(TAG, "checkFirstLogIn: found that first sign in badge");
+                            firstSignIn = false;
+                            break;
+                        }
+                    }
+                } else {
+                    Log.d(TAG, "checkFirstLogIn: user badges null");
+                }
+
+                if (firstSignIn) {
+                    Log.d(TAG, "checkFirstLogIn: first sign in... giving badge...");
+//                    String badgeId = GamificationRules.FIRST_SIGN_IN_BADGE_ID;
+//                    String imgUrl = "https://www.vanstyle.co.uk/van/images/productsbig/va_7080_va7081_va7082_va7083_va7460_vw_logo_t6_gp_front_badge_backing_coloured_1035_jb_b.jpg";
+//                    Badge badge = new Badge(badgeId, imgUrl, true, Badge.Type.GENERAL, 30, "");
+//                    badge.setTitle("First sign in");
+//                    badge.setDescription("New buddy joined in");
+
+//                    badgeTask.setImageUrl(imgUrl);
+//                    badgeTasks.add(badgeTask);
+//                    badge.setBadgeTasks(badgeTasks);
+//                    badge.setProgress(1);
+//                    badge.setMaxProgress(1);
+//                    badge.setPinned(true);
+//                    badge.setImageUrl(imgUrl);
+                    Badge badge = null;
+                    for (Badge originalBadge : badges) {
+                        Log.d(TAG, "checkFirstLogIn: checking badge: " + originalBadge.getId());
+                        if (originalBadge.getId().equals(GamificationRules.FIRST_SIGN_IN_BADGE_ID)) {
+                            Log.d(TAG, "checkFirstLogIn: found the sign in badge: " + originalBadge.getId());
+                            badge = originalBadge;
+                            originalBadge.getBadgeTasks().get(0).setProgress(1);
+                            originalBadge.getBadgeTasks().get(0).setBadgeId(originalBadge.getId());
+                            homeViewModel.setBadgeTask(originalBadge.getBadgeTasks().get(0));
+                            homeViewModel.earnFirstBadge();
+                        }
+                    }
+                    showFirstBadgeDialog(badge);
+
+                } else {
+                    Log.d(TAG, "checkFirstLogIn: old user... ignoring badge");
+                }
+            });
+        });
+    }
+
+    private void showFirstBadgeDialog(Badge badge) {
+        Dialog dialog = new Dialog(this);
+        View v = LayoutInflater.from(this).inflate(R.layout.badge_earned_dialog, null, false);
+        dialog.setContentView(v);
+
+        TextView badgeTitle = v.findViewById(R.id.badgeEarnedDialogTitleTextView);
+        badgeTitle.setText(badge.getTitle());
+
+        TextView badgeDescription = v.findViewById(R.id.badgeEarnedDialogDescriptionTextView);
+        badgeDescription.setText(badge.getDescription());
+
+        CircleProgressbar circleProgressbar = v.findViewById(R.id.badgeEarnedDialogCircleProgressBar);
+        circleProgressbar.setProgress(circleProgressbar.getMaxProgress());
+        circleProgressbar.setForegroundProgressColor(Color.GREEN);
+
+        Target target = new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                circleProgressbar.setBackground(new BitmapDrawable(getResources(), bitmap));
+            }
+
+            @Override
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        };
+        Picasso.get().load(badge.getImageUrl()).into(target);
+
+        dialog.show();
     }
 
     private void startChatBot() {
@@ -128,7 +217,7 @@ public class Home extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    private void initView() {
+    private void initViews() {
         navigation = binding.appBarNewHome.navigation;
         DrawerLayout drawer = binding.drawerLayout;
         navigationView = binding.navView;
@@ -287,7 +376,7 @@ public class Home extends AppCompatActivity {
     private void ViewModelObserve() {
 
 
-        homeViewModel.isLoged.observe(this, new Observer<Boolean>() {
+        homeViewModel.isLogged.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 if (!aBoolean) {

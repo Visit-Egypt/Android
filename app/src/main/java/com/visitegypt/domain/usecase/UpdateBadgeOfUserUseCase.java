@@ -36,7 +36,7 @@ public class UpdateBadgeOfUserUseCase extends SingleUseCase<List<Badge>> {
 
     @Override
     protected Single<List<Badge>> buildSingleUseCase() {
-        badgeId = "623637b3da63f3494ba0ab2d";
+        //badgeId = "623637b3da63f3494ba0ab2d";
         //badge = new Badge(5, true, true);
 
         return userRepository.updateUserBadge(badgeId, badge);

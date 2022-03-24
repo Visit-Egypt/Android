@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -16,8 +17,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 import com.visitegypt.R;
 import com.visitegypt.domain.usecase.UserValidation;
-import com.visitegypt.presentation.signin.SignInActivity;
 import com.visitegypt.presentation.home.parent.Home;
+import com.visitegypt.presentation.signin.SignInActivity;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -63,19 +64,16 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
-        signUpViewModel.mutableLiveDataResponse.observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-
-                if (s.equals("Your account was created successfully")) {
-                    Intent intent = new Intent(SignUpActivity.this, Home.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
-                }
-                hideLoading();
-                Toast.makeText(SignUpActivity.this, s, Toast.LENGTH_LONG).show();
+        signUpViewModel.mutableLiveDataResponse.observe(this, s -> {
+            Log.d(TAG, "account change observed");
+            if (s.equals("Your account was created successfully")) {
+                Intent intent = new Intent(SignUpActivity.this, Home.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
             }
+            hideLoading();
+            Toast.makeText(SignUpActivity.this, s, Toast.LENGTH_LONG).show();
         });
         btnSignUp.setOnClickListener(v -> {
             if (firstName.getEditText().getText().toString().isEmpty() ||
