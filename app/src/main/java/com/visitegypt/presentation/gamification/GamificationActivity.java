@@ -60,6 +60,7 @@ import com.visitegypt.presentation.review.ReviewViewModel;
 import com.visitegypt.utils.Constants;
 import com.visitegypt.utils.GamificationRules;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -165,9 +166,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                 mapView.getMapAsync(this);
                 mapView.onCreate(b);
                 //placeTitleTextView.setText(place.getTitle());
-                initActivityLogic(place);
-
-
+                initActivityLogic();
             });
         } catch (Exception e) {
             Toast.makeText(this, "Failed to load, try again later", Toast.LENGTH_SHORT).show();
@@ -177,12 +176,18 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     }
 
     private void initPlaceActivitiesViewModel() {
+        Log.d(TAG, "initPlaceActivitiesViewModel: loading...");
         gamificationViewModel.getUserPlaceActivity();
         gamificationViewModel.userPlaceActivitiesMutableLiveData.observe(this, placeActivities -> {
             int totalActivities = 0, doneActivities = 0, totalXp = 0, doneXp = 0;
+            Log.d(TAG, "initPlaceActivitiesViewModel: userPlaceActivities: " + new Gson().toJson(placeActivities));
+            if (place.getPlaceActivities() != null)
+                Log.d(TAG, "initPlaceActivitiesViewModel: placeActivities: " + new Gson().toJson(place.getPlaceActivities()));
+            else
+                Log.d(TAG, "initPlaceActivitiesViewModel:  no place activities");
             for (PlaceActivity userPlaceActivity : placeActivities) {
                 for (PlaceActivity placeActivity : place.getPlaceActivities()) {
-                    if (placeActivity.getId() == userPlaceActivity.getId()) {
+                    if (placeActivity.getId().equals(userPlaceActivity.getId())) {
                         totalActivities += placeActivity.getMaxProgress();
                         totalXp += placeActivity.getXp();
                         doneActivities += userPlaceActivity.getProgress();
@@ -193,13 +198,18 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                     }
                 }
             }
+
+            Log.d(TAG, "initPlaceActivitiesViewModel: total activities:" + totalActivities);
+            Log.d(TAG, "initPlaceActivitiesViewModel: done activities: " + doneActivities);
+            Log.d(TAG, "initPlaceActivitiesViewModel: total xp: " + totalXp);
+            Log.d(TAG, "initPlaceActivitiesViewModel: done xp: " + doneXp);
+
             if (totalActivities > doneActivities)
-                placeRemainingActivitiesTextView.setText(totalActivities - doneActivities);
+                placeRemainingActivitiesTextView.setText(MessageFormat.format("{0} remaining activities", totalActivities - doneActivities));
             else {
                 placeRemainingActivitiesTextView.setText("Completed");
-
             }
-            placeXpTextView.setText(doneXp + "/" + totalXp);
+            placeXpTextView.setText(MessageFormat.format("{0}/{1} XP", doneXp, totalXp));
         });
     }
 
@@ -311,7 +321,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         Toast.makeText(this, "Stay tuned, coming soon...", Toast.LENGTH_SHORT).show();
     }
 
-    private void initActivityLogic(Place place) {
+    private void initActivityLogic() {
         placeTitleTextView.setText(place.getTitle());
         if (place.getDefaultImage() == null) {
             Picasso.get().load(place.getImageUrls().get(0)).into(placeImageView);
@@ -321,6 +331,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
 
         try {
             ArrayList<PlaceActivity> placeActivities = place.getPlaceActivities();
+            Log.d(TAG, "initActivityLogic: " + new Gson().toJson(placeActivities));
             int totalXp = 0, maxProgress = 0;
             for (PlaceActivity placeActivity : placeActivities) {
                 totalXp += placeActivity.getXp();
@@ -350,10 +361,20 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
             }
             //placeProgressIndicator.setMax(place.getMaxProgress());
             //placeRemainingActivitiesTextView.setText(totalXp + "xp remaining");
-            initPlaceActivitiesViewModel();
 
         } catch (Exception e) {
-            Log.e(TAG, "fillActivity: failed to get place activities xp", e);
+            Log.e(TAG, "fillActivity: failed to get place activities xp: " + e.getMessage());
+        }
+
+        try {
+            if (place.getPlaceActivities() != null) {
+                initPlaceActivitiesViewModel();
+            } else {
+                Log.d(TAG, "initActivityLogic: gamification not supported yet for this place");
+                Toast.makeText(this, "gamification not supported for this place yet", Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "initActivityLogic: couldn't init place activities: " + e.getMessage());
         }
 
 
