@@ -167,11 +167,43 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                 //placeTitleTextView.setText(place.getTitle());
                 initActivityLogic(place);
 
+
             });
         } catch (Exception e) {
             Toast.makeText(this, "Failed to load, try again later", Toast.LENGTH_SHORT).show();
         }
 
+        initBadgesViewModel();
+    }
+
+    private void initPlaceActivitiesViewModel() {
+        gamificationViewModel.getUserPlaceActivity();
+        gamificationViewModel.userPlaceActivitiesMutableLiveData.observe(this, placeActivities -> {
+            int totalActivities = 0, doneActivities = 0, totalXp = 0, doneXp = 0;
+            for (PlaceActivity userPlaceActivity : placeActivities) {
+                for (PlaceActivity placeActivity : place.getPlaceActivities()) {
+                    if (placeActivity.getId() == userPlaceActivity.getId()) {
+                        totalActivities += placeActivity.getMaxProgress();
+                        totalXp += placeActivity.getXp();
+                        doneActivities += userPlaceActivity.getProgress();
+                        if (userPlaceActivity.isFinished()) {
+                            doneXp += placeActivity.getXp();
+                        }
+                        placeActivity.setProgress(userPlaceActivity.getProgress());
+                    }
+                }
+            }
+            if (totalActivities > doneActivities)
+                placeRemainingActivitiesTextView.setText(totalActivities - doneActivities);
+            else {
+                placeRemainingActivitiesTextView.setText("Completed");
+
+            }
+            placeXpTextView.setText(doneXp + "/" + totalXp);
+        });
+    }
+
+    private void initBadgesViewModel() {
         gamificationViewModel.setPlaceId(placeId);
         gamificationViewModel.getBadgesOfUser();
         gamificationViewModel.getPlaceBadges();
@@ -316,8 +348,9 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                         break;
                 }
             }
-            placeProgressIndicator.setMax(place.getMaxProgress());
-            placeRemainingActivitiesTextView.setText(totalXp + "xp remaining");
+            //placeProgressIndicator.setMax(place.getMaxProgress());
+            //placeRemainingActivitiesTextView.setText(totalXp + "xp remaining");
+            initPlaceActivitiesViewModel();
 
         } catch (Exception e) {
             Log.e(TAG, "fillActivity: failed to get place activities xp", e);

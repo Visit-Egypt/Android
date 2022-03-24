@@ -11,7 +11,7 @@ public class Badge {
 
     private String id;
     private int progress;
-    @SerializedName("image_url")
+    @SerializedName("img_url")
     private String imageUrl;
     @SerializedName("max_progress")
     private int maxProgress;

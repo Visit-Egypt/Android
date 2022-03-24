@@ -33,6 +33,7 @@ public class GamificationViewModel extends ViewModel {
     private static final String TAG = "Gamification ViewModel";
 
     MutableLiveData<List<PlaceActivity>> userPlaceActivitiesMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<List<PlaceActivity>> placeActivitiesMutableLiveData = new MutableLiveData<>();
 
     MutableLiveData<Place> placesMutableLiveData = new MutableLiveData<>();
     MutableLiveData<List<Item>> itemMutableLiveData = new MutableLiveData<>();
