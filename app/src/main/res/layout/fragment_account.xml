@@ -293,6 +293,18 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/prata_regular"
+            android:padding="10dp"
+            android:text="You haven't visited any cities yet"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/citiesRecyclerViewAccountFragment"
             android:layout_width="match_parent"

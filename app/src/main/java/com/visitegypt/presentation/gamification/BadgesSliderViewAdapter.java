@@ -61,8 +61,8 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
     @Override
     public void onBindViewHolder(SliderAdapterViewHolder viewHolder, final int position) {
         viewHolder.linearLayout.setOnClickListener(view -> showBadgeDialog(badges.get(position)));
-//        viewHolder.circleProgressbar.setOnClickListener(view -> showBadgeDialog(badges.get(position)));
-//        viewHolder.textView.setOnClickListener(view -> showBadgeDialog(badges.get(position)));
+        
+        viewHolder.textView.setText(badges.get(position).getTitle());
 
         if (badges.get(position).isOwned()) {
             Log.d(TAG, "onBindViewHolder: owned badge");
