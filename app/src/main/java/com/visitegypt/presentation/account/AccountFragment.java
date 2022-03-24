@@ -132,6 +132,7 @@ public class AccountFragment extends Fragment {
                     userBadges -> {
                         //Log.d(TAG, "initViewModel: BOOM" + new Gson().toJson(userBadges.get(1).getBadgeTasks()));
                         Log.d(TAG, "initViewModel: ");
+                        ArrayList<Badge> realBadges = new ArrayList<>();
                         for (Badge badge : userBadges) {
                             for (Badge placeBadge : placeBadges) {
                                 if (badge.getId().equals(placeBadge.getId())) {
@@ -147,10 +148,11 @@ public class AccountFragment extends Fragment {
                                         }
                                     }
                                     placeBadge.setBadgeTasks(badgeTasks);
+                                    realBadges.add(placeBadge);
                                 }
                             }
                         }
-                        badgesSliderViewAdapter.setBadges(placeBadges);
+                        badgesSliderViewAdapter.setBadges(realBadges);
                     }
             );
         });

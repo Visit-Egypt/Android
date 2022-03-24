@@ -24,6 +24,7 @@ public class Badge {
     private ArrayList<BadgeTask> badgeTasks;
     @SerializedName("badge_frame_image_url")
     private boolean pinned;
+    @SerializedName("place_id")
     private String placeId;
     @SerializedName("city")
     private String city;
@@ -86,7 +87,7 @@ public class Badge {
     }
 
     public boolean isOwned() {
-        return owned;
+        return getProgress() == getMaxProgress();
     }
 
     public void setOwned(boolean owned) {
@@ -118,12 +119,13 @@ public class Badge {
     }
 
     public int getProgress() {
-//        if (badgeTasks != null) {
-//            for (int i = 0; i < badgeTasks.size(); i++) {
-//                progress += badgeTasks.get(i).getProgress();
-//            }
-//        }
-        return progress;
+        int tempProgress = 0;
+        if (badgeTasks != null) {
+            for (int i = 0; i < badgeTasks.size(); i++) {
+                tempProgress += badgeTasks.get(i).getProgress();
+            }
+        }
+        return tempProgress;
     }
 
     public void setProgress(int progress) {

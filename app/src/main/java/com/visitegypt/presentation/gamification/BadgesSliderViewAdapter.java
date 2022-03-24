@@ -138,9 +138,13 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
         MaterialTextView descriptionTextView = v.findViewById(R.id.badgeDialogDescriptionTextView);
         descriptionTextView.setText(badge.getDescription());
 
+        ColorMatrix colorMatrix = new ColorMatrix();
+        colorMatrix.setSaturation(0);
+        ColorMatrixColorFilter filter = new ColorMatrixColorFilter(colorMatrix);
 
         CircleProgressbar circleProgressbar = v.findViewById(R.id.badgeDialogCircleProgressBar);
         if (badge.isOwned()) {
+            circleProgressbar.setMaxProgress(1);
             circleProgressbar.setProgress(circleProgressbar.getMaxProgress());
             circleProgressbar.setForegroundProgressColor(Color.GREEN);
         } else {
@@ -152,7 +156,10 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
         Target target = new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                circleProgressbar.setBackground(new BitmapDrawable(context.getResources(), bitmap));
+                Drawable drawable = new BitmapDrawable(circleProgressbar.getResources(), bitmap);
+                if (!badge.isOwned())
+                    drawable.setColorFilter(filter);
+                circleProgressbar.setBackground(drawable);
             }
 
             @Override

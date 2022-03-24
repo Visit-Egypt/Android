@@ -178,6 +178,19 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private void initPlaceActivitiesViewModel() {
         Log.d(TAG, "initPlaceActivitiesViewModel: loading...");
         gamificationViewModel.getUserPlaceActivity();
+
+
+        /*** TODO REMOVE THIS TRASH ***/
+        int placeXp = 0, numActivities = 0;
+        for (PlaceActivity placeActivity : place.getPlaceActivities()) {
+            placeXp += placeActivity.getXp();
+            numActivities += 1;
+        }
+        placeProgressIndicator.setProgress(0);
+        placeXpTextView.setText(MessageFormat.format("0/{0} XP", placeXp));
+        placeRemainingActivitiesTextView.setText(MessageFormat.format("{0} remaining activities", numActivities));
+        /*** TODO END ***/
+
         gamificationViewModel.userPlaceActivitiesMutableLiveData.observe(this, placeActivities -> {
             int totalActivities = 0, doneActivities = 0, totalXp = 0, doneXp = 0;
             Log.d(TAG, "initPlaceActivitiesViewModel: userPlaceActivities: " + new Gson().toJson(placeActivities));
@@ -203,6 +216,9 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
             Log.d(TAG, "initPlaceActivitiesViewModel: done activities: " + doneActivities);
             Log.d(TAG, "initPlaceActivitiesViewModel: total xp: " + totalXp);
             Log.d(TAG, "initPlaceActivitiesViewModel: done xp: " + doneXp);
+            
+            placeProgressIndicator.setMax(totalXp);
+            placeProgressIndicator.setProgress(doneXp);
 
             if (totalActivities > doneActivities)
                 placeRemainingActivitiesTextView.setText(MessageFormat.format("{0} remaining activities", totalActivities - doneActivities));
@@ -219,10 +235,11 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         gamificationViewModel.getPlaceBadges();
         gamificationViewModel.placeBadgesMutableLiveData.observe(this, placeBadges -> {
             this.placeBadges = (ArrayList<Badge>) placeBadges;
-            Log.d(TAG, "initViewModel: BOOM" + new Gson().toJson(placeBadges.get(1).getBadgeTasks()));
+            Log.d(TAG, "initBadgesViewModel: place badges: " + new Gson().toJson(placeBadges));
+            //Log.d(TAG, "initViewModel: BOOM" + new Gson().toJson(placeBadges.get(1).getBadgeTasks()));
             gamificationViewModel.userBadgesMutableLiveData.observe(this,
                     userBadges -> {
-                        Log.d(TAG, "initViewModel: BOOM" + new Gson().toJson(userBadges.get(1).getBadgeTasks()));
+                        //Log.d(TAG, "initViewModel: BOOM" + new Gson().toJson(userBadges.get(1).getBadgeTasks()));
                         Log.d(TAG, "initViewModel: ");
                         for (Badge badge : userBadges) {
                             for (Badge placeBadge : placeBadges) {
@@ -239,10 +256,21 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                                         }
                                     }
                                     placeBadge.setBadgeTasks(badgeTasks);
+
                                 }
                             }
                         }
-                        badgesSliderViewAdapter.setBadges((ArrayList<Badge>) placeBadges);
+                        ArrayList<Badge> realBadges = new ArrayList<>();
+                        for (Badge realBadge : placeBadges) {
+                            Log.d(TAG, "initBadgesViewModel: chcecking badge if in place: " + realBadge.getTitle());
+                            if (realBadge.getPlaceId() != null) {
+                                if (realBadge.getPlaceId().equals(place.getId())) {
+                                    realBadges.add(realBadge);
+                                    Log.d(TAG, "initBadgesViewModel: matched badge: " + realBadge.getTitle());
+                                }
+                            }
+                        }
+                        badgesSliderViewAdapter.setBadges(realBadges);
                     }
             );
         });
