@@ -53,40 +53,84 @@
         android:padding="8dp">
 
 
-        <com.jackandphantom.circularprogressbar.CircleProgressbar
-            android:id="@+id/cityBadgePlacesActivityProgressBar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:background="@drawable/badge"
-            app:cpb_foregroundProgressColor="#1864c2"
-            app:cpb_foregroundProgressWidth="10"
-            app:cpb_progress="50"
-            app:cpb_roundedCorner="true"
-            app:cpb_touchEnabled="true" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/cityXPlacesActivityTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/prata_regular"
-            android:text="80/350 xp"
-            android:textSize="16sp" />
-
-        <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id="@+id/cityRemainingProgressPlacesActivityProgressIndicator"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cityBadgesPlacesActivityRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginVertical="8dp"
-            android:layout_marginRight="4dp"
-            android:max="100"
-            android:progress="24"
-            android:visibility="visible"
-            app:trackCornerRadius="10dp"
-            app:trackThickness="25dp" />
+            android:layout_gravity="left"
+            android:layout_margin="8dp" />
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/cityRemainingProgressPlacesActivityProgressIndicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:max="600"
+                    android:progress="560"
+                    app:trackCornerRadius="3dp"
+                    app:trackThickness="20dp" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/cityRemainingProgressPlacesActivityProgressIndicator"
+                    android:layout_alignTop="@id/cityRemainingProgressPlacesActivityProgressIndicator"
+                    android:layout_alignRight="@id/cityRemainingProgressPlacesActivityProgressIndicator"
+                    android:layout_alignBottom="@id/cityRemainingProgressPlacesActivityProgressIndicator">
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/cityRemainingProgressPlacesActivityTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:background="#00000000"
+                        android:text="8" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:background="#00000000"
+                        android:text="9" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </RelativeLayout>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/cityXPlacesActivityTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_weight="1"
+                    android:text="560/600" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="40XP to next level" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </LinearLayout>
 

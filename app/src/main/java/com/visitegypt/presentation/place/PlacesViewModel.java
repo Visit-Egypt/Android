@@ -31,7 +31,7 @@ public class PlacesViewModel extends ViewModel {
     private GetBadgesOfUserUseCase getBadgesOfUserUseCase;
 
     @Inject
-    public PlacesViewModel(GetPlacesOfCityUseCase getPlacesOfCityUseCase,GetBadgesOfUserUseCase getBadgesOfUserUseCase, GetAllBadgesUseCase getAllBadgesUseCase) {
+    public PlacesViewModel(GetPlacesOfCityUseCase getPlacesOfCityUseCase, GetBadgesOfUserUseCase getBadgesOfUserUseCase, GetAllBadgesUseCase getAllBadgesUseCase) {
         this.getPlacesOfCityUseCase = getPlacesOfCityUseCase;
         this.getAllBadgesUseCase = getAllBadgesUseCase;
         this.getBadgesOfUserUseCase = getBadgesOfUserUseCase;

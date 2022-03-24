@@ -1,9 +1,6 @@
 package com.visitegypt.presentation.place;
 
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -17,8 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textview.MaterialTextView;
 import com.jackandphantom.circularprogressbar.CircleProgressbar;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.Place;
@@ -38,11 +33,12 @@ public class PlacesActivity extends AppCompatActivity {
     private PlacesViewModel placesViewModel;
     private String cityName;
     private PlacesCityRecyclerViewAdapter placesCityRecyclerViewAdapter;
-    private RecyclerView placesPlacesActivityRecyclerView;
+    private RecyclerView placesPlacesActivityRecyclerView, cityBadgesPlacesActivityRecyclerView;
     private MaterialTextView placeNamePlacesActivityTextView, cityXPlacesActivityTextView;
     private LinearProgressIndicator cityRemainingProgressPlacesActivityProgressIndicator;
-    private CircleProgressbar cityBadgePlacesActivityProgressBar;
-    private ArrayList<Badge> badges;
+//    private CircleProgressbar cityBadgePlacesActivityProgressBar;
+    private ArrayList<Badge> badges, cityBadges;
+    private CityBadgesRecyclerViewAdapter cityBadgesRecyclerViewAdapter;
 
 
     @Override
@@ -66,10 +62,16 @@ public class PlacesActivity extends AppCompatActivity {
         placeNamePlacesActivityTextView.setText(cityName);
 
         cityRemainingProgressPlacesActivityProgressIndicator = findViewById(R.id.cityRemainingProgressPlacesActivityProgressIndicator);
-        cityBadgePlacesActivityProgressBar = findViewById(R.id.cityBadgePlacesActivityProgressBar);
+//        cityBadgePlacesActivityProgressBar = findViewById(R.id.cityBadgePlacesActivityProgressBar);
         cityXPlacesActivityTextView = findViewById(R.id.cityXPlacesActivityTextView);
 
         badges = new ArrayList<>();
+        cityBadges = new ArrayList<>();
+
+        cityBadgesPlacesActivityRecyclerView = findViewById(R.id.cityBadgesPlacesActivityRecyclerView);
+        cityBadgesRecyclerViewAdapter = new CityBadgesRecyclerViewAdapter(cityBadges, this);
+        cityBadgesPlacesActivityRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        cityBadgesPlacesActivityRecyclerView.setAdapter(cityBadgesRecyclerViewAdapter);
 
     }
 
@@ -93,25 +95,27 @@ public class PlacesActivity extends AppCompatActivity {
         });
         for (int i = 0; i < badges.size(); i++) {
             if (badges.get(i).getCity() == cityName) {
-                Target target = new Target() {
-                    @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        cityBadgePlacesActivityProgressBar.setBackground(new BitmapDrawable(cityBadgePlacesActivityProgressBar.getResources(), bitmap));
-                    }
-
-                    @Override
-                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-
-                    }
-
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                    }
-                };
-                Picasso.get().load(badges.get(i).getImageUrl()).into(target);
+                cityBadges.add(badges.get(i));
+//                Target target = new Target() {
+//                    @Override
+//                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+//                        cityBadgePlacesActivityProgressBar.setBackground(new BitmapDrawable(cityBadgePlacesActivityProgressBar.getResources(), bitmap));
+//                    }
+//
+//                    @Override
+//                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+//
+//                    }
+//                };
+//                Picasso.get().load(badges.get(i).getImageUrl()).into(target);
             }
         }
+        cityBadgesRecyclerViewAdapter.setBadges((ArrayList<Badge>) cityBadges);
 
 
     }
