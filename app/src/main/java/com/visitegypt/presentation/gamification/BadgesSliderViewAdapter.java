@@ -3,6 +3,7 @@ package com.visitegypt.presentation.gamification;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.BitmapDrawable;
@@ -19,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textview.MaterialTextView;
+import com.google.gson.Gson;
 import com.jackandphantom.circularprogressbar.CircleProgressbar;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -59,8 +61,8 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
     @Override
     public void onBindViewHolder(SliderAdapterViewHolder viewHolder, final int position) {
         viewHolder.linearLayout.setOnClickListener(view -> showBadgeDialog(badges.get(position)));
-        viewHolder.circleProgressbar.setOnClickListener(view -> showBadgeDialog(badges.get(position)));
-        viewHolder.textView.setOnClickListener(view -> showBadgeDialog(badges.get(position)));
+//        viewHolder.circleProgressbar.setOnClickListener(view -> showBadgeDialog(badges.get(position)));
+//        viewHolder.textView.setOnClickListener(view -> showBadgeDialog(badges.get(position)));
 
         if (badges.get(position).isOwned()) {
             Log.d(TAG, "onBindViewHolder: owned badge");
@@ -68,6 +70,7 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
             Log.d(TAG, "onBindViewHolder: badge progress: " + badges.get(position).getMaxProgress());
             viewHolder.circleProgressbar.setMaxProgress(badges.get(position).getMaxProgress());
             viewHolder.circleProgressbar.setProgress(badges.get(position).getMaxProgress());
+            viewHolder.circleProgressbar.setForegroundProgressColor(Color.GREEN);
 
             // badge owned => color
             Target target = new Target() {
@@ -122,9 +125,12 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
     }
 
     private void showBadgeDialog(@NonNull Badge badge) {
+        Log.d(TAG, "showBadgeDialog: " + new Gson().toJson(badge.getBadgeTasks()));
         Log.d(TAG, "showBadgeDialog called");
+        System.out.println(badge);
         Dialog dialog = new Dialog(context);
-        View v = LayoutInflater.from(context).inflate(R.layout.dialog_badge_gamification, null, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.dialog_badge_gamification,
+                null, false);
 
         MaterialTextView titleTextView = v.findViewById(R.id.badgeDialogTitleTextView);
         titleTextView.setText(badge.getTitle());
@@ -134,9 +140,15 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
 
 
         CircleProgressbar circleProgressbar = v.findViewById(R.id.badgeDialogCircleProgressBar);
-        Log.d(TAG, "show badge dialog: " + badge.getTitle() + ", progress: " + badge.getProgress() + "/" + badge.getMaxProgress());
-        circleProgressbar.setMaxProgress(badge.getMaxProgress());
-        circleProgressbar.setProgress(badge.getProgress());
+        if (badge.isOwned()) {
+            circleProgressbar.setProgress(circleProgressbar.getMaxProgress());
+            circleProgressbar.setForegroundProgressColor(Color.GREEN);
+        } else {
+            circleProgressbar.setMaxProgress(badge.getMaxProgress());
+            circleProgressbar.setProgress(badge.getProgress());
+        }
+        Log.d(TAG, "show badge dialog: " + badge.getTitle() + ", progress: " +
+                badge.getProgress() + "/" + badge.getMaxProgress());
         Target target = new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -157,7 +169,8 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
         dialog.show();
 
         RecyclerView recyclerView = v.findViewById(R.id.dialogBadgeRecyclerView);
-        GamificationBadgesDialogRecyclerViewAdapter gamificationBadgesDialogRecyclerViewAdapter = new GamificationBadgesDialogRecyclerViewAdapter(badge.getBadgeTasks());
+        GamificationBadgesDialogRecyclerViewAdapter gamificationBadgesDialogRecyclerViewAdapter =
+                new GamificationBadgesDialogRecyclerViewAdapter(badge.getBadgeTasks());
         recyclerView.setAdapter(gamificationBadgesDialogRecyclerViewAdapter);
 
         Window window = dialog.getWindow();

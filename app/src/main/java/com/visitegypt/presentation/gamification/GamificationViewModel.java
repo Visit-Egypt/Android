@@ -36,7 +36,9 @@ public class GamificationViewModel extends ViewModel {
 
     MutableLiveData<Place> placesMutableLiveData = new MutableLiveData<>();
     MutableLiveData<List<Item>> itemMutableLiveData = new MutableLiveData<>();
-    MutableLiveData<List<Badge>> badgesMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<List<Badge>> placeBadgesMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<List<Badge>> userBadgesMutableLiveData = new MutableLiveData<>();
+
     private SharedPreferences sharedPreferences;
 
     private GetItemsUseCase getItemsUseCase;
@@ -103,6 +105,15 @@ public class GamificationViewModel extends ViewModel {
 
     }
 
+    public void getBadgesOfUser() {
+        getBadgesOfUserUseCase.execute(badges -> {
+                    userBadgesMutableLiveData.setValue(badges);
+                }, throwable -> {
+                    Log.e(TAG, "getBadgesOfUser: failed to get user badges: " + throwable.getMessage());
+                }
+        );
+    }
+
     public void getUserPlaceActivity() {
         // TODO getUserPlaceActivityUseCase.setUserId();
         String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
@@ -131,7 +142,7 @@ public class GamificationViewModel extends ViewModel {
     public void getPlaceBadges() {
         getBadgesOfPlaceUseCase.setPlaceId(placeId);
         getBadgesOfPlaceUseCase.execute(badgeResponse -> {
-                    badgesMutableLiveData.setValue(badgeResponse.getBadges());
+                    placeBadgesMutableLiveData.setValue(badgeResponse.getBadges());
                 },
                 throwable -> {
                     Log.e(TAG, "error retrieving badges: " + throwable.getMessage());

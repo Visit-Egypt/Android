@@ -20,8 +20,9 @@ public class GetBadgesOfUserUseCase extends SingleUseCase<List<Badge>> {
      * this use case returns list of badges with badge task
      */
 
-     UserRepository userRepository;
-     SharedPreferences sharedPreferences;
+    private UserRepository userRepository;
+    private SharedPreferences sharedPreferences;
+
     @Inject
     public GetBadgesOfUserUseCase(@Named("Normal") UserRepository userRepository, SharedPreferences sharedPreferences) {
         this.userRepository = userRepository;
@@ -30,8 +31,7 @@ public class GetBadgesOfUserUseCase extends SingleUseCase<List<Badge>> {
 
     @Override
     protected Single<List<Badge>> buildSingleUseCase() {
-        //final String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID,"");
-        String userId = "623705926efafa75d06313e4";
+        String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
         return userRepository.getUserBadges(userId);
     }
 }

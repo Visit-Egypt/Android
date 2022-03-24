@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -45,11 +44,11 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textview.MaterialTextView;
-import com.squareup.picasso.Callback;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
+import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.Explore;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
@@ -67,7 +66,6 @@ import java.util.Locale;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 @AndroidEntryPoint
 public class GamificationActivity extends AppCompatActivity implements LocationListener, OnMapReadyCallback {
@@ -82,6 +80,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     String placeId;
     private ArrayList<PlaceActivity> placeActivities;
     private ArrayList<Badge> placeBadges;
+    private ArrayList<Badge> userBadges;
     private Dialog addReviewDialog;
     private ReviewViewModel reviewViewModel;
 
@@ -98,8 +97,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private GamificationViewModel gamificationViewModel;
     private Place place;
     private Explore dummyExplore;
-    private Boolean mapLoaded = false, placeLoaded = false;
-    private MutableLiveData<Boolean> userLocationLoaded;
+
 
     private ShimmerFrameLayout sliderShimmerFrameLayout, claimPlaceShimmer, badgesShimmer;
     private ShimmerFrameLayout socialActivitiesShimmer, mapShimmer, confirmLocation;
@@ -116,6 +114,13 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private LinearProgressIndicator placeProgressIndicator;
     private LinearLayout shimmerLayout, gamificationLayout;
 
+    private MutableLiveData<Boolean> userLocationLoaded = new MutableLiveData<>();
+    private MutableLiveData<Boolean> placeBadgesLoaded = new MutableLiveData<>();
+    private MutableLiveData<Boolean> userBadgesLoaded = new MutableLiveData<>();
+    private MutableLiveData<Boolean> placeActivitiesLoaded = new MutableLiveData<>();
+    private MutableLiveData<Boolean> userPlaceActivitiesLoaded = new MutableLiveData<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,11 +135,10 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         } else {
             placeId = (String) savedInstanceState.getSerializable(HomeRecyclerViewAdapter.CHOSEN_PLACE_ID);
         }
-        //placeId = "616f2746b817807a7a6c7167";
 
+        initPermissions();
         initViews();
         initViewModels(placeId, savedInstanceState);
-        initPermissions();
         initClickListeners();
         initDummyData();
     }
@@ -156,7 +160,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
             gamificationViewModel.placesMutableLiveData.observe(this, place -> {
                 GamificationActivity.this.place = place;
                 Log.d(TAG, "initViewModels: loaded place: " + place.getTitle());
-                placeLoaded = true;
                 stopShimmerAnimation();
                 setLayoutVisible();
                 mapView.getMapAsync(this);
@@ -170,11 +173,36 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         }
 
         gamificationViewModel.setPlaceId(placeId);
+        gamificationViewModel.getBadgesOfUser();
         gamificationViewModel.getPlaceBadges();
-        gamificationViewModel.badgesMutableLiveData.observe(this, badges -> {
-            this.placeBadges = (ArrayList<Badge>) badges;
-            badgesSliderViewAdapter.setBadges((ArrayList<Badge>) badges);
-            Log.d(TAG, "initViewModels, badge: " + badges.get(0).getTitle());
+        gamificationViewModel.placeBadgesMutableLiveData.observe(this, placeBadges -> {
+            this.placeBadges = (ArrayList<Badge>) placeBadges;
+            Log.d(TAG, "initViewModel: BOOM" + new Gson().toJson(placeBadges.get(1).getBadgeTasks()));
+            gamificationViewModel.userBadgesMutableLiveData.observe(this,
+                    userBadges -> {
+                        Log.d(TAG, "initViewModel: BOOM" + new Gson().toJson(userBadges.get(1).getBadgeTasks()));
+                        Log.d(TAG, "initViewModel: ");
+                        for (Badge badge : userBadges) {
+                            for (Badge placeBadge : placeBadges) {
+                                if (badge.getId().equals(placeBadge.getId())) {
+                                    placeBadge.setProgress(badge.getProgress());
+                                    placeBadge.setOwned(badge.isOwned());
+                                    ArrayList<BadgeTask> badgeTasks = new ArrayList<>();
+                                    for (BadgeTask badgeTask : badge.getBadgeTasks()) {
+                                        for (BadgeTask placeBadgeTask : placeBadge.getBadgeTasks()) {
+                                            if (badgeTask.getTaskTitle().equals(placeBadgeTask.getTaskTitle())) {
+                                                placeBadgeTask.setProgress(badgeTask.getProgress());
+                                                badgeTasks.add(placeBadgeTask);
+                                            }
+                                        }
+                                    }
+                                    placeBadge.setBadgeTasks(badgeTasks);
+                                }
+                            }
+                        }
+                        badgesSliderViewAdapter.setBadges((ArrayList<Badge>) placeBadges);
+                    }
+            );
         });
     }
 
@@ -188,6 +216,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
 
         achievementsRecyclerView = findViewById(R.id.achievementsGamificationActivityRecyclerView);
         placeBadges = new ArrayList<>();
+        userBadges = new ArrayList<>();
         badgesSliderViewAdapter = new BadgesSliderViewAdapter(placeBadges, this);
         achievementsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         achievementsRecyclerView.setAdapter(badgesSliderViewAdapter);
@@ -238,8 +267,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         mapView = findViewById(R.id.mapViewGamificationActivity);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-
-        userLocationLoaded = new MutableLiveData<>();
     }
 
     private void showPostPost() {
@@ -395,40 +422,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         }
     }
 
-    private void showExploreDialog(Explore explore) {
-        Dialog dialog = new Dialog(this);
-        View v = LayoutInflater.from(this).inflate(R.layout.dialog_ar_explore, null, false);
-
-        ImageView zoomableImageView = v.findViewById(R.id.gamificationHintDialogZoomableImageView);
-
-        MaterialTextView materialTextView = v.findViewById(R.id.gamificationHintDialogTitle);
-        materialTextView.setText(explore.getTitle());
-
-        Picasso.get().load(explore.getImageUrl()).into(zoomableImageView, new Callback() {
-            @Override
-            public void onSuccess() {
-                // TODO ADD PROGRESSBAR
-                PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher(zoomableImageView);
-                photoViewAttacher.update();
-            }
-
-            @Override
-            public void onError(Exception e) {
-
-            }
-        });
-
-        GamificationHintRecyclerViewAdapter adapter = new GamificationHintRecyclerViewAdapter(explore.getHints());
-        RecyclerView recyclerView = v.findViewById(R.id.gamificationHintDialogRecyclerView);
-        recyclerView.setAdapter(adapter);
-
-        dialog.setContentView(v);
-        dialog.show();
-
-        Window window = dialog.getWindow();
-        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-    }
-
     private void showReviewDialog() {
         View dialogLayout = LayoutInflater.from(GamificationActivity.this).inflate(R.layout.dialog_add_review, null);
         addReviewDialog = new Dialog(this);
@@ -447,6 +440,13 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                 String lastName = sharedPreferences.getString(Constants.SHARED_PREF_LAST_NAME, "");
                 String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
                 Review review = new Review(numStars, reviewText, firstName + " " + lastName, userId);
+
+                for (PlaceActivity placeActivity : placeActivities) {
+                    if (placeActivity.getType() == PlaceActivity.POST_REVIEW) {
+                        reviewViewModel.setPlaceActivity(placeActivity);
+                    }
+                }
+
                 reviewViewModel.submitReview(placeId, review);
                 addReviewDialog.dismiss();
             }
@@ -579,7 +579,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                     Location.distanceBetween(latitude, longitude, place.getLatitude(), place.getLongitude(), distance);
                     Log.d(TAG, "onMapReady: " + distance[0] + " distance between you and location");
 
-                    if (distance[0] > GamificationRules.CONFIRM_LOCATION_CIRCLE_RADIUS * 10) {
+                    if (distance[0] > GamificationRules.CONFIRM_LOCATION_CIRCLE_RADIUS) {
                         distanceAwayTextView.setText(String.format(Locale.CANADA, "You are %,.2f metres away!", distance[0]));
                     } else if (distance[0] > GamificationRules.CONFIRM_LOCATION_CIRCLE_RADIUS) {
                         distanceAwayTextView.setText(String.format(Locale.CANADA, "You are only %,.0f metres away!", distance[0]));
@@ -590,7 +590,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                 }
             });
 
-            mapLoaded = true;
             mapView.onResume();
         }
     }
@@ -603,7 +602,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
             Log.d(TAG, "onResume: map resumed");
             mapView.onResume();
         }
-
     }
 
     @Override
@@ -632,7 +630,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         barShimmer.startShimmerAnimation();
         startExploringShimmer.startShimmerAnimation();
         askAnubisShimmer.startShimmerAnimation();
-
     }
 
     private void stopShimmerAnimation() {
@@ -646,7 +643,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         barShimmer.stopShimmerAnimation();
         startExploringShimmer.stopShimmerAnimation();
         askAnubisShimmer.stopShimmerAnimation();
-
     }
 
     private void setLayoutVisible() {

@@ -64,8 +64,17 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_margin="8dp"
             android:orientation="vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginHorizontal="8dp"
+                android:layout_weight="1"
+                android:text="32 Remaining Activities"
+                android:textSize="20sp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -75,7 +84,7 @@
                     android:id="@+id/cityRemainingProgressPlacesActivityProgressIndicator"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginHorizontal="8dp"
                     android:max="600"
                     android:progress="560"
                     app:trackCornerRadius="3dp"
@@ -89,22 +98,6 @@
                     android:layout_alignRight="@id/cityRemainingProgressPlacesActivityProgressIndicator"
                     android:layout_alignBottom="@id/cityRemainingProgressPlacesActivityProgressIndicator">
 
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/cityRemainingProgressPlacesActivityTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="8dp"
-                        android:layout_weight="1"
-                        android:background="#00000000"
-                        android:text="8" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:background="#00000000"
-                        android:text="9" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
             </RelativeLayout>
@@ -113,7 +106,7 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
+                android:layout_marginHorizontal="8dp"
                 android:orientation="horizontal">
 
                 <com.google.android.material.textview.MaterialTextView
@@ -128,17 +121,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:text="40XP to next level" />
+                    android:text="40XP can be earned" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </LinearLayout>
 
     <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="Places to visit"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Discover the city"
         android:textSize="20sp"
         android:textStyle="bold" />
 

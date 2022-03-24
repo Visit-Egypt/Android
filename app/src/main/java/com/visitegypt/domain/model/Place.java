@@ -244,13 +244,13 @@ public class Place {
     }
 
     public int getMaxProgress() {
-        int sum = 0;
-        if (placeActivities != null) {
-            for (int i = 0; i < placeActivities.size(); i++) {
-                sum += placeActivities.get(i).getMaxProgress();
-            }
-        }
-        return sum;
+//        int sum = 0;
+//        if (placeActivities != null) {
+//            for (int i = 0; i < placeActivities.size(); i++) {
+//                sum += placeActivities.get(i).getMaxProgress();
+//            }
+//        }
+        return maxProgress;
     }
 
     @Deprecated

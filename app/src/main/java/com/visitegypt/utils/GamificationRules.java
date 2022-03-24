@@ -1,5 +1,7 @@
 package com.visitegypt.utils;
 
+import android.util.Log;
+
 public class GamificationRules {
     public static final int CONFIRM_LOCATION_CIRCLE_RADIUS = 500;
     public static final int MAX_LEVEL = 20;
@@ -30,6 +32,8 @@ public class GamificationRules {
     public static final int SILVER_BADGE_XP = 70;
     public static final int GOLD_BADGE_XP = 300;
 
+    private static final String TAG = "gamification rules";
+
     // DIGESTA LEVELING SYSTEM
     /*
         level 0: 20
@@ -59,8 +63,20 @@ public class GamificationRules {
         Total 20 xp  : 5390
     */
 
-    public static long getLevelXp(int level) {
-        return Math.round(0.04 * (level ^ 3) + 0.8 * (level ^ 2) + 1.7 * level);
+    public static int getLevelXp(int level) {
+        return (int) Math.round(0.04 * (level ^ 3) + 0.8 * (level ^ 2) + 1.7 * level) * 10;
+    }
+
+    public static int getLevelFromXp(int xp) {
+        for (int i = 0; i < GamificationRules.MAX_LEVEL; i++) {
+            int levelXp = GamificationRules.getLevelXp(i);
+            xp -= levelXp;
+            Log.d(TAG, "getLevelFromXp: " + xp);
+            if (xp < 0) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public static final String getTitleFromLevel(int level) {

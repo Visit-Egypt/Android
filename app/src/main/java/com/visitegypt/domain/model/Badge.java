@@ -118,30 +118,38 @@ public class Badge {
     }
 
     public int getProgress() {
-        if (badgeTasks != null) {
-            for (int i = 0; i < badgeTasks.size(); i++) {
-                progress += badgeTasks.get(i).getProgress();
-            }
-        }
+//        if (badgeTasks != null) {
+//            for (int i = 0; i < badgeTasks.size(); i++) {
+//                progress += badgeTasks.get(i).getProgress();
+//            }
+//        }
         return progress;
     }
 
-    @Deprecated
     public void setProgress(int progress) {
         Log.w(TAG, "progress is automatically generated from badge tasks, don't use it");
         this.progress = progress;
     }
 
     public int getMaxProgress() {
-        if (badgeTasks != null) {
-            for (int i = 0; i < badgeTasks.size(); i++) {
-                maxProgress += badgeTasks.get(i).getMaxProgress();
-            }
-        }
+//        if (badgeTasks != null) {
+//            for (int i = 0; i < badgeTasks.size(); i++) {
+//                maxProgress += badgeTasks.get(i).getMaxProgress();
+//            }
+//        }
         return maxProgress;
     }
 
-    @Deprecated
+//    public int getMaxProgressFromActivities() {
+//        if (badgeTasks != null) {
+//            for (int i = 0; i < badgeTasks.size(); i++) {
+//                maxProgress += badgeTasks.get(i).getMaxProgress();
+//            }
+//        }
+//        Log.e(TAG, "getMaxProgressFromActivities: failed, returning ordinary maxProgress");
+//        return maxProgress;
+//    }
+
     public void setMaxProgress(int maxProgress) {
         Log.w(TAG, "maxProgress is automatically generated from badge tasks, don't use it");
         this.maxProgress = maxProgress;

@@ -9,6 +9,7 @@ public class BadgeTask {
     private String taskTitle;
     public static final String SOCIAL_BUTTERFLY = "social_badge";
     private int progress;
+    @SerializedName("max_progress")
     private int maxProgress;
     private String type;
 
