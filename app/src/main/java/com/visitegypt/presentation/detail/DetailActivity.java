@@ -137,6 +137,18 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
             initViewModel(placeId, savedInstanceState);
         }
         chatBot();
+        reviewViewModel.mutableLiveDataResponseCode.observe(DetailActivity.this, code -> {
+            Log.d(TAG, "Submit review onclick " + code);
+            if (code == 400) {
+                Toast.makeText(DetailActivity.this, "This is offensive review", Toast.LENGTH_LONG).show();
+            } else {
+
+                addReviewDialog.dismiss();
+            }
+
+
+        });
+
     }
 
     private void initViews() {
@@ -373,7 +385,8 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
                     String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
                     Review review = new Review(numStars, reviewText, firstName + " " + lastName, userId);
                     reviewViewModel.submitReview(placeId, review);
-                    addReviewDialog.dismiss();
+
+
                 }
             }
 

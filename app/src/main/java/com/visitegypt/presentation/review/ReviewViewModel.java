@@ -17,6 +17,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import retrofit2.HttpException;
+import retrofit2.Response;
 
 @HiltViewModel
 public class ReviewViewModel extends ViewModel {
@@ -29,6 +31,7 @@ public class ReviewViewModel extends ViewModel {
     private SubmitReviewUseCase submitReviewUseCase;
     private GetPlaceDetailUseCase getPlaceDetailUseCase;
     private UpdateUserPlaceActivityUseCase updateUserPlaceActivityUseCase;
+    public MutableLiveData<Integer> mutableLiveDataResponseCode = new MutableLiveData<>();
     private PlaceActivity placeActivity;
 
     @Inject
@@ -72,13 +75,22 @@ public class ReviewViewModel extends ViewModel {
                 }
                 updateUserPlaceActivityUseCase.setPlaceActivity(placeActivity);
                 updateUserPlaceActivityUseCase.execute(placeActivities -> {
+
                     Log.d(TAG, "submitReview: updated user progress");
                 }, throwable -> {
-                    Log.e(TAG, "submitReview: " + throwable.getMessage());
+                    Log.d(TAG, "submitReview: "+ throwable.getMessage());
                 });
             }
+            mutableLiveDataResponseCode.setValue(200);
         }, throwable -> {
-            Log.e(TAG, "submitReview: " + throwable.getMessage());
+            try {
+                Log.e(TAG, "getUser: " + throwable.getMessage());
+                Response<?> response = ((HttpException) throwable).response();
+                mutableLiveDataResponseCode.setValue(response.code());
+
+            } catch (Exception e) {
+                Log.e(TAG, "accept catch: " + e.getMessage());
+            }
         });
 
     }
