@@ -73,7 +73,7 @@ public class GamificationRules {
             int levelXp = GamificationRules.getLevelXp(i);
             xp -= levelXp;
             Log.d(TAG, "getLevelFromXp: " + xp);
-            if (xp < 0) {
+            if (xp <= 0) {
                 return i;
             }
         }

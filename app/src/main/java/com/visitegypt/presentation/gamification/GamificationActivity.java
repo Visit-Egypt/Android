@@ -218,7 +218,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
             Log.d(TAG, "initPlaceActivitiesViewModel: done xp: " + doneXp);
             
             placeProgressIndicator.setMax(totalXp);
-            placeProgressIndicator.setProgress(doneXp);
+            placeProgressIndicator.setProgress(doneXp, true);
 
             if (totalActivities > doneActivities)
                 placeRemainingActivitiesTextView.setText(MessageFormat.format("{0} remaining activities", totalActivities - doneActivities));

@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
@@ -40,6 +41,7 @@ public class AccountFragment extends Fragment {
             xpRemainingTextView, xpProgressTextView;
     private TextView postNameTextView, postDateTextView, postCaptionTextView, postImageView;
     private TextView userTitleTextView;
+    private LinearProgressIndicator xpLinearProgressIndicator;
     private AccountViewModel accountViewModel;
     private Button gamificationStartPlayingButton;
     private CircularImageView circularAccountImageView;
@@ -75,6 +77,8 @@ public class AccountFragment extends Fragment {
         xpRemainingTextView = accountView.findViewById(R.id.remainingXpTextViewAccountFragment);
         userTitleTextView = accountView.findViewById(R.id.titleTextViewAccountFragment);
 
+        xpLinearProgressIndicator = accountView.findViewById(R.id.userLevelLinearProgressIndicationAccountFragment);
+
         gamificationStartPlayingButton = accountView.findViewById(R.id.startPlayingGamificationButtonAccountFragment);
         gamificationStartPlayingButton.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), CitiesActivity.class);
@@ -106,6 +110,8 @@ public class AccountFragment extends Fragment {
             xpRemainingTextView.setText((GamificationRules.getLevelXp(level + 1) - (GamificationRules.getLevelXp(level))) + "XP remaining to next level");
             xpProgressTextView.setText(GamificationRules.getLevelXp(level) + "/" + GamificationRules.getLevelXp(level + 1));
             userTitleTextView.setText(GamificationRules.getTitleFromLevel(level));
+            xpLinearProgressIndicator.setMax(GamificationRules.getLevelXp(level + 1));
+            xpLinearProgressIndicator.setProgress(GamificationRules.getLevelXp(level), true);
         });
 
         accountViewModel.getUserInformation();
