@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <com.jackandphantom.circularprogressbar.CircleProgressbar
+        android:id="@+id/badgeDialogCircleProgressBar"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        app:cpb_foregroundProgressColor="#1864c2"
+        app:cpb_foregroundProgressWidth="15"
+        app:cpb_progress="50"
+        app:cpb_roundedCorner="true" />
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/badgeDialogTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Social butterfly"
+        android:textSize="32sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/badgeDialogDescriptionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:text="Le Lorem Ipsum et la mise en page avant impression."
+        android:textSize="22sp" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dialogBadgeRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+</androidx.appcompat.widget.LinearLayoutCompat>

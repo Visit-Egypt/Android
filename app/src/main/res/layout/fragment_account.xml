@@ -1,0 +1,634 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorOnPrimary"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginVertical="10dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/circularAccountImageView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_baseline_account_circle_24" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/levelTextViewAccountFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/circularAccountImageView"
+                android:layout_alignTop="@id/circularAccountImageView"
+                android:layout_alignRight="@id/circularAccountImageView"
+                android:layout_alignBottom="@id/circularAccountImageView"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="80dp"
+                android:background="@color/camel"
+                android:gravity="center"
+                android:text="LVL 1" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/nameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="xxx"
+            android:textAlignment="center"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/titleTextViewAccountFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Explorer"
+            android:textAlignment="center"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:textSize="17sp" />
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/userLevelLinearProgressIndicationAccountFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:max="20"
+                    android:progress="0"
+                    app:trackCornerRadius="3dp"
+                    app:trackThickness="20dp" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/userLevelLinearProgressIndicationAccountFragment"
+                    android:layout_alignTop="@id/userLevelLinearProgressIndicationAccountFragment"
+                    android:layout_alignRight="@id/userLevelLinearProgressIndicationAccountFragment"
+                    android:layout_alignBottom="@id/userLevelLinearProgressIndicationAccountFragment">
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/userLevelLinearProgressIndicationTextViewAccountFragment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:background="#00000000"
+                        android:text="1" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/nextLevelProgressIndicatorTextViewAccountFragment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:background="#00000000"
+                        android:text="2" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </RelativeLayout>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/xpProgressTextViewAccountFragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_weight="1"
+                    android:text="0/20" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/remainingXpTextViewAccountFragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="15XP to next level" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <LinearLayout
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/likesNumberTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="0"
+                    android:textAlignment="center"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="VISITED CITIES"
+                    android:textAlignment="center"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/followingNumberTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="0"
+                    android:textAlignment="center"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="FOLLOWING"
+                    android:textAlignment="center"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/followersNumberTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="0"
+                    android:textAlignment="center"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="FOLLOWERS"
+                    android:textAlignment="center"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/startPlayingGamificationButtonAccountFragment"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Playing"
+            android:textSize="19sp"
+            app:icon="@drawable/ic_gamepad"
+            app:iconGravity="textStart" />
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="?attr/colorSecondaryVariant" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/prata_regular"
+                android:padding="10dp"
+                android:text="@string/user_badges"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/userBadgesRecyclerViewAccountFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </LinearLayout>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="?attr/colorSecondaryVariant" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/prata_regular"
+                android:padding="10dp"
+                android:text="Cities"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/prata_regular"
+            android:padding="10dp"
+            android:text="You haven't visited any cities yet"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/citiesRecyclerViewAccountFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="?attr/colorSecondaryVariant" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/prata_regular"
+            android:paddingVertical="10dp"
+            android:paddingLeft="15dp"
+            android:text="My Posts"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="10dp"
+            android:paddingLeft="35dp">
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/userImgPostImageView"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_baseline_account_circle_24" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:id="@+id/userNamePostTextView"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/datePostTextView"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:textColor="?attr/colorSecondaryVariant"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/postCaptionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="90dp"
+            android:layout_marginBottom="7dp"
+            android:inputType="textLongMessage"
+            android:maxLines="3"
+            android:text="Nice place"
+            android:textAlignment="textStart"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:textSize="18dp" />
+
+        <ImageView
+            android:id="@+id/postImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:paddingBottom="7dp"
+            android:src="@drawable/home_search" />
+
+    </LinearLayout>
+</ScrollView>
+
+
+    <!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    xmlns:tools="http://schemas.android.com/tools"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent"-->
+    <!--    android:importantForAutofill="noExcludeDescendants"-->
+    <!--    tools:context=".presentation.account.AccountFragment">-->
+
+    <!--    <View-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:background="@color/brown"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--    <ScrollView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent">-->
+
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent">-->
+
+    <!--            <LinearLayout-->
+    <!--                android:id="@+id/goldLinearLayout"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="350dp"-->
+    <!--                android:background="@drawable/likes_background"-->
+    <!--                android:gravity="bottom"-->
+    <!--                android:orientation="horizontal"-->
+    <!--                android:paddingBottom="20dp"-->
+    <!--                android:weightSum="3"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/countryTextView"-->
+    <!--                app:layout_constraintTop_toTopOf="parent"-->
+    <!--                app:layout_constraintVertical_bias="0.0"-->
+    <!--                tools:layout_editor_absoluteX="0dp">-->
+
+    <!--                <LinearLayout-->
+    <!--                    android:layout_width="180dp"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_weight="1"-->
+    <!--                    android:orientation="vertical">-->
+
+    <!--                    <TextView-->
+    <!--                        android:id="@+id/likesNumberTextView"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:text="0"-->
+    <!--                        android:textAlignment="center"-->
+    <!--                        android:textColor="?attr/colorOnPrimary"-->
+    <!--                        android:textSize="18dp"-->
+    <!--                        android:textStyle="bold" />-->
+
+    <!--                    <TextView-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:text="LIKES"-->
+    <!--                        android:textAlignment="center"-->
+    <!--                        android:textColor="?attr/colorSecondaryVariant"-->
+    <!--                        android:textSize="15dp" />-->
+
+    <!--                </LinearLayout>-->
+
+    <!--                <LinearLayout-->
+    <!--                    android:layout_width="180dp"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_weight="1"-->
+    <!--                    android:orientation="vertical">-->
+
+    <!--                    <TextView-->
+    <!--                        android:id="@+id/followingNumberTextView"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:text="0"-->
+    <!--                        android:textAlignment="center"-->
+    <!--                        android:textColor="?attr/colorOnPrimary"-->
+    <!--                        android:textSize="18dp"-->
+    <!--                        android:textStyle="bold" />-->
+
+    <!--                    <TextView-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:text="FOLLOWING"-->
+    <!--                        android:textAlignment="center"-->
+    <!--                        android:textColor="?attr/colorSecondaryVariant"-->
+    <!--                        android:textSize="15dp" />-->
+
+    <!--                </LinearLayout>-->
+
+    <!--                <LinearLayout-->
+    <!--                    android:layout_width="180dp"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_weight="1"-->
+    <!--                    android:orientation="vertical">-->
+
+    <!--                    <TextView-->
+    <!--                        android:id="@+id/followersNumberTextView"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:text="0"-->
+    <!--                        android:textAlignment="center"-->
+    <!--                        android:textColor="?attr/colorOnPrimary"-->
+    <!--                        android:textSize="18dp"-->
+    <!--                        android:textStyle="bold" />-->
+
+    <!--                    <TextView-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:text="FOLLOWERS"-->
+    <!--                        android:textAlignment="center"-->
+    <!--                        android:textColor="?attr/colorSecondaryVariant"-->
+    <!--                        android:textSize="15dp" />-->
+
+    <!--                </LinearLayout>-->
+
+    <!--            </LinearLayout>-->
+
+    <!--            <View-->
+    <!--                android:id="@+id/view1"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="260dp"-->
+    <!--                android:background="@drawable/setting_bg"-->
+    <!--                app:layout_constraintBottom_toTopOf="@+id/goldLinearLayout"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintHorizontal_bias="0.0"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent"-->
+    <!--                app:layout_constraintVertical_bias="0.0" />-->
+
+    <!--            <com.mikhaellopez.circularimageview.CircularImageView-->
+    <!--                android:id="@+id/circularAccountImageView"-->
+    <!--                android:layout_width="100dp"-->
+    <!--                android:layout_height="100dp"-->
+    <!--                android:src="@drawable/ic_baseline_account_circle_24"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintHorizontal_bias="0.5"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent"-->
+    <!--                app:layout_constraintVertical_bias="0.102" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/nameTextView"-->
+    <!--                android:layout_width="200dp"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:textAlignment="center"-->
+    <!--                android:textColor="?attr/colorOnSecondary"-->
+    <!--                android:textSize="18dp"-->
+    <!--                android:textStyle="bold"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintHorizontal_bias="0.5"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/circularAccountImageView"-->
+    <!--                app:layout_constraintVertical_bias="0.042" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/countryTextView"-->
+    <!--                android:layout_width="100dp"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="Egypt"-->
+    <!--                android:textAlignment="center"-->
+    <!--                android:textColor="?attr/colorPrimaryVariant"-->
+    <!--                android:textSize="18dp"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintHorizontal_bias="0.5"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/nameTextView"-->
+    <!--                app:layout_constraintVertical_bias="0.028" />-->
+
+    <!--            <LinearLayout-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:orientation="vertical"-->
+    <!--                android:paddingTop="20dp"-->
+    <!--                android:paddingBottom="20dp"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/goldLinearLayout">-->
+
+    <!--                <LinearLayout-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:orientation="horizontal"-->
+    <!--                    android:paddingLeft="20dp">-->
+
+    <!--                    <com.mikhaellopez.circularimageview.CircularImageView-->
+    <!--                        android:id="@+id/userImgPostImageView"-->
+    <!--                        android:layout_width="70dp"-->
+    <!--                        android:layout_height="70dp"-->
+    <!--                        android:src="@drawable/ic_baseline_account_circle_24" />-->
+
+    <!--                    <LinearLayout-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:orientation="vertical"-->
+    <!--                        android:paddingLeft="15dp">-->
+
+    <!--                        <TextView-->
+    <!--                            android:id="@+id/userNamePostTextView"-->
+    <!--                            android:layout_width="100dp"-->
+    <!--                            android:layout_height="wrap_content"-->
+    <!--                            android:textAlignment="textStart"-->
+    <!--                            android:textColor="?attr/colorOnPrimary"-->
+    <!--                            android:textSize="18dp"-->
+    <!--                            android:textStyle="bold" />-->
+
+    <!--                        <TextView-->
+    <!--                            android:id="@+id/datePostTextView"-->
+    <!--                            android:layout_width="70dp"-->
+    <!--                            android:layout_height="wrap_content"-->
+    <!--                            android:textAlignment="textStart"-->
+    <!--                            android:textColor="?attr/colorSecondaryVariant"-->
+    <!--                            android:textSize="18dp"-->
+    <!--                            android:textStyle="bold" />-->
+    <!--                    </LinearLayout>-->
+
+    <!--                </LinearLayout>-->
+
+    <!--                <TextView-->
+    <!--                    android:id="@+id/postCaptionTextView"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginLeft="90dp"-->
+    <!--                    android:inputType="textLongMessage"-->
+    <!--                    android:maxLines="3"-->
+    <!--                    android:textAlignment="textStart"-->
+    <!--                    android:textColor="?attr/colorSecondaryVariant"-->
+    <!--                    android:textSize="18dp" />-->
+
+    <!--                <ImageView-->
+    <!--                    android:id="@+id/postImageView"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="200dp"-->
+    <!--                    android:paddingTop="7dp"-->
+    <!--                    android:src="@drawable/home_search" />-->
+
+    <!--            </LinearLayout>-->
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--    </ScrollView>-->
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->

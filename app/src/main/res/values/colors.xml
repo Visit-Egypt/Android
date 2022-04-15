@@ -6,5 +6,19 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="black_trans">#4D000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="mainColor">#2F80ED</color>
+    <color name="camel">#ffb300</color>
+    <color name="darkCamel">#B38602</color>
+    <color name="brown">#E6603A05</color>
+    <color name="gold">#D19E05</color>
+    <color name="gray">#E1E1E1</color>
+    <color name="darkGray">#444444</color>
+    <color name="semiwhite">#F7F7F7</color>
+    <color name="nav_drawer_color">#EBEBEB</color>
+    <color name="icon_color">#AAAAAA</color>
+    <color name="icon_title">#222222</color>
+
+
 </resources>

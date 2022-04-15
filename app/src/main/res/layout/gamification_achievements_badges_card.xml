@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/badgeGamificationCardLinearLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.jackandphantom.circularprogressbar.CircleProgressbar
+            android:id="@+id/badgeGamificationCardCircleProgressBar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:background="@drawable/badge"
+            app:cpb_foregroundProgressColor="#1864c2"
+            app:cpb_foregroundProgressWidth="10"
+            app:cpb_progress="50"
+            app:cpb_roundedCorner="true" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/badgeGamificationCardTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/montserrat_light"
+            android:gravity="center"
+            android:singleLine="false"
+            android:text="Love badge"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="12dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</LinearLayout>

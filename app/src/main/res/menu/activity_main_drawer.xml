@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/menu_activites_id"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_discover"
+            android:icon="@drawable/ic_discover"
+            android:title="@string/menu_discover" />
+        <item
+            android:id="@+id/nav_near_me"
+            android:icon="@drawable/ic_near_me"
+            android:title="@string/menu_near_me" />
+        <item
+            android:id="@+id/nav_activities"
+            android:icon="@drawable/ic_activities"
+            android:title="@string/menu_activities" />
+        <item
+            android:id="@+id/nav_map"
+            android:icon="@drawable/ic_map"
+            android:title="@string/menu_map" />
+        <item
+            android:id="@+id/nav_booking"
+            android:icon="@drawable/ic_booking"
+            android:title="@string/menu_booking" />
+        <item
+            android:id="@+id/nav_subscription"
+            android:icon="@drawable/ic_subscreption"
+            android:title="@string/menu_subscription" />
+
+    </group>
+    <group
+        android:id="@+id/menu_setting_id"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/setting"
+            android:icon="@drawable/ic_setting"
+            android:title="@string/menu_setting" />
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/menu_logout" />
+
+    </group>
+</menu>
