@@ -13,6 +13,10 @@ public class BadgeTask {
     private int maxProgress;
     private String type;
 
+    public BadgeTask() {
+
+    }
+
     public BadgeTask(String badgeId, String taskTitle, int progress) {
         this.badgeId = badgeId;
         this.taskTitle = taskTitle;
@@ -55,7 +59,7 @@ public class BadgeTask {
     }
 
     public void setMaxProgress(int maxProgress) {
-        this.maxProgress = maxProgress;
+        this.maxProgress = this.maxProgress == 0 ? maxProgress : this.maxProgress;
     }
 
     public String getType() {

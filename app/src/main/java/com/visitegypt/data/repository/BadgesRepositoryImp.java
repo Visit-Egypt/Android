@@ -23,6 +23,7 @@ public class BadgesRepositoryImp implements BadgesRepository {
 
     @Override
     public Single<BadgeResponse> getBadgesByPlace(String placeId) {
-        return retrofitService.getBadgesByPlace(placeId);
+        String placeQuery = "{\"place_id\":\"" + placeId + "\"}";
+        return retrofitService.getBadgesByPlace(placeQuery);
     }
 }

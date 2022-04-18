@@ -39,7 +39,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
 
         Glide.with(viewHolder.itemView)
                 .load(sliderItem.getImgUrl())
-                .fitCenter()
+                .centerCrop()
                 .into(viewHolder.imageViewBackground);
     }
 

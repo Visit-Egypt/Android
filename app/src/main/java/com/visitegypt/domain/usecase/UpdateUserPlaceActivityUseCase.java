@@ -12,7 +12,7 @@ import javax.inject.Named;
 import io.reactivex.rxjava3.core.Single;
 
 public class UpdateUserPlaceActivityUseCase extends SingleUseCase<List<PlaceActivity>> {
-    UserRepository userRepository;
+    private UserRepository userRepository;
     private PlaceActivity placeActivity;
 
     @Inject

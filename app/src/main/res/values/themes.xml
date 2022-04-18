@@ -10,9 +10,12 @@
         <item name="colorSecondaryVariant">@color/gray</item>
         <item name="colorOnSecondary">@color/black</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/camel</item>
         <!-- Customize your theme here. -->
+        <item name="android:windowContentTransitions">true</item>
+
     </style>
 
     <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
@@ -41,7 +44,7 @@
         <!-- Status bar color. -->
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorOnPrimary</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/camel</item>
     </style>
 
     <style name="Theme.VisitEgypt.AppBarOverlayCamel" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -54,7 +57,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorOnPrimary</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/camel</item>
     </style>
 
     <style name="Theme.VisitEgypt.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

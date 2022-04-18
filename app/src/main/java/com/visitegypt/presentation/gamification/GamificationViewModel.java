@@ -91,19 +91,16 @@ public class GamificationViewModel extends ViewModel {
 
     public void updatePlaceActivityForUser() throws Exception {
         if (placeActivity == null) throw new Exception("must call setPlaceActivity");
+        Log.d(TAG, "updatePlaceActivityForUser: updating place activity of user");
         if (placeActivity.getProgress() != placeActivity.getMaxProgress()) {
+            Log.d(TAG, "updatePlaceActivityForUser: olace activity not finished yet, completing...");
             placeActivity.setProgress(placeActivity.getProgress() + 1);
             updateUserPlaceActivityUseCase.setPlaceActivity(placeActivity);
             updateUserPlaceActivityUseCase.execute(placeActivities -> {
-
             }, throwable -> {
                 Log.e(TAG, "updatePlaceActivityForUser: failed to update activity progress" + throwable.getMessage());
             });
         }
-    }
-
-    private void getPlaceActivity() {
-
     }
 
     public void getBadgesOfUser() {
