@@ -23,7 +23,6 @@
         app:headerLayout="@layout/nav_header_new_home"
         app:itemIconPadding="25dp"
         app:itemIconTint="?attr/colorSecondaryVariant"
-        app:itemTextColor="@color/icon_title"
         app:menu="@menu/activity_main_drawer" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

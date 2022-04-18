@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -77,9 +78,11 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     public static final String INSIGHTS = "insights";
     public static final String PLACE_TITLE = "placeTitle";
     private static final String TAG = "Gamification Activity";
+
     @Inject
     public SharedPreferences sharedPreferences;
-    String placeId;
+
+    private String placeId;
     private ArrayList<PlaceActivity> placeActivities;
     private ArrayList<Badge> placeBadges;
     private ArrayList<Badge> userBadges;
@@ -99,7 +102,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private GamificationViewModel gamificationViewModel;
     private Place place;
 
-
     private ShimmerFrameLayout sliderShimmerFrameLayout, claimPlaceShimmer, badgesShimmer;
     private ShimmerFrameLayout socialActivitiesShimmer, mapShimmer, confirmLocation;
     private ShimmerFrameLayout adventureShimmer, barShimmer, startExploringShimmer, askAnubisShimmer;
@@ -114,6 +116,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private ImageButton askAboutInsightsImageButton, askAboutArtifactsImageButton;
     private LinearProgressIndicator placeProgressIndicator;
     private LinearLayout shimmerLayout, gamificationLayout;
+    private ConstraintLayout postCardConstraintLayout;
 
     private final MutableLiveData<Boolean> userLocationLoaded = new MutableLiveData<>();
     private final MutableLiveData<Boolean> placeBadgesLoaded = new MutableLiveData<>();
@@ -343,6 +346,9 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         mapView = findViewById(R.id.mapViewGamificationActivity);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+
+        postCardConstraintLayout = findViewById(R.id.postCardConstraintLayout);
+        postCardConstraintLayout.setBackgroundResource(R.drawable.card_review_edge);
     }
 
 
