@@ -2,24 +2,17 @@ package com.visitegypt.presentation.setting;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
-
 import static com.visitegypt.utils.UploadUtils.checkAndRequestPermissions;
 import static com.visitegypt.utils.UploadUtils.getRealPathFromUri;
 import static com.visitegypt.utils.UploadUtils.setContext;
 
 import android.Manifest;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,11 +38,7 @@ import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.presentation.home.parent.Home;
 import com.visitegypt.presentation.signin.SignInActivity;
 
-import com.visitegypt.utils.UploadUtils;
-
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -61,12 +50,12 @@ public class SettingFragment extends Fragment {
             email,
             phone,
             password;
-    AppCompatButton saveButton, cancelButton, logOutButton;
+    AppCompatButton saveButton, logOutButton;
     CircularImageView changeImageView;
     CircularImageView userImageView;
     View settingFragment;
     SettingViewModel settingViewModel;
-    private  String userImage ;
+    private String userImage;
     File file = null;
     private static final int PHOTO_SELECTED = 1;
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
@@ -117,12 +106,6 @@ public class SettingFragment extends Fragment {
                 settingViewModel.updateUser(userUpdateRequest);
             }
         });
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
         settingViewModel.url.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -147,7 +130,6 @@ public class SettingFragment extends Fragment {
         phone = settingFragment.findViewById(R.id.phoneTextInputEditText);
         password = settingFragment.findViewById(R.id.passwordTextInputEditText);
         saveButton = settingFragment.findViewById(R.id.saveButton);
-        cancelButton = settingFragment.findViewById(R.id.cancelButton);
 //        logOutButton = settingFragment.findViewById(R.id.logOutButton);
         changeImageView = settingFragment.findViewById(R.id.changeImageView);
         userImageView = settingFragment.findViewById(R.id.userImageView);

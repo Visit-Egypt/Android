@@ -51,6 +51,11 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
         notifyDataSetChanged();
     }
 
+    public void addBadge(ArrayList<Badge> badges) {
+        this.badges = badges;
+        notifyItemChanged(getItemCount());
+    }
+
     @NonNull
     @Override
     public SliderAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -69,7 +74,7 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
             Log.d(TAG, "onBindViewHolder: badge max progress: " + badges.get(position).getMaxProgress());
             Log.d(TAG, "onBindViewHolder: badge progress: " + badges.get(position).getMaxProgress());
             viewHolder.circleProgressbar.setMaxProgress(badges.get(position).getMaxProgress());
-            viewHolder.circleProgressbar.setProgress(badges.get(position).getMaxProgress());
+            viewHolder.circleProgressbar.setProgressWithAnimation(badges.get(position).getMaxProgress());
             viewHolder.circleProgressbar.setForegroundProgressColor(Color.GREEN);
 
             // badge owned => color
@@ -95,7 +100,7 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
             Log.d(TAG, "onBindViewHolder: badge max progress: " + badges.get(position).getMaxProgress());
             Log.d(TAG, "onBindViewHolder: badge progress: " + badges.get(position).getProgress());
             viewHolder.circleProgressbar.setMaxProgress(badges.get(position).getMaxProgress());
-            viewHolder.circleProgressbar.setProgress(badges.get(position).getProgress());
+            viewHolder.circleProgressbar.setProgressWithAnimation(badges.get(position).getProgress());
 
             // badge not owned => gray
             ColorMatrix colorMatrix = new ColorMatrix();
@@ -144,12 +149,12 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
 
         CircleProgressbar circleProgressbar = v.findViewById(R.id.badgeDialogCircleProgressBar);
         if (badge.isOwned()) {
-            circleProgressbar.setMaxProgress(1);
-            circleProgressbar.setProgress(circleProgressbar.getMaxProgress());
+            //circleProgressbar.setMaxProgress(1);
+            circleProgressbar.setProgressWithAnimation(circleProgressbar.getMaxProgress());
             circleProgressbar.setForegroundProgressColor(Color.GREEN);
         } else {
             circleProgressbar.setMaxProgress(badge.getMaxProgress());
-            circleProgressbar.setProgress(badge.getProgress());
+            circleProgressbar.setProgressWithAnimation(badge.getProgress());
         }
         Log.d(TAG, "show badge dialog: " + badge.getTitle() + ", progress: " +
                 badge.getProgress() + "/" + badge.getMaxProgress());

@@ -56,7 +56,7 @@
     <string name="no_reviews">No Reviews</string>
     <string name="know_this_place">Know this place?</string>
     <string name="opening_hours">Opening Hours</string>
-    <string name="prices">Ticket Price</string>
+    <string name="prices">Ticket Prices</string>
     <string name="title_activity_navigation">NavigationActivity</string>
     <string name="title_home">Discover</string>
     <string name="title_account">Account</string>
@@ -86,7 +86,7 @@
     <string name="menu_map">Map</string>
     <string name="menu_booking">Booking</string>
     <string name="menu_subscription">Subscription</string>
-    <string name="menu_setting">Setting</string>
+    <string name="menu_setting">Settings</string>
     <string name="menu_logout">Logout</string>
     <string name="Recommendation">Recommendation </string>
     <string name="places_to_visit">Places to visit </string>

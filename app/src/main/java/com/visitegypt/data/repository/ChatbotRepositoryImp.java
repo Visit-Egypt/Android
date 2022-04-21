@@ -7,7 +7,6 @@ import com.visitegypt.domain.model.Message;
 import com.visitegypt.domain.repository.ChatbotRepository;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import io.reactivex.rxjava3.core.Single;
 

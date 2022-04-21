@@ -9,28 +9,31 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.textview.MaterialTextView;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Explore;
 import com.visitegypt.domain.model.Hint;
-import com.visitegypt.domain.model.Item;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import uk.co.senab.photoview.PhotoViewAttacher;
+
 public class ArtifactsRecyclerViewAdapter extends RecyclerView.Adapter<com.visitegypt.presentation.gamification.ArtifactsRecyclerViewAdapter.ViewHolder> {
 
     private static final String TAG = "Artifacts Adapter in Gamification ";
-    private List<Item> itemsArrayList;
+    private List<Explore> exploreArrayList;
 
     private Context context;
     private Explore dummyExplore;
-
 
     public ArtifactsRecyclerViewAdapter(Context context) {
         this.context = context;
@@ -46,22 +49,22 @@ public class ArtifactsRecyclerViewAdapter extends RecyclerView.Adapter<com.visit
     @Override
     public void onBindViewHolder(com.visitegypt.presentation.gamification.ArtifactsRecyclerViewAdapter.ViewHolder holder, int position) {
 
-        Item currentItem = itemsArrayList.get(position);
-        holder.itemTitleTextView.setText(currentItem.getTitle());
+        Explore currentExplore = exploreArrayList.get(position);
+        holder.itemTitleTextView.setText(currentExplore.getTitle());
 
         holder.itemTitleTextView.setOnClickListener(view -> {
             Log.d(TAG, "onClick: kkkkkkkkk");
-            showHints(view, currentItem);
+            showHints(view, currentExplore);
         });
         holder.itemImage.setOnClickListener(view -> {
             Log.d(TAG, "onClick: ssssssssssssss");
-            showHints(view, currentItem);
+            showHints(view, currentExplore);
         });
-        if (currentItem.getImageUrls() != null) {
-            if (!currentItem.getImageUrls().isEmpty()) {
-                Log.d(TAG, "found image for item: " + currentItem.getImageUrls().get(0).toString());
+        if (currentExplore.getImageUrl() != null) {
+            if (!currentExplore.getImageUrl().isEmpty()) {
+                Log.d(TAG, "found image for item: " + currentExplore.getImageUrl().toString());
                 Glide.with(holder.itemView)
-                        .load(currentItem.getImageUrls().get(0))
+                        .load(currentExplore.getImageUrl())
                         .fitCenter()
                         .into(holder.itemImage);
             } else {
@@ -74,17 +77,17 @@ public class ArtifactsRecyclerViewAdapter extends RecyclerView.Adapter<com.visit
 
     @Override
     public int getItemCount() {
-        if (itemsArrayList == null)
+        if (exploreArrayList == null)
             return 0;
-        return itemsArrayList.size();
+        return exploreArrayList.size();
     }
 
-    public void setItemsArrayList(List<Item> itemsArrayList) {
-        this.itemsArrayList = itemsArrayList;
+    public void setExploreArrayList(List<Explore> exploreArrayList) {
+        this.exploreArrayList = exploreArrayList;
         notifyDataSetChanged();
     }
 
-    public void showHints(View view, Item currentItem) {
+    public void showHints(View view, Explore currentExplore) {
 //        Context contextt;
 //        contextt = view.getContext();
 //        Intent intent = new Intent(contextt, ItemActivity.class);
@@ -103,32 +106,38 @@ public class ArtifactsRecyclerViewAdapter extends RecyclerView.Adapter<com.visit
         dummyExplore = new Explore("Tout Ankha Amon", "https://images.lpcdn.ca/924x615/201002/13/147005-momie-toutankhamon.jpg", hints);
 
 //        showExploreDialog(dummyExplore);
-        showExploreDialog(currentItem);
+        showExploreDialog(currentExplore);
 
     }
 
-    private void showExploreDialog(Item item) {
+    private void showExploreDialog(Explore explore) {
         Dialog dialog = new Dialog(context);
         View v = LayoutInflater.from(context).inflate(R.layout.dialog_ar_explore, null, false);
 
-        ImageView zoomableImageView = v.findViewById(R.id.gamificationHintDialogZoomableImageView);
         MaterialTextView materialTextView = v.findViewById(R.id.gamificationHintDialogTitle);
-        materialTextView.setText(item.getTitle());
+        materialTextView.setText(explore.getTitle());
 
 //        materialTextView.setText(explore.getTitle());
 
-//        Picasso.get().load(explore.getImageUrl()).into(zoomableImageView, new Callback() {
-//            @Override
-//            public void onSuccess() {
-//                PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher(zoomableImageView);
-//                photoViewAttacher.update();
-//            }
-//
-//            @Override
-//            public void onError(Exception e) {
-//
-//            }
-//        });
+        ImageView zoomableImageView = v.findViewById(R.id.gamificationHintDialogZoomableImageView);
+        if (explore.getImageUrl() != null) {
+            if (!explore.getImageUrl().isEmpty()) {
+                Picasso.get().load(explore.getImageUrl()).into(zoomableImageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher(zoomableImageView);
+                        photoViewAttacher.update();
+                        ProgressBar progressBar = v.findViewById(R.id.gamificationHintDialogProgressBar);
+                        progressBar.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+                });
+            }
+        }
 
 //        GamificationHintRecyclerViewAdapter adapter = new GamificationHintRecyclerViewAdapter(item.getHints());
 //        RecyclerView recyclerView = v.findViewById(R.id.gamificationHintDialogRecyclerView);

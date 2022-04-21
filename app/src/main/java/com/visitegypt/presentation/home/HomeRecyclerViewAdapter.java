@@ -59,7 +59,6 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
             } catch (Exception e) {
                 Log.e(TAG, "couldn't load price text: " + e.getMessage());
             }
-        } else {
         }
         if (placesList.get(position).getDefaultImage() != null) {
             Log.d(TAG, "default image found for: " + placesList.get(position).getTitle());
@@ -90,14 +89,10 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
             imgPlace = itemView.findViewById(R.id.imgPlaceCard);
             txtTitle = itemView.findViewById(R.id.txtPlaceCardNewCity);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    Intent intent = new Intent(context, DetailActivity.class);
-                    intent.putExtra(CHOSEN_PLACE_ID, placesList.get(getAdapterPosition()).getId());
-                    context.startActivity(intent);
-                }
+            itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra(CHOSEN_PLACE_ID, placesList.get(getAdapterPosition()).getId());
+                context.startActivity(intent);
             });
         }
     }

@@ -161,6 +161,7 @@
         app:layout_goneMarginTop="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10" />
@@ -201,6 +202,8 @@
         android:text="@string/signUp"
         android:textColor="?attr/colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:clickable="true"
+        android:foreground="?android:selectableItemBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent"

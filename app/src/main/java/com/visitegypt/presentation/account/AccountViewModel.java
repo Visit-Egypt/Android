@@ -38,7 +38,7 @@ public class AccountViewModel extends ViewModel {
     MutableLiveData<List<Post>> mutableLiveDataMyPosts = new MutableLiveData<>();
     MutableLiveData<String> mutableLiveDataName = new MutableLiveData<>();
     MutableLiveData<String> mutableLiveDataUserImage = new MutableLiveData<>();
-    MutableLiveData<ArrayList<Badge>> allBadges = new MutableLiveData<>();
+    MutableLiveData<ArrayList<Badge>> allBadgesMutableLiveData = new MutableLiveData<>();
     MutableLiveData<User> userMutableLiveData = new MutableLiveData<>();
     private SharedPreferences sharedPreferences;
     private GetPostsByUser getPostsByUser;
@@ -91,7 +91,7 @@ public class AccountViewModel extends ViewModel {
 
     public void getAllBadges() {
         getAllBadgesUseCase.execute(badgeResponse -> {
-            allBadges.setValue((ArrayList<Badge>) badgeResponse.getBadges());
+            allBadgesMutableLiveData.setValue((ArrayList<Badge>) badgeResponse.getBadges());
         }, throwable -> {
             Log.e(TAG, "getAllBadges: " + throwable.getMessage());
         });

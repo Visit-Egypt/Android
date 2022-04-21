@@ -11,6 +11,8 @@
         android:layout_height="wrap_content"
         android:elevation="12dp"
         android:foreground="?android:selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
         app:cardCornerRadius="3dp">
 
         <LinearLayout

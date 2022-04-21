@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 public class PlaceActivity {
     // Types
-    public static final int VISIT_LOCATION = 0, POST_STORY = 1, POST_POST = 2, ASK_CHAT_BOT = 3, POST_REVIEW = 4, GENERAL = 5;
+    public static final String VISIT_LOCATION = "0", POST_STORY = "1", POST_POST = "2", ASK_CHAT_BOT = "3", POST_REVIEW = "4", GENERAL = "5";
     private String id;
     private int progress;
     boolean customXp = false;
     private int xp;
-    private int type;
+    private String type;
     private boolean finished;
     private String title;
     private String description;
@@ -25,7 +25,7 @@ public class PlaceActivity {
 
     }
 
-    public PlaceActivity(int xp, int type, String title, String description) {
+    public PlaceActivity(int xp, String type, String title, String description) {
         this.xp = xp;
         this.type = type;
         this.title = title;
@@ -52,7 +52,7 @@ public class PlaceActivity {
     }
 
     public void setProgress(int progress) {
-        this.progress = progress;
+        this.progress = this.progress == 0 ? progress : this.progress;
     }
 
     public int getXp() {
@@ -60,19 +60,19 @@ public class PlaceActivity {
     }
 
     public void setXp(int xp) {
-        this.xp = xp;
+        this.xp = this.xp == 0 ? xp : this.xp;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 
     public boolean isFinished() {
-        return finished;
+        return getProgress() == getMaxProgress();
     }
 
     public void setFinished(boolean finished) {
@@ -140,6 +140,6 @@ public class PlaceActivity {
     }
 
     public void setMaxProgress(int maxProgress) {
-        this.maxProgress = maxProgress;
+        this.maxProgress = this.maxProgress == 0 ? maxProgress : this.maxProgress;
     }
 }

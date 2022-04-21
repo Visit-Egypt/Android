@@ -48,12 +48,12 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:fontFamily="@font/montserrat_alternates_medium"
+                        style="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:textColor="?attr/colorPrimaryVariant"
                         android:gravity="center"
                         android:shadowColor="?attr/colorSecondaryVariant"
                         android:text="@string/Recommendation"
-                        android:textColor="?attr/colorPrimaryVariant"
-                        android:textSize="24sp"
-                        android:textStyle="normal" />
+                        android:textSize="28sp" />
 
                     <View
                         android:layout_width="0dp"
@@ -64,13 +64,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_marginRight="20dp"
-                        android:background="@drawable/button_shape"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:gravity="center"
-                        android:shadowColor="?attr/colorSecondaryVariant"
                         android:text="See all >"
-                        android:textAllCaps="false"
-                        app:backgroundTint="@null"
-                        app:cornerRadius="60dp" />
+                        android:textAllCaps="false" />
                 </LinearLayout>
 
                 <TableLayout
@@ -112,10 +109,10 @@
                     android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:shadowColor="?attr/colorSecondaryVariant"
-                    android:text="@string/places_to_visit"
+                    style="@style/TextAppearance.MaterialComponents.Headline5"
                     android:textColor="?attr/colorPrimaryVariant"
-                    android:textSize="30sp"
-                    android:textStyle="normal" />
+                    android:text="@string/places_to_visit"
+                    android:textSize="28sp" />
 
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/placesToVisitShimmer"
@@ -210,8 +207,9 @@
                         android:gravity="center"
                         android:shadowColor="?attr/colorSecondaryVariant"
                         android:text="@string/Recommendation"
+                        style="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:textSize="28sp"
                         android:textColor="?attr/colorPrimaryVariant"
-                        android:textSize="24sp"
                         android:textStyle="normal" />
 
                     <View
@@ -223,13 +221,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_marginRight="20dp"
-                        android:background="@drawable/button_shape"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:gravity="center"
-                        android:shadowColor="?attr/colorSecondaryVariant"
                         android:text="See all >"
-                        android:textAllCaps="false"
-                        app:backgroundTint="@null"
-                        app:cornerRadius="60dp" />
+                        android:textAllCaps="false" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -246,8 +241,9 @@
                     android:gravity="center"
                     android:shadowColor="?attr/colorSecondaryVariant"
                     android:text="@string/places_to_visit"
+                    style="@style/TextAppearance.MaterialComponents.Headline5"
                     android:textColor="?attr/colorPrimaryVariant"
-                    android:textSize="30sp"
+                    android:textSize="28sp"
                     android:textStyle="normal" />
 
                 <com.google.android.material.card.MaterialCardView

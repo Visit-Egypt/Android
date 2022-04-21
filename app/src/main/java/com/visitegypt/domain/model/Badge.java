@@ -107,7 +107,7 @@ public class Badge {
     }
 
     public void setXp(int xp) {
-        this.xp = xp;
+        this.xp = this.xp == 0 ? xp : this.xp;
     }
 
     public String getDescription() {
@@ -154,7 +154,7 @@ public class Badge {
 
     public void setMaxProgress(int maxProgress) {
         Log.w(TAG, "maxProgress is automatically generated from badge tasks, don't use it");
-        this.maxProgress = maxProgress;
+        this.maxProgress = this.maxProgress == 0 ? maxProgress : this.maxProgress;
     }
 
     public ArrayList<BadgeTask> getBadgeTasks() {
@@ -162,7 +162,7 @@ public class Badge {
     }
 
     public void setBadgeTasks(ArrayList<BadgeTask> badgeTasks) {
-        this.badgeTasks = badgeTasks;
+        this.badgeTasks = this.badgeTasks == null ? badgeTasks : this.badgeTasks;
     }
 
     public boolean isPinned() {

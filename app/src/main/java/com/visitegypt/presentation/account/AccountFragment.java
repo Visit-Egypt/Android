@@ -24,6 +24,7 @@ import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.presentation.gamification.BadgesSliderViewAdapter;
 import com.visitegypt.presentation.gamification.CitiesActivity;
 import com.visitegypt.utils.GamificationRules;
+import com.visitegypt.utils.MergeObjects;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -39,7 +40,6 @@ public class AccountFragment extends Fragment {
     private TextView likesNumberTextView, followingNumberTextView, followersNumberTextView;
     private TextView levelTextView, currentLevelTextView, nextLevelTextView,
             xpRemainingTextView, xpProgressTextView;
-    private TextView postNameTextView, postDateTextView, postCaptionTextView, postImageView;
     private TextView userTitleTextView;
     private LinearProgressIndicator xpLinearProgressIndicator;
     private AccountViewModel accountViewModel;
@@ -66,8 +66,6 @@ public class AccountFragment extends Fragment {
         likesNumberTextView = accountView.findViewById(R.id.likesNumberTextView);
         followingNumberTextView = accountView.findViewById(R.id.followingNumberTextView);
         followersNumberTextView = accountView.findViewById(R.id.followersNumberTextView);
-        postNameTextView = accountView.findViewById(R.id.userNamePostTextView);
-        postCaptionTextView = accountView.findViewById(R.id.postCaptionTextView);
         circularAccountImageView = accountView.findViewById(R.id.circularAccountImageView);
 
         levelTextView = accountView.findViewById(R.id.levelTextViewAccountFragment);
@@ -117,10 +115,7 @@ public class AccountFragment extends Fragment {
         accountViewModel.getUserInformation();
         accountViewModel.mutableLiveDataMyPosts.observe(getViewLifecycleOwner(), posts -> {
             if (posts.get(0).getId() == null) {
-
-            } else {
-                postNameTextView.setText(posts.get(0).getUserName());
-                postCaptionTextView.setText(posts.get(0).getCaption());
+                // TODO fill user activities
             }
         });
         accountViewModel.mutableLiveDataUserImage.observe(getViewLifecycleOwner(), s -> {
@@ -131,7 +126,7 @@ public class AccountFragment extends Fragment {
 
         accountViewModel.getUserBadges();
         accountViewModel.getAllBadges();
-        accountViewModel.allBadges.observe(getViewLifecycleOwner(), placeBadges -> {
+        accountViewModel.allBadgesMutableLiveData.observe(getViewLifecycleOwner(), placeBadges -> {
             this.placeBadges = placeBadges;
             //Log.d(TAG, "initViewModel: BOOM" + new Gson().toJson(placeBadges.get(1).getBadgeTasks()));
             accountViewModel.userBadgesMutableLiveData.observe(getViewLifecycleOwner(),
@@ -142,13 +137,14 @@ public class AccountFragment extends Fragment {
                         for (Badge badge : userBadges) {
                             for (Badge placeBadge : placeBadges) {
                                 if (badge.getId().equals(placeBadge.getId())) {
-                                    placeBadge.setProgress(badge.getProgress());
-                                    placeBadge.setOwned(badge.isOwned());
+                                    MergeObjects.MergeTwoObjects.merge(placeBadge, badge);
+                                    //placeBadge.setProgress(badge.getProgress());
+                                    //placeBadge.setOwned(badge.isOwned());
                                     ArrayList<BadgeTask> badgeTasks = new ArrayList<>();
                                     for (BadgeTask badgeTask : badge.getBadgeTasks()) {
                                         for (BadgeTask placeBadgeTask : placeBadge.getBadgeTasks()) {
                                             if (badgeTask.getTaskTitle().equals(placeBadgeTask.getTaskTitle())) {
-                                                placeBadgeTask.setProgress(badgeTask.getProgress());
+                                                MergeObjects.MergeTwoObjects.merge(placeBadgeTask, badgeTask);
                                                 badgeTasks.add(placeBadgeTask);
                                             }
                                         }
@@ -160,6 +156,7 @@ public class AccountFragment extends Fragment {
                         }
                         badgesSliderViewAdapter.setBadges(realBadges);
                     }
+
             );
         });
 

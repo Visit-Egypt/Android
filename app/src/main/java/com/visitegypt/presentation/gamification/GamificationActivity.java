@@ -1,5 +1,6 @@
 package com.visitegypt.presentation.gamification;
 
+import static com.visitegypt.domain.model.PlaceActivity.POST_REVIEW;
 import static com.visitegypt.utils.Constants.PLACE_ID;
 
 import android.Manifest;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -49,7 +51,6 @@ import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.BadgeTask;
-import com.visitegypt.domain.model.Explore;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.model.Review;
@@ -59,6 +60,7 @@ import com.visitegypt.presentation.post.PostActivity;
 import com.visitegypt.presentation.review.ReviewViewModel;
 import com.visitegypt.utils.Constants;
 import com.visitegypt.utils.GamificationRules;
+import com.visitegypt.utils.MergeObjects;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -76,9 +78,11 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     public static final String INSIGHTS = "insights";
     public static final String PLACE_TITLE = "placeTitle";
     private static final String TAG = "Gamification Activity";
+
     @Inject
     public SharedPreferences sharedPreferences;
-    String placeId;
+
+    private String placeId;
     private ArrayList<PlaceActivity> placeActivities;
     private ArrayList<Badge> placeBadges;
     private ArrayList<Badge> userBadges;
@@ -94,11 +98,9 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private GoogleMap googleMap;
     private LocationManager locationManager;
     private double latitude, longitude;
-    private boolean insideLocation = false;
+    private final boolean insideLocation = false;
     private GamificationViewModel gamificationViewModel;
     private Place place;
-    private Explore dummyExplore;
-
 
     private ShimmerFrameLayout sliderShimmerFrameLayout, claimPlaceShimmer, badgesShimmer;
     private ShimmerFrameLayout socialActivitiesShimmer, mapShimmer, confirmLocation;
@@ -114,18 +116,29 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private ImageButton askAboutInsightsImageButton, askAboutArtifactsImageButton;
     private LinearProgressIndicator placeProgressIndicator;
     private LinearLayout shimmerLayout, gamificationLayout;
+    private ConstraintLayout postCardConstraintLayout;
 
-    private MutableLiveData<Boolean> userLocationLoaded = new MutableLiveData<>();
-    private MutableLiveData<Boolean> placeBadgesLoaded = new MutableLiveData<>();
-    private MutableLiveData<Boolean> userBadgesLoaded = new MutableLiveData<>();
-    private MutableLiveData<Boolean> placeActivitiesLoaded = new MutableLiveData<>();
-    private MutableLiveData<Boolean> userPlaceActivitiesLoaded = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> userLocationLoaded = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> placeBadgesLoaded = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> userBadgesLoaded = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> placeActivitiesLoaded = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> userPlaceActivitiesLoaded = new MutableLiveData<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gamification);
+
+
+        initPlaceId(savedInstanceState);
+        initPermissions();
+        initViews();
+        initViewModels(placeId, savedInstanceState);
+        initClickListeners();
+    }
+
+    private void initPlaceId(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
@@ -136,12 +149,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         } else {
             placeId = (String) savedInstanceState.getSerializable(HomeRecyclerViewAdapter.CHOSEN_PLACE_ID);
         }
-
-        initPermissions();
-        initViews();
-        initViewModels(placeId, savedInstanceState);
-        initClickListeners();
-        initDummyData();
     }
 
     private void initViewModels(String placeId, Bundle b) {
@@ -152,20 +159,23 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         gamificationViewModel.setPlaceId(placeId);
         gamificationViewModel.getItemsByPlaceId(placeId);
 
-        gamificationViewModel.itemMutableLiveData.observe(this, items -> {
-            Log.d(TAG, "setting items to recycler view...");
-            artifactsRecyclerViewAdapter.setItemsArrayList(items);
-        });
+
+//        gamificationViewModel.itemMutableLiveData.observe(this, items -> {
+//            Log.d(TAG, "setting items to recycler view...");
+//            artifactsRecyclerViewAdapter.setExploreArrayList(items);
+//        });
         try {
             gamificationViewModel.getPlaceDetail();
             gamificationViewModel.placesMutableLiveData.observe(this, place -> {
                 GamificationActivity.this.place = place;
+                GamificationActivity.this.placeActivities = place.getPlaceActivities();
                 Log.d(TAG, "initViewModels: loaded place: " + place.getTitle());
                 stopShimmerAnimation();
                 setLayoutVisible();
                 mapView.getMapAsync(this);
                 mapView.onCreate(b);
                 //placeTitleTextView.setText(place.getTitle());
+                artifactsRecyclerViewAdapter.setExploreArrayList(place.getExplores());
                 initActivityLogic();
             });
         } catch (Exception e) {
@@ -178,7 +188,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private void initPlaceActivitiesViewModel() {
         Log.d(TAG, "initPlaceActivitiesViewModel: loading...");
         gamificationViewModel.getUserPlaceActivity();
-
 
         /*** TODO REMOVE THIS TRASH ***/
         int placeXp = 0, numActivities = 0;
@@ -200,19 +209,21 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                 Log.d(TAG, "initPlaceActivitiesViewModel:  no place activities");
             for (PlaceActivity userPlaceActivity : placeActivities) {
                 for (PlaceActivity placeActivity : place.getPlaceActivities()) {
+                    totalActivities += placeActivity.getMaxProgress();
+                    totalXp += placeActivity.getXp();
                     if (placeActivity.getId().equals(userPlaceActivity.getId())) {
-                        totalActivities += placeActivity.getMaxProgress();
-                        totalXp += placeActivity.getXp();
-                        doneActivities += userPlaceActivity.getProgress();
-                        if (userPlaceActivity.isFinished()) {
+                        MergeObjects.MergeTwoObjects.merge(placeActivity, userPlaceActivity);
+                        Log.d(TAG, "initPlaceActivitiesViewModel: " + new Gson().toJson(placeActivity));
+                        doneActivities += placeActivity.getProgress();
+                        if (placeActivity.isFinished()) {
                             doneXp += placeActivity.getXp();
                         }
-                        placeActivity.setProgress(userPlaceActivity.getProgress());
+                        //placeActivity.setProgress(userPlaceActivity.getProgress());
                     }
                 }
             }
 
-            Log.d(TAG, "initPlaceActivitiesViewModel: total activities:" + totalActivities);
+            Log.d(TAG, "initPlaceActivitiesViewModel: total activities: " + totalActivities);
             Log.d(TAG, "initPlaceActivitiesViewModel: done activities: " + doneActivities);
             Log.d(TAG, "initPlaceActivitiesViewModel: total xp: " + totalXp);
             Log.d(TAG, "initPlaceActivitiesViewModel: done xp: " + doneXp);
@@ -220,9 +231,11 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
             placeProgressIndicator.setMax(totalXp);
             placeProgressIndicator.setProgress(doneXp, true);
 
-            if (totalActivities > doneActivities)
+            if (totalActivities > doneActivities && (totalActivities - doneActivities) > 1)
                 placeRemainingActivitiesTextView.setText(MessageFormat.format("{0} remaining activities", totalActivities - doneActivities));
-            else {
+            else if ((totalActivities - doneActivities) == 1) {
+                placeRemainingActivitiesTextView.setText("1 remaining activity");
+            } else {
                 placeRemainingActivitiesTextView.setText("Completed");
             }
             placeXpTextView.setText(MessageFormat.format("{0}/{1} XP", doneXp, totalXp));
@@ -230,6 +243,10 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     }
 
     private void initBadgesViewModel() {
+        initBadges();
+    }
+
+    private void initBadges() {
         gamificationViewModel.setPlaceId(placeId);
         gamificationViewModel.getBadgesOfUser();
         gamificationViewModel.getPlaceBadges();
@@ -244,33 +261,26 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                         for (Badge badge : userBadges) {
                             for (Badge placeBadge : placeBadges) {
                                 if (badge.getId().equals(placeBadge.getId())) {
-                                    placeBadge.setProgress(badge.getProgress());
-                                    placeBadge.setOwned(badge.isOwned());
-                                    ArrayList<BadgeTask> badgeTasks = new ArrayList<>();
+                                    // merge badge
+                                    Log.d(TAG, "initBadgesViewModel: before original merge badge" + new Gson().toJson(placeBadge));
+                                    Log.d(TAG, "initBadgesViewModel: before merge update badge" + new Gson().toJson(badge));
+
+                                    MergeObjects.MergeTwoObjects.merge(placeBadge, badge);
+
                                     for (BadgeTask badgeTask : badge.getBadgeTasks()) {
                                         for (BadgeTask placeBadgeTask : placeBadge.getBadgeTasks()) {
                                             if (badgeTask.getTaskTitle().equals(placeBadgeTask.getTaskTitle())) {
-                                                placeBadgeTask.setProgress(badgeTask.getProgress());
-                                                badgeTasks.add(placeBadgeTask);
+                                                // same badgeTask -> merge them
+                                                MergeObjects.MergeTwoObjects.merge(placeBadgeTask, badgeTask);
                                             }
                                         }
                                     }
-                                    placeBadge.setBadgeTasks(badgeTasks);
+                                    Log.d(TAG, "initBadgesViewModel: merged badge" + new Gson().toJson(placeBadge));
 
                                 }
                             }
                         }
-                        ArrayList<Badge> realBadges = new ArrayList<>();
-                        for (Badge realBadge : placeBadges) {
-                            Log.d(TAG, "initBadgesViewModel: chcecking badge if in place: " + realBadge.getTitle());
-                            if (realBadge.getPlaceId() != null) {
-                                if (realBadge.getPlaceId().equals(place.getId())) {
-                                    realBadges.add(realBadge);
-                                    Log.d(TAG, "initBadgesViewModel: matched badge: " + realBadge.getTitle());
-                                }
-                            }
-                        }
-                        badgesSliderViewAdapter.setBadges(realBadges);
+                        badgesSliderViewAdapter.setBadges((ArrayList<Badge>) placeBadges);
                     }
             );
         });
@@ -311,7 +321,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
             confirmLocation();
         });
 
-
         placeImageView = findViewById(R.id.placeImageGamificationActivityImageView);
         placeTitleTextView = findViewById(R.id.placeTitleGamificationActivityTextView);
         placeRemainingActivitiesTextView = findViewById(R.id.placeRemainingGamificationActivityTextView);
@@ -337,7 +346,11 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         mapView = findViewById(R.id.mapViewGamificationActivity);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+
+        postCardConstraintLayout = findViewById(R.id.postCardConstraintLayout);
+        postCardConstraintLayout.setBackgroundResource(R.drawable.card_review_edge);
     }
+
 
     private void showPostPost() {
         Intent intent = new Intent(this, PostActivity.class);
@@ -368,7 +381,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                     case PlaceActivity.VISIT_LOCATION:
                         visitPlaceXpTextView.setText(placeActivity.getMaxProgress());
                         break;
-                    case PlaceActivity.POST_REVIEW:
+                    case POST_REVIEW:
                         reviewXpTextView.setText(placeActivity.getMaxProgress());
                         break;
                     case PlaceActivity.ASK_CHAT_BOT:
@@ -387,8 +400,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                         break;
                 }
             }
-            //placeProgressIndicator.setMax(place.getMaxProgress());
-            //placeRemainingActivitiesTextView.setText(totalXp + "xp remaining");
 
         } catch (Exception e) {
             Log.e(TAG, "fillActivity: failed to get place activities xp: " + e.getMessage());
@@ -407,43 +418,43 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
 
 
         // set user progress TODO
-        gamificationViewModel.userPlaceActivitiesMutableLiveData.observe(this, placeActivities -> {
-            try {
-                int userProgress;
-                for (PlaceActivity placeActivity : placeActivities) {
-                    switch (placeActivity.getType()) {
-                        case PlaceActivity.VISIT_LOCATION:
-                            if (placeActivity.getProgress() == placeActivity.getMaxProgress())
-                                distanceAwayTextView.setText("Complete");
-                            break;
-                        case PlaceActivity.POST_REVIEW:
-                            if (placeActivity.getProgress() == placeActivity.getMaxProgress()) {
-                                // TODO user finished reviewing
-                            }
-                            break;
-                        case PlaceActivity.ASK_CHAT_BOT:
-                            if (placeActivity.getProgress() == placeActivity.getMaxProgress()) {
-                                // TODO user finsihed chatbot
-                            }
-                            break;
-                        case PlaceActivity.POST_POST:
-                            if (placeActivity.getProgress() == placeActivity.getMaxProgress()) {
-                                // TODO user finished posting
-                            }
-                            postXpTextView.setText(placeActivity.getMaxProgress());
-                            break;
-                        case PlaceActivity.POST_STORY:
-                            break;
-                        case PlaceActivity.GENERAL:
-                            // pass
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            } catch (Exception ignored) {
-            }
-        });
+//        gamificationViewModel.userPlaceActivitiesMutableLiveData.observe(this, placeActivities -> {
+//            try {
+//                int userProgress;
+//                for (PlaceActivity placeActivity : placeActivities) {
+//                    switch (placeActivity.getType()) {
+//                        case PlaceActivity.VISIT_LOCATION:
+//                            if (placeActivity.getProgress() == placeActivity.getMaxProgress())
+//                                distanceAwayTextView.setText("Complete");
+//                            break;
+//                        case POST_REVIEW:
+//                            if (placeActivity.getProgress() == placeActivity.getMaxProgress()) {
+//                                // TODO user finished reviewing
+//                            }
+//                            break;
+//                        case PlaceActivity.ASK_CHAT_BOT:
+//                            if (placeActivity.getProgress() == placeActivity.getMaxProgress()) {
+//                                // TODO user finsihed chatbot
+//                            }
+//                            break;
+//                        case PlaceActivity.POST_POST:
+//                            if (placeActivity.getProgress() == placeActivity.getMaxProgress()) {
+//                                // TODO user finished posting
+//                            }
+//                            postXpTextView.setText(placeActivity.getMaxProgress());
+//                            break;
+//                        case PlaceActivity.POST_STORY:
+//                            break;
+//                        case PlaceActivity.GENERAL:
+//                            // pass
+//                            break;
+//                        default:
+//                            break;
+//                    }
+//                }
+//            } catch (Exception ignored) {
+//            }
+//        });
 
         // TODO: remaining from user progress
         //placeRemainingActivitiesTextView.setText(place);
@@ -471,7 +482,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
             intent.putExtra(MSG_TYPE, INSIGHTS);
             startActivity(intent);
         });
-
     }
 
     // call whenever you want to increase an activity's progress
@@ -489,7 +499,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         //mapView.onResume();
         if (placeActivities != null) {
             for (PlaceActivity placeActivity : placeActivities) {
-                if (placeActivity.getType() == PlaceActivity.VISIT_LOCATION) {
+                if (placeActivity.getType().equals(PlaceActivity.VISIT_LOCATION)) {
                     updatePlaceActivityProgress(placeActivity);
                 }
             }
@@ -514,7 +524,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
             TextInputEditText textInputEditText = addReviewDialog.findViewById(R.id.reviewEditText);
             String reviewText = textInputEditText.getText().toString().trim();
             float numStars = ((RatingBar) addReviewDialog.findViewById(R.id.ratingBar)).getRating();
-            Log.d(TAG, "onClick: " + reviewText);
+            Log.d(TAG, "submitting review: : " + reviewText);
             if (reviewText.isEmpty()) {
                 textInputEditText.setError("Review can't be empty");
             } else {
@@ -524,50 +534,34 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                 Review review = new Review(numStars, reviewText, firstName + " " + lastName, userId);
 
                 for (PlaceActivity placeActivity : placeActivities) {
-                    if (placeActivity.getType() == PlaceActivity.POST_REVIEW) {
-                        reviewViewModel.setPlaceActivity(placeActivity);
+                    if (placeActivity.getType().equals(POST_REVIEW)) {
+                        Log.d(TAG, "showReviewDialog: found activity review: " + new Gson().toJson(placeActivity));
+                        reviewViewModel.setReviewPlaceActivity(placeActivity);
+                        //gamificationViewModel.setPlaceActivity(placeActivity);
+
                     }
                 }
 
-                reviewViewModel.submitReview(placeId, review);
-                addReviewDialog.dismiss();
+                Badge reviewBadge = null;
+                for (Badge badge : placeBadges) {
+                    if (badge.getType().equals("review")) {
+
+                    }
+                }
+
+                //reviewViewModel.setBadgeTask(placeBadges.get());
+
+                //reviewViewModel.setPlaceActivity(place);
+                try {
+                    //gamificationViewModel.updatePlaceActivityForUser();
+                    reviewViewModel.submitReview(placeId, review);
+                    addReviewDialog.dismiss();
+                } catch (Exception e) {
+                    Log.e(TAG, "showReviewDialog: " + e.getMessage());
+                    e.printStackTrace();
+                }
             }
         });
-    }
-
-
-    private void initDummyData() {
-//        placeActivities.add(new PlaceActivity(100, PlaceActivity.VISIT_LOCATION, "Visit Place", "Head there and open your location confirmation"));
-//        placeActivities.add(new PlaceActivity(150, PlaceActivity.POST_STORY, "Post a story", "Head there and post a story"));
-//        placeActivities.add(new PlaceActivity(100, PlaceActivity.POST_POST, "Post a post", "Head there and open post a post"));
-//        placeActivities.add(new PlaceActivity(100, PlaceActivity.ASK_CHAT_BOT, "Ask the chat bot", "Tell the bot \"What do you know about Luxor\""));
-//        placeActivities.add(new PlaceActivity(100, PlaceActivity.GENERAL, "General", "Dance or something"));
-//
-//        badges.add(new Badge("0", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", false, Badge.Type.PLACE, 120));
-//        badges.add(new Badge("0", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", true, Badge.Type.PLACE, 120));
-//        badges.add(new Badge("0", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", false, Badge.Type.PLACE, 120));
-//        badges.add(new Badge("1", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", true, Badge.Type.PLACE, 120));
-//        badges.add(new Badge("2", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Circle-icons-art.svg/1200px-Circle-icons-art.svg.png", false, Badge.Type.PLACE, 120));
-//
-//        BadgeTask badgeTask = new BadgeTask("https://www.citypng.com/public/uploads/preview/-1216105642094jeazr60ms.png", "Review the place", 3, 5);
-//        ArrayList<BadgeTask> badgeTasks = new ArrayList<>();
-//        badgeTasks.add(badgeTask);
-//
-//        badges.get(0).setTitle("Amazing badge");
-//        badges.get(0).setDescription("an amazing badge for an amazing person");
-//        badges.get(0).setBadgeTasks(badgeTasks);
-//
-//        ArrayList<Hint> hints = new ArrayList<>();
-//        hints.add(new Hint("He is super handsome"));
-//        hints.add(new Hint("Okay he's ugly, we lied", "https://file1.science-et-vie.com/var/scienceetvie/storage/images/1/0/4/104445/et-momie-revela-ses-secrets.jpg"));
-//        dummyExplore = new Explore("Tout Ankha Amon", "https://images.lpcdn.ca/924x615/201002/13/147005-momie-toutankhamon.jpg", hints);
-//
-//        claimButton.setOnClickListener(view -> {
-//            //showBadgeDialog(badges.get(0));
-//            showExploreDialog(dummyExplore);
-//        });
-//
-//        badgesSliderViewAdapter.setBadges(badges);
     }
 
     @Override
