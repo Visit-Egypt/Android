@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.User;
-import com.visitegypt.domain.repository.CallBack;
 import com.visitegypt.domain.repository.UserRepository;
 import com.visitegypt.domain.usecase.base.SingleUseCase;
 
@@ -17,20 +16,16 @@ import javax.inject.Named;
 
 import io.reactivex.rxjava3.core.Single;
 
-public class GetRefreshTokenUseCase extends SingleUseCase<User> {
+public class GetGoogleRegisterTokenUseCase extends SingleUseCase<User> {
+
     UserRepository userRepository;
     SharedPreferences sharedPreferences;
-    CallBack callBack;
     private Token token;
 
     @Inject
-    public GetRefreshTokenUseCase(@Named("RefreshToken") UserRepository userRepository, SharedPreferences sharedPreferences) {
+    public GetGoogleRegisterTokenUseCase(@Named("Normal") UserRepository userRepository, SharedPreferences sharedPreferences) {
         this.userRepository = userRepository;
         this.sharedPreferences = sharedPreferences;
-    }
-
-    public void setCallBack(CallBack callBack) {
-        this.callBack = callBack;
     }
 
     public void setToken(Token token) {
@@ -43,7 +38,6 @@ public class GetRefreshTokenUseCase extends SingleUseCase<User> {
                     .putString(SHARED_PREF_USER_ACCESS_TOKEN, user.getAccessToken())
                     .putString(SHARED_PREF_USER_REFRESH_TOKEN, user.getRefreshToken())
                     .apply();
-            callBack.callBack(user.getAccessToken());
 
         }, throwable -> {
             Log.d("TAG", "getNewToken: " + throwable);
@@ -53,6 +47,6 @@ public class GetRefreshTokenUseCase extends SingleUseCase<User> {
 
     @Override
     protected Single<User> buildSingleUseCase() {
-        return userRepository.refreshUserToken(token);
+        return userRepository.googleRegisterUser(token);
     }
 }

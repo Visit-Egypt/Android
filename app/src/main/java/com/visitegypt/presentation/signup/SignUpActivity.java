@@ -8,33 +8,65 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 import com.visitegypt.R;
 import com.visitegypt.domain.usecase.UserValidation;
 import com.visitegypt.presentation.home.parent.Home;
 import com.visitegypt.presentation.signin.SignInActivity;
+import com.visitegypt.presentation.signin.SignInViewModel;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private static final String TAG = "Sign Up Activity";
+    private static final int RC_SIGN_IN = 1;
+    SignInButton googleSignInButton;
     TextInputLayout firstName, lastName, email, phoneNumber, password;
     SignUpViewModel signUpViewModel;
+    SignInViewModel signInViewModel;
+
     MaterialTextView btnSignInTransfer;
     AppCompatButton btnSignUp;
     View loadingLayout;
+    GoogleSignInClient mGoogleSignInClient;
+    private GoogleApiClient googleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.server_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        googleSignInButton = findViewById(R.id.googleSignInButton);
+        googleSignInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signIn();
+            }
+        });
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
@@ -47,6 +79,7 @@ public class SignUpActivity extends AppCompatActivity {
         password = findViewById(R.id.txtPassword);
         btnSignInTransfer = findViewById(R.id.btnSignInTransfer);
         signUpViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
+        signInViewModel = new ViewModelProvider(this).get(SignInViewModel.class);
         signUpViewModel.mutableLiveDataErrors.observe(this, new Observer<String[]>() {
             @Override
             public void onChanged(String[] strings) {
@@ -67,10 +100,7 @@ public class SignUpActivity extends AppCompatActivity {
         signUpViewModel.mutableLiveDataResponse.observe(this, s -> {
             Log.d(TAG, "account change observed");
             if (s.equals("Your account was created successfully")) {
-                Intent intent = new Intent(SignUpActivity.this, Home.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
+                redirectHome();
             }
             hideLoading();
             Toast.makeText(SignUpActivity.this, s, Toast.LENGTH_LONG).show();
@@ -243,5 +273,60 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void redirectHome() {
+        Intent intent = new Intent(SignUpActivity.this, Home.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
+
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+            Log.d(TAG, "onActivityResult:done ");
+
+        }
+    }
+
+    private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        Log.d(TAG, "onActivityResult:Start task ");
+        try {
+            GoogleSignInAccount acct = completedTask.getResult(ApiException.class);
+
+            if (acct != null) {
+                String personName = acct.getDisplayName();
+
+                String idToken = acct.getIdToken();
+                Log.d(TAG, "handleSignInResult: " + personName);
+                Log.d(TAG, "handleSignInResult: " + idToken);
+                signUpViewModel.signUpWithGoogle(idToken, acct.getEmail());
+                signUpViewModel.mutableLiveDataResponse.observe(this, s -> {
+                    if (s.equals("Your account was created successfully")) {
+                        redirectHome();
+                    }
+                    Toast.makeText(SignUpActivity.this, s, Toast.LENGTH_LONG).show();
+                });
+
+            }
+
+        } catch (ApiException e) {
+            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+        }
+
     }
 }

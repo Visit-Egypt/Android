@@ -345,7 +345,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         mapView = findViewById(R.id.mapViewGamificationActivity);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
         postCardConstraintLayout = findViewById(R.id.postCardConstraintLayout);
         postCardConstraintLayout.setBackgroundResource(R.drawable.card_review_edge);

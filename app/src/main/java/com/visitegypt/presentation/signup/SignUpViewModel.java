@@ -6,7 +6,9 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.usecase.GetGoogleRegisterTokenUseCase;
 import com.visitegypt.domain.usecase.RegisterUseCase;
 import com.visitegypt.domain.usecase.UpdateUserBadgeTaskProgUseCase;
 import com.visitegypt.domain.usecase.UserValidation;
@@ -16,33 +18,33 @@ import org.json.JSONObject;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import io.reactivex.rxjava3.functions.Consumer;
 import okhttp3.ResponseBody;
 import retrofit2.HttpException;
 
 @HiltViewModel
 public class SignUpViewModel extends ViewModel {
 
+    private static final String TAG = "Signup view model";
+    private static UserValidation userValidation;
     MutableLiveData<String[]> mutableLiveDataErrors = new MutableLiveData<>();
     MutableLiveData<String> mutableLiveDataResponse = new MutableLiveData<>();
-
-    private static UserValidation userValidation;
     SharedPreferences sharedPreferences;
-
-    private static final String TAG = "Signup view model";
     private UpdateUserBadgeTaskProgUseCase updateUserBadgeTaskProgUseCase;
-
-    public void setUserValidation(UserValidation userValidation) {
-        this.userValidation = userValidation;
-    }
-
     private RegisterUseCase registerUseCase;
+    private GetGoogleRegisterTokenUseCase getGoogleRegisterTokenUseCase;
 
     @Inject
-    public SignUpViewModel(RegisterUseCase registerUseCase, SharedPreferences sharedPreferences,
+    public SignUpViewModel(GetGoogleRegisterTokenUseCase getGoogleRegisterTokenUseCase, RegisterUseCase registerUseCase, SharedPreferences sharedPreferences,
                            UpdateUserBadgeTaskProgUseCase updateUserBadgeTaskProgUseCase) {
         this.registerUseCase = registerUseCase;
         this.sharedPreferences = sharedPreferences;
         this.updateUserBadgeTaskProgUseCase = updateUserBadgeTaskProgUseCase;
+        this.getGoogleRegisterTokenUseCase = getGoogleRegisterTokenUseCase;
+    }
+
+    public void setUserValidation(UserValidation userValidation) {
+        this.userValidation = userValidation;
     }
 
     public void getUser() {
@@ -83,5 +85,19 @@ public class SignUpViewModel extends ViewModel {
             return true;
         }
         return false;
+    }
+
+    public void signUpWithGoogle(String token, String email) {
+        getGoogleRegisterTokenUseCase.setToken(new Token(token));
+        getGoogleRegisterTokenUseCase.execute(new Consumer<User>() {
+            @Override
+            public void accept(User user) throws Throwable {
+                Log.d("TAG", "donee" + user);
+                registerUseCase.saveUserData(user);
+                mutableLiveDataResponse.setValue("Your account was created successfully");
+            }
+
+        }, throwable -> Log.d(TAG, "signUpWithGoogle: " + throwable.getMessage()));
+
     }
 }

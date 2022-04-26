@@ -14,9 +14,6 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.PUT;
-import retrofit2.http.Path;
 
 public interface UserRepository {
     /**
@@ -34,6 +31,10 @@ public interface UserRepository {
     Single<User> loginUser(User user);
 
     Single<User> refreshUserToken(Token token);
+
+    Single<User> googleLoginUserToken(Token token);
+
+    Single<User> googleRegisterUser(Token token);
 
     Single<User> getUser(String userId, String email);
 

@@ -34,7 +34,7 @@
     </style>
 
     <style name="Theme.VisitEgypt.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="colorPrimary">@color/semiwhite</item>
+        <item name="colorPrimary">@color/semiWhite</item>
         <item name="colorPrimaryVariant">@color/darkCamel</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->

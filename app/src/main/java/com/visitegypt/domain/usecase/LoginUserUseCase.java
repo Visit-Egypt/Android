@@ -2,13 +2,10 @@ package com.visitegypt.domain.usecase;
 
 import android.content.SharedPreferences;
 
-import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.repository.UserRepository;
 import com.visitegypt.domain.usecase.base.SingleUseCase;
 import com.visitegypt.utils.Constants;
-
-import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,7 +18,7 @@ public class LoginUserUseCase extends SingleUseCase<User> {
     User user;
 
     @Inject
-    public LoginUserUseCase(@Named("Normal") UserRepository userRepository, SharedPreferences sharedPreferences ) {
+    public LoginUserUseCase(@Named("Normal") UserRepository userRepository, SharedPreferences sharedPreferences) {
         this.userRepository = userRepository;
         this.sharedPreferences = sharedPreferences;
     }
@@ -34,8 +31,7 @@ public class LoginUserUseCase extends SingleUseCase<User> {
         return user;
     }
 
-    public void saveUserData(User user)
-    {
+    public void saveUserData(User user) {
 
         sharedPreferences.edit()
                 .putString(Constants.SHARED_PREF_USER_ACCESS_TOKEN, user.getAccessToken())
@@ -45,22 +41,17 @@ public class LoginUserUseCase extends SingleUseCase<User> {
                 .putString(Constants.SHARED_PREF_FIRST_NAME, user.getFirstName() + " " + user.getLastName())
                 .apply();
     }
-    public Boolean isUserDataValid()
-    {
 
-       if ((sharedPreferences.getString(Constants.SHARED_PREF_USER_ACCESS_TOKEN,null) != null)
-               && (sharedPreferences.getString(Constants.SHARED_PREF_USER_REFRESH_TOKEN,null) != null)
-               && (sharedPreferences.getString(Constants.SHARED_PREF_USER_ID,null) != null)
-       )
-       {
-           return true;
-       }
-       return false;
-
+    public Boolean isUserDataValid() {
+        if ((sharedPreferences.getString(Constants.SHARED_PREF_USER_ACCESS_TOKEN, null) != null)
+                && (sharedPreferences.getString(Constants.SHARED_PREF_USER_REFRESH_TOKEN, null) != null)
+                && (sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, null) != null)
+        ) {
+            return true;
+        }
+        return false;
 
     }
-
-
 
     @Override
     protected Single<User> buildSingleUseCase() {

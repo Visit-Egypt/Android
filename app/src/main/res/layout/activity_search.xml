@@ -13,16 +13,16 @@
         android:orientation="vertical">
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/not_found"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/not_found"
-            android:fontFamily="@font/montserrat_alternates_bold"
-            android:text="Not Found"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
             android:layout_gravity="center_horizontal"
-            android:visibility="gone"
-            android:textSize="20sp" />
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/montserrat_alternates_bold"
+            android:gravity="center"
+            android:text="Not Found"
+            android:textSize="20sp"
+            android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/searchRecyclerView"

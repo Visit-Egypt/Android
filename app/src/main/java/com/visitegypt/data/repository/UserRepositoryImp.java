@@ -43,6 +43,16 @@ public class UserRepositoryImp implements UserRepository {
         return retrofitService.refreshUserToken(token);
     }
 
+    @Override
+    public Single<User> googleRegisterUser(Token token) {
+        return retrofitService.googleRegisterUser(token);
+    }
+
+    @Override
+    public Single<User> googleLoginUserToken(Token token) {
+        return retrofitService.googleLoginUserToken(token);
+    }
+
 
     @Override
     public Single<User> getUser(String userId, String email) {

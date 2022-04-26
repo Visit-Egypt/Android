@@ -19,11 +19,11 @@
 
 
             <com.jackandphantom.circularprogressbar.CircleProgressbar
-                android:layout_margin="4dp"
                 android:id="@+id/dialogCardTaskCircleBar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
+                android:layout_margin="4dp"
                 android:background="@drawable/ic_discover"
                 app:cpb_foregroundProgressColor="#1864c2"
                 app:cpb_foregroundProgressWidth="10"

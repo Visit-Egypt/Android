@@ -1,29 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="@drawable/chatbot_background"
+    android:orientation="vertical"
     tools:context=".presentation.chatbot.ChatbotActivity">
-
-    <View
-        android:id="@+id/view1"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/chatbot_header"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/chatbot_header"
         android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/view1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view1">
+        android:orientation="horizontal">
 
         <View
             android:layout_width="0dp"
@@ -71,9 +62,7 @@
     <RelativeLayout
         android:id="@+id/chatbotRelativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
-        app:layout_constraintTop_toBottomOf="@+id/view1">
+        android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/chatbotRecyclerView"
@@ -98,10 +87,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_marginStart="3dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="3dp"
-                android:layout_marginBottom="3dp"
                 android:layout_toLeftOf="@+id/sendMessageFAButton"
                 android:hint="Enter Message"
                 android:singleLine="true"
@@ -118,10 +103,10 @@
                 android:layout_margin="4dp"
                 android:backgroundTint="?attr/colorPrimary"
                 android:src="@drawable/ic_send"
-                android:tint="@color/semiwhite"
+                android:tint="@color/semiWhite"
                 app:fabCustomSize="45dp" />
 
         </RelativeLayout>
     </RelativeLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -54,6 +54,8 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class Home extends AppCompatActivity {
+    private static final String TAG = "Home";
+    HomeViewModel homeViewModel;
     private BottomNavigationView navigation;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityNewHomeBinding binding;
@@ -61,11 +63,9 @@ public class Home extends AppCompatActivity {
     private NavController navController;
     private View header, searchViewLayout, homeViewLayout;
     private TextView txtName, txtEmail;
-    HomeViewModel homeViewModel;
     private SearchRecyclerViewAdapter searchRecyclerViewAdapter;
     private RecyclerView searchRecyclerView;
     private ArrayList<SearchPlace> searchPlaces = new ArrayList<>();
-    private static final String TAG = "Home";
     private TextView txtNotFound;
     private SearchViewModel searchViewModel;
     private MaterialButton editButton;
@@ -389,9 +389,8 @@ public class Home extends AppCompatActivity {
             public void onChanged(User user) {
                 txtName.setText(user.getFirstName() + " " + user.getLastName());
                 txtEmail.setText(user.getEmail());
-                if (user.getPhotoUrl() != null )
-                {
-                    Log.d(TAG, "onChanged: "+user.getPhotoUrl());
+                if (user.getPhotoUrl() != null) {
+                    Log.d(TAG, "onChanged: " + user.getPhotoUrl());
                     homeViewModel.saveUserImage(user.getPhotoUrl());
                     Picasso.get().load(user.getPhotoUrl()).into(userImageView);
                 }
@@ -399,6 +398,7 @@ public class Home extends AppCompatActivity {
             }
         });
     }
+
     public void logOut() {
         navigationView.getMenu().findItem(R.id.logout).setOnMenuItemClickListener(menuItem -> {
             homeViewModel.logOut();

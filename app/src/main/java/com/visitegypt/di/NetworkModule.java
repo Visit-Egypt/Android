@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
 
-
 import androidx.annotation.NonNull;
 
 import com.visitegypt.data.repository.BadgesRepositoryImp;
@@ -22,7 +21,6 @@ import com.visitegypt.data.repository.UserRepositoryImp;
 import com.visitegypt.data.source.remote.RetrofitService;
 import com.visitegypt.data.source.remote.RetrofitServiceUpload;
 import com.visitegypt.domain.model.Token;
-import com.visitegypt.domain.model.response.BadgeResponse;
 import com.visitegypt.domain.repository.BadgesRepository;
 import com.visitegypt.domain.repository.CallBack;
 import com.visitegypt.domain.repository.ChatbotRepository;
@@ -31,6 +29,8 @@ import com.visitegypt.domain.repository.PlaceRepository;
 import com.visitegypt.domain.repository.PostsRepository;
 import com.visitegypt.domain.repository.UploadToS3Repository;
 import com.visitegypt.domain.repository.UserRepository;
+import com.visitegypt.domain.usecase.GetGoogleLoginTokenUseCase;
+import com.visitegypt.domain.usecase.GetGoogleRegisterTokenUseCase;
 import com.visitegypt.domain.usecase.GetRefreshTokenUseCase;
 import com.visitegypt.utils.JWT;
 
@@ -43,7 +43,6 @@ import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
-import io.reactivex.rxjava3.core.Single;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -101,7 +100,7 @@ public class NetworkModule implements CallBack {
                             .addHeader("Authorization", "Bearer " + newToken)
                             .build();
                     flag = true;
-                    Log.d("TAG", "callBack: new token  " + newToken+ " " +flag);
+                    Log.d("TAG", "callBack: new token  " + newToken + " " + flag);
 
                     return chain.proceed(newRequest);
 
@@ -130,6 +129,7 @@ public class NetworkModule implements CallBack {
     public RetrofitService getRetrofitServiceٌRefreshToken(@Named("RefreshToken") Retrofit retrofit) {
         return retrofit.create(RetrofitService.class);
     }
+
     @Provides
     @Singleton
     public RetrofitServiceUpload getRetrofitServiceٌUpload(@Named("Upload") Retrofit retrofit) {
@@ -141,26 +141,27 @@ public class NetworkModule implements CallBack {
     @Named("Normal")
     public Retrofit provideRetrofit(GsonConverterFactory gsonConverterFactory, RxJava3CallAdapterFactory rxJava3CallAdapterFactory, OkHttpClient client) {
 
-        Retrofit retrofit =  new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(gsonConverterFactory)
                 .addCallAdapterFactory(rxJava3CallAdapterFactory)
                 .client(client)
                 .build();
-        Log.d("TAG", " Retrofit provideRetrofit: "+retrofit);
+        Log.d("TAG", " Retrofit provideRetrofit: " + retrofit);
         return retrofit;
     }
+
     @Provides
     @Singleton
     @Named("Upload")
     public Retrofit provideRetrofitUpload(GsonConverterFactory gsonConverterFactory, RxJava3CallAdapterFactory rxJava3CallAdapterFactory) {
         Log.d("TAG", "provideRetrofitUpload:  " + S3_URL);
-        Retrofit retrofit =  new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(S3_URL)
                 .addConverterFactory(gsonConverterFactory)
                 .addCallAdapterFactory(rxJava3CallAdapterFactory)
                 .build();
-        Log.d("TAG", " Retrofit provideRetrofitUpload: "+retrofit);
+        Log.d("TAG", " Retrofit provideRetrofitUpload: " + retrofit);
         return retrofit;
     }
 
@@ -175,7 +176,7 @@ public class NetworkModule implements CallBack {
                 .addConverterFactory(gsonConverterFactory)
                 .addCallAdapterFactory(rxJava3CallAdapterFactory)
                 .build();
-        Log.d("TAG", " Retrofit provideRetrofitRefreshToken: "+retrofit);
+        Log.d("TAG", " Retrofit provideRetrofitRefreshToken: " + retrofit);
         return retrofit;
     }
 
@@ -196,6 +197,7 @@ public class NetworkModule implements CallBack {
     public PlaceRepository providePlaceRepository(@Named("Normal") RetrofitService retrofitService) {
         return new PlaceRepositoryImp(retrofitService);
     }
+
     @Provides
     @Singleton
     public BadgesRepository provideBadgeRepository(@Named("Normal") RetrofitService retrofitService) {
@@ -223,6 +225,7 @@ public class NetworkModule implements CallBack {
     public ItemRepository provideItemRepository(@Named("Normal") RetrofitService retrofitService) {
         return new ItemRepositoryImp(retrofitService);
     }
+
     @Provides
     @Singleton
     public UploadToS3Repository provideUploadToS3Repository(RetrofitServiceUpload retrofitServiceUpload) {
@@ -275,6 +278,6 @@ public class NetworkModule implements CallBack {
     public void callBack(String token) {
         Log.d("TAG", "callBack: " + token);
         newToken = token;
-       flag = false;
+        flag = false;
     }
 }

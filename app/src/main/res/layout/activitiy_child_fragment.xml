@@ -6,122 +6,115 @@
     android:background="?attr/colorOnPrimary"
     android:orientation="vertical">
 
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorOnPrimary"
-        android:orientation="vertical">
+        android:layout_height="150dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        app:cardCornerRadius="20dp">
 
-        <com.google.android.material.card.MaterialCardView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            app:cardCornerRadius="20dp">
+            android:layout_height="150dp">
 
-            <RelativeLayout
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgPlaceCardNew"
                 android:layout_width="match_parent"
-                android:layout_height="200dp">
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:foreground="?android:selectableItemBackground"
+                android:scaleType="centerInside"
+                android:src="@drawable/clip" />
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/imgPlaceCardNew"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/clip" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/placeCardNameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="100dp"
+                android:fontFamily="@font/montserrat_alternates_bold"
+                android:gravity="left"
+                android:text="Nature’s Light "
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/placeCardNameTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginTop="100dp"
-                    android:fontFamily="@font/montserrat_alternates_bold"
-                    android:gravity="left"
-                    android:text="Nature’s Light "
-                    android:textColor="?attr/colorOnPrimary"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+        </RelativeLayout>
 
-            </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
 
-        </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        app:cardCornerRadius="20dp">
 
-        <com.google.android.material.card.MaterialCardView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            app:cardCornerRadius="20dp">
+            android:layout_height="150dp">
 
-            <RelativeLayout
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgPlaceCardNew3"
                 android:layout_width="match_parent"
-                android:layout_height="200dp">
+                android:layout_height="150dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/egypt_history" />
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/imgPlaceCardNew3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/egypt_history" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtPlaceCardName2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="100dp"
+                android:fontFamily="@font/montserrat_alternates_bold"
+                android:gravity="left"
+                android:text="Learn History "
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/txtPlaceCardName2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginTop="100dp"
-                    android:fontFamily="@font/montserrat_alternates_bold"
-                    android:gravity="left"
-                    android:text="Learn History "
-                    android:textColor="?attr/colorOnPrimary"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+        </RelativeLayout>
 
-            </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
 
-        </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        app:cardCornerRadius="20dp">
 
-        <com.google.android.material.card.MaterialCardView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            app:cardCornerRadius="20dp">
+            android:layout_height="150dp">
 
-            <RelativeLayout
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgPlaceCardNew1"
                 android:layout_width="match_parent"
-                android:layout_height="200dp">
+                android:layout_height="150dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/egypt" />
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/imgPlaceCardNew1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/egypt" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtPlaceCardName1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="100dp"
+                android:fontFamily="@font/montserrat_alternates_bold"
+                android:gravity="left"
+                android:text="Learn About Egypt "
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/txtPlaceCardName1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginTop="100dp"
-                    android:fontFamily="@font/montserrat_alternates_bold"
-                    android:gravity="left"
-                    android:text="Learn About Egypt "
-                    android:textColor="?attr/colorOnPrimary"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+        </RelativeLayout>
 
-            </RelativeLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-    </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

@@ -6,41 +6,71 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.User;
-import com.visitegypt.presentation.signup.SignUpActivity;
 import com.visitegypt.presentation.home.parent.Home;
+import com.visitegypt.presentation.signup.SignUpActivity;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 
 @AndroidEntryPoint
-public class SignInActivity extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private static final String TAG = "Sign In Activity";
     private static final String USER_NAME = "user_name";
     private static final String USER_EMAIL = "user_email";
+    private static final int RC_SIGN_IN = 1;
+    SignInButton googleSignInButton;
     TextInputLayout txtEmail, txtPassword;
     AppCompatButton btnSignIn;
     View loadingLayout;
-    String password, email;
+    String password, email, token;
     SignInViewModel signInViewModel;
+    GoogleSignInClient mGoogleSignInClient;
+    private GoogleApiClient googleApiClient;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.server_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
+
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
+        googleSignInButton = findViewById(R.id.googleSignInButton);
+        googleSignInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signIn();
+            }
+        });
+
         signInViewModel = new ViewModelProvider(this).get(SignInViewModel.class);
         if (signInViewModel.checkUser()) {
             redirectHome();
@@ -68,8 +98,8 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onChanged(User user) {
                 Intent intent = new Intent(SignInActivity.this, Home.class);
-                intent.putExtra(USER_NAME,user.getFirstName()+" " + user.getLastName());
-                intent.putExtra(USER_EMAIL,user.getEmail());
+                intent.putExtra(USER_NAME, user.getFirstName() + " " + user.getLastName());
+                intent.putExtra(USER_EMAIL, user.getEmail());
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
@@ -80,7 +110,6 @@ public class SignInActivity extends AppCompatActivity {
     public void buttonOnClick(View view) {
         email = txtEmail.getEditText().getText().toString();
         password = txtPassword.getEditText().getText().toString();
-
         if (email.isEmpty() || password.isEmpty()) {
             if (email.isEmpty()) {
                 txtEmail.setError("Please Enter Your Email");
@@ -129,7 +158,6 @@ public class SignInActivity extends AppCompatActivity {
                 });
             }
         } else {
-
             User myUser = new User(email, password);
             showLoading();
             signInViewModel.login(myUser);
@@ -166,5 +194,51 @@ public class SignInActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+            Log.d(TAG, "onActivityResult:XXXXX ");
+            if (signInViewModel.checkUser()) {
+                Log.d(TAG, "onActivityResult:done ");
+                redirectHome();
+            } else {
+                Log.d(TAG, "onActivityResult:Error ");
+            }
+        }
+    }
+
+    private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        Log.d(TAG, "onActivityResult: ");
+
+        try {
+            GoogleSignInAccount acct = completedTask.getResult(ApiException.class);
+
+            if (acct != null) {
+                String personName = acct.getDisplayName();
+
+                String idToken = acct.getIdToken();
+                Log.d(TAG, "handleSignInResult: " + personName);
+                Log.d(TAG, "handleSignInResult: " + idToken);
+                signInViewModel.signInWithGoogle(idToken, acct.getEmail());
+            }
+
+        } catch (ApiException e) {
+            Log.d(TAG, "signInResult:failed code=" + e.getStatusCode());
+        }
+
     }
 }
