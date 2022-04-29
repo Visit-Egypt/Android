@@ -29,8 +29,6 @@ import com.visitegypt.domain.repository.PlaceRepository;
 import com.visitegypt.domain.repository.PostsRepository;
 import com.visitegypt.domain.repository.UploadToS3Repository;
 import com.visitegypt.domain.repository.UserRepository;
-import com.visitegypt.domain.usecase.GetGoogleLoginTokenUseCase;
-import com.visitegypt.domain.usecase.GetGoogleRegisterTokenUseCase;
 import com.visitegypt.domain.usecase.GetRefreshTokenUseCase;
 import com.visitegypt.utils.JWT;
 
@@ -78,7 +76,10 @@ public class NetworkModule implements CallBack {
 
     @Provides
     @Singleton
-    public OkHttpClient provideOkHttpClient(OkHttpClient.Builder httpClient, HttpLoggingInterceptor logging, SharedPreferences sharedPreferences, GetRefreshTokenUseCase userRepository) {
+    public OkHttpClient provideOkHttpClient(OkHttpClient.Builder httpClient,
+                                            HttpLoggingInterceptor logging,
+                                            SharedPreferences sharedPreferences,
+                                            GetRefreshTokenUseCase userRepository) {
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         httpClient.addInterceptor(logging);
         httpClient.addInterceptor(new Interceptor() {

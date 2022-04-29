@@ -33,11 +33,14 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class PostActivity extends AppCompatActivity {
     private static final String TAG = "Posts Activity";
+
     private PostsViewModel postsViewModel;
+
     private File file;
-    private EditText postTxt;
     private String placeId;
+
     private CircularImageView userImageView;
+    private EditText postTxt;
 
 
     @Override
@@ -52,16 +55,21 @@ public class PostActivity extends AppCompatActivity {
             }
         } else {
             placeId = (String) savedInstanceState.getSerializable(Constants.PLACE_ID);
-
         }
+
         setContentView(R.layout.activity_post);
         setContext(this);
+
+        initViews();
+        setUserImageImageView();
+        liveDataObserev();
+    }
+
+    private void initViews() {
         postTxt = findViewById(R.id.postTextView);
         postsViewModel = new ViewModelProvider(this).get(PostsViewModel.class);
         postsViewModel.initCallBack();
         userImageView = findViewById(R.id.userImageView);
-        setUserImageImageView();
-        liveDataObserev();
     }
 
 

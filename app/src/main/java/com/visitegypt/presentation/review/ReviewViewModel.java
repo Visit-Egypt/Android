@@ -30,10 +30,16 @@ public class ReviewViewModel extends ViewModel {
     MutableLiveData<Place> placesMutableLiveData = new MutableLiveData<>();
     MutableLiveData<List<Review>> reviewMutableLiveData = new MutableLiveData<>();
 
+    public MutableLiveData<List<BadgeTask>> badgeTaskMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<List<PlaceActivity>> placeActivitiesMutableLiveData = new MutableLiveData<>();
+
+    public MutableLiveData<Integer> placeActivityUpdateResponseCode = new MutableLiveData<>();
+    public MutableLiveData<Integer> badgeTaskUpdateResponseCode = new MutableLiveData<>();
+    public MutableLiveData<Integer> mutableLiveDataResponseCode = new MutableLiveData<>();
+
     private SubmitReviewUseCase submitReviewUseCase;
     private GetPlaceDetailUseCase getPlaceDetailUseCase;
     private UpdateUserPlaceActivityUseCase updateUserPlaceActivityUseCase;
-    public MutableLiveData<Integer> mutableLiveDataResponseCode = new MutableLiveData<>();
     private UpdateUserBadgeTaskProgUseCase updateUserBadgeTaskProgUseCase;
 
     private PlaceActivity reviewPlaceActivity;
@@ -63,6 +69,50 @@ public class ReviewViewModel extends ViewModel {
         );
     }
 
+    private void updateBadgeTask() {
+        if (reviewBadgeTask == null) {
+            Log.e(TAG, "submitReview: unable to update badge progress, you must call setBadgeTask()");
+        } else if (reviewBadgeTask.getProgress() < reviewBadgeTask.getMaxProgress()) {
+            Log.d(TAG, "submitReview: updating review badge progress");
+            reviewBadgeTask.setProgress(reviewBadgeTask.getProgress() + 1);
+            updateUserBadgeTaskProgUseCase.setBadgeTask(reviewBadgeTask);
+            updateUserBadgeTaskProgUseCase.execute(badgeTasks -> {
+                badgeTaskMutableLiveData.setValue(badgeTasks);
+                badgeTaskUpdateResponseCode.setValue(200);
+            }, throwable -> {
+            });
+        } else {
+            Log.d(TAG, "submitReview: you already earned the badge");
+        }
+    }
+
+    private void updatePlaceActivity() {
+        if (reviewPlaceActivity != null) {
+            Log.d(TAG, "updatePlaceActivity: checking place activities");
+            if (reviewPlaceActivity.getProgress() < reviewPlaceActivity.getMaxProgress()) {
+                Log.d(TAG, "updatePlaceActivity: unfinished activity, increasing it...");
+                reviewPlaceActivity.setProgress(reviewPlaceActivity.getProgress() + 1);
+                Log.d(TAG, "updatePlaceActivity: task progress: " + reviewPlaceActivity.getProgress());
+            }
+            updateUserPlaceActivityUseCase.setPlaceActivity(reviewPlaceActivity);
+            updateUserPlaceActivityUseCase.execute(placeActivities -> {
+                Log.d(TAG, "updatePlaceActivity: updated user place activity progress");
+                placeActivitiesMutableLiveData.setValue(placeActivities);
+                placeActivityUpdateResponseCode.setValue(200);
+            }, throwable -> {
+                try {
+                    Log.e(TAG, "updatePlaceActivity: " + throwable.getMessage());
+                    Response<?> response = ((HttpException) throwable).response();
+                    placeActivityUpdateResponseCode.setValue(response.code());
+
+                } catch (Exception e) {
+                    Log.e(TAG, "updatePlaceActivity: accept catch: " + e.getMessage());
+                }
+                Log.e(TAG, "updatePlaceActivity: " + throwable.getMessage());
+            });
+        }
+    }
+
     public void setReviewBadgeTask(BadgeTask reviewBadgeTask) {
         this.reviewBadgeTask = reviewBadgeTask;
     }
@@ -81,36 +131,9 @@ public class ReviewViewModel extends ViewModel {
         submitReviewUseCase.execute(reviews -> {
             Log.d(TAG, "submitReview: Review is submitted");
             reviewMutableLiveData.setValue(reviews);
-            if (reviewPlaceActivity != null) {
-                Log.d(TAG, "submitReview: checking place activities");
-                if (reviewPlaceActivity.getProgress() < reviewPlaceActivity.getMaxProgress()) {
-                    Log.d(TAG, "submitReview: unfinished activity, increasing it...");
-                    reviewPlaceActivity.setProgress(reviewPlaceActivity.getProgress() + 1);
-                }
-                if (reviewBadgeTask == null) {
-                    Log.e(TAG, "submitReview: unable to update badge progress, you must call setBadgeTask()");
-                } else if (reviewBadgeTask.getProgress() < reviewBadgeTask.getMaxProgress()) {
-                    Log.d(TAG, "submitReview: updating review badge progress");
-                    reviewBadgeTask.setProgress(reviewBadgeTask.getProgress() + 1);
-                    updateUserBadgeTaskProgUseCase.setBadgeTask(reviewBadgeTask);
-                    updateUserBadgeTaskProgUseCase.execute(badgeTasks -> {
-
-                    }, throwable -> {
-
-                    });
-                } else {
-                    Log.d(TAG, "submitReview: you already earned the badge");
-                }
-                // badgeTask.setBadgeId();
-
-                updateUserPlaceActivityUseCase.setPlaceActivity(reviewPlaceActivity);
-                updateUserPlaceActivityUseCase.execute(placeActivities -> {
-                    Log.d(TAG, "submitReview: updated user place activity progress");
-                }, throwable -> {
-                    Log.d(TAG, "submitReview: " + throwable.getMessage());
-                });
-            }
             mutableLiveDataResponseCode.setValue(200);
+            updatePlaceActivity();
+            updateBadgeTask();
         }, throwable -> {
             try {
                 Log.e(TAG, "submitReview: " + throwable.getMessage());

@@ -20,6 +20,7 @@ import com.visitegypt.domain.model.response.UploadResponse;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -79,7 +80,7 @@ public interface RetrofitService {
     public Single<List<Badge>> getUserBadges(@Path("user_id") String userId);
 
     @PUT("api/user/badge/task")
-    public Single<List<BadgeTask>> updateUserBadgeTaskProgress(@Body BadgeTask badgeTask);
+    public Observable<List<BadgeTask>> updateUserBadgeTaskProgress(@Body BadgeTask badgeTask);
 
     //without Tasks
     @PUT("api/user/badges/{badge_id}")

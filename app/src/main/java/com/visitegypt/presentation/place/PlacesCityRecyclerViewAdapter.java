@@ -44,18 +44,19 @@ public class PlacesCityRecyclerViewAdapter extends RecyclerView.Adapter<com.visi
         Place currentPlace = placeList.get(position);
         Log.d(TAG, "onBindViewHolder: " + currentPlace.getDefaultImage());
 
-        if (currentPlace.getImageUrls().get(0) != null) {
-            if (!currentPlace.getImageUrls().get(0).isEmpty()) {
-                Glide.with(holder.itemView)
-                        .load(currentPlace.getImageUrls().get(0))
-                        .fitCenter()
-                        .into(holder.placeInCityImageView);
-                Log.d(TAG, "image: " + currentPlace.getImageUrls().get(0).toString());
+        if (currentPlace.getImageUrls() != null)
+            if (currentPlace.getImageUrls().get(0) != null) {
+                if (!currentPlace.getImageUrls().get(0).isEmpty()) {
+                    Glide.with(holder.itemView)
+                            .load(currentPlace.getImageUrls().get(0))
+                            .fitCenter()
+                            .into(holder.placeInCityImageView);
+                    Log.d(TAG, "image: " + currentPlace.getImageUrls().get(0).toString());
 
+                } else {
+                }
             } else {
             }
-        } else {
-        }
         holder.placeInCityTextView.setText(currentPlace.getTitle());
 //        holder.placeInCityRemainingProgressTextView.setProgress(placeList.get(position).getProgress());
 //        holder.placesInCityRemainingTextView.setText(placeList.get(position).getProgress() + " remaining activities");

@@ -21,6 +21,7 @@ import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.BadgeTask;
+import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.presentation.gamification.BadgesSliderViewAdapter;
 import com.visitegypt.presentation.gamification.CitiesActivity;
 import com.visitegypt.utils.GamificationRules;
@@ -50,6 +51,8 @@ public class AccountFragment extends Fragment {
 
     private ArrayList<Badge> userBadges;
     private ArrayList<Badge> placeBadges;
+
+    private int generatedXp;
 
     @Nullable
     @Override
@@ -91,6 +94,20 @@ public class AccountFragment extends Fragment {
         badgesRecyclerView.setAdapter(badgesSliderViewAdapter);
     }
 
+    private void setUserXp(int xp) {
+        Log.d(TAG, "initViewModel: user with xp: " + xp);
+        int level = GamificationRules.getLevelFromXp(xp);
+        Log.d(TAG, "initViewModel: level of user: " + level);
+        levelTextView.setText(MessageFormat.format("LVL {0}", level));
+        currentLevelTextView.setText(Integer.toString(level));
+        nextLevelTextView.setText(Integer.toString(level + 1));
+        xpRemainingTextView.setText((GamificationRules.getLevelXp(level + 1) - (GamificationRules.getLevelXp(level))) + "XP remaining to next level");
+        xpProgressTextView.setText(GamificationRules.getLevelXp(level) + "/" + GamificationRules.getLevelXp(level + 1));
+        userTitleTextView.setText(GamificationRules.getTitleFromLevel(level));
+        xpLinearProgressIndicator.setMax(GamificationRules.getLevelXp(level + 1));
+        xpLinearProgressIndicator.setProgress(GamificationRules.getLevelXp(level), true);
+    }
+
     private void initViewModel() {
         accountViewModel = new ViewModelProvider(this).get(AccountViewModel.class);
         accountViewModel.mutableLiveDataName.observe(getViewLifecycleOwner(), s -> userName.setText(s));
@@ -99,18 +116,9 @@ public class AccountFragment extends Fragment {
         accountViewModel.userMutableLiveData.observe(getViewLifecycleOwner(), user -> {
             Log.d(TAG, "initViewModel: filling user data... " + user.getUserId());
             int xp = user.getXp();
-            Log.d(TAG, "initViewModel: user with xp: " + xp);
-            int level = GamificationRules.getLevelFromXp(xp);
-            Log.d(TAG, "initViewModel: level of user: " + level);
-            levelTextView.setText(MessageFormat.format("LVL {0}", level));
-            currentLevelTextView.setText(Integer.toString(level));
-            nextLevelTextView.setText(Integer.toString(level + 1));
-            xpRemainingTextView.setText((GamificationRules.getLevelXp(level + 1) - (GamificationRules.getLevelXp(level))) + "XP remaining to next level");
-            xpProgressTextView.setText(GamificationRules.getLevelXp(level) + "/" + GamificationRules.getLevelXp(level + 1));
-            userTitleTextView.setText(GamificationRules.getTitleFromLevel(level));
-            xpLinearProgressIndicator.setMax(GamificationRules.getLevelXp(level + 1));
-            xpLinearProgressIndicator.setProgress(GamificationRules.getLevelXp(level), true);
+            //setUserXp(xp);
         });
+
 
         accountViewModel.getUserInformation();
         accountViewModel.mutableLiveDataMyPosts.observe(getViewLifecycleOwner(), posts -> {
@@ -128,18 +136,16 @@ public class AccountFragment extends Fragment {
         accountViewModel.getAllBadges();
         accountViewModel.allBadgesMutableLiveData.observe(getViewLifecycleOwner(), placeBadges -> {
             this.placeBadges = placeBadges;
-            //Log.d(TAG, "initViewModel: BOOM" + new Gson().toJson(placeBadges.get(1).getBadgeTasks()));
             accountViewModel.userBadgesMutableLiveData.observe(getViewLifecycleOwner(),
                     userBadges -> {
-                        //Log.d(TAG, "initViewModel: BOOM" + new Gson().toJson(userBadges.get(1).getBadgeTasks()));
                         Log.d(TAG, "initViewModel: ");
                         ArrayList<Badge> realBadges = new ArrayList<>();
                         for (Badge badge : userBadges) {
+                            generatedXp += badge.getXp();
+                            Log.d(TAG, "initViewModel: place activity generatedXp: " + generatedXp);
                             for (Badge placeBadge : placeBadges) {
                                 if (badge.getId().equals(placeBadge.getId())) {
                                     MergeObjects.MergeTwoObjects.merge(placeBadge, badge);
-                                    //placeBadge.setProgress(badge.getProgress());
-                                    //placeBadge.setOwned(badge.isOwned());
                                     ArrayList<BadgeTask> badgeTasks = new ArrayList<>();
                                     for (BadgeTask badgeTask : badge.getBadgeTasks()) {
                                         for (BadgeTask placeBadgeTask : placeBadge.getBadgeTasks()) {
@@ -155,9 +161,18 @@ public class AccountFragment extends Fragment {
                             }
                         }
                         badgesSliderViewAdapter.setBadges(realBadges);
+                        setUserXp(generatedXp);
                     }
-
             );
+        });
+
+        accountViewModel.getPlaceActivitiesOfUser();
+        accountViewModel.userPlaceActivityMutableLiveData.observe(getViewLifecycleOwner(), placeActivities -> {
+            for (PlaceActivity placeActivity : placeActivities) {
+                generatedXp += placeActivity.getXp();
+                Log.d(TAG, "initViewModel: place activity generatedXp: " + generatedXp);
+            }
+            setUserXp(generatedXp);
         });
 
 

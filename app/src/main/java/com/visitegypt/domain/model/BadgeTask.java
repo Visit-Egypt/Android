@@ -10,7 +10,7 @@ public class BadgeTask {
     public static final String SOCIAL_BUTTERFLY = "social_badge";
     private int progress;
     @SerializedName("max_progress")
-    private int maxProgress;
+    private int maxProgress = -1;
     private String type;
 
     public BadgeTask() {
@@ -59,7 +59,7 @@ public class BadgeTask {
     }
 
     public void setMaxProgress(int maxProgress) {
-        this.maxProgress = this.maxProgress == 0 ? maxProgress : this.maxProgress;
+        this.maxProgress = this.maxProgress == -1 ? maxProgress : this.maxProgress;
     }
 
     public String getType() {

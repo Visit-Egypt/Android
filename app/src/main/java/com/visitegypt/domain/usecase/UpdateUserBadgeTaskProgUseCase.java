@@ -5,16 +5,16 @@ import android.util.Log;
 import com.google.gson.annotations.SerializedName;
 import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.repository.UserRepository;
-import com.visitegypt.domain.usecase.base.SingleUseCase;
+import com.visitegypt.domain.usecase.base.ObservableUseCase;
 
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.core.Observable;
 
-public class UpdateUserBadgeTaskProgUseCase extends SingleUseCase<List<BadgeTask>> {
+public class UpdateUserBadgeTaskProgUseCase extends ObservableUseCase<List<BadgeTask>> {
     private static final String TAG = "update badgeTask progress";
     //badgeTask Constructor BadgeTask(String badgeId, String taskTitle, int progress)
     private BadgeTask badgeTask;
@@ -32,7 +32,7 @@ public class UpdateUserBadgeTaskProgUseCase extends SingleUseCase<List<BadgeTask
     }
 
     @Override
-    protected Single<List<BadgeTask>> buildSingleUseCase() {
+    protected Observable<List<BadgeTask>> buildObservableUseCase() {
         if (badgeTask == null) {
             Log.e(TAG, "buildSingleUseCase: you must call setBadgeTask()");
         }

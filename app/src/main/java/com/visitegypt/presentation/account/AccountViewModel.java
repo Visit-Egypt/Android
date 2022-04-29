@@ -9,11 +9,14 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.visitegypt.domain.model.Badge;
+import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.model.Post;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.usecase.GetAllBadgesUseCase;
 import com.visitegypt.domain.usecase.GetBadgesOfUserUseCase;
+import com.visitegypt.domain.usecase.GetPlacesUseCase;
 import com.visitegypt.domain.usecase.GetPostsByUser;
+import com.visitegypt.domain.usecase.GetUserPlaceActivityUseCase;
 import com.visitegypt.domain.usecase.GetUserUseCase;
 import com.visitegypt.utils.Constants;
 
@@ -34,29 +37,54 @@ public class AccountViewModel extends ViewModel {
     private static final String TAG = "account view model";
 
     MutableLiveData<ArrayList<Badge>> userBadgesMutableLiveData = new MutableLiveData<>();
-
     MutableLiveData<List<Post>> mutableLiveDataMyPosts = new MutableLiveData<>();
     MutableLiveData<String> mutableLiveDataName = new MutableLiveData<>();
     MutableLiveData<String> mutableLiveDataUserImage = new MutableLiveData<>();
     MutableLiveData<ArrayList<Badge>> allBadgesMutableLiveData = new MutableLiveData<>();
     MutableLiveData<User> userMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<ArrayList<PlaceActivity>> userPlaceActivityMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<ArrayList<PlaceActivity>> allPlacesMutableLiveData = new MutableLiveData<>();
+
     private SharedPreferences sharedPreferences;
     private GetPostsByUser getPostsByUser;
     private GetBadgesOfUserUseCase getBadgesOfUserUseCase;
     private GetUserUseCase getUserUseCase;
     private GetAllBadgesUseCase getAllBadgesUseCase;
+    private GetUserPlaceActivityUseCase getUserPlaceActivityUseCase;
+    private GetPlacesUseCase getPlacesUseCase;
 
     @Inject
     public AccountViewModel(SharedPreferences sharedPreferences, GetPostsByUser getPostsByUser,
                             GetBadgesOfUserUseCase getBadgesOfUserUseCase,
                             GetAllBadgesUseCase getAllBadgesUseCase,
-                            GetUserUseCase getUserUseCase) {
+                            GetUserUseCase getUserUseCase,
+                            GetUserPlaceActivityUseCase getUserPlaceActivityUseCase,
+                            GetPlacesUseCase getPlacesUseCase) {
         this.sharedPreferences = sharedPreferences;
         this.getPostsByUser = getPostsByUser;
         this.getBadgesOfUserUseCase = getBadgesOfUserUseCase;
         this.getUserUseCase = getUserUseCase;
         this.getAllBadgesUseCase = getAllBadgesUseCase;
+        this.getUserPlaceActivityUseCase = getUserPlaceActivityUseCase;
+        this.getPlacesUseCase = getPlacesUseCase;
+    }
 
+    public void getAllPlaces() {
+        getPlacesUseCase.execute(placePageResponse -> {
+
+        }, throwable -> {
+
+        });
+    }
+
+    public void getPlaceActivitiesOfUser() {
+        String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
+        getUserPlaceActivityUseCase.setUserId(userId);
+        getUserPlaceActivityUseCase.execute(placeActivities -> {
+            userPlaceActivityMutableLiveData.setValue((ArrayList<PlaceActivity>) placeActivities);
+        }, throwable -> {
+
+        });
     }
 
     public void getUserInformation() {

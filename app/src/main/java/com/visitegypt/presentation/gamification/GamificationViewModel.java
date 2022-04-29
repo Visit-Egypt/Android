@@ -93,10 +93,12 @@ public class GamificationViewModel extends ViewModel {
         if (placeActivity == null) throw new Exception("must call setPlaceActivity");
         Log.d(TAG, "updatePlaceActivityForUser: updating place activity of user");
         if (placeActivity.getProgress() != placeActivity.getMaxProgress()) {
-            Log.d(TAG, "updatePlaceActivityForUser: olace activity not finished yet, completing...");
+            Log.d(TAG, "updatePlaceActivityForUser: place activity not finished yet, completing...");
             placeActivity.setProgress(placeActivity.getProgress() + 1);
             updateUserPlaceActivityUseCase.setPlaceActivity(placeActivity);
             updateUserPlaceActivityUseCase.execute(placeActivities -> {
+                Log.d(TAG, "updatePlaceActivityForUser: setting placeActivities to live data");
+                userPlaceActivitiesMutableLiveData.setValue(placeActivities);
             }, throwable -> {
                 Log.e(TAG, "updatePlaceActivityForUser: failed to update activity progress" + throwable.getMessage());
             });
@@ -113,15 +115,16 @@ public class GamificationViewModel extends ViewModel {
     }
 
     public void getUserPlaceActivity() {
-        // TODO getUserPlaceActivityUseCase.setUserId();
         String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
         if (userId.isEmpty()) {
             Log.e(TAG, "getUserPlaceActivity: user not found");
         }
         getUserPlaceActivityUseCase.setUserId(userId);
         getUserPlaceActivityUseCase.execute(placeActivities -> {
+            Log.d(TAG, "getUserPlaceActivity: setting placeActivities to live data");
             userPlaceActivitiesMutableLiveData.setValue(placeActivities);
         }, throwable -> {
+            userPlaceActivitiesMutableLiveData.setValue(null);
             Log.e(TAG, "getUserPlaceActivity: failed to get place activities for the user: " + throwable.getMessage());
         });
     }

@@ -12,6 +12,7 @@ import com.visitegypt.domain.model.response.UploadResponse;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 
@@ -46,7 +47,7 @@ public interface UserRepository {
 
     Call<ConfirmUploadResponse> confirmUpload(ConfirmUploadModel confirmUploadModel);
 
-    Single<List<BadgeTask>> updateUserBadgeTaskProgress(BadgeTask badgeTask);
+    Observable<List<BadgeTask>> updateUserBadgeTaskProgress(BadgeTask badgeTask);
 
     Single<List<Badge>> getUserBadges(String userId);
 

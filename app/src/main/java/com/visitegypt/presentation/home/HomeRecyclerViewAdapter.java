@@ -75,8 +75,6 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     public int getItemCount() {
         if (placesList == null)
             return 0;
-        if (placesList.isEmpty())
-            return 0;
         return placesList.size();
     }
 

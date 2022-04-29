@@ -16,6 +16,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 
@@ -80,7 +81,7 @@ public class UserRepositoryImp implements UserRepository {
     }
 
     @Override
-    public Single<List<BadgeTask>> updateUserBadgeTaskProgress(BadgeTask badgeTask) {
+    public Observable<List<BadgeTask>> updateUserBadgeTaskProgress(BadgeTask badgeTask) {
         return retrofitService.updateUserBadgeTaskProgress(badgeTask);
     }
 
