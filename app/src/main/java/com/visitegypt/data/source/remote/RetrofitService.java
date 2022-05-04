@@ -9,6 +9,8 @@ import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.model.Post;
 import com.visitegypt.domain.model.PostPage;
+import com.visitegypt.domain.model.Tag;
+import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.User;
@@ -51,9 +53,8 @@ public interface RetrofitService {
     @POST("api/user/refresh")
     public Single<User> refreshUserToken(@Body Token token);
 
-    @Headers({"Content-Type: application/json;charset=UTF-8"})
     @GET("api/user")
-    public Single<User> getUser(@Query("user_id") String userId, @Query("user_email") String email);
+    public Single<User> getUser(@Query("user_id") String userId);
 
     @PUT("api/user/{user_id}")
     public Single<User> updateUser(@Path("user_id") String userId, @Body UserUpdateRequest user);
@@ -74,16 +75,22 @@ public interface RetrofitService {
 
     @PUT("api/user/badge/task")
     public Single<List<BadgeTask>> updateUserBadgeTaskProgress(@Body BadgeTask badgeTask);
+
     //without Tasks
     @PUT("api/user/badges/{badge_id}")
-    public Single<List<Badge>> updateUserBadge(@Path("badge_id") String badgeId,@Body Badge badge);
+    public Single<List<Badge>> updateUserBadge(@Path("badge_id") String badgeId, @Body Badge badge);
+
     @GET("api/user/actvity/{user_id}")
     public Single<List<PlaceActivity>> getUserPlaceActivity(@Path("user_id") String userId);
 
     @PUT("api/user/actvity/{activity_id}")
-    public Single<List<PlaceActivity>> updateUserPlaceActivity(@Path("activity_id") String activityId,@Body PlaceActivity placeActivity);
+    public Single<List<PlaceActivity>> updateUserPlaceActivity(@Path("activity_id") String activityId, @Body PlaceActivity placeActivity);
 
-//    @GET("api/user/activity/{user_id}")
+    //    @GET("api/user/activity/{user_id}")
+    @POST("api/user/{user_id}/follow")
+    public Single<Boolean> follow(@Path("user_id") String userId);
+    @POST("api/user/{user_id}/mate")
+    public Single<User> requestTripMate(@Path("user_id") String userId, @Body TripMateRequest requestMateBody);
 
     /*******************************************************************/
     @GET("api/place/{id}")
@@ -156,4 +163,7 @@ public interface RetrofitService {
 
     @GET("api/badge")
     public Single<BadgeResponse> getBadgesByPlace(@Query("filters") String placeId);
+    /********************************************************************/
+    @GET("api/tag")
+    public Single<List<Tag>> getTags();
 }

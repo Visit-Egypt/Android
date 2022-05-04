@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorOnPrimary"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginVertical="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/userProfile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:id="@+id/circularAccountImageView"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_baseline_account_circle_24" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/levelTextViewAccountFragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/circularAccountImageView"
+                    android:layout_alignTop="@id/circularAccountImageView"
+                    android:layout_alignRight="@id/circularAccountImageView"
+                    android:layout_alignBottom="@id/circularAccountImageView"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="80dp"
+                    android:background="@color/camel"
+                    android:gravity="center"
+                    android:text="LVL 1" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/nameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="xxx"
+                android:textAlignment="center"
+                android:textColor="?attr/colorOnSecondary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/titleTextViewAccountFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Explorer"
+                android:textAlignment="center"
+                android:textColor="?attr/colorPrimaryVariant"
+                android:textSize="17sp" />
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/userLevelLinearProgressIndicationAccountFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"
+                        android:max="20"
+                        android:progress="0"
+                        app:trackCornerRadius="3dp"
+                        app:trackThickness="20dp" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@id/userLevelLinearProgressIndicationAccountFragment"
+                        android:layout_alignTop="@id/userLevelLinearProgressIndicationAccountFragment"
+                        android:layout_alignRight="@id/userLevelLinearProgressIndicationAccountFragment"
+                        android:layout_alignBottom="@id/userLevelLinearProgressIndicationAccountFragment">
+
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/userLevelLinearProgressIndicationTextViewAccountFragment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="8dp"
+                            android:layout_weight="1"
+                            android:background="#00000000"
+                            android:text="1" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/nextLevelProgressIndicatorTextViewAccountFragment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:background="#00000000"
+                            android:text="2" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </RelativeLayout>
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/xpProgressTextViewAccountFragment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_weight="1"
+                        android:text="0/20" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/remainingXpTextViewAccountFragment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="15XP to next level" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/likesNumberTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="0"
+                        android:textAlignment="center"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="VISITED CITIES"
+                        android:textAlignment="center"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/followingNumberTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="0"
+                        android:textAlignment="center"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="FOLLOWING"
+                        android:textAlignment="center"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/followersNumberTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="0"
+                        android:textAlignment="center"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="FOLLOWERS"
+                        android:textAlignment="center"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/follow"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Follow"
+                    android:textSize="14sp"
+                    app:icon="@drawable/ic_follow"
+                    app:iconGravity="textStart" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/request"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Trip mate"
+                    android:textSize="14sp"
+                    app:icon="@drawable/ic_trip_mate"
+                    app:iconGravity="textStart" />
+            </LinearLayout>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="?attr/colorSecondaryVariant" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/prata_regular"
+                    android:padding="10dp"
+                    android:text="@string/my_interests"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_weight="1"
+                    android:id="@+id/myInterests"
+                    android:fontFamily="@font/prata_regular"
+                    android:padding="10dp"
+                    android:text="I don't have any interests yet"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroup"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content">
+
+                    <!-- Chips can be declared here, or added dynamically. -->
+
+                </com.google.android.material.chip.ChipGroup>
+            </LinearLayout>
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="?attr/colorSecondaryVariant" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/prata_regular"
+                    android:padding="10dp"
+                    android:text="@string/user_badges"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/userBadgesRecyclerViewUserFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            </LinearLayout>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="?attr/colorSecondaryVariant" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="?attr/colorSecondaryVariant" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/prata_regular"
+                android:paddingVertical="10dp"
+                android:paddingLeft="15dp"
+                android:text="My Activities"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/prata_regular"
+                android:padding="10dp"
+                android:text="I don't have any activities yet"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/loadingLayout"
+            layout="@layout/loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+        </LinearLayout>
+
+</ScrollView>

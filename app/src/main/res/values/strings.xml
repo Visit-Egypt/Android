@@ -60,6 +60,7 @@
     <string name="title_activity_navigation">NavigationActivity</string>
     <string name="title_home">Discover</string>
     <string name="title_account">Account</string>
+    <string name="trip_mate">Trip Mate</string>
     <string name="title_setting">Setting</string>
     <string name="title_ar">AR</string>
     <string name="setting">Setting</string>
@@ -94,4 +95,5 @@
     <string name="chat">Chat</string>
     <string name="user_badges">My Badges</string>
     <string name="Search_visit_egypt">Search Visti Egypt</string>
+    <string name="my_interests">My Interests</string>
 </resources>

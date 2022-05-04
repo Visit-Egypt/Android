@@ -17,6 +17,7 @@ import com.visitegypt.data.repository.ChatbotRepositoryImp;
 import com.visitegypt.data.repository.ItemRepositoryImp;
 import com.visitegypt.data.repository.PlaceRepositoryImp;
 import com.visitegypt.data.repository.PostRepositoryImp;
+import com.visitegypt.data.repository.TagRepositoryImp;
 import com.visitegypt.data.repository.UploadToS3Imp;
 import com.visitegypt.data.repository.UserRepositoryImp;
 import com.visitegypt.data.source.remote.RetrofitService;
@@ -29,6 +30,7 @@ import com.visitegypt.domain.repository.ChatbotRepository;
 import com.visitegypt.domain.repository.ItemRepository;
 import com.visitegypt.domain.repository.PlaceRepository;
 import com.visitegypt.domain.repository.PostsRepository;
+import com.visitegypt.domain.repository.TagRepository;
 import com.visitegypt.domain.repository.UploadToS3Repository;
 import com.visitegypt.domain.repository.UserRepository;
 import com.visitegypt.domain.usecase.GetRefreshTokenUseCase;
@@ -44,6 +46,7 @@ import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
 import io.reactivex.rxjava3.core.Single;
+import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -87,11 +90,11 @@ public class NetworkModule implements CallBack {
             @Override
             public Response intercept(@NonNull Chain chain) throws IOException {
                 token = sharedPreferences.getString(SHARED_PREF_USER_ACCESS_TOKEN, "");
-                String refreshToken = sharedPreferences.getString(SHARED_PREF_USER_REFRESH_TOKEN, "");
                 Request request = chain.request().newBuilder()
                         .addHeader("Authorization", "Bearer " + token)
                         .build();
                 Response response = chain.proceed(request);
+                response.cacheResponse();
                 if (response.code() == 403 || response.code() == 401) {
                     response.close();
                     getNewToken(userRepository, sharedPreferences);
@@ -147,7 +150,6 @@ public class NetworkModule implements CallBack {
                 .addCallAdapterFactory(rxJava3CallAdapterFactory)
                 .client(client)
                 .build();
-        Log.d("TAG", " Retrofit provideRetrofit: "+retrofit);
         return retrofit;
     }
     @Provides
@@ -257,6 +259,12 @@ public class NetworkModule implements CallBack {
     @Singleton
     public GetRefreshTokenUseCase provideGetRefreshToken(@Named("RefreshToken") UserRepository userRepository, SharedPreferences sharedPreferences) {
         return new GetRefreshTokenUseCase(userRepository, sharedPreferences);
+    }
+
+    @Provides
+    @Singleton
+    public TagRepository provideTagRepository(@Named("Normal") RetrofitService retrofitService) {
+        return new TagRepositoryImp(retrofitService);
     }
 
 

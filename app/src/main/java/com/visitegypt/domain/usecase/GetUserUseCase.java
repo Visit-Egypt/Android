@@ -47,6 +47,6 @@ public class GetUserUseCase extends SingleUseCase<User> {
 
     @Override
     protected Single<User> buildSingleUseCase() {
-        return userRepository.getUser(userId, email);
+        return userRepository.getUser(userId);
     }
 }

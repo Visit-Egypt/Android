@@ -5,6 +5,7 @@ import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.ConfirmUploadModel;
 import com.visitegypt.domain.model.ConfirmUploadResponse;
 import com.visitegypt.domain.model.PlaceActivity;
+import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
@@ -14,9 +15,6 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.PUT;
-import retrofit2.http.Path;
 
 public interface UserRepository {
     /**
@@ -35,8 +33,9 @@ public interface UserRepository {
 
     Single<User> refreshUserToken(Token token);
 
-    Single<User> getUser(String userId, String email);
-
+    Single<User> getUser(String userId);
+    Single<Boolean> follow(String userId);
+    Single<User> requestTripMate(String userId, TripMateRequest requestMateBody);
     Single<String> logOut(String userId);
 
     Single<User> updateUser(String userId, UserUpdateRequest user);

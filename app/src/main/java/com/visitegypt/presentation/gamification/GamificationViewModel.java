@@ -165,4 +165,5 @@ public class GamificationViewModel extends ViewModel {
     public void updateBadgeProgress(Badge badge) {
 
     }
+
 }

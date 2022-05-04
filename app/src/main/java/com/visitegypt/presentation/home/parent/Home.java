@@ -27,7 +27,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
@@ -230,7 +229,8 @@ public class Home extends AppCompatActivity {
                 R.id.nav_map,
                 R.id.nav_booking,
                 R.id.nav_subscription,
-                R.id.setting
+                R.id.tripMate,
+                R.id.userProfile
         )
                 .setOpenableLayout(drawer)
                 .build();

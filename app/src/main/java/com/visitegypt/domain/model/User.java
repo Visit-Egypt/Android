@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User {
@@ -34,6 +35,9 @@ public class User {
     private ArrayList<Badge> badges;
     private int xp;
     private int level;
+    private List<String> following;
+    private List<String> followers;
+    private List<String> interests;
     private ProfileFrame frame;
 
     /*******************************************************************************/
@@ -57,7 +61,11 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.photoUrl = photoUrl;
     }
-
+    public User(String firstName, String lastName, String photoUrl) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.photoUrl = photoUrl;
+    }
     public User(String email, String password) {
         this.email = email;
         this.password = password;
@@ -178,6 +186,30 @@ public class User {
 
     public ProfileFrame getFrame() {
         return frame;
+    }
+
+    public List<String> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(List<String> following) {
+        this.following = following;
+    }
+
+    public List<String> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(List<String> followers) {
+        this.followers = followers;
+    }
+
+    public List<String> getInterests() {
+        return interests;
+    }
+
+    public void setInterests(List<String> interests) {
+        this.interests = interests;
     }
 
     public void setFrame(ProfileFrame frame) {
