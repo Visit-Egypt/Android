@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textview.MaterialTextView;
-import com.jackandphantom.circularprogressbar.CircleProgressbar;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.Place;
@@ -79,13 +78,10 @@ public class PlacesActivity extends AppCompatActivity {
         placesViewModel = new ViewModelProvider(this).get(PlacesViewModel.class);
         placesViewModel.getPlacesInCity(cityName);
 
-        placesViewModel.placesMutableLiveData.observe(this, new Observer<List<Place>>() {
-            @Override
-            public void onChanged(List<Place> placeActivities) {
-                Log.d(TAG, " getting places to recycler vieww");
-                placesCityRecyclerViewAdapter.setplaceList(placeActivities);
+        placesViewModel.placesMutableLiveData.observe(this, (Observer<List<Place>>) placeActivities -> {
+            Log.d(TAG, " getting places to recycler vieww");
+            placesCityRecyclerViewAdapter.setplaceList(placeActivities);
 
-            }
         });
 
         placesViewModel.getBadges();

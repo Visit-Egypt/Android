@@ -3,7 +3,6 @@ package com.visitegypt.presentation.gamification;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.BitmapDrawable;
@@ -75,7 +74,7 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
             Log.d(TAG, "onBindViewHolder: badge progress: " + badges.get(position).getMaxProgress());
             viewHolder.circleProgressbar.setMaxProgress(badges.get(position).getMaxProgress());
             viewHolder.circleProgressbar.setProgressWithAnimation(badges.get(position).getMaxProgress());
-            viewHolder.circleProgressbar.setForegroundProgressColor(Color.GREEN);
+            viewHolder.circleProgressbar.setForegroundProgressColor(viewHolder.circleProgressbar.getResources().getColor(R.color.camel));
 
             // badge owned => color
             Target target = new Target() {
@@ -124,7 +123,9 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
 
                 }
             };
-            Picasso.get().load(badges.get(position).getImageUrl()).into(target);
+            if (badges.get(position).getImageUrl() != null)
+                if (!badges.get(position).getImageUrl().isEmpty())
+                    Picasso.get().load(badges.get(position).getImageUrl()).into(target);
 
         }
     }
@@ -151,7 +152,7 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
         if (badge.isOwned()) {
             //circleProgressbar.setMaxProgress(1);
             circleProgressbar.setProgressWithAnimation(circleProgressbar.getMaxProgress());
-            circleProgressbar.setForegroundProgressColor(Color.GREEN);
+            circleProgressbar.setForegroundProgressColor(circleProgressbar.getResources().getColor(R.color.camel));
         } else {
             circleProgressbar.setMaxProgress(badge.getMaxProgress());
             circleProgressbar.setProgressWithAnimation(badge.getProgress());

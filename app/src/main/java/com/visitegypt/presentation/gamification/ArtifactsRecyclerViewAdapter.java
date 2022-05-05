@@ -139,9 +139,11 @@ public class ArtifactsRecyclerViewAdapter extends RecyclerView.Adapter<com.visit
             }
         }
 
-//        GamificationHintRecyclerViewAdapter adapter = new GamificationHintRecyclerViewAdapter(item.getHints());
-//        RecyclerView recyclerView = v.findViewById(R.id.gamificationHintDialogRecyclerView);
-//        recyclerView.setAdapter(adapter);
+        if (explore.getHints() != null) {
+            GamificationHintRecyclerViewAdapter adapter = new GamificationHintRecyclerViewAdapter(explore.getHints());
+            RecyclerView recyclerView = v.findViewById(R.id.gamificationHintDialogRecyclerView);
+            recyclerView.setAdapter(adapter);
+        }
 
         dialog.setContentView(v);
         dialog.show();

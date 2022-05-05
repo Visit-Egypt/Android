@@ -165,4 +165,7 @@ public interface RetrofitService {
 
     @GET("api/badge")
     public Single<BadgeResponse> getBadgesByPlace(@Query("filters") String placeId);
+
+    @GET("/api/place/activityid")
+    public Single<List<Place>> getPlacesByPlaceActivitiesId(@Query("id") List<String> placeActivitiesIds);
 }

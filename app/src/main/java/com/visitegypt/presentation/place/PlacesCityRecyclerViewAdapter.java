@@ -57,6 +57,8 @@ public class PlacesCityRecyclerViewAdapter extends RecyclerView.Adapter<com.visi
                 }
             } else {
             }
+        if (placeList.get(position).getPlaceActivities() != null)
+            holder.placesInCityRemainingTextView.setText(placeList.get(position).getPlaceActivities().size() + " activities");
         holder.placeInCityTextView.setText(currentPlace.getTitle());
 //        holder.placeInCityRemainingProgressTextView.setProgress(placeList.get(position).getProgress());
 //        holder.placesInCityRemainingTextView.setText(placeList.get(position).getProgress() + " remaining activities");
@@ -91,14 +93,11 @@ public class PlacesCityRecyclerViewAdapter extends RecyclerView.Adapter<com.visi
             placeInCityImageView = itemView.findViewById(R.id.placeInCityImageView);
             placesInCityRemainingTextView = itemView.findViewById(R.id.placesInCityRemainingTextView);
             placeInCityTextView = itemView.findViewById(R.id.placeInCityTextView);
-            placeInCityRemainingProgressTextView = itemView.findViewById(R.id.placeInCityRemainingProgressTextView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, GamificationActivity.class);
-                    intent.putExtra(CHOSEN_PLACE_ID, placeList.get(getAdapterPosition()).getId());
-                    context.startActivity(intent);
-                }
+            placeInCityRemainingProgressTextView = itemView.findViewById(R.id.placeInCityRemainingProgressIndicator);
+            itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(context, GamificationActivity.class);
+                intent.putExtra(CHOSEN_PLACE_ID, placeList.get(getAdapterPosition()).getId());
+                context.startActivity(intent);
             });
 
         }

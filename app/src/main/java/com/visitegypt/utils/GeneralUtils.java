@@ -5,12 +5,15 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
+import com.github.razir.progressbutton.DrawableButton;
+import com.github.razir.progressbutton.DrawableButtonExtensionsKt;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -22,6 +25,8 @@ import java.util.ArrayList;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import kotlin.Unit;
 
 public class GeneralUtils {
 
@@ -107,5 +112,26 @@ public class GeneralUtils {
             });
         }
     }
+
+    public static void showButtonLoading(final Button button) {
+        DrawableButtonExtensionsKt.showProgress(button, progressParams -> {
+            progressParams.setButtonTextRes(R.string.loading);
+            progressParams.setProgressColor(Color.WHITE);
+            progressParams.setGravity(DrawableButton.GRAVITY_TEXT_START);
+            return Unit.INSTANCE;
+        });
+        button.setEnabled(false);
+    }
+
+    public static void showButtonLoaded(final Button button, @Nullable String newText) {
+        DrawableButtonExtensionsKt.hideProgress(button, newText == null ? "Complete" : newText);
+    }
+
+    public static void showButtonFailed(final Button button, @Nullable String error, @Nullable String newButtonText) {
+        button.setEnabled(true);
+        DrawableButtonExtensionsKt.hideProgress(button, newButtonText);
+        GeneralUtils.showSnackError(button.getContext(), button, error == null ? "An error has occurred" : error);
+    }
+
 
 }

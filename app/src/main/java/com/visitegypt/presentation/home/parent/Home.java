@@ -3,7 +3,6 @@ package com.visitegypt.presentation.home.parent;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -40,7 +39,6 @@ import com.visitegypt.R;
 import com.visitegypt.databinding.ActivityNewHomeBinding;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.SearchPlace;
-import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
 import com.visitegypt.presentation.setting.SettingFragment;
 import com.visitegypt.presentation.signin.SignInActivity;
@@ -115,19 +113,6 @@ public class Home extends AppCompatActivity {
 
                 if (firstSignIn) {
                     Log.d(TAG, "checkFirstLogIn: first sign in... giving badge...");
-//                    String badgeId = GamificationRules.FIRST_SIGN_IN_BADGE_ID;
-//                    String imgUrl = "https://www.vanstyle.co.uk/van/images/productsbig/va_7080_va7081_va7082_va7083_va7460_vw_logo_t6_gp_front_badge_backing_coloured_1035_jb_b.jpg";
-//                    Badge badge = new Badge(badgeId, imgUrl, true, Badge.Type.GENERAL, 30, "");
-//                    badge.setTitle("First sign in");
-//                    badge.setDescription("New buddy joined in");
-
-//                    badgeTask.setImageUrl(imgUrl);
-//                    badgeTasks.add(badgeTask);
-//                    badge.setBadgeTasks(badgeTasks);
-//                    badge.setProgress(1);
-//                    badge.setMaxProgress(1);
-//                    badge.setPinned(true);
-//                    badge.setImageUrl(imgUrl);
                     Badge badge = null;
                     for (Badge originalBadge : badges) {
                         Log.d(TAG, "checkFirstLogIn: checking badge: " + originalBadge.getId());
@@ -162,7 +147,11 @@ public class Home extends AppCompatActivity {
 
         CircleProgressbar circleProgressbar = v.findViewById(R.id.badgeEarnedDialogCircleProgressBar);
         circleProgressbar.setProgress(circleProgressbar.getMaxProgress());
-        circleProgressbar.setForegroundProgressColor(Color.GREEN);
+        circleProgressbar.setForegroundProgressColor(getResources().getColor(R.color.camel));
+
+        v.findViewById(R.id.dismissBadgeEarnedButton).setOnClickListener(view -> {
+            dialog.dismiss();
+        });
 
         Target target = new Target() {
             @Override
@@ -186,20 +175,13 @@ public class Home extends AppCompatActivity {
     }
 
     private void startChatBot() {
-        binding.appBarNewHome.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Home.this, ChatbotActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                //finish();
+        binding.appBarNewHome.fab.setOnClickListener(view -> {
+            Intent intent = new Intent(Home.this, ChatbotActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            //finish();
 
-            }
         });
-    }
-
-    private void updateUserInfo() {
-
     }
 
     private void navigationController() {
@@ -273,12 +255,10 @@ public class Home extends AppCompatActivity {
     }
 
     private void redirect() {
-
         Intent intent = new Intent(this, SignInActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
-
     }
 
     @Override
@@ -374,28 +354,20 @@ public class Home extends AppCompatActivity {
     }
 
     private void ViewModelObserve() {
-
-
-        homeViewModel.isLogged.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                if (!aBoolean) {
-                    redirect();
-                }
+        homeViewModel.isLogged.observe(this, aBoolean -> {
+            if (!aBoolean) {
+                redirect();
             }
         });
-        homeViewModel.mutableLiveDataUser.observe(this, new Observer<User>() {
-            @Override
-            public void onChanged(User user) {
-                txtName.setText(user.getFirstName() + " " + user.getLastName());
-                txtEmail.setText(user.getEmail());
-                if (user.getPhotoUrl() != null) {
-                    Log.d(TAG, "onChanged: " + user.getPhotoUrl());
-                    homeViewModel.saveUserImage(user.getPhotoUrl());
-                    Picasso.get().load(user.getPhotoUrl()).into(userImageView);
-                }
-
+        homeViewModel.mutableLiveDataUser.observe(this, user -> {
+            txtName.setText(user.getFirstName() + " " + user.getLastName());
+            txtEmail.setText(user.getEmail());
+            if (user.getPhotoUrl() != null) {
+                Log.d(TAG, "onChanged: " + user.getPhotoUrl());
+                homeViewModel.saveUserImage(user.getPhotoUrl());
+                Picasso.get().load(user.getPhotoUrl()).into(userImageView);
             }
+
         });
     }
 

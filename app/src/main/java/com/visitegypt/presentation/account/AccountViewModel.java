@@ -9,11 +9,13 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.visitegypt.domain.model.Badge;
+import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.model.Post;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.usecase.GetAllBadgesUseCase;
 import com.visitegypt.domain.usecase.GetBadgesOfUserUseCase;
+import com.visitegypt.domain.usecase.GetPlacesByPlaceActivityIdUseCase;
 import com.visitegypt.domain.usecase.GetPlacesUseCase;
 import com.visitegypt.domain.usecase.GetPostsByUser;
 import com.visitegypt.domain.usecase.GetUserPlaceActivityUseCase;
@@ -36,6 +38,8 @@ public class AccountViewModel extends ViewModel {
 
     private static final String TAG = "account view model";
 
+    MutableLiveData<ArrayList<Place>> placesWithNeededPlaceActivities = new MutableLiveData<>();
+
     MutableLiveData<ArrayList<Badge>> userBadgesMutableLiveData = new MutableLiveData<>();
     MutableLiveData<List<Post>> mutableLiveDataMyPosts = new MutableLiveData<>();
     MutableLiveData<String> mutableLiveDataName = new MutableLiveData<>();
@@ -43,7 +47,7 @@ public class AccountViewModel extends ViewModel {
     MutableLiveData<ArrayList<Badge>> allBadgesMutableLiveData = new MutableLiveData<>();
     MutableLiveData<User> userMutableLiveData = new MutableLiveData<>();
     MutableLiveData<ArrayList<PlaceActivity>> userPlaceActivityMutableLiveData = new MutableLiveData<>();
-    MutableLiveData<ArrayList<PlaceActivity>> allPlacesMutableLiveData = new MutableLiveData<>();
+    private List<String> placeActivitiesId;
 
     private SharedPreferences sharedPreferences;
     private GetPostsByUser getPostsByUser;
@@ -52,6 +56,7 @@ public class AccountViewModel extends ViewModel {
     private GetAllBadgesUseCase getAllBadgesUseCase;
     private GetUserPlaceActivityUseCase getUserPlaceActivityUseCase;
     private GetPlacesUseCase getPlacesUseCase;
+    private GetPlacesByPlaceActivityIdUseCase getPlacesByPlaceActivityIdUseCase;
 
     @Inject
     public AccountViewModel(SharedPreferences sharedPreferences, GetPostsByUser getPostsByUser,
@@ -59,7 +64,8 @@ public class AccountViewModel extends ViewModel {
                             GetAllBadgesUseCase getAllBadgesUseCase,
                             GetUserUseCase getUserUseCase,
                             GetUserPlaceActivityUseCase getUserPlaceActivityUseCase,
-                            GetPlacesUseCase getPlacesUseCase) {
+                            GetPlacesUseCase getPlacesUseCase,
+                            GetPlacesByPlaceActivityIdUseCase getPlacesByPlaceActivityIdUseCase) {
         this.sharedPreferences = sharedPreferences;
         this.getPostsByUser = getPostsByUser;
         this.getBadgesOfUserUseCase = getBadgesOfUserUseCase;
@@ -67,14 +73,7 @@ public class AccountViewModel extends ViewModel {
         this.getAllBadgesUseCase = getAllBadgesUseCase;
         this.getUserPlaceActivityUseCase = getUserPlaceActivityUseCase;
         this.getPlacesUseCase = getPlacesUseCase;
-    }
-
-    public void getAllPlaces() {
-        getPlacesUseCase.execute(placePageResponse -> {
-
-        }, throwable -> {
-
-        });
+        this.getPlacesByPlaceActivityIdUseCase = getPlacesByPlaceActivityIdUseCase;
     }
 
     public void getPlaceActivitiesOfUser() {
@@ -129,11 +128,11 @@ public class AccountViewModel extends ViewModel {
         //when backend finishes there work start to implement
         Log.d("TAG", "accept List of posts:  welcome");
         getPostsByUser.execute(postPage -> mutableLiveDataMyPosts.setValue(postPage.getPosts()), throwable -> {
-            try {
-                ResponseBody body = ((HttpException) throwable).response().errorBody();
-                JSONObject jObjectError = new JSONObject(body.string());
-                Log.d("TAG", "accept try : " + jObjectError.getJSONArray("errors").toString());
-                if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
+                    try {
+                        ResponseBody body = ((HttpException) throwable).response().errorBody();
+                        JSONObject jObjectError = new JSONObject(body.string());
+                        Log.d("TAG", "accept try : " + jObjectError.getJSONArray("errors").toString());
+                        if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
                         } else {
                         }
                     } catch (Exception e) {
@@ -143,4 +142,20 @@ public class AccountViewModel extends ViewModel {
         );
     }
 
+    public void getPlacesByPlaceActivities() {
+        if (placeActivitiesId == null) {
+            Log.e(TAG, "getPlacesByPlaceActivities: you must setPlaceActivitiesId");
+        }
+        getPlacesByPlaceActivityIdUseCase.setPlaceActivities(placeActivitiesId);
+        getPlacesByPlaceActivityIdUseCase.execute(places -> {
+            placesWithNeededPlaceActivities.setValue((ArrayList<Place>) places);
+        }, throwable -> {
+            Log.e(TAG, "getPlacesByPlaceActivities: " + throwable.getMessage());
+        });
+
+    }
+
+    public void setPlaceActivitiesId(List<String> placeActivitiesId) {
+        this.placeActivitiesId = placeActivitiesId;
+    }
 }

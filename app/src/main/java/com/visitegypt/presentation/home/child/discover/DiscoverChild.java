@@ -123,15 +123,11 @@ public class DiscoverChild extends Fragment {
     private void initViewModels() {
         discoverChildViewModel = new ViewModelProvider(this).get(DiscoverChildViewModel.class);
         discoverChildViewModel.getAllPlaces();
-        discoverChildViewModel.placesMutableLiveData.observe(getViewLifecycleOwner(), new Observer<List<Place>>() {
-            @Override
-            public void onChanged(List<Place> placesList) {
-                stopShimmerAnimation();
-                setLayoutVisible();
-                setRecyclerViewsVisible();
-                setShimmersGone();
-                discoverPlaceAdapter.updatePlacesList(placesList);
-            }
+        discoverChildViewModel.placesMutableLiveData.observe(getViewLifecycleOwner(), (Observer<List<Place>>) placesList -> {
+            stopShimmerAnimation();
+            setLayoutVisible();
+            setRecyclerViewsVisible();
+            discoverPlaceAdapter.updatePlacesList(placesList);
         });
 
     }
@@ -156,18 +152,12 @@ public class DiscoverChild extends Fragment {
         imgPlaceCardshimmer.stopShimmerAnimation();
         firstRecommendedPlaceShimmer.stopShimmerAnimation();
         secRecommendedPlaceShimmer.stopShimmerAnimation();
-
+        shimmerLayout.setVisibility(View.GONE);
     }
 
     private void setLayoutVisible() {
         discoverVerticalLayOut.setVisibility(View.VISIBLE);
         shimmerLayout.setVisibility(View.GONE);
-
-
-    }
-
-    private void setShimmersGone() {
-
     }
 
     @Override

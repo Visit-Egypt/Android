@@ -16,19 +16,23 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.gson.Gson;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.BadgeTask;
+import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.presentation.gamification.BadgesSliderViewAdapter;
 import com.visitegypt.presentation.gamification.CitiesActivity;
 import com.visitegypt.utils.GamificationRules;
+import com.visitegypt.utils.GeneralUtils;
 import com.visitegypt.utils.MergeObjects;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -95,17 +99,17 @@ public class AccountFragment extends Fragment {
     }
 
     private void setUserXp(int xp) {
-        Log.d(TAG, "initViewModel: user with xp: " + xp);
+        Log.d(TAG, "setUserXp: user with xp: " + xp);
         int level = GamificationRules.getLevelFromXp(xp);
-        Log.d(TAG, "initViewModel: level of user: " + level);
+        Log.d(TAG, "setUserXp: level of user: " + level);
         levelTextView.setText(MessageFormat.format("LVL {0}", level));
         currentLevelTextView.setText(Integer.toString(level));
         nextLevelTextView.setText(Integer.toString(level + 1));
-        xpRemainingTextView.setText((GamificationRules.getLevelXp(level + 1) - (GamificationRules.getLevelXp(level))) + "XP remaining to next level");
-        xpProgressTextView.setText(GamificationRules.getLevelXp(level) + "/" + GamificationRules.getLevelXp(level + 1));
+        xpRemainingTextView.setText((GamificationRules.getLevelXp(level + 1) - xp + (GamificationRules.getLevelXp(level))) + "XP remaining to next level");
+        xpProgressTextView.setText(xp - GamificationRules.getLevelXp(level) + "/" + GamificationRules.getLevelXp(level + 1));
         userTitleTextView.setText(GamificationRules.getTitleFromLevel(level));
         xpLinearProgressIndicator.setMax(GamificationRules.getLevelXp(level + 1));
-        xpLinearProgressIndicator.setProgress(GamificationRules.getLevelXp(level), true);
+        xpLinearProgressIndicator.setProgress(xp - GamificationRules.getLevelXp(level), true);
     }
 
     private void initViewModel() {
@@ -141,11 +145,27 @@ public class AccountFragment extends Fragment {
                         Log.d(TAG, "initViewModel: ");
                         ArrayList<Badge> realBadges = new ArrayList<>();
                         for (Badge badge : userBadges) {
-                            generatedXp += badge.getXp();
-                            Log.d(TAG, "initViewModel: place activity generatedXp: " + generatedXp);
+                            Log.d(TAG, "initViewModel: badge generatedXp: " + generatedXp);
                             for (Badge placeBadge : placeBadges) {
                                 if (badge.getId().equals(placeBadge.getId())) {
+
                                     MergeObjects.MergeTwoObjects.merge(placeBadge, badge);
+                                    for (BadgeTask badgeTask : badge.getBadgeTasks()) {
+                                        for (BadgeTask placeBadgeTask : placeBadge.getBadgeTasks()) {
+                                            if (badgeTask.getTaskTitle().equals(placeBadgeTask.getTaskTitle())) {
+                                                // same badgeTask -> merge them
+                                                MergeObjects.MergeTwoObjects.merge(placeBadgeTask, badgeTask);
+                                            }
+                                        }
+                                    }
+                                    Log.d(TAG, "initViewModel: " + new Gson().toJson(placeBadge));
+                                    if (placeBadge.isOwned()) {
+                                        Log.d(TAG, "initViewModel: found an owned badge: " + placeBadge.getTitle());
+                                        generatedXp += placeBadge.getXp();
+                                        Log.d(TAG, "initViewModel: badge generatedXp: " + generatedXp);
+                                    } else {
+                                        Log.d(TAG, "initViewModel: not owned: " + placeBadge.getTitle());
+                                    }
                                     ArrayList<BadgeTask> badgeTasks = new ArrayList<>();
                                     for (BadgeTask badgeTask : badge.getBadgeTasks()) {
                                         for (BadgeTask placeBadgeTask : placeBadge.getBadgeTasks()) {
@@ -168,11 +188,37 @@ public class AccountFragment extends Fragment {
 
         accountViewModel.getPlaceActivitiesOfUser();
         accountViewModel.userPlaceActivityMutableLiveData.observe(getViewLifecycleOwner(), placeActivities -> {
+            List<String> placeActivitiesIds = new ArrayList<>();
             for (PlaceActivity placeActivity : placeActivities) {
-                generatedXp += placeActivity.getXp();
+                placeActivitiesIds.add(placeActivity.getId());
+                //generatedXp += placeActivity.getXp();
                 Log.d(TAG, "initViewModel: place activity generatedXp: " + generatedXp);
             }
-            setUserXp(generatedXp);
+            accountViewModel.setPlaceActivitiesId(placeActivitiesIds);
+            accountViewModel.getPlacesByPlaceActivities();
+            GeneralUtils.LiveDataUtil.observeOnce(accountViewModel.placesWithNeededPlaceActivities, places -> {
+                Log.d(TAG, "initViewModel: finding the actual place activities");
+                List<PlaceActivity> placeActivityList = new ArrayList<>();
+                for (Place place : places) {
+                    for (PlaceActivity placeActivity : place.getPlaceActivities()) {
+                        Log.d(TAG, "initViewModel: " + new Gson().toJson(placeActivity));
+
+                        for (PlaceActivity userPlaceActivity : placeActivities) {
+                            if (userPlaceActivity.getId().equals(placeActivity.getId())) {
+                                MergeObjects.MergeTwoObjects.merge(placeActivity, userPlaceActivity);
+                                if (placeActivity.isFinished()) {
+                                    Log.d(TAG, "initViewModel: " + new Gson().toJson(placeActivity));
+                                    generatedXp += placeActivity.getXp();
+                                }
+                                placeActivityList.add(placeActivity);
+                            }
+                        }
+                        Log.d(TAG, "initViewModel: place activity generatedXp: " + generatedXp);
+                    }
+                }
+                setUserXp(generatedXp);
+            });
+
         });
 
 

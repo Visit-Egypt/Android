@@ -2,6 +2,9 @@ package com.visitegypt.presentation.gamification;
 
 import static com.visitegypt.domain.model.PlaceActivity.POST_REVIEW;
 import static com.visitegypt.utils.Constants.PLACE_ID;
+import static com.visitegypt.utils.GeneralUtils.LiveDataUtil.observeOnce;
+import static com.visitegypt.utils.GeneralUtils.showButtonFailed;
+import static com.visitegypt.utils.GeneralUtils.showButtonLoading;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -32,11 +35,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.github.razir.progressbutton.ButtonTextAnimatorExtensionsKt;
+import com.github.razir.progressbutton.DrawableButtonExtensionsKt;
+import com.github.razir.progressbutton.ProgressButtonHolderKt;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -167,7 +174,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
 
         try {
             gamificationViewModel.getPlaceDetail();
-            GeneralUtils.LiveDataUtil.observeOnce(gamificationViewModel.placesMutableLiveData, place -> {
+            observeOnce(gamificationViewModel.placesMutableLiveData, place -> {
                 GamificationActivity.this.place = place;
                 GamificationActivity.this.placeActivities = place.getPlaceActivities();
                 Log.d(TAG, "initViewModels: loaded place: " + place.getTitle());
@@ -198,8 +205,8 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         reviewXpTextView.setPaintFlags(reviewXpTextView.getPaintFlags() |
                 Paint.STRIKE_THRU_TEXT_FLAG);
 
-        gamificationViewModel.getUserPlaceActivity();
-        gamificationViewModel.getBadgesOfUser();
+        //gamificationViewModel.getUserPlaceActivity();
+        //gamificationViewModel.getBadgesOfUser();
 
     }
 
@@ -209,9 +216,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         distanceAwayTextView.setVisibility(View.GONE);
         visitPlaceXpTextView.setPaintFlags(reviewXpTextView.getPaintFlags() |
                 Paint.STRIKE_THRU_TEXT_FLAG);
-
-        gamificationViewModel.getUserPlaceActivity();
-        gamificationViewModel.getBadgesOfUser();
     }
 
     private void setPostActivityComplete() {
@@ -222,25 +226,16 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
             Toast.makeText(this, "You've already made your post",
                     Toast.LENGTH_SHORT).show();
         });
-
-        gamificationViewModel.getUserPlaceActivity();
-        gamificationViewModel.getBadgesOfUser();
     }
 
     private void setStoryActivityComplete() {
         storyBorder.setStrokeColor(Color.GREEN);
         storyXpTextView.setPaintFlags(reviewXpTextView.getPaintFlags() |
                 Paint.STRIKE_THRU_TEXT_FLAG);
-
-        gamificationViewModel.getUserPlaceActivity();
-        gamificationViewModel.getBadgesOfUser();
     }
 
     private void setChatBotComplete() {
         // TODO put green border on chatbots
-
-        gamificationViewModel.getUserPlaceActivity();
-        gamificationViewModel.getBadgesOfUser();
     }
 
     private void initPlaceActivitiesViewModel() {
@@ -296,7 +291,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
 
             int finalTotalActivities = totalActivities;
             int finalDoneActivities = doneActivities;
-            GeneralUtils.LiveDataUtil.observeOnce(placeBadgesLoaded, aBoolean -> {
+            observeOnce(placeBadgesLoaded, aBoolean -> {
                 if (aBoolean) {
                     for (Badge badge : placeBadges) {
                         totalXp.addAndGet(badge.getXp());
@@ -346,7 +341,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
             this.placeBadges = (ArrayList<Badge>) placeBadges;
             Log.d(TAG, "initBadgesViewModel: place badges: " + new Gson().toJson(placeBadges));
             //Log.d(TAG, "initViewModel: BOOM" + new Gson().toJson(placeBadges.get(1).getBadgeTasks()));
-            GeneralUtils.LiveDataUtil.observeOnce(gamificationViewModel.userBadgesMutableLiveData, userBadges -> {
+            observeOnce(gamificationViewModel.userBadgesMutableLiveData, userBadges -> {
                 //Log.d(TAG, "initViewModel: BOOM" + new Gson().toJson(userBadges.get(1).getBadgeTasks()));
                 Log.d(TAG, "initViewModel: ");
                 for (Badge badge : userBadges) {
@@ -533,11 +528,11 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private void confirmLocation() {
         //mapView.onResume();
         if (placeActivities != null) {
-            Log.d(TAG, "confirmLocation: updating place activity of visit location");
+            Log.d(TAG, "confirmLocation: trying to confirm location...");
             for (PlaceActivity placeActivity : placeActivities) {
                 if (placeActivity.getType().equals(PlaceActivity.VISIT_LOCATION)) {
                     Log.d(TAG, "confirmLocation: found the visit location place activity" + new Gson().toJson(placeActivity));
-                    GeneralUtils.LiveDataUtil.observeOnce(userInsideCircuitMutableLiveData, aBoolean -> {
+                    observeOnce(userInsideCircuitMutableLiveData, aBoolean -> {
                         if (aBoolean) {
                             updatePlaceActivityProgress(placeActivity);
                         } else {
@@ -569,7 +564,14 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         addReviewDialog.setContentView(dialogLayout);
         addReviewDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         addReviewDialog.show();
-        addReviewDialog.findViewById(R.id.submitReviewButton).setOnClickListener(view -> {
+
+        Button submitReviewButton = addReviewDialog.findViewById(R.id.submitReviewButton);
+        ProgressButtonHolderKt.bindProgressButton(this, submitReviewButton);
+        ButtonTextAnimatorExtensionsKt.attachTextChangeAnimator(submitReviewButton);
+
+
+        submitReviewButton.setOnClickListener(view -> {
+            showButtonLoading(submitReviewButton);
             TextInputEditText textInputEditText = addReviewDialog.findViewById(R.id.reviewEditText);
             String reviewText = textInputEditText.getText().toString().trim();
             float numStars = ((RatingBar) addReviewDialog.findViewById(R.id.ratingBar)).getRating();
@@ -610,21 +612,21 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                     PlaceActivity finalReviewPlaceActivity = reviewPlaceActivity;
 
                     ArrayList<PlaceActivity> activityArrayList = new ArrayList<>();
-                    reviewViewModel.placeActivityUpdateResponseCode.observe(this, integer -> {
+                    observeOnce(reviewViewModel.placeActivityUpdateResponseCode, integer -> {
                         if (integer == 200) {
                             setReviewActivityComplete();
                             activityArrayList.add(finalReviewPlaceActivity);
-                            GeneralUtils.showUserProgress(this, reviewImageButton,
+                            GeneralUtils.showUserProgress(GamificationActivity.this, reviewImageButton,
                                     activityArrayList, null);
                         } else {
-                            GeneralUtils.showSnackError(this, reviewImageButton,
+                            GeneralUtils.showSnackError(GamificationActivity.this, reviewImageButton,
                                     integer.toString());
                         }
                     });
 
                     ArrayList<BadgeTask> badgeTaskArrayList = new ArrayList<>();
                     BadgeTask finalReviewBadgeTask = reviewBadgeTask;
-                    reviewViewModel.badgeTaskUpdateResponseCode.observe(this, integer -> {
+                    observeOnce(reviewViewModel.badgeTaskUpdateResponseCode, integer -> {
                         if (integer == 200) {
                             setReviewActivityComplete();
                             addReviewDialog.dismiss();
@@ -638,11 +640,29 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                         }
                     });
 
+                    observeOnce(reviewViewModel.mutableLiveDataResponseCode, new Observer<Integer>() {
+                        @Override
+                        public void onChanged(Integer integer) {
+                            if (integer == 200) {
+                                GeneralUtils.showButtonLoaded(submitReviewButton, null);
+                                if (addReviewDialog != null) {
+                                    addReviewDialog.dismiss();
+                                    Toast.makeText(GamificationActivity.this, "review submitted", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                showButtonFailed(submitReviewButton, null, "submit");
+                            }
+                        }
+                    });
 
                 } catch (Exception e) {
                     Log.e(TAG, "showReviewDialog: " + e.getMessage());
                     Toast.makeText(this, "Failed to post review", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
+                    showButtonFailed(submitReviewButton, null, "submit");
+
+                    DrawableButtonExtensionsKt.hideProgress(submitReviewButton, "boom");
+
                 }
             }
         });
@@ -751,7 +771,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                     } else {
                         distanceAwayTextView.setText(String.format(Locale.CANADA, "You are inside, you may confirm now!", distance[0]));
                         userInsideCircuitMutableLiveData.setValue(true);
-                        confirmLocation();
+                        //confirmLocation();
                     }
                 }
             });

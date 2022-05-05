@@ -12,16 +12,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.Review;
 import com.visitegypt.presentation.detail.DetailActivity;
-import com.visitegypt.presentation.gamification.GamificationActivity;
 
 import java.util.List;
-
-import dagger.hilt.android.AndroidEntryPoint;
 
 public class DiscoverPlaceAdapter extends RecyclerView.Adapter<DiscoverPlaceAdapter.PlaceViewHolder> {
     private static final String TAG = "Discover Place Adapter";
@@ -55,6 +52,16 @@ public class DiscoverPlaceAdapter extends RecyclerView.Adapter<DiscoverPlaceAdap
         } else {
             Log.d("TAG", "no images found for: " + placesList.get(position).getTitle());
         }
+        List<Review> reviews = placesList.get(position).getReviews();
+        if (reviews != null) {
+            holder.commentsTextView.setText(reviews.size() + "");
+            float averageRating = 0;
+            for (Review review : reviews) {
+                averageRating += review.getRating() / reviews.size();
+            }
+            holder.ratingTextView.setText(String.format("%.1f", averageRating));
+        }
+
     }
 
     @Override
@@ -74,7 +81,7 @@ public class DiscoverPlaceAdapter extends RecyclerView.Adapter<DiscoverPlaceAdap
 
     public class PlaceViewHolder extends RecyclerView.ViewHolder {
         private final ImageView imgPlace;
-        private final TextView txtCityName;
+        private final TextView txtCityName, commentsTextView, ratingTextView;
         private TextView txtPlaceName;
 
 
@@ -83,13 +90,13 @@ public class DiscoverPlaceAdapter extends RecyclerView.Adapter<DiscoverPlaceAdap
             txtPlaceName = itemView.findViewById(R.id.txtPlaceCardNewTitle);
             imgPlace = itemView.findViewById(R.id.imgPlaceCardNew);
             txtCityName = itemView.findViewById(R.id.txtPlaceCardNewCity);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, DetailActivity.class);
-                    intent.putExtra(CHOSEN_PLACE_ID, placesList.get(getAdapterPosition()).getId());
-                    context.startActivity(intent);
-                }
+            commentsTextView = itemView.findViewById(R.id.txtPlaceCardComment);
+            ratingTextView = itemView.findViewById(R.id.txtPlaceCardReviewsNumber);
+
+            itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra(CHOSEN_PLACE_ID, placesList.get(getAdapterPosition()).getId());
+                context.startActivity(intent);
             });
 
         }

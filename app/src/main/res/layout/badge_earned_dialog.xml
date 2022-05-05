@@ -36,6 +36,7 @@
         android:textSize="22sp" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/dismissBadgeEarnedButton"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

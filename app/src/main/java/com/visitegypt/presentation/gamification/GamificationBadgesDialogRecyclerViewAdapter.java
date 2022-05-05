@@ -1,7 +1,6 @@
 package com.visitegypt.presentation.gamification;
 
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -43,7 +42,7 @@ public class GamificationBadgesDialogRecyclerViewAdapter extends RecyclerView.Ad
             holder.descriptionTextView.setText(badgeTask.getProgress() + "/" + badgeTask.getMaxProgress() + " remaining");
         else {
             holder.descriptionTextView.setText("Completed");
-            holder.circleProgressbar.setForegroundProgressColor(Color.GREEN);
+            holder.circleProgressbar.setForegroundProgressColor(holder.circleProgressbar.getResources().getColor(R.color.camel));
         }
 
         holder.circleProgressbar.setMaxProgress(badgeTask.getMaxProgress());

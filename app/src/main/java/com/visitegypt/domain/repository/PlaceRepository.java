@@ -20,4 +20,6 @@ public interface PlaceRepository {
     Single<List<String>> getAllCities();
 
     Single<List<String>> getAllAvailableCities();
+
+    Single<List<Place>> getPlacesByPlaceActivityIds(List<String> placeActivitiesId);
 }

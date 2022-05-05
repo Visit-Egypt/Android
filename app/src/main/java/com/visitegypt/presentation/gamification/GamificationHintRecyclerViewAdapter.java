@@ -43,7 +43,7 @@ public class GamificationHintRecyclerViewAdapter extends RecyclerView.Adapter<Ga
         holder.hintNumberTextView.setText("Hint " + (position + 1));
         holder.hintTextView.setText(hint.getHint());
 
-        if (hint.getImageUrl() != null) {
+        if (hint.getImageUrl() != null && !hint.getImageUrl().isEmpty()) {
             holder.zoomableImageView.setVisibility(View.VISIBLE);
             Target target = new Target() {
                 @Override
@@ -69,6 +69,7 @@ public class GamificationHintRecyclerViewAdapter extends RecyclerView.Adapter<Ga
         }
 
         holder.expandableLayout.setVisibility(hint.isExpanded() ? View.VISIBLE : View.GONE);
+        holder.arrowTextView.setText(hint.isExpanded() ? "↑" : "↓");
     }
 
     @Override
@@ -77,7 +78,7 @@ public class GamificationHintRecyclerViewAdapter extends RecyclerView.Adapter<Ga
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private MaterialTextView hintNumberTextView, hintTextView;
+        private MaterialTextView hintNumberTextView, hintTextView, arrowTextView;
         private ImageView zoomableImageView;
         private LinearLayoutCompat expandableLayout;
 
@@ -85,6 +86,8 @@ public class GamificationHintRecyclerViewAdapter extends RecyclerView.Adapter<Ga
             super(itemView);
             hintNumberTextView = itemView.findViewById(R.id.dialogExploreHintNumberTextView);
             hintTextView = itemView.findViewById(R.id.dialogExploreHintTextView);
+            arrowTextView = itemView.findViewById(R.id.dialogExploreHintArrowTextView);
+
             zoomableImageView = itemView.findViewById(R.id.dialogExploreHintZoomableImage);
 
             expandableLayout = itemView.findViewById(R.id.dialogExploreHintExpandableLayout);

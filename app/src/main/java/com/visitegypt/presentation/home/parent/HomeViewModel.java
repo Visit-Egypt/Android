@@ -154,7 +154,6 @@ public class HomeViewModel extends ViewModel {
 
     public void saveUserImage(String url) {
         sharedPreferences.edit().putString(SHARED_PREF_USER_IMAGE, url).apply();
-
     }
 
     public void setBadgeTask(BadgeTask badgeTask) {

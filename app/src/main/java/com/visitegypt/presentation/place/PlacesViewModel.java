@@ -12,6 +12,7 @@ import com.visitegypt.domain.usecase.GetAllBadgesUseCase;
 import com.visitegypt.domain.usecase.GetBadgesOfUserUseCase;
 import com.visitegypt.domain.usecase.GetPlacesOfCityUseCase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -39,8 +40,19 @@ public class PlacesViewModel extends ViewModel {
 
     public void getPlacesInCity(String cityName) {
         getPlacesOfCityUseCase.setCityName(cityName);
+        List<Place> filteredPlaces = new ArrayList<>();
         getPlacesOfCityUseCase.execute(getPlacesOfCity -> {
             Log.d(TAG, "getPlacesInCity: done");
+            List<Place> places = getPlacesOfCity.getPlaces();
+
+//            for (Place place : places) {
+//                if (place.getPlaceActivities() != null){
+//                    if (!place.getPlaceActivities().isEmpty()){
+//                        filteredPlaces.add(place);
+//                    }
+//                }
+//            }
+
             placesMutableLiveData.setValue(getPlacesOfCity.getPlaces());
         }, throwable -> Log.e(TAG, "places retrieve error: " + throwable.getMessage()));
 

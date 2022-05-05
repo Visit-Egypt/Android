@@ -36,7 +36,7 @@
                 android:layout_marginTop="80dp"
                 android:background="@color/camel"
                 android:gravity="center"
-                android:text="LVL 1" />
+                android:text="LVL" />
         </RelativeLayout>
 
         <TextView
@@ -76,7 +76,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
-                    android:max="20"
                     android:progress="0"
                     app:trackCornerRadius="3dp"
                     app:trackThickness="20dp" />
@@ -97,7 +96,7 @@
                         android:layout_marginLeft="8dp"
                         android:layout_weight="1"
                         android:background="#00000000"
-                        android:text="1" />
+                        android:text="" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/nextLevelProgressIndicatorTextViewAccountFragment"
@@ -105,7 +104,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:background="#00000000"
-                        android:text="2" />
+                        android:text="" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
             </RelativeLayout>
@@ -123,14 +122,14 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_weight="1"
-                    android:text="0/20" />
+                    android:text="" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/remainingXpTextViewAccountFragment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:text="15XP to next level" />
+                    android:text="" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
 

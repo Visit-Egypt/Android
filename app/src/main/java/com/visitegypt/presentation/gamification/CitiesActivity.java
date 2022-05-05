@@ -3,7 +3,6 @@ package com.visitegypt.presentation.gamification;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -35,7 +34,6 @@ public class CitiesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cities);
         initViews();
         init();
-
     }
 
 
@@ -65,41 +63,29 @@ public class CitiesActivity extends AppCompatActivity {
         slideCitiesActivitySliderView.setAutoCycle(true);
         slideCitiesActivitySliderView.startAutoCycle();
 
-        luxorCityLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CitiesActivity.this, PlacesActivity.class);
-                intent.putExtra("city_name", "Luxor");
-                startActivity(intent);
+        luxorCityLayout.setOnClickListener(view -> {
+            Intent intent = new Intent(CitiesActivity.this, PlacesActivity.class);
+            intent.putExtra("city_name", "Luxor");
+            startActivity(intent);
 
-            }
         });
-        cairoCityLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CitiesActivity.this, PlacesActivity.class);
-                intent.putExtra("city_name", "Cairo");
-                startActivity(intent);
+        cairoCityLayout.setOnClickListener(view -> {
+            Intent intent = new Intent(CitiesActivity.this, PlacesActivity.class);
+            intent.putExtra("city_name", "Cairo");
+            startActivity(intent);
 
-            }
         });
-        alsharkiaCityLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CitiesActivity.this, PlacesActivity.class);
-                intent.putExtra("city_name", "Al-Sharkia");
-                startActivity(intent);
+        alsharkiaCityLayout.setOnClickListener(view -> {
+            Intent intent = new Intent(CitiesActivity.this, PlacesActivity.class);
+            intent.putExtra("city_name", "Al-Sharkia");
+            startActivity(intent);
 
-            }
         });
-        alexCityLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CitiesActivity.this, PlacesActivity.class);
-                intent.putExtra("city_name", "Alexandria");
-                startActivity(intent);
+        alexCityLayout.setOnClickListener(view -> {
+            Intent intent = new Intent(CitiesActivity.this, PlacesActivity.class);
+            intent.putExtra("city_name", "Alexandria");
+            startActivity(intent);
 
-            }
         });
 
     }
