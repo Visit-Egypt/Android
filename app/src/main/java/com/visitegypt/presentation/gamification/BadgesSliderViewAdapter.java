@@ -177,7 +177,11 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
             public void onPrepareLoad(Drawable placeHolderDrawable) {
             }
         };
-        Picasso.get().load(badge.getImageUrl()).into(target);
+        if (badge.getImageUrl() != null) {
+            if (!badge.getImageUrl().isEmpty()) {
+                Picasso.get().load(badge.getImageUrl()).into(target);
+            }
+        }
         dialog.setContentView(v);
         dialog.show();
 

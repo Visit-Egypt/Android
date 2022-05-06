@@ -68,6 +68,7 @@
             android:orientation="vertical">
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/remainingActivitiesPlacesActivityTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -110,7 +111,7 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/cityXPlacesActivityTextView"
+                    android:id="@+id/cityRemainingXPlacesActivityTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
@@ -118,6 +119,7 @@
                     android:text="560/600" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/nextLevelRemainingXPTextViewPlacesActivity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
@@ -138,7 +140,7 @@
         android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_margin="16dp"
+        android:layout_margin="8dp"
         android:id="@+id/placesPlacesActivityRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

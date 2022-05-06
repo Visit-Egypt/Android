@@ -2,6 +2,12 @@ package com.visitegypt.utils;
 
 import android.util.Log;
 
+import com.visitegypt.domain.model.Badge;
+import com.visitegypt.domain.model.BadgeTask;
+import com.visitegypt.domain.model.PlaceActivity;
+
+import java.util.List;
+
 public class GamificationRules {
     public static final int CONFIRM_LOCATION_CIRCLE_RADIUS = 500;
     public static final int MAX_LEVEL = 20;
@@ -35,46 +41,22 @@ public class GamificationRules {
 
     private static final String TAG = "gamification rules";
 
-    // DIGESTA LEVELING SYSTEM
-    /*
-        level 0: 20
-        level 1: 40
-        level 2: 40
-        level 3: 70
-        level 4: 130
-        level 5: 160
-        level 6: 150
-        level 7: 180
-        level 8: 240
-        level 9: 270
-        level 10: 270
-        level 11: 300
-        level 12: 360
-        level 13: 390
-        level 14: 380
-        level 15: 410
-        level 16: 470
-        level 17: 500
-        level 18: 490
-        level 19: 520
-
-        level 5  xp  : 300
-        level 10 xp  : 1300
-        level 15 xp  : 3000
-        Total 20 xp  : 5390
-    */
-
     public static int getLevelXp(int level) {
-        return (int) Math.round(0.04 * (level ^ 3) + 0.8 * (level ^ 2) + 1.7 * level) * 10;
+        float boom = Math.round(3 * Math.pow(level - 1, 1.5) * 10);
+        //Log.d(TAG, "getLevelXp: real level value: " + boom);
+        return 5 * Math.round(boom / 5);
     }
 
     public static int getLevelFromXp(int xp) {
-        for (int i = 0; i < GamificationRules.MAX_LEVEL; i++) {
-            int levelXp = GamificationRules.getLevelXp(i);
-            xp -= levelXp;
+        for (int i = 1; i < GamificationRules.MAX_LEVEL; i++) {
+            int levelXp = GamificationRules.getLevelXp(i); // 2
+            Log.d(TAG, "getLevelFromXp: levelXp for " + i + ": " + levelXp);
+            xp -= levelXp; // 30
             Log.d(TAG, "getLevelFromXp: " + xp);
-            if (xp <= 0) {
+            if (xp == 0)
                 return i;
+            if (xp < 0) {
+                return i - 1; // 1
             }
         }
         return -1;
@@ -93,6 +75,35 @@ public class GamificationRules {
             return "Anusbis";
         } else {
             return "Off the Grid";
+        }
+    }
+
+    public static void mergeTwoBadges(List<Badge> badges, List<Badge> userBadges) {
+        for (Badge fullBadge : badges) {
+            for (Badge userBadge : userBadges) {
+                if (fullBadge.getId().equals(userBadge.getId())) {
+                    MergeObjects.MergeTwoObjects.merge(fullBadge, userBadge);
+                    for (BadgeTask badgeTask : fullBadge.getBadgeTasks()) {
+                        for (BadgeTask userBadgeTask : userBadge.getBadgeTasks()) {
+                            if (badgeTask.getTaskTitle().equals(userBadgeTask.getTaskTitle())) {
+                                MergeObjects.MergeTwoObjects.merge(badgeTask, userBadgeTask);
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    public static void mergeTwoPlaceActivities(List<PlaceActivity> placeActivities,
+                                               List<PlaceActivity> userPlaceActivities) {
+        for (PlaceActivity placeActivity : placeActivities) {
+            for (PlaceActivity userPlaceActivity : userPlaceActivities) {
+                if (placeActivity.getId().equals(userPlaceActivity.getId())) {
+                    MergeObjects.MergeTwoObjects.merge(placeActivity, userPlaceActivity);
+                }
+            }
         }
     }
 }

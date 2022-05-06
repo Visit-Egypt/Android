@@ -28,7 +28,7 @@ public class ReviewViewModel extends ViewModel {
     private static final String TAG = "Review View Model";
 
     MutableLiveData<Place> placesMutableLiveData = new MutableLiveData<>();
-    MutableLiveData<List<Review>> reviewMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<List<Review>> reviewMutableLiveData = new MutableLiveData<>();
 
     public MutableLiveData<List<BadgeTask>> badgeTaskMutableLiveData = new MutableLiveData<>();
     public MutableLiveData<List<PlaceActivity>> placeActivitiesMutableLiveData = new MutableLiveData<>();

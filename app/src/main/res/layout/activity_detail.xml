@@ -862,6 +862,7 @@
                     android:orientation="vertical">
 
                     <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/remainingActivitiesDetailActivityTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/prata_regular"
@@ -871,6 +872,7 @@
                         android:textStyle="bold" />
 
                     <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/remainingActivitiesDetailActivityLinearProgressIndicator"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:max="8"
@@ -878,7 +880,6 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/gamificationInDetailActivityImageView"
-
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

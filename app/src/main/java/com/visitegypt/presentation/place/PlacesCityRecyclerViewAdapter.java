@@ -57,8 +57,28 @@ public class PlacesCityRecyclerViewAdapter extends RecyclerView.Adapter<com.visi
                 }
             } else {
             }
-        if (placeList.get(position).getPlaceActivities() != null)
-            holder.placesInCityRemainingTextView.setText(placeList.get(position).getPlaceActivities().size() + " activities");
+        if (placeList.get(position).getPlaceActivities() != null) {
+            int progress = placeList.get(position).getProgress();
+            int maxProgress = placeList.get(position).getMaxProgress();
+            int remaining = maxProgress - progress;
+
+            holder.placeInCityRemainingProgressProgressIndicator.setVisibility(View.VISIBLE);
+
+            if (remaining == 0) {
+                holder.placesInCityRemainingTextView.setText("Complete");
+                holder.placeInCityRemainingProgressProgressIndicator.setProgress(holder.placeInCityRemainingProgressProgressIndicator.getMax(), true);
+            } else if (remaining == 1) {
+                holder.placesInCityRemainingTextView.setText("1 remaining activity");
+                holder.placeInCityRemainingProgressProgressIndicator.setMax(maxProgress);
+                holder.placeInCityRemainingProgressProgressIndicator.setProgress(progress, true);
+            } else {
+                holder.placesInCityRemainingTextView.setText(placeList.get(position).getPlaceActivities().size() + " activities");
+                holder.placeInCityRemainingProgressProgressIndicator.setMax(maxProgress);
+                holder.placeInCityRemainingProgressProgressIndicator.setProgress(progress, true);
+            }
+        } else {
+            holder.placeInCityRemainingProgressProgressIndicator.setVisibility(View.GONE);
+        }
         holder.placeInCityTextView.setText(currentPlace.getTitle());
 //        holder.placeInCityRemainingProgressTextView.setProgress(placeList.get(position).getProgress());
 //        holder.placesInCityRemainingTextView.setText(placeList.get(position).getProgress() + " remaining activities");
@@ -85,7 +105,7 @@ public class PlacesCityRecyclerViewAdapter extends RecyclerView.Adapter<com.visi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView placesInCityRemainingTextView, placeInCityTextView;
-        private LinearProgressIndicator placeInCityRemainingProgressTextView;
+        private LinearProgressIndicator placeInCityRemainingProgressProgressIndicator;
         private ImageView placeInCityImageView;
 
         public ViewHolder(@NonNull View itemView) {
@@ -93,7 +113,7 @@ public class PlacesCityRecyclerViewAdapter extends RecyclerView.Adapter<com.visi
             placeInCityImageView = itemView.findViewById(R.id.placeInCityImageView);
             placesInCityRemainingTextView = itemView.findViewById(R.id.placesInCityRemainingTextView);
             placeInCityTextView = itemView.findViewById(R.id.placeInCityTextView);
-            placeInCityRemainingProgressTextView = itemView.findViewById(R.id.placeInCityRemainingProgressIndicator);
+            placeInCityRemainingProgressProgressIndicator = itemView.findViewById(R.id.placeInCityRemainingProgressIndicator);
             itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(context, GamificationActivity.class);
                 intent.putExtra(CHOSEN_PLACE_ID, placeList.get(getAdapterPosition()).getId());

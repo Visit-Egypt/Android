@@ -34,7 +34,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,11 +48,11 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.smarteist.autoimageslider.SliderView;
 import com.visitegypt.R;
-import com.visitegypt.domain.model.Item;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.Slider;
@@ -64,9 +63,10 @@ import com.visitegypt.presentation.home.parent.Home;
 import com.visitegypt.presentation.review.ReviewActivity;
 import com.visitegypt.presentation.review.ReviewViewModel;
 import com.visitegypt.utils.Constants;
+import com.visitegypt.utils.GamificationRules;
+import com.visitegypt.utils.GeneralUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -82,10 +82,16 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     public SharedPreferences sharedPreferences;
     public String placeIdToReview, placeIdFromReview;
     private NestedScrollView detailNestedScrollView;
-    private TextView foreignerAdultPriceTextView, foreignerStudentPriceTextView, egyptianStudentTextView, egyptianAdultPriceTextView, descriptionTextView,
+    private TextView foreignerAdultPriceTextView, foreignerStudentPriceTextView,
+            egyptianStudentTextView, egyptianAdultPriceTextView, descriptionTextView,
             placeTitleTextView, saturdayOpeningHours, sundayOpeningHours, mondayOpeningHours,
             tuesdayOpeningHours, thursdayOpeningHours, wednesdayOpeningHours,
-            fridayOpeningHours, foreignerVideoPriceTextView, foreignerPhotoPriceTextView, egyptianVideoPriceTextView, egyptianPhotoPriceTextView, childrenPriceTextView, locationTextView;
+            fridayOpeningHours, foreignerVideoPriceTextView, foreignerPhotoPriceTextView,
+            egyptianVideoPriceTextView, egyptianPhotoPriceTextView, childrenPriceTextView,
+            locationTextView, remainingActivitiesTextView;
+
+    private LinearProgressIndicator remainingActivitiesProgressIndicator;
+
     private MaterialButton addReviewButton, gamificationInDetailActivityImageView;
     private FloatingActionButton chatbotFloatingActionButton;
 
@@ -99,7 +105,10 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     private ArrayList<Slider> sliderArrayList;
     private Dialog addReviewDialog;
     private String placeId;
-    private ShimmerFrameLayout sliderShimmerFrameLayout, titleShimmerFrameLayout, descriptionShimmerFrameLayout, artifactsShimmerFrameLayout, locationShimmerFrameLayout, reviewsShimmerFrameLayout, buttonShimmerFrameLayout, hoursShimmerFrameLayout, pricesShimmerFrameLayout;
+    private ShimmerFrameLayout sliderShimmerFrameLayout, titleShimmerFrameLayout,
+            descriptionShimmerFrameLayout, artifactsShimmerFrameLayout,
+            locationShimmerFrameLayout, reviewsShimmerFrameLayout,
+            buttonShimmerFrameLayout, hoursShimmerFrameLayout, pricesShimmerFrameLayout;
     private LinearLayout detailLayout;
     private ScrollView shimmerScrollView;
     private CircularImageView backArrowCircularImageButton;
@@ -140,7 +149,8 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         reviewViewModel.mutableLiveDataResponseCode.observe(DetailActivity.this, code -> {
             Log.d(TAG, "Submit review onclick " + code);
             if (code == 400) {
-                Toast.makeText(DetailActivity.this, "This is offensive review", Toast.LENGTH_LONG).show();
+                Toast.makeText(DetailActivity.this, "This is offensive review",
+                        Toast.LENGTH_LONG).show();
             } else {
 
                 addReviewDialog.dismiss();
@@ -181,7 +191,8 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         sliderView = findViewById(R.id.sliderSliderView);
         itemsRecyclerView = findViewById(R.id.itemsRecyclerView);
         itemsRecyclerViewAdapter = new ItemsRecyclerViewAdapter(this);
-        itemsRecyclerView.setLayoutManager(new LinearLayoutManager(DetailActivity.this, LinearLayoutManager.HORIZONTAL, true));
+        itemsRecyclerView.setLayoutManager(new LinearLayoutManager(DetailActivity.this,
+                LinearLayoutManager.HORIZONTAL, true));
         itemsRecyclerView.setAdapter(itemsRecyclerViewAdapter);
         reviewsRecyclerView = findViewById(R.id.reviewsRecyclerView);
         reviewsRecyclerViewAdapter = new ReviewsRecyclerViewAdapter(this);
@@ -211,6 +222,9 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 
         mapView = findViewById(R.id.detailActivityMapView);
         mapView.getMapAsync(this);
+
+        remainingActivitiesTextView = findViewById(R.id.remainingActivitiesDetailActivityTextView);
+        remainingActivitiesProgressIndicator = findViewById(R.id.remainingActivitiesDetailActivityLinearProgressIndicator);
     }
 
     private void initViewModel(String placeId, Bundle savedInstances) {
@@ -219,27 +233,16 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         detailViewModel.getPlace(placeId);
         detailViewModel.getItemsByPlaceId(placeId);
 
-        detailViewModel.itemMutableLiveData.observe(this, new Observer<List<Item>>() {
-            @Override
-            public void onChanged(List<Item> items) {
-                Log.d(TAG, "setting items to recycler view...");
-                itemsRecyclerViewAdapter.setItemsArrayList(items);
-            }
+        detailViewModel.itemMutableLiveData.observe(this, items -> {
+            Log.d(TAG, "setting items to recycler view...");
+            itemsRecyclerViewAdapter.setItemsArrayList(items);
         });
-        backArrowCircularImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                backPlace();
-            }
-        });
+        backArrowCircularImageButton.setOnClickListener(v -> backPlace());
 
-        gamificationInDetailActivityImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(DetailActivity.this, GamificationActivity.class);
-                intent.putExtra(HomeRecyclerViewAdapter.CHOSEN_PLACE_ID, placeId);
-                startActivity(intent);
-            }
+        gamificationInDetailActivityImageView.setOnClickListener(view -> {
+            Intent intent = new Intent(DetailActivity.this, GamificationActivity.class);
+            intent.putExtra(HomeRecyclerViewAdapter.CHOSEN_PLACE_ID, placeId);
+            startActivity(intent);
         });
         detailNestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
                     if (scrollY > oldScrollY + 12 && chatbotFloatingActionButton.isShown()) {
@@ -310,6 +313,33 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
             }
             placeTitleTextView.setText(place.getTitle());
             descriptionTextView.setText(place.getLongDescription());
+
+            detailViewModel.getUserPlaceActivity();
+            if (place.getPlaceActivities() != null)
+                GeneralUtils.LiveDataUtil.observeOnce(detailViewModel.userPlaceActivitiesMutableLiveData,
+                        placeActivities -> {
+                            if (placeActivities != null)
+                                GamificationRules.mergeTwoPlaceActivities(place.getPlaceActivities(),
+                                        placeActivities);
+                            int progress = place.getProgress();
+                            Log.d(TAG, "initViewModel: progress: " + progress);
+                            int maxProgress = place.getMaxProgress();
+                            Log.d(TAG, "initViewModel: maxProgress: " + maxProgress);
+
+                            int remaining = maxProgress - progress;
+
+                            remainingActivitiesProgressIndicator.setMax(maxProgress);
+                            remainingActivitiesProgressIndicator.setProgress(progress, true);
+
+                            if (remaining == 0) {
+                                remainingActivitiesTextView.setText("Complete");
+                            } else if (remaining == 1) {
+                                remainingActivitiesTextView.setText("1 remaining activity");
+                            } else {
+                                remainingActivitiesTextView.setText(place.getMaxProgress() - place.getProgress() + " remaining activities");
+                            }
+                        });
+
         });
     }
 
@@ -398,12 +428,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
     private void chatBot() {
-        chatbotFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(DetailActivity.this, ChatbotActivity.class));
-            }
-        });
+        chatbotFloatingActionButton.setOnClickListener(v -> startActivity(new Intent(DetailActivity.this, ChatbotActivity.class)));
     }
 
     public void showReviews(View view) {
@@ -436,21 +461,9 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         } else {
             googleMap.setMinZoomPreference(15);
             googleMap.setMaxZoomPreference(20);
-
             LatLng location = new LatLng(place.getLatitude(), place.getLongitude());
             googleMap.addMarker(new MarkerOptions().position(location).title(place.getTitle()));
-//            // Instantiating CircleOptions to draw a circle around the marker
-//            CircleOptions locationCircle = new CircleOptions();
-//            LatLng latLng = new LatLng(place.getLatitude(), place.getLongitude());
-//            locationCircle.center(latLng);
-//            locationCircle.radius(GamificationRules.CONFIRM_LOCATION_CIRCLE_RADIUS);
-//            locationCircle.strokeColor(Color.YELLOW);
-//            locationCircle.fillColor(0x30ff0000);
-//            locationCircle.strokeWidth(2);
-//            googleMap.addCircle(locationCircle);
-            // move camera to place location
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-
             mapView.onResume();
         }
     }

@@ -45,8 +45,9 @@ public class GamificationBadgesDialogRecyclerViewAdapter extends RecyclerView.Ad
             holder.circleProgressbar.setForegroundProgressColor(holder.circleProgressbar.getResources().getColor(R.color.camel));
         }
 
+        holder.circleProgressbar.setProgress(0);
         holder.circleProgressbar.setMaxProgress(badgeTask.getMaxProgress());
-        holder.circleProgressbar.setProgress(badgeTask.getProgress());
+        holder.circleProgressbar.setProgressWithAnimation(badgeTask.getProgress());
 
         Target target = new Target() {
             @Override
@@ -63,7 +64,9 @@ public class GamificationBadgesDialogRecyclerViewAdapter extends RecyclerView.Ad
             public void onPrepareLoad(Drawable placeHolderDrawable) {
             }
         };
-        Picasso.get().load(badgeTask.getImageUrl()).into(target);
+        if (badgeTask.getImageUrl() != null)
+            if (!badgeTask.getImageUrl().isEmpty())
+                Picasso.get().load(badgeTask.getImageUrl()).into(target);
     }
 
     @Override

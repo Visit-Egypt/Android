@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class BadgeTask {
     @SerializedName("badge_id")
     private String badgeId;
+    @SerializedName("imgUrl")
     private String imageUrl;
     private String taskTitle;
     public static final String SOCIAL_BUTTERFLY = "social_badge";

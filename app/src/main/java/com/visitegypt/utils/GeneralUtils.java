@@ -68,12 +68,12 @@ public class GeneralUtils {
                 View badgeTaskLayout = LayoutInflater.from(context).inflate(R.layout.snack_badge_task,
                         null, false);
 
-                TextView descriptionTextView = snackbar.getView().findViewById(R.id.badgeSnackbarDescriptionTextView);
+                TextView descriptionTextView = badgeTaskLayout.findViewById(R.id.badgeSnackbarDescriptionTextView);
                 descriptionTextView.setText(badgeTask.getTaskTitle());
 
-                TextView xpTextView = snackbar.getView().findViewById(R.id.badgeSnackXpTextView);
+                TextView xpTextView = badgeTaskLayout.findViewById(R.id.badgeSnackXpTextView);
                 LinearProgressIndicator linearProgressIndicator =
-                        snackbar.getView().findViewById(R.id.badgeSnackbarProgressIndicator);
+                        badgeTaskLayout.findViewById(R.id.badgeSnackbarProgressIndicator);
 
                 linearProgressIndicator.setProgress(0);
                 linearProgressIndicator.setMax(badgeTask.getMaxProgress());
@@ -123,6 +123,15 @@ public class GeneralUtils {
         button.setEnabled(false);
     }
 
+    public static void showButtonLoadingRight(final Button button) {
+        DrawableButtonExtensionsKt.showProgress(button, progressParams -> {
+            progressParams.setButtonTextRes(R.string.loading);
+            progressParams.setProgressColor(Color.WHITE);
+            return Unit.INSTANCE;
+        });
+        button.setEnabled(false);
+    }
+
     public static void showButtonLoaded(final Button button, @Nullable String newText) {
         DrawableButtonExtensionsKt.hideProgress(button, newText == null ? "Complete" : newText);
     }
@@ -132,6 +141,8 @@ public class GeneralUtils {
         DrawableButtonExtensionsKt.hideProgress(button, newButtonText);
         GeneralUtils.showSnackError(button.getContext(), button, error == null ? "An error has occurred" : error);
     }
+
+
 
 
 }

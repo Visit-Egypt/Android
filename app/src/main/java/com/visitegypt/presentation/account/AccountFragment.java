@@ -21,7 +21,6 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
-import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.presentation.gamification.BadgesSliderViewAdapter;
@@ -140,50 +139,23 @@ public class AccountFragment extends Fragment {
         accountViewModel.getAllBadges();
         accountViewModel.allBadgesMutableLiveData.observe(getViewLifecycleOwner(), placeBadges -> {
             this.placeBadges = placeBadges;
-            accountViewModel.userBadgesMutableLiveData.observe(getViewLifecycleOwner(),
-                    userBadges -> {
-                        Log.d(TAG, "initViewModel: ");
-                        ArrayList<Badge> realBadges = new ArrayList<>();
-                        for (Badge badge : userBadges) {
-                            Log.d(TAG, "initViewModel: badge generatedXp: " + generatedXp);
-                            for (Badge placeBadge : placeBadges) {
-                                if (badge.getId().equals(placeBadge.getId())) {
+            GeneralUtils.LiveDataUtil.observeOnce(accountViewModel.userBadgesMutableLiveData, userBadges -> {
+                GamificationRules.mergeTwoBadges(placeBadges, userBadges);
 
-                                    MergeObjects.MergeTwoObjects.merge(placeBadge, badge);
-                                    for (BadgeTask badgeTask : badge.getBadgeTasks()) {
-                                        for (BadgeTask placeBadgeTask : placeBadge.getBadgeTasks()) {
-                                            if (badgeTask.getTaskTitle().equals(placeBadgeTask.getTaskTitle())) {
-                                                // same badgeTask -> merge them
-                                                MergeObjects.MergeTwoObjects.merge(placeBadgeTask, badgeTask);
-                                            }
-                                        }
-                                    }
-                                    Log.d(TAG, "initViewModel: " + new Gson().toJson(placeBadge));
-                                    if (placeBadge.isOwned()) {
-                                        Log.d(TAG, "initViewModel: found an owned badge: " + placeBadge.getTitle());
-                                        generatedXp += placeBadge.getXp();
-                                        Log.d(TAG, "initViewModel: badge generatedXp: " + generatedXp);
-                                    } else {
-                                        Log.d(TAG, "initViewModel: not owned: " + placeBadge.getTitle());
-                                    }
-                                    ArrayList<BadgeTask> badgeTasks = new ArrayList<>();
-                                    for (BadgeTask badgeTask : badge.getBadgeTasks()) {
-                                        for (BadgeTask placeBadgeTask : placeBadge.getBadgeTasks()) {
-                                            if (badgeTask.getTaskTitle().equals(placeBadgeTask.getTaskTitle())) {
-                                                MergeObjects.MergeTwoObjects.merge(placeBadgeTask, badgeTask);
-                                                badgeTasks.add(placeBadgeTask);
-                                            }
-                                        }
-                                    }
-                                    placeBadge.setBadgeTasks(badgeTasks);
-                                    realBadges.add(placeBadge);
-                                }
-                            }
+                ArrayList<Badge> progressBadges = new ArrayList<>();
+                for (Badge badge : placeBadges) {
+                    if (badge.getProgress() != 0) {
+                        progressBadges.add(badge);
+                        if (badge.isOwned()) {
+                            Log.d(TAG, "initViewModel: found an owned badge" +
+                                    badge.getTitle() + ": " + badge.getXp() + " xp");
+                            generatedXp += badge.getXp();
                         }
-                        badgesSliderViewAdapter.setBadges(realBadges);
-                        setUserXp(generatedXp);
                     }
-            );
+                }
+                badgesSliderViewAdapter.setBadges(progressBadges);
+                setUserXp(generatedXp);
+            });
         });
 
         accountViewModel.getPlaceActivitiesOfUser();

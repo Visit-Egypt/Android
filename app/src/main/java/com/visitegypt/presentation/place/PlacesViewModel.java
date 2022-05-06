@@ -1,6 +1,7 @@
 package com.visitegypt.presentation.place;
 
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
@@ -8,9 +9,12 @@ import androidx.lifecycle.ViewModel;
 
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.usecase.GetAllBadgesUseCase;
 import com.visitegypt.domain.usecase.GetBadgesOfUserUseCase;
 import com.visitegypt.domain.usecase.GetPlacesOfCityUseCase;
+import com.visitegypt.domain.usecase.GetUserPlaceActivityUseCase;
+import com.visitegypt.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,16 +30,24 @@ public class PlacesViewModel extends ViewModel {
 
     MutableLiveData placesMutableLiveData = new MutableLiveData<Place>();
     MutableLiveData<List<Badge>> badgesMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<List<PlaceActivity>> userPlaceActivitiesMutableLiveData = new MutableLiveData<>();
 
     private GetPlacesOfCityUseCase getPlacesOfCityUseCase;
     private GetAllBadgesUseCase getAllBadgesUseCase;
     private GetBadgesOfUserUseCase getBadgesOfUserUseCase;
+    @Inject
+    SharedPreferences sharedPreferences;
+    private GetUserPlaceActivityUseCase getUserPlaceActivityUseCase;
 
     @Inject
-    public PlacesViewModel(GetPlacesOfCityUseCase getPlacesOfCityUseCase, GetBadgesOfUserUseCase getBadgesOfUserUseCase, GetAllBadgesUseCase getAllBadgesUseCase) {
+    public PlacesViewModel(GetPlacesOfCityUseCase getPlacesOfCityUseCase,
+                           GetBadgesOfUserUseCase getBadgesOfUserUseCase,
+                           GetAllBadgesUseCase getAllBadgesUseCase,
+                           GetUserPlaceActivityUseCase getUserPlaceActivityUseCase) {
         this.getPlacesOfCityUseCase = getPlacesOfCityUseCase;
         this.getAllBadgesUseCase = getAllBadgesUseCase;
         this.getBadgesOfUserUseCase = getBadgesOfUserUseCase;
+        this.getUserPlaceActivityUseCase = getUserPlaceActivityUseCase;
     }
 
     public void getPlacesInCity(String cityName) {
@@ -56,6 +68,17 @@ public class PlacesViewModel extends ViewModel {
             placesMutableLiveData.setValue(getPlacesOfCity.getPlaces());
         }, throwable -> Log.e(TAG, "places retrieve error: " + throwable.getMessage()));
 
+    }
+
+    public void getUserPlaceActivities() {
+        String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
+        getUserPlaceActivityUseCase.setUserId(userId);
+        getUserPlaceActivityUseCase.execute(placeActivities -> {
+            userPlaceActivitiesMutableLiveData.setValue(placeActivities);
+        }, throwable -> {
+            userPlaceActivitiesMutableLiveData.setValue(null);
+            Log.e(TAG, "getUserPlaceActivities: " + throwable.getMessage());
+        });
     }
 
     public void getBadges() {

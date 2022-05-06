@@ -16,9 +16,13 @@ import com.google.android.material.textview.MaterialTextView;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.utils.GamificationRules;
+import com.visitegypt.utils.GeneralUtils;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 
@@ -33,9 +37,9 @@ public class PlacesActivity extends AppCompatActivity {
     private String cityName;
     private PlacesCityRecyclerViewAdapter placesCityRecyclerViewAdapter;
     private RecyclerView placesPlacesActivityRecyclerView, cityBadgesPlacesActivityRecyclerView;
-    private MaterialTextView placeNamePlacesActivityTextView, cityXPlacesActivityTextView;
+    private MaterialTextView placeNamePlacesActivityTextView, nextLevelXPTextView,
+            remainingXpTextView, remainingActivitiesTextView;
     private LinearProgressIndicator cityRemainingProgressPlacesActivityProgressIndicator;
-//    private CircleProgressbar cityBadgePlacesActivityProgressBar;
     private ArrayList<Badge> badges, cityBadges;
     private CityBadgesRecyclerViewAdapter cityBadgesRecyclerViewAdapter;
 
@@ -50,6 +54,12 @@ public class PlacesActivity extends AppCompatActivity {
         initViewModel(cityName);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initViewModel(cityName);
+    }
+
     private void initViews() {
         placesPlacesActivityRecyclerView = findViewById(R.id.placesPlacesActivityRecyclerView);
         placesCityRecyclerViewAdapter = new PlacesCityRecyclerViewAdapter(this);
@@ -60,9 +70,10 @@ public class PlacesActivity extends AppCompatActivity {
         placeNamePlacesActivityTextView = findViewById(R.id.cityTitlePlacesActivityTextView);
         placeNamePlacesActivityTextView.setText(cityName);
 
+        remainingActivitiesTextView = findViewById(R.id.remainingActivitiesPlacesActivityTextView);
+        remainingXpTextView = findViewById(R.id.cityRemainingXPlacesActivityTextView);
+        nextLevelXPTextView = findViewById(R.id.nextLevelRemainingXPTextViewPlacesActivity);
         cityRemainingProgressPlacesActivityProgressIndicator = findViewById(R.id.cityRemainingProgressPlacesActivityProgressIndicator);
-//        cityBadgePlacesActivityProgressBar = findViewById(R.id.cityBadgePlacesActivityProgressBar);
-        cityXPlacesActivityTextView = findViewById(R.id.cityXPlacesActivityTextView);
 
         badges = new ArrayList<>();
         cityBadges = new ArrayList<>();
@@ -76,43 +87,88 @@ public class PlacesActivity extends AppCompatActivity {
 
     private void initViewModel(String cityName) {
         placesViewModel = new ViewModelProvider(this).get(PlacesViewModel.class);
-        placesViewModel.getPlacesInCity(cityName);
 
-        placesViewModel.placesMutableLiveData.observe(this, (Observer<List<Place>>) placeActivities -> {
-            Log.d(TAG, " getting places to recycler vieww");
-            placesCityRecyclerViewAdapter.setplaceList(placeActivities);
+
+        placesViewModel.getUserPlaceActivities();
+        placesViewModel.getPlacesInCity(cityName);
+        placesViewModel.placesMutableLiveData.observe(this, (Observer<List<Place>>) places -> {
+            Log.d(TAG, " getting places to recycler view");
+            AtomicInteger progress = new AtomicInteger();
+            AtomicInteger maxProgress = new AtomicInteger();
+
+            AtomicInteger ownedPlaces = new AtomicInteger();
+            AtomicInteger totalPlaces = new AtomicInteger();
+
+            placesCityRecyclerViewAdapter.setplaceList(places);
+            GeneralUtils.LiveDataUtil.observeOnce(placesViewModel.userPlaceActivitiesMutableLiveData,
+                    placeActivities -> {
+                        if (placeActivities != null)
+                            for (Place place : places) {
+                                if (place.getPlaceActivities() != null)
+                                    GamificationRules.mergeTwoPlaceActivities(place.getPlaceActivities(),
+                                            placeActivities);
+                            }
+                        for (Place place : places) {
+                            progress.addAndGet(place.getProgress());
+                            maxProgress.addAndGet(place.getMaxProgress());
+                            Log.d(TAG, "initViewModel: place progress: " + place.getProgress());
+                            Log.d(TAG, "initViewModel: place max progress: " + place.getMaxProgress());
+                            if (progress.get() == place.getMaxProgress() && (place.getProgress() != 0)) {
+                                ownedPlaces.getAndIncrement();
+                                Log.d(TAG, "initViewModel: incremented owned places: " + ownedPlaces.get());
+                            }
+                            if (place.getMaxProgress() != 0) {
+                                totalPlaces.getAndIncrement();
+                                Log.d(TAG, "initViewModel: incremented total places: " + totalPlaces.get());
+                            }
+                        }
+
+                        if (ownedPlaces.get() == 1) {
+                            remainingXpTextView.setText(MessageFormat.format("{0} place completed", 1));
+                        } else {
+                            remainingXpTextView.setText(MessageFormat.format("{0} places completed", ownedPlaces.get()));
+                        }
+
+                        if (totalPlaces.get() - ownedPlaces.get() == 1) {
+                            nextLevelXPTextView.setText(MessageFormat.format("{0} places remaining", totalPlaces.get() - ownedPlaces.get()));
+                        } else if (totalPlaces.get() - ownedPlaces.get() == 0) {
+                            nextLevelXPTextView.setText("no places remaining");
+
+                        } else {
+                            nextLevelXPTextView.setText(MessageFormat.format("{0} places remaining", totalPlaces.get() - ownedPlaces.get()));
+                        }
+
+                        cityRemainingProgressPlacesActivityProgressIndicator.setMax(totalPlaces.get());
+                        cityRemainingProgressPlacesActivityProgressIndicator.setProgress(ownedPlaces.get(), true);
+
+
+                        Log.d(TAG, "initViewModel: max progress of city: " + maxProgress.get());
+                        Log.d(TAG, "initViewModel: progress of city: " + progress.get());
+
+                        int remaining = maxProgress.get() - progress.get();
+
+                        if (remaining == 0) {
+                            remainingActivitiesTextView.setText("City complete");
+                        } else if (remaining == 1) {
+                            remainingActivitiesTextView.setText("1 activity remaining");
+                        } else {
+                            remainingActivitiesTextView.setText(maxProgress.get() - progress.get() + " activities remaining");
+                        }
+                    });
+
 
         });
 
         placesViewModel.getBadges();
         placesViewModel.badgesMutableLiveData.observe(this, badges -> {
             this.badges = (ArrayList<Badge>) badges;
-
-        });
-        for (int i = 0; i < badges.size(); i++) {
-            if (badges.get(i).getCity() == cityName) {
-                cityBadges.add(badges.get(i));
-//                Target target = new Target() {
-//                    @Override
-//                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-//                        cityBadgePlacesActivityProgressBar.setBackground(new BitmapDrawable(cityBadgePlacesActivityProgressBar.getResources(), bitmap));
-//                    }
-//
-//                    @Override
-//                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-//
-//                    }
-//                };
-//                Picasso.get().load(badges.get(i).getImageUrl()).into(target);
+            for (int i = 0; i < badges.size(); i++) {
+                if (badges.get(i).getCity() != null)
+                    if (badges.get(i).getCity().equals(cityName)) {
+                        cityBadges.add(badges.get(i));
+                    }
             }
-        }
-        cityBadgesRecyclerViewAdapter.setBadges((ArrayList<Badge>) cityBadges);
-
-
+            cityBadgesRecyclerViewAdapter.setBadges(cityBadges);
+        });
     }
 }

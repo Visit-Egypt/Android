@@ -4,7 +4,9 @@ import static com.visitegypt.domain.model.PlaceActivity.POST_REVIEW;
 import static com.visitegypt.utils.Constants.PLACE_ID;
 import static com.visitegypt.utils.GeneralUtils.LiveDataUtil.observeOnce;
 import static com.visitegypt.utils.GeneralUtils.showButtonFailed;
+import static com.visitegypt.utils.GeneralUtils.showButtonLoaded;
 import static com.visitegypt.utils.GeneralUtils.showButtonLoading;
+import static com.visitegypt.utils.GeneralUtils.showButtonLoadingRight;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -205,9 +207,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         reviewXpTextView.setPaintFlags(reviewXpTextView.getPaintFlags() |
                 Paint.STRIKE_THRU_TEXT_FLAG);
 
-        //gamificationViewModel.getUserPlaceActivity();
-        //gamificationViewModel.getBadgesOfUser();
-
     }
 
     private void setVisitLocationActivityDone() {
@@ -337,11 +336,10 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         gamificationViewModel.setPlaceId(placeId);
         gamificationViewModel.getBadgesOfUser();
         gamificationViewModel.getPlaceBadges();
-        gamificationViewModel.placeBadgesMutableLiveData.observe(this, placeBadges -> {
-            this.placeBadges = (ArrayList<Badge>) placeBadges;
-            Log.d(TAG, "initBadgesViewModel: place badges: " + new Gson().toJson(placeBadges));
-            //Log.d(TAG, "initViewModel: BOOM" + new Gson().toJson(placeBadges.get(1).getBadgeTasks()));
-            observeOnce(gamificationViewModel.userBadgesMutableLiveData, userBadges -> {
+        gamificationViewModel.userBadgesMutableLiveData.observe(this, userBadge -> {
+            observeOnce(gamificationViewModel.placeBadgesMutableLiveData, placeBadges -> {
+                this.placeBadges = (ArrayList<Badge>) placeBadges;
+                Log.d(TAG, "initBadgesViewModel: place badges: " + new Gson().toJson(placeBadges));
                 //Log.d(TAG, "initViewModel: BOOM" + new Gson().toJson(userBadges.get(1).getBadgeTasks()));
                 Log.d(TAG, "initViewModel: ");
                 for (Badge badge : userBadges) {
@@ -409,6 +407,9 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         /*******************************************************************/
         claimButton = findViewById(R.id.startExploringGamificationActivityButton);
         confirmLocationButton = findViewById(R.id.confirmLocationGamificationActivityButton);
+
+        ProgressButtonHolderKt.bindProgressButton(this, confirmLocationButton);
+        ButtonTextAnimatorExtensionsKt.attachTextChangeAnimator(confirmLocationButton);
         confirmLocationButton.setOnClickListener(view -> {
             confirmLocation();
         });
@@ -438,7 +439,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         mapView = findViewById(R.id.mapViewGamificationActivity);
-//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
         postCardConstraintLayout = findViewById(R.id.postCardConstraintLayout);
         postCardConstraintLayout.setBackgroundResource(R.drawable.card_review_edge);
@@ -451,7 +451,10 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         insightsBorder = findViewById(R.id.insightsCardGamificationActivityBorder);
 
         claimButton = findViewById(R.id.claimPlaceGamificationButton);
-        claimButton.setOnClickListener(view -> GeneralUtils.showUserProgress(GamificationActivity.this, claimButton, null, null));
+        claimButton.setOnClickListener(view -> {
+                    dummyTests();
+                }
+        );
     }
 
 
@@ -527,6 +530,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
 
     private void confirmLocation() {
         //mapView.onResume();
+        showButtonLoadingRight(confirmLocationButton);
         if (placeActivities != null) {
             Log.d(TAG, "confirmLocation: trying to confirm location...");
             for (PlaceActivity placeActivity : placeActivities) {
@@ -535,14 +539,16 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                     observeOnce(userInsideCircuitMutableLiveData, aBoolean -> {
                         if (aBoolean) {
                             updatePlaceActivityProgress(placeActivity);
+                            showButtonLoaded(confirmLocationButton, "Complete");
                         } else {
-                            GeneralUtils.showSnackError(GamificationActivity.this,
-                                    mapView, "You're not inside yet");
+                            showButtonFailed(confirmLocationButton, "You're not inside yet", "confirm location");
                         }
                     });
 
                 }
             }
+        } else {
+            showButtonFailed(confirmLocationButton, "failed to confirm location", "confirm location");
         }
     }
 
@@ -612,33 +618,36 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                     PlaceActivity finalReviewPlaceActivity = reviewPlaceActivity;
 
                     ArrayList<PlaceActivity> activityArrayList = new ArrayList<>();
+                    BadgeTask finalReviewBadgeTask1 = reviewBadgeTask;
                     observeOnce(reviewViewModel.placeActivityUpdateResponseCode, integer -> {
                         if (integer == 200) {
                             setReviewActivityComplete();
                             activityArrayList.add(finalReviewPlaceActivity);
-                            GeneralUtils.showUserProgress(GamificationActivity.this, reviewImageButton,
-                                    activityArrayList, null);
+                            gamificationViewModel.getUserPlaceActivity();
+
+                            ArrayList<BadgeTask> badgeTaskArrayList = new ArrayList<>();
+                            BadgeTask finalReviewBadgeTask = finalReviewBadgeTask1;
+                            observeOnce(reviewViewModel.badgeTaskUpdateResponseCode, badgeTaskResponse -> {
+                                if (badgeTaskResponse == 200) {
+                                    setReviewActivityComplete();
+                                    addReviewDialog.dismiss();
+
+                                    badgeTaskArrayList.add(finalReviewBadgeTask);
+                                    GeneralUtils.showUserProgress(this, reviewImageButton,
+                                            activityArrayList, badgeTaskArrayList);
+                                    initBadges();
+                                } else {
+                                    GeneralUtils.showSnackError(this, reviewImageButton, "failed to add review");
+                                }
+                            });
+
                         } else {
                             GeneralUtils.showSnackError(GamificationActivity.this, reviewImageButton,
-                                    integer.toString());
+                                    "failed to add review");
                         }
                     });
 
-                    ArrayList<BadgeTask> badgeTaskArrayList = new ArrayList<>();
-                    BadgeTask finalReviewBadgeTask = reviewBadgeTask;
-                    observeOnce(reviewViewModel.badgeTaskUpdateResponseCode, integer -> {
-                        if (integer == 200) {
-                            setReviewActivityComplete();
-                            addReviewDialog.dismiss();
 
-                            badgeTaskArrayList.add(finalReviewBadgeTask);
-                            GeneralUtils.showUserProgress(this, reviewImageButton,
-                                    null, badgeTaskArrayList);
-                        } else {
-                            //GeneralUtils.showSnackError(this, reviewImageButton, integer.toString());
-                            Toast.makeText(this, "Failed to post review", Toast.LENGTH_SHORT).show();
-                        }
-                    });
 
                     observeOnce(reviewViewModel.mutableLiveDataResponseCode, new Observer<Integer>() {
                         @Override
@@ -834,5 +843,17 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private void setLayoutVisible() {
         gamificationLayout.setVisibility(View.VISIBLE);
         shimmerLayout.setVisibility(View.GONE);
+    }
+
+    private void dummyTests() {
+        GeneralUtils.showSnackError(this, gamificationLayout, "an error occurred");
+        BadgeTask badgeTask = new BadgeTask();
+        badgeTask.setType("review");
+        badgeTask.setProgress(1);
+        badgeTask.setMaxProgress(1);
+        badgeTask.setTaskTitle("boom");
+        ArrayList<BadgeTask> badgeTaskArrayList = new ArrayList<>();
+        badgeTaskArrayList.add(badgeTask);
+        GeneralUtils.showUserProgress(this, gamificationLayout, null, badgeTaskArrayList);
     }
 }

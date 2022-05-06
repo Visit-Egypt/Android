@@ -70,6 +70,8 @@ public class Place {
     private int progress;
     private int maxProgress;
 
+    private boolean owned;
+
     public Place() {
     }
 
@@ -244,13 +246,13 @@ public class Place {
     }
 
     public int getMaxProgress() {
-//        int sum = 0;
-//        if (placeActivities != null) {
-//            for (int i = 0; i < placeActivities.size(); i++) {
-//                sum += placeActivities.get(i).getMaxProgress();
-//            }
-//        }
-        return maxProgress;
+        int sum = 0;
+        if (placeActivities != null) {
+            for (int i = 0; i < placeActivities.size(); i++) {
+                sum += placeActivities.get(i).getMaxProgress();
+            }
+        }
+        return sum;
     }
 
     @Deprecated
@@ -271,5 +273,13 @@ public class Place {
     @Deprecated
     public void setProgress(int progress) {
         this.progress = progress;
+    }
+
+    public boolean isOwned() {
+        return getProgress() == getMaxProgress();
+    }
+
+    public void setOwned(boolean owned) {
+        this.owned = owned;
     }
 }
