@@ -48,4 +48,9 @@ public class PlaceRepositoryImp implements PlaceRepository {
     public Single<List<String>> getAllAvailableCities() {
         return retrofitService.getAllAvailableCities();
     }
+
+    @Override
+    public Single<PlacePageResponse> getPlacesPaging(int pageNumber) {
+        return retrofitService.getPlacesPaging(pageNumber);
+    }
 }

@@ -58,6 +58,8 @@ import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.Slider;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
+import com.visitegypt.presentation.detail.paging.ItemComparator;
+import com.visitegypt.presentation.detail.paging.ItemPagingAdapter;
 import com.visitegypt.presentation.gamification.GamificationActivity;
 import com.visitegypt.presentation.home.HomeRecyclerViewAdapter;
 import com.visitegypt.presentation.home.parent.Home;
@@ -91,7 +93,6 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 
     private DetailViewModel detailViewModel;
     private ReviewViewModel reviewViewModel;
-    private ItemsRecyclerViewAdapter itemsRecyclerViewAdapter;
     private RecyclerView itemsRecyclerView, reviewsRecyclerView;
     private ReviewsRecyclerViewAdapter reviewsRecyclerViewAdapter;
     private SliderView sliderView;
@@ -99,6 +100,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     private ArrayList<Slider> sliderArrayList;
     private Dialog addReviewDialog;
     private String placeId;
+    private ItemPagingAdapter itemPagingAdapter;
     private ShimmerFrameLayout sliderShimmerFrameLayout, titleShimmerFrameLayout, descriptionShimmerFrameLayout, artifactsShimmerFrameLayout, locationShimmerFrameLayout, reviewsShimmerFrameLayout, buttonShimmerFrameLayout, hoursShimmerFrameLayout, pricesShimmerFrameLayout;
     private LinearLayout detailLayout;
     private ScrollView shimmerScrollView;
@@ -137,6 +139,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
             initViewModel(placeId, savedInstanceState);
         }
         chatBot();
+        getAllItems();
         reviewViewModel.mutableLiveDataResponseCode.observe(DetailActivity.this, code -> {
             Log.d(TAG, "Submit review onclick " + code);
             if (code == 400) {
@@ -179,10 +182,13 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         detailNestedScrollView = findViewById(R.id.detailNestedScrollView);
 
         sliderView = findViewById(R.id.sliderSliderView);
+        /*******************************************************************************/
         itemsRecyclerView = findViewById(R.id.itemsRecyclerView);
-        itemsRecyclerViewAdapter = new ItemsRecyclerViewAdapter(this);
+         itemPagingAdapter = new ItemPagingAdapter(new ItemComparator());
+        itemPagingAdapter.setContext(getApplicationContext());
         itemsRecyclerView.setLayoutManager(new LinearLayoutManager(DetailActivity.this, LinearLayoutManager.HORIZONTAL, true));
-        itemsRecyclerView.setAdapter(itemsRecyclerViewAdapter);
+        itemsRecyclerView.setAdapter(itemPagingAdapter);
+        /********************************************************************************/
         reviewsRecyclerView = findViewById(R.id.reviewsRecyclerView);
         reviewsRecyclerViewAdapter = new ReviewsRecyclerViewAdapter(this);
         reviewsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -218,14 +224,6 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         reviewViewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
         detailViewModel.getPlace(placeId);
         detailViewModel.getItemsByPlaceId(placeId);
-
-        detailViewModel.itemMutableLiveData.observe(this, new Observer<List<Item>>() {
-            @Override
-            public void onChanged(List<Item> items) {
-                Log.d(TAG, "setting items to recycler view...");
-                itemsRecyclerViewAdapter.setItemsArrayList(items);
-            }
-        });
         backArrowCircularImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -453,5 +451,13 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 
             mapView.onResume();
         }
+    }
+    private void getAllItems()
+    {
+        detailViewModel.flowable.subscribe(placePagingData -> {
+
+            this.itemPagingAdapter.submitData(getLifecycle(), placePagingData);
+
+        });
     }
 }

@@ -1,5 +1,7 @@
 package com.visitegypt.data.source.remote;
 
+import androidx.paging.PagingSource;
+
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.ConfirmUploadModel;
@@ -100,9 +102,10 @@ public interface RetrofitService {
 
     @GET("api/place")
     public Single<PlacePageResponse> getAllPlaces();
-
+    @GET("api/place")
+    public Single<PlacePageResponse> getPlacesPaging(@Query("page_num") int pageNumber);
     @GET("api/item")
-    public Single<ItemPageResponse> getAllItems(@Query("filters") String queryMap);
+    public Single<ItemPageResponse> getAllItems(@Query("filters") String queryMap , @Query("page_num") int pageNumber ,@Query("limit") int limit);
 
     @POST("api/place/review/{place_id}")
     public Single<List<Review>> submitReview(@Path("place_id") String placeId, @Body Review review);

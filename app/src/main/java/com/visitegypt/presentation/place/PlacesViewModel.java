@@ -35,6 +35,7 @@ public class PlacesViewModel extends ViewModel {
         this.getPlacesOfCityUseCase = getPlacesOfCityUseCase;
         this.getAllBadgesUseCase = getAllBadgesUseCase;
         this.getBadgesOfUserUseCase = getBadgesOfUserUseCase;
+
     }
 
     public void getPlacesInCity(String cityName) {

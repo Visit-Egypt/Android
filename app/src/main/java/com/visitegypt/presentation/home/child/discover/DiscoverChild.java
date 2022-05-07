@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,10 +18,12 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.smarteist.autoimageslider.SliderView;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.presentation.paging.CustomLoadStateAdapter;
+import com.visitegypt.presentation.home.child.discover.paging.PlacePagingAdapter;
+import com.visitegypt.presentation.home.child.discover.paging.PlaceserComparator;
 import com.visitegypt.presentation.home.parent.Home;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -37,10 +38,9 @@ public class DiscoverChild extends Fragment {
     private RecyclerView placesRecyclerView;
     private int[] images;
     private RecyclerView recommendationPlaceRecyclerView;
-    private DiscoverPlaceAdapter discoverPlaceAdapter;
+    private PlacePagingAdapter placePagingAdapter;
     private LinearLayout discoverVerticalLayOut;
     private RecommendationPlaceAdapter recommendationPlaceAdapter;
-    private ArrayList<Place> placeArrayList;
     private ArrayList<Place> ourFavouritesArrayList;
     private DiscoverChildViewModel discoverChildViewModel;
     private ShimmerFrameLayout allPlacesShimmer;
@@ -62,7 +62,7 @@ public class DiscoverChild extends Fragment {
         initViews();
         createDummyPlaces();
         initViewModels();
-        ;
+        getAllPlaces();
         return discoverLayOut;
     }
 
@@ -96,11 +96,16 @@ public class DiscoverChild extends Fragment {
         sliderView.startAutoCycle();
         /**********************************************/
         //init Places Recycler view
-        placeArrayList = new ArrayList<>();
-        discoverPlaceAdapter = new DiscoverPlaceAdapter(getContext(), placeArrayList);
+
+        placePagingAdapter = new PlacePagingAdapter(new PlaceserComparator());
         placesRecyclerView = discoverLayOut.findViewById(R.id.placeRecyclerView);
         placesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        placesRecyclerView.setAdapter(discoverPlaceAdapter);
+        PlacePagingAdapter.setContext(getContext());
+        CustomLoadStateAdapter customLoadStateAdapter = new CustomLoadStateAdapter(view -> {
+           placePagingAdapter.retry();
+        });
+        placesRecyclerView.setAdapter(placePagingAdapter.withLoadStateFooter(customLoadStateAdapter));
+
         /************************************************/
         // init Recommendation Places Recycler View
         ourFavouritesArrayList = new ArrayList<>();
@@ -122,17 +127,21 @@ public class DiscoverChild extends Fragment {
 
     private void initViewModels() {
         discoverChildViewModel = new ViewModelProvider(this).get(DiscoverChildViewModel.class);
-        discoverChildViewModel.getAllPlaces();
-        discoverChildViewModel.placesMutableLiveData.observe(getViewLifecycleOwner(), new Observer<List<Place>>() {
-            @Override
-            public void onChanged(List<Place> placesList) {
-                stopShimmerAnimation();
-                setLayoutVisible();
-                setRecyclerViewsVisible();
-                setShimmersGone();
-                discoverPlaceAdapter.updatePlacesList(placesList);
-            }
-        });
+        discoverChildViewModel.init();
+
+
+
+//        discoverChildViewModel.getAllPlaces();
+//        discoverChildViewModel.placesMutableLiveData.observe(getViewLifecycleOwner(), new Observer<List<Place>>() {
+//            @Override
+//            public void onChanged(List<Place> placesList) {
+//                stopShimmerAnimation();
+//                setLayoutVisible();
+//                setRecyclerViewsVisible();
+//                setShimmersGone();
+//                discoverPlaceAdapter.updatePlacesList(placesList);
+//            }
+//        });
 
     }
 
@@ -157,6 +166,7 @@ public class DiscoverChild extends Fragment {
         firstRecommendedPlaceShimmer.stopShimmerAnimation();
         secRecommendedPlaceShimmer.stopShimmerAnimation();
 
+
     }
 
     private void setLayoutVisible() {
@@ -170,6 +180,17 @@ public class DiscoverChild extends Fragment {
 
     }
 
+    private void getAllPlaces()
+    {
+
+        discoverChildViewModel.flowable.subscribe(placePagingData -> {
+            this.placePagingAdapter.submitData(getLifecycle(), placePagingData);
+            stopShimmerAnimation();
+            setLayoutVisible();
+            setRecyclerViewsVisible();
+            setShimmersGone();
+        });
+    }
     @Override
     public void onResume() {
         super.onResume();
