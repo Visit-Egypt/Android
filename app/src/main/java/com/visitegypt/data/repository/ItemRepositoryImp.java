@@ -22,6 +22,12 @@ public class ItemRepositoryImp implements ItemRepository {
     @Override
     public Single<ItemPageResponse> getItemsWithPlaceId(String placeId) {
         String placeQuery = "{\"place_id\":\"" +placeId + "\"}";
-        return retrofitService.getAllItems(placeQuery);
+        return retrofitService.getAllItems(placeQuery,1,10);
+    }
+
+    @Override
+    public Single<ItemPageResponse> getItems(String placeId, int pageNumber) {
+        String placeQuery = "{\"place_id\":\"" +placeId + "\"}";
+        return retrofitService.getAllItems(placeQuery,pageNumber,10);
     }
 }

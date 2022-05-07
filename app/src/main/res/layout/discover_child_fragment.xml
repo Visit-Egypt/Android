@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="?attr/colorOnPrimary"
     android:orientation="vertical"
     tools:context=".presentation.home.child.discover.DiscoverChild">
@@ -44,15 +44,15 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textview.MaterialTextView
+                        style="@style/TextAppearance.MaterialComponents.Headline5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:fontFamily="@font/montserrat_alternates_medium"
-                        style="@style/TextAppearance.MaterialComponents.Headline5"
-                        android:textColor="?attr/colorPrimaryVariant"
                         android:gravity="center"
                         android:shadowColor="?attr/colorSecondaryVariant"
                         android:text="@string/Recommendation"
+                        android:textColor="?attr/colorPrimaryVariant"
                         android:textSize="28sp" />
 
                     <View
@@ -61,10 +61,10 @@
                         android:layout_weight="1" />
 
                     <com.google.android.material.button.MaterialButton
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_marginRight="20dp"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:gravity="center"
                         android:text="See all >"
                         android:textAllCaps="false" />
@@ -103,15 +103,15 @@
                 </TableLayout>
 
                 <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.MaterialComponents.Headline5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:shadowColor="?attr/colorSecondaryVariant"
-                    style="@style/TextAppearance.MaterialComponents.Headline5"
-                    android:textColor="?attr/colorPrimaryVariant"
                     android:text="@string/places_to_visit"
+                    android:textColor="?attr/colorPrimaryVariant"
                     android:textSize="28sp" />
 
                 <com.facebook.shimmer.ShimmerFrameLayout
@@ -149,22 +149,30 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/discoverLinearLayout"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:layout_height="match_parent" >
 
-        <ScrollView
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar_layout"
+            android:background="?attr/colorOnPrimary"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:titleEnabled="false">
 
             <LinearLayout
+                android:id="@+id/discoverLinearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -200,6 +208,7 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textview.MaterialTextView
+                        style="@style/TextAppearance.MaterialComponents.Headline5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -207,9 +216,8 @@
                         android:gravity="center"
                         android:shadowColor="?attr/colorSecondaryVariant"
                         android:text="@string/Recommendation"
-                        style="@style/TextAppearance.MaterialComponents.Headline5"
-                        android:textSize="28sp"
                         android:textColor="?attr/colorPrimaryVariant"
+                        android:textSize="28sp"
                         android:textStyle="normal" />
 
                     <View
@@ -218,10 +226,10 @@
                         android:layout_weight="1" />
 
                     <com.google.android.material.button.MaterialButton
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_marginRight="20dp"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:gravity="center"
                         android:text="See all >"
                         android:textAllCaps="false" />
@@ -234,6 +242,7 @@
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.MaterialComponents.Headline5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -241,7 +250,6 @@
                     android:gravity="center"
                     android:shadowColor="?attr/colorSecondaryVariant"
                     android:text="@string/places_to_visit"
-                    style="@style/TextAppearance.MaterialComponents.Headline5"
                     android:textColor="?attr/colorPrimaryVariant"
                     android:textSize="28sp"
                     android:textStyle="normal" />
@@ -256,20 +264,42 @@
                         android:id="@+id/imgPlaceCard"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_margin="8dp"
                         android:adjustViewBounds="true"
                         android:scaleType="centerInside"
                         android:src="@drawable/egypt" />
 
                 </com.google.android.material.card.MaterialCardView>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/placeRecyclerView"
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray" />
+
+<!--                <androidx.recyclerview.widget.RecyclerView-->
+<!--                    android:id="@+id/placeRecyclerView"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height\="wrap_content"-->
+<!--                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />-->
+
+
             </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+
+
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+        <!-- RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/placeRecyclerView"
+            android:nestedScrollingEnabled="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:scrollbars="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </LinearLayout>

@@ -24,8 +24,8 @@ public class PlacesCityRecyclerViewAdapter extends RecyclerView.Adapter<com.visi
 
     private static final String TAG = "Places Adapter";
     public static String CHOSEN_PLACE_ID = "placeId";
-    private List<Place> placeList;
-    private Context context;
+    private static List<Place> placeList;
+    private static   Context context;
 
     public PlacesCityRecyclerViewAdapter(Context context) {
         this.context = context;
@@ -103,7 +103,7 @@ public class PlacesCityRecyclerViewAdapter extends RecyclerView.Adapter<com.visi
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView placesInCityRemainingTextView, placeInCityTextView;
         private LinearProgressIndicator placeInCityRemainingProgressProgressIndicator;
         private ImageView placeInCityImageView;
@@ -119,6 +119,7 @@ public class PlacesCityRecyclerViewAdapter extends RecyclerView.Adapter<com.visi
                 intent.putExtra(CHOSEN_PLACE_ID, placeList.get(getAdapterPosition()).getId());
                 context.startActivity(intent);
             });
+
 
         }
     }

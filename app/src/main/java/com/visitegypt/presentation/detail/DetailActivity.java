@@ -34,6 +34,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,10 +54,13 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.smarteist.autoimageslider.SliderView;
 import com.visitegypt.R;
+import com.visitegypt.domain.model.Item;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.Slider;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
+import com.visitegypt.presentation.detail.paging.ItemComparator;
+import com.visitegypt.presentation.detail.paging.ItemPagingAdapter;
 import com.visitegypt.presentation.gamification.GamificationActivity;
 import com.visitegypt.presentation.home.HomeRecyclerViewAdapter;
 import com.visitegypt.presentation.home.parent.Home;
@@ -67,6 +71,7 @@ import com.visitegypt.utils.GamificationRules;
 import com.visitegypt.utils.GeneralUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -109,6 +114,8 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
             descriptionShimmerFrameLayout, artifactsShimmerFrameLayout,
             locationShimmerFrameLayout, reviewsShimmerFrameLayout,
             buttonShimmerFrameLayout, hoursShimmerFrameLayout, pricesShimmerFrameLayout;
+    private ItemPagingAdapter itemPagingAdapter;
+    private ShimmerFrameLayout sliderShimmerFrameLayout, titleShimmerFrameLayout, descriptionShimmerFrameLayout, artifactsShimmerFrameLayout, locationShimmerFrameLayout, reviewsShimmerFrameLayout, buttonShimmerFrameLayout, hoursShimmerFrameLayout, pricesShimmerFrameLayout;
     private LinearLayout detailLayout;
     private ScrollView shimmerScrollView;
     private CircularImageView backArrowCircularImageButton;
@@ -146,6 +153,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
             initViewModel(placeId, savedInstanceState);
         }
         chatBot();
+        getAllItems();
         reviewViewModel.mutableLiveDataResponseCode.observe(DetailActivity.this, code -> {
             Log.d(TAG, "Submit review onclick " + code);
             if (code == 400) {
@@ -190,10 +198,12 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 
         sliderView = findViewById(R.id.sliderSliderView);
         itemsRecyclerView = findViewById(R.id.itemsRecyclerView);
-        itemsRecyclerViewAdapter = new ItemsRecyclerViewAdapter(this);
+         itemPagingAdapter = new ItemPagingAdapter(new ItemComparator());
+        itemPagingAdapter.setContext(getApplicationContext());
         itemsRecyclerView.setLayoutManager(new LinearLayoutManager(DetailActivity.this,
                 LinearLayoutManager.HORIZONTAL, true));
-        itemsRecyclerView.setAdapter(itemsRecyclerViewAdapter);
+        itemsRecyclerView.setAdapter(itemPagingAdapter);
+        /********************************************************************************/
         reviewsRecyclerView = findViewById(R.id.reviewsRecyclerView);
         reviewsRecyclerViewAdapter = new ReviewsRecyclerViewAdapter(this);
         reviewsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -232,6 +242,12 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         reviewViewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
         detailViewModel.getPlace(placeId);
         detailViewModel.getItemsByPlaceId(placeId);
+        backArrowCircularImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backPlace();
+            }
+        });
 
         detailViewModel.itemMutableLiveData.observe(this, items -> {
             Log.d(TAG, "setting items to recycler view...");
@@ -428,7 +444,12 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
     private void chatBot() {
-        chatbotFloatingActionButton.setOnClickListener(v -> startActivity(new Intent(DetailActivity.this, ChatbotActivity.class)));
+        chatbotFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DetailActivity.this, ChatbotActivity.class));
+            }
+        });
     }
 
     public void showReviews(View view) {
@@ -461,10 +482,30 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         } else {
             googleMap.setMinZoomPreference(15);
             googleMap.setMaxZoomPreference(20);
+
             LatLng location = new LatLng(place.getLatitude(), place.getLongitude());
             googleMap.addMarker(new MarkerOptions().position(location).title(place.getTitle()));
+//            // Instantiating CircleOptions to draw a circle around the marker
+//            CircleOptions locationCircle = new CircleOptions();
+//            LatLng latLng = new LatLng(place.getLatitude(), place.getLongitude());
+//            locationCircle.center(latLng);
+//            locationCircle.radius(GamificationRules.CONFIRM_LOCATION_CIRCLE_RADIUS);
+//            locationCircle.strokeColor(Color.YELLOW);
+//            locationCircle.fillColor(0x30ff0000);
+//            locationCircle.strokeWidth(2);
+//            googleMap.addCircle(locationCircle);
+            // move camera to place location
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+
             mapView.onResume();
         }
+    }
+    private void getAllItems()
+    {
+        detailViewModel.flowable.subscribe(placePagingData -> {
+
+            this.itemPagingAdapter.submitData(getLifecycle(), placePagingData);
+
+        });
     }
 }

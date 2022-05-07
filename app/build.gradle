@@ -7,7 +7,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'dagger.hilt.android.plugin'
 
 android {
-    compileSdk 29
+    compileSdk 31
 
     defaultConfig {
         applicationId "com.visitegypt"
@@ -117,4 +117,18 @@ dependencies {
 //    implementation 'com.squareup.retrofit2:retrofit:2.6.4'
 //    implementation 'com.squareup.retrofit2:converter-scalars:2.6.4'
 //    implementation 'com.github.bumptech.glide:glide:3.8.0'
+    def paging_version = "3.1.0"
+
+    implementation "androidx.paging:paging-runtime:$paging_version"
+
+
+    // optional - RxJava3 support
+    implementation "androidx.paging:paging-rxjava3:$paging_version"
+
+
+    // optional - Jetpack Compose integration
+    implementation "androidx.paging:paging-compose:1.0.0-alpha14"
+    implementation "androidx.recyclerview:recyclerview:1.2.0-alpha03"
+
+
 }

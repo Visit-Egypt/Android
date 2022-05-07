@@ -6,4 +6,5 @@ import io.reactivex.rxjava3.core.Single;
 
 public interface ItemRepository {
     Single<ItemPageResponse> getItemsWithPlaceId(String placeId);
+    Single<ItemPageResponse> getItems(String placeId,int pageNumber);
 }

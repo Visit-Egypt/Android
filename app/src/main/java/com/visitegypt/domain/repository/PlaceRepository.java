@@ -22,4 +22,5 @@ public interface PlaceRepository {
     Single<List<String>> getAllAvailableCities();
 
     Single<List<Place>> getPlacesByPlaceActivityIds(List<String> placeActivitiesId);
+    public Single<PlacePageResponse> getPlacesPaging(int pageNumber);
 }
