@@ -39,18 +39,18 @@ public class DetailViewModel extends ViewModel {
     private GetPlaceDetailUseCase getPlaceDetailUseCase;
     private GetItemPagingUseCase getItemPagingUseCase;
     Flowable<PagingData<Item>> flowable;
-    @Inject
-    public DetailViewModel(GetPlaceDetailUseCase getPlaceDetailUseCase, GetItemPagingUseCase getItemPagingUseCase) {
-    SharedPreferences sharedPreferences;
     private GetUserPlaceActivityUseCase getUserPlaceActivityUseCase;
-
+    private SharedPreferences sharedPreferences;
     @Inject
     public DetailViewModel(GetPlaceDetailUseCase getPlaceDetailUseCase,
-                           GetItemsUseCase getItemsUseCase,
-                           GetUserPlaceActivityUseCase getUserPlaceActivityUseCase) {
+                           GetItemPagingUseCase GetItemPagingUseCase,
+                           GetUserPlaceActivityUseCase getUserPlaceActivityUseCase,
+                           SharedPreferences sharedPreferences
+                           ) {
         this.getPlaceDetailUseCase = getPlaceDetailUseCase;
-        this.getItemPagingUseCase = getItemPagingUseCase;
+        this.getItemPagingUseCase = GetItemPagingUseCase;
         this.getUserPlaceActivityUseCase = getUserPlaceActivityUseCase;
+        this.sharedPreferences = sharedPreferences;
     }
 
     //This function is used to get the details of place by passing place ID

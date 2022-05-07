@@ -115,7 +115,6 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
             locationShimmerFrameLayout, reviewsShimmerFrameLayout,
             buttonShimmerFrameLayout, hoursShimmerFrameLayout, pricesShimmerFrameLayout;
     private ItemPagingAdapter itemPagingAdapter;
-    private ShimmerFrameLayout sliderShimmerFrameLayout, titleShimmerFrameLayout, descriptionShimmerFrameLayout, artifactsShimmerFrameLayout, locationShimmerFrameLayout, reviewsShimmerFrameLayout, buttonShimmerFrameLayout, hoursShimmerFrameLayout, pricesShimmerFrameLayout;
     private LinearLayout detailLayout;
     private ScrollView shimmerScrollView;
     private CircularImageView backArrowCircularImageButton;
