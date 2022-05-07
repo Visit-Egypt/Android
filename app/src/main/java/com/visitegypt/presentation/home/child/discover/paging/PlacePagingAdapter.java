@@ -47,10 +47,10 @@ public class PlacePagingAdapter extends PagingDataAdapter<Place, PlacePagingAdap
             holder.txtPlaceName.setText(place.getTitle());
         if (place.getCity() != null)
             holder.txtCityName.setText(place.getCity());
-        if (place.getDefaultImage() != null) {
+        if (place.getDefaultImage() != null && !place.getDefaultImage().isEmpty() ) {
             Log.d("TAG", "default image found for: " + place.getTitle());
             Picasso.get().load(place.getDefaultImage()).into(holder.imgPlace);
-        } else if (place.getImageUrls() != null) {
+        } else if (place.getImageUrls() != null && !place.getImageUrls().isEmpty()  ) {
             Log.d("TAG", "default image not found! loading first image instead for: " + place.getTitle());
             Picasso.get().load(place.getImageUrls().get(0)).into(holder.imgPlace);
         } else {
