@@ -98,10 +98,11 @@
 
     <string name="server_client_id">1008372786382-b12co7cdm09mssi73ip89bdmtt66294i.apps.googleusercontent.com</string>
 
-    <string name="facebook_app_id">1234</string>
-    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_app_id">564583515004991</string>
+    <string name="fb_login_protocol_scheme">fb564583515004991</string>
     <string name="facebook_client_token">56789</string>
 
 
     <string name="complete">Completed</string>
+
 </resources>

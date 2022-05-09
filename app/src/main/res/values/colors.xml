@@ -19,6 +19,7 @@
     <color name="nav_drawer_color">#EBEBEB</color>
     <color name="icon_color">#AAAAAA</color>
     <color name="icon_title">#222222</color>
+    <color name="red">#D11B0E</color>
 
 
 </resources>

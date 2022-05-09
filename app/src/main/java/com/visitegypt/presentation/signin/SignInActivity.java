@@ -1,13 +1,16 @@
 package com.visitegypt.presentation.signin;
 
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,16 +20,26 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.textview.MaterialTextView;
+import com.shobhitpuri.custombuttons.GoogleSignInButton;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.home.parent.Home;
@@ -36,25 +49,33 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 @AndroidEntryPoint
-public class SignInActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class SignInActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, FacebookCallback<LoginResult> {
     private static final String TAG = "Sign In Activity";
     private static final String USER_NAME = "user_name";
     private static final String USER_EMAIL = "user_email";
     private static final int RC_SIGN_IN = 1;
-    SignInButton googleSignInButton;
+    public int GoogleFlag = 0;
+    public GoogleSignInClient mGoogleSignInClient;
+    public GoogleApiClient googleApiClient;
+    GoogleSignInButton googleSignInButton;
+    Dialog forgetPasswordDialog;
     TextInputLayout txtEmail, txtPassword;
     AppCompatButton btnSignIn;
     View loadingLayout;
     String password, email, token;
     SignInViewModel signInViewModel;
-    GoogleSignInClient mGoogleSignInClient;
-    private GoogleApiClient googleApiClient;
+    CallbackManager callbackManager;
+    AccessTokenTracker accessTokenTracker;
+    AccessToken accessToken;
+    MaterialTextView forgetPasswordTextView;
+    private LoginButton facebookSignInButton;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+        forgetPasswordTextView = findViewById(R.id.forgetPasswordMaterialTextView);
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.server_client_id))
                 .requestEmail()
@@ -64,6 +85,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
         googleSignInButton = findViewById(R.id.googleSignInButton);
+
         googleSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +93,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
             }
         });
 
+        Log.d(TAG, "onCreate: tokennnnn   " + accessTokenTracker);
         signInViewModel = new ViewModelProvider(this).get(SignInViewModel.class);
         if (signInViewModel.checkUser()) {
             redirectHome();
@@ -82,7 +105,14 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-
+        forgetPasswordTextView.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        forgetPassword();
+                    }
+                }
+        );
         signInViewModel.msgMutableLiveData.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -105,6 +135,37 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 finish();
             }
         });
+        signInViewModel.forgotPasswordResponse.observe(this, a -> {
+
+            if (a.equals("reset done")) {
+                Toast.makeText(SignInActivity.this, "Reset password done.", Toast.LENGTH_LONG).show();
+                redirectSignup();
+
+
+            } else {
+                Toast.makeText(SignInActivity.this, "Not found", Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
+
+    @Override
+    public void onCancel() {
+        Toast.makeText(this, "Login cancel, ", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onError(@NonNull FacebookException e) {
+        Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "onError: " + e.getMessage());
+
+    }
+
+    @Override
+    public void onSuccess(LoginResult loginResult) {
+        Toast.makeText(this, "Login successfullyy, " + loginResult.getAccessToken(), Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "onSuccess: " + loginResult.getAccessToken());
     }
 
     public void buttonOnClick(View view) {
@@ -172,12 +233,14 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         btnSignIn.setVisibility(View.GONE);
         txtPassword.setVisibility(View.GONE);
         txtEmail.setVisibility(View.GONE);
+        googleSignInButton.setVisibility(View.GONE);
         loadingLayout.setVisibility(View.VISIBLE);
     }
 
     private void hideLoading() {
         btnSignIn.setVisibility(View.VISIBLE);
         txtPassword.setVisibility(View.VISIBLE);
+        googleSignInButton.setVisibility(View.VISIBLE);
         txtEmail.setVisibility(View.VISIBLE);
         loadingLayout.setVisibility(View.GONE);
     }
@@ -203,16 +266,15 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        Log.d(TAG, "onActivityResult:google " + GoogleFlag);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
-            Log.d(TAG, "onActivityResult:XXXXX ");
-            if (signInViewModel.checkUser()) {
-                Log.d(TAG, "onActivityResult:done ");
-                redirectHome();
-            } else {
-                Log.d(TAG, "onActivityResult:Error ");
-            }
+            Log.d(TAG, "onActivityResult: ");
+            logOut();
+            redirectHome();
+
         }
     }
 
@@ -220,6 +282,17 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
+    public void logOut() {
+        mGoogleSignInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Log.d(TAG, "onComplete: logout from google acc done successfully");
+            }
+        });
+
+    }
+
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         Log.d(TAG, "onActivityResult: ");
@@ -229,7 +302,6 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
 
             if (acct != null) {
                 String personName = acct.getDisplayName();
-
                 String idToken = acct.getIdToken();
                 Log.d(TAG, "handleSignInResult: " + personName);
                 Log.d(TAG, "handleSignInResult: " + idToken);
@@ -240,5 +312,28 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
             Log.d(TAG, "signInResult:failed code=" + e.getStatusCode());
         }
 
+    }
+
+    private void forgetPassword() {
+        View dialogLayout = LayoutInflater.from(SignInActivity.this).inflate(R.layout.dialog_forget_password, null);
+        forgetPasswordDialog = new Dialog(this);
+        forgetPasswordDialog.setContentView(dialogLayout);
+        forgetPasswordDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        forgetPasswordDialog.show();
+        TextInputEditText textInputEditText = forgetPasswordDialog.findViewById(R.id.forgetPasswordTextInputEditText);
+
+        forgetPasswordDialog.findViewById(R.id.forgetPasswordMaterialButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String emaill = textInputEditText.getText().toString().trim();
+                Log.d(TAG, "onClick:aaaaaaaaaaaaaaaas " + emaill);
+                if (emaill.isEmpty()) {
+                    textInputEditText.setError("Enter your E-mail.");
+                } else {
+                    signInViewModel.forgotPassword(emaill);
+                }
+            }
+
+        });
     }
 }

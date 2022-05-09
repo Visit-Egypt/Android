@@ -46,7 +46,7 @@ public class DetailViewModel extends ViewModel {
                            GetItemPagingUseCase GetItemPagingUseCase,
                            GetUserPlaceActivityUseCase getUserPlaceActivityUseCase,
                            SharedPreferences sharedPreferences
-                           ) {
+    ) {
         this.getPlaceDetailUseCase = getPlaceDetailUseCase;
         this.getItemPagingUseCase = GetItemPagingUseCase;
         this.getUserPlaceActivityUseCase = getUserPlaceActivityUseCase;

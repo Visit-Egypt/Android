@@ -66,6 +66,11 @@ public class UserRepositoryImp implements UserRepository {
     }
 
     @Override
+    public Single<String> forgotPassword(String email) {
+        return retrofitService.forgotPassword(email);
+    }
+
+    @Override
     public Single<User> updateUser(String userId, UserUpdateRequest user) {
         return retrofitService.updateUser(userId, user);
     }

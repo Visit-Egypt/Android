@@ -197,7 +197,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 
         sliderView = findViewById(R.id.sliderSliderView);
         itemsRecyclerView = findViewById(R.id.itemsRecyclerView);
-         itemPagingAdapter = new ItemPagingAdapter(new ItemComparator());
+        itemPagingAdapter = new ItemPagingAdapter(new ItemComparator());
         itemPagingAdapter.setContext(getApplicationContext());
         itemsRecyclerView.setLayoutManager(new LinearLayoutManager(DetailActivity.this,
                 LinearLayoutManager.HORIZONTAL, true));

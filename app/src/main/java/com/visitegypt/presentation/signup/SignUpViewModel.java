@@ -13,14 +13,10 @@ import com.visitegypt.domain.usecase.RegisterUseCase;
 import com.visitegypt.domain.usecase.UpdateUserBadgeTaskProgUseCase;
 import com.visitegypt.domain.usecase.UserValidation;
 
-import org.json.JSONObject;
-
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.functions.Consumer;
-import okhttp3.ResponseBody;
-import retrofit2.HttpException;
 
 @HiltViewModel
 public class SignUpViewModel extends ViewModel {
@@ -50,33 +46,38 @@ public class SignUpViewModel extends ViewModel {
     public void getUser() {
         User myUser = userValidation;
         registerUseCase.saveUser(userValidation);
-        registerUseCase.execute(user -> {
-            user.setFirstName(myUser.getFirstName());
-            user.setLastName(myUser.getLastName());
-            user.setEmail(myUser.getEmail());
-            user.setPhoneNumber(myUser.getPhoneNumber());
-            Log.d(TAG, "getUser: " + user.getFirstName());
-            Log.d(TAG, "getUser: " + user.getUserId());
-            Log.d(TAG, "getUser: " + user.getLastName());
-            Log.d(TAG, "getUser: " + user.getAccessToken());
-            Log.d(TAG, "getUser: " + user.getRefreshToken());
-            registerUseCase.saveUserData(user);
-            mutableLiveDataResponse.setValue("Your account was created successfully");
-        }, throwable -> {
-            try {
-                Log.e(TAG, "getUser: " + throwable.getMessage());
-                ResponseBody body = ((HttpException) throwable).response().errorBody();
-                JSONObject jObjectError = new JSONObject(body.string());
-                Log.e(TAG, "accept try : " + jObjectError.getJSONArray("errors"));
-                if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
-                    mutableLiveDataResponse.setValue(jObjectError.getJSONArray("errors").getJSONObject(0).getString("msg"));
-                } else {
-                    mutableLiveDataResponse.setValue(jObjectError.getJSONArray("errors").toString());
-                }
-            } catch (Exception e) {
-                Log.e(TAG, "accept catch: " + e.getMessage());
-            }
-        });
+        mutableLiveDataResponse.setValue("Your account was created successfully");
+
+//                registerUseCase.execute(user -> {
+//            user.setFirstName(myUser.getFirstName());
+//            user.setLastName(myUser.getLastName());
+//            user.setEmail(myUser.getEmail());
+//            user.setPhoneNumber(myUser.getPhoneNumber());
+//            Log.d(TAG, "xxxxxxxxxxxxxxxxxxxlll: " +myUser.getFirstName());
+//
+////            Log.d(TAG, "getUser: " + user.getFirstName());
+////            Log.d(TAG, "getUser: " + user.getUserId());
+////            Log.d(TAG, "getUser: " + user.getLastName());
+////            Log.d(TAG, "getUser: " + user.getAccessToken());
+////            Log.d(TAG, "getUser: " + user.getRefreshToken());
+////            registerUseCase.saveUserData(user);
+//
+//            mutableLiveDataResponse.setValue("Your account was created successfully");
+//        }, throwable -> {
+//            try {
+//                Log.e(TAG, "getUser: " + throwable.getMessage());
+//                ResponseBody body = ((HttpException) throwable).response().errorBody();
+//                JSONObject jObjectError = new JSONObject(body.string());
+//                Log.e(TAG, "accept try : " + jObjectError.getJSONArray("errors"));
+//                if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
+//                    mutableLiveDataResponse.setValue(jObjectError.getJSONArray("errors").getJSONObject(0).getString("msg"));
+//                } else {
+//                    mutableLiveDataResponse.setValue(jObjectError.getJSONArray("errors").toString());
+//                }
+//            } catch (Exception e) {
+//                Log.e(TAG, "accept catch: " + e.getMessage());
+//            }
+//        });
     }
 
     public Boolean checkUserValidation() {

@@ -10,25 +10,25 @@ import javax.inject.Named;
 
 import io.reactivex.rxjava3.core.Single;
 
-public class LogOutUseCase extends SingleUseCase<String> {
+public class ForgotPasswordUseCase extends SingleUseCase<String> {
 
     UserRepository userRepository;
     SharedPreferences sharedPreferences;
-    private String userId;
+    private String email;
 
 
     @Inject
-    public LogOutUseCase(@Named("Normal") UserRepository userRepository, SharedPreferences sharedPreferences) {
+    public ForgotPasswordUseCase(@Named("Normal") UserRepository userRepository, SharedPreferences sharedPreferences) {
         this.userRepository = userRepository;
         this.sharedPreferences = sharedPreferences;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
     protected Single<String> buildSingleUseCase() {
-        return userRepository.logOut(userId);
+        return userRepository.forgotPassword(email);
     }
 }

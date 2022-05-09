@@ -19,12 +19,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
+import com.shobhitpuri.custombuttons.GoogleSignInButton;
 import com.visitegypt.R;
 import com.visitegypt.domain.usecase.UserValidation;
 import com.visitegypt.presentation.home.parent.Home;
@@ -37,7 +37,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class SignUpActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private static final String TAG = "Sign Up Activity";
     private static final int RC_SIGN_IN = 1;
-    SignInButton googleSignInButton;
+    GoogleSignInButton googleSignInButton;
     TextInputLayout firstName, lastName, email, phoneNumber, password;
     SignUpViewModel signUpViewModel;
     SignInViewModel signInViewModel;
@@ -100,7 +100,11 @@ public class SignUpActivity extends AppCompatActivity implements GoogleApiClient
         signUpViewModel.mutableLiveDataResponse.observe(this, s -> {
             Log.d(TAG, "account change observed");
             if (s.equals("Your account was created successfully")) {
-                redirectHome();
+                Toast.makeText(SignUpActivity.this, "Verfication email is sent, please verify your email", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
             }
             hideLoading();
             Toast.makeText(SignUpActivity.this, s, Toast.LENGTH_LONG).show();
@@ -119,7 +123,6 @@ public class SignUpActivity extends AppCompatActivity implements GoogleApiClient
                         password.getEditText().getText().toString());
                 signUpViewModel.setUserValidation(userValidation);
                 if (signUpViewModel.checkUserValidation()) {
-                    showLoading();
                     signUpViewModel.getUser();
                 }
             }

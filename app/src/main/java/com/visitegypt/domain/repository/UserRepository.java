@@ -29,6 +29,8 @@ public interface UserRepository {
      */
     Single<User> registerUser(User user);
 
+    Single<String> forgotPassword(String email);
+
     Single<User> loginUser(User user);
 
     Single<User> refreshUserToken(Token token);

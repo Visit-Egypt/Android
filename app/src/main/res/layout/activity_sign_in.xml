@@ -111,7 +111,7 @@
 
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/forgetPassword"
+        android:id="@+id/forgetPasswordMaterialTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -139,17 +139,20 @@
         app:layout_constraintEnd_toEndOf="@+id/container"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/container"
-        app:layout_constraintTop_toBottomOf="@+id/forgetPassword"
+        app:layout_constraintTop_toBottomOf="@+id/forgetPasswordMaterialTextView"
         app:layout_constraintVertical_bias="0.638"
         app:strokeColor="?attr/colorOnPrimary"
         app:strokeWidth="2dp"
         tools:ignore="DuplicateSpeakableTextCheck" />
 
-    <com.google.android.gms.common.SignInButton
+    <com.shobhitpuri.custombuttons.GoogleSignInButton
         android:id="@+id/googleSignInButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:layout_marginTop="15dp"
+        android:text="@string/google_sign_in"
+        app:isDarkTheme="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSignIn" />

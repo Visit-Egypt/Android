@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.usecase.ForgotPasswordUseCase;
 import com.visitegypt.domain.usecase.GetGoogleLoginTokenUseCase;
 import com.visitegypt.domain.usecase.GetUserUseCase;
 import com.visitegypt.domain.usecase.LoginUserUseCase;
@@ -26,17 +27,21 @@ public class SignInViewModel extends ViewModel {
     private static final String TAG = "Sign in view model test";
     MutableLiveData<String> msgMutableLiveData = new MutableLiveData<>();
     MutableLiveData<User> userMutable = new MutableLiveData<>();
+    MutableLiveData<String> forgotPasswordResponse = new MutableLiveData<>();
+
     private LoginUserUseCase loginUserUseCase;
     private SharedPreferences sharedPreferences;
     private GetUserUseCase getUserUseCase;
     private GetGoogleLoginTokenUseCase getGoogleLoginTokenUseCase;
+    private ForgotPasswordUseCase forgotPasswordUseCase;
 
     @Inject
-    public SignInViewModel(GetGoogleLoginTokenUseCase getGoogleLoginTokenUseCase, LoginUserUseCase loginUserUseCase, SharedPreferences sharedPreferences, GetUserUseCase getUserUseCase) {
+    public SignInViewModel(GetGoogleLoginTokenUseCase getGoogleLoginTokenUseCase, ForgotPasswordUseCase forgotPasswordUseCase, LoginUserUseCase loginUserUseCase, SharedPreferences sharedPreferences, GetUserUseCase getUserUseCase) {
         this.loginUserUseCase = loginUserUseCase;
         this.sharedPreferences = sharedPreferences;
         this.getUserUseCase = getUserUseCase;
         this.getGoogleLoginTokenUseCase = getGoogleLoginTokenUseCase;
+        this.forgotPasswordUseCase = forgotPasswordUseCase;
     }
 
     public void login(User user) {
@@ -118,6 +123,20 @@ public class SignInViewModel extends ViewModel {
             }
 
         }, throwable -> Log.d(TAG, "signInWithGoogle: " + throwable.getMessage()));
+
+    }
+
+    public void forgotPassword(String email) {
+        forgotPasswordUseCase.setEmail(email);
+        Log.d(TAG, "forgotPassword: "+email);
+        forgotPasswordUseCase.execute(s -> {
+            Log.d(TAG, "forgotPassword: donee");
+            forgotPasswordResponse.setValue("reset done");
+        }, throwable -> {
+            forgotPasswordResponse.setValue("Not found");
+            Log.d("TAG", "forgetpassword: " + throwable.getMessage());
+
+        });
 
     }
 }
