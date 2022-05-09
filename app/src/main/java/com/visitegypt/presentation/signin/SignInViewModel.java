@@ -11,6 +11,7 @@ import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.usecase.GetGoogleLoginTokenUseCase;
 import com.visitegypt.domain.usecase.GetUserUseCase;
 import com.visitegypt.domain.usecase.LoginUserUseCase;
+import com.visitegypt.domain.usecase.RegisterDeviceToNotificationUseCase;
 
 import org.json.JSONObject;
 
@@ -30,13 +31,18 @@ public class SignInViewModel extends ViewModel {
     private SharedPreferences sharedPreferences;
     private GetUserUseCase getUserUseCase;
     private GetGoogleLoginTokenUseCase getGoogleLoginTokenUseCase;
+    private RegisterDeviceToNotificationUseCase registerDeviceToNotificationUseCase;
 
     @Inject
-    public SignInViewModel(GetGoogleLoginTokenUseCase getGoogleLoginTokenUseCase, LoginUserUseCase loginUserUseCase, SharedPreferences sharedPreferences, GetUserUseCase getUserUseCase) {
+    public SignInViewModel(GetGoogleLoginTokenUseCase getGoogleLoginTokenUseCase, LoginUserUseCase loginUserUseCase, SharedPreferences sharedPreferences, GetUserUseCase getUserUseCase
+    ,RegisterDeviceToNotificationUseCase registerDeviceToNotificationUseCase
+
+    ) {
         this.loginUserUseCase = loginUserUseCase;
         this.sharedPreferences = sharedPreferences;
         this.getUserUseCase = getUserUseCase;
         this.getGoogleLoginTokenUseCase = getGoogleLoginTokenUseCase;
+        this.registerDeviceToNotificationUseCase = registerDeviceToNotificationUseCase;
     }
 
     public void login(User user) {
@@ -119,5 +125,15 @@ public class SignInViewModel extends ViewModel {
 
         }, throwable -> Log.d(TAG, "signInWithGoogle: " + throwable.getMessage()));
 
+    }
+
+    public void test(String st)
+    {
+        registerDeviceToNotificationUseCase.setMsg(st);
+        registerDeviceToNotificationUseCase.execute(map -> {
+            Log.d(TAG, "test: " + map.get("message"));
+        },throwable -> {
+            Log.d(TAG, "test: "+ throwable.getMessage());
+        });
     }
 }

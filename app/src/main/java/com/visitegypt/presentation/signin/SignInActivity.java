@@ -27,6 +27,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.home.parent.Home;
@@ -192,6 +193,11 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     private void redirectHome() {
         Intent intent = new Intent(SignInActivity.this, Home.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(runnable -> {
+            String token = runnable.getResult();
+            Log.d(TAG, "redirectHome: woow" + token);
+            signInViewModel.test(token);
+        });
         startActivity(intent);
         finish();
     }

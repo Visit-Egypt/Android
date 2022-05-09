@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import com.visitegypt.data.repository.BadgesRepositoryImp;
 import com.visitegypt.data.repository.ChatbotRepositoryImp;
 import com.visitegypt.data.repository.ItemRepositoryImp;
+import com.visitegypt.data.repository.NotificationRepositoryImp;
 import com.visitegypt.data.repository.PlaceRepositoryImp;
 import com.visitegypt.data.repository.PostRepositoryImp;
 import com.visitegypt.data.repository.UploadToS3Imp;
@@ -25,6 +26,7 @@ import com.visitegypt.domain.repository.BadgesRepository;
 import com.visitegypt.domain.repository.CallBack;
 import com.visitegypt.domain.repository.ChatbotRepository;
 import com.visitegypt.domain.repository.ItemRepository;
+import com.visitegypt.domain.repository.NotificationRepository;
 import com.visitegypt.domain.repository.PlaceRepository;
 import com.visitegypt.domain.repository.PostsRepository;
 import com.visitegypt.domain.repository.UploadToS3Repository;
@@ -261,6 +263,11 @@ public class NetworkModule implements CallBack {
     @Singleton
     public GetRefreshTokenUseCase provideGetRefreshToken(@Named("RefreshToken") UserRepository userRepository, SharedPreferences sharedPreferences) {
         return new GetRefreshTokenUseCase(userRepository, sharedPreferences);
+    }
+    @Provides
+    @Singleton
+    public NotificationRepository provideNotificationRepository(@Named("Normal") RetrofitService retrofitService) {
+        return new NotificationRepositoryImp(retrofitService);
     }
 
 

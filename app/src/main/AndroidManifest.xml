@@ -27,7 +27,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VisitEgypt"
         android:usesCleartextTraffic="true">
+        <service
+            android:name=".presentation.services.FireBaseService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
 
+        </service>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDyX88ZuZ6_KrI2SqFLnWFe5e0-3L4IKNM" />

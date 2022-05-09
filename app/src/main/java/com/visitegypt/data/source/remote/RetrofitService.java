@@ -20,6 +20,7 @@ import com.visitegypt.domain.model.response.ItemPageResponse;
 import com.visitegypt.domain.model.response.PlacePageResponse;
 import com.visitegypt.domain.model.response.UploadResponse;
 
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -171,4 +172,7 @@ public interface RetrofitService {
 
     @GET("/api/place/activityid")
     public Single<List<Place>> getPlacesByPlaceActivitiesId(@Query("id") List<String> placeActivitiesIds);
+    /******************************************************************/
+    @POST("api/notification/register-device")
+    public Single<HashMap<Object,Object>> RegisterDeviceToNotification(@Body HashMap<Object,Object> deviceToken);
 }
