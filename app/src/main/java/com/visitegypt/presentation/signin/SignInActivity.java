@@ -40,7 +40,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.android.material.textview.MaterialTextView;
-import com.shobhitpuri.custombuttons.GoogleSignInButton;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.home.parent.Home;
@@ -259,7 +258,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(runnable -> {
             String token = runnable.getResult();
             Log.d(TAG, "redirectHome: woow" + token);
-            signInViewModel.test(token);
+            signInViewModel.registerDeviceToNotification(token);
         });
         startActivity(intent);
         finish();

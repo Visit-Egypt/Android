@@ -32,9 +32,7 @@ import com.visitegypt.domain.usecase.UserValidation;
 import com.visitegypt.presentation.home.parent.Home;
 import com.visitegypt.presentation.signin.SignInActivity;
 import com.visitegypt.presentation.signin.SignInViewModel;
-
 import dagger.hilt.android.AndroidEntryPoint;
-
 @AndroidEntryPoint
 public class SignUpActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private static final String TAG = "Sign Up Activity";
