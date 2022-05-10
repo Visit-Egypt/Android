@@ -27,9 +27,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VisitEgypt"
         android:usesCleartextTraffic="true">
+
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id"/>
+
         <service
-            android:name=".presentation.services.FireBaseService"
-            android:exported="true">
+            android:name=".presentation.services.FireBaseServices"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>

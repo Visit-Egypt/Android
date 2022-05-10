@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -33,12 +34,15 @@ public class FireBaseServices extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage message) {
         super.onMessageReceived(message);
+        Log.d("not", message.getNotification().getTitle());
         createNotificationChannel();
         try {
             showNotification(getPendingIntent(),message, Random.class.newInstance().nextInt());
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (Exception e){
             e.printStackTrace();
         }
 
@@ -66,26 +70,22 @@ public class FireBaseServices extends FirebaseMessagingService {
     }
 
     private void showNotification(PendingIntent pendingIntent,RemoteMessage remoteMessage, int id) {
-        Bitmap image = null;
+/*        Bitmap image = null;
         try {
             URL url = new URL(remoteMessage.getData().get("image"));
             image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
         } catch (IOException e) {
             System.out.println(e);
-        }
+        }*/
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, getResources().getString(R.string.default_notification_channel_id))
                 .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark_normal)
-                .setContentTitle(remoteMessage.getData().get("title"))
-                .setContentText(remoteMessage.getData().get("body"))
+                .setContentTitle(remoteMessage.getNotification().getTitle())
+                .setContentText(remoteMessage.getNotification().getBody())
                 .setAutoCancel(true)
-                .setLargeIcon(image)
                 .setSubText("Incoming Client")
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(remoteMessage.getData().get("title")))
-                .setStyle(new NotificationCompat.BigPictureStyle()
-                        .bigPicture(image)
-                        .bigLargeIcon(image))
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
                 .setContentIntent(pendingIntent);
