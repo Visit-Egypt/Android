@@ -34,7 +34,6 @@ public class FireBaseServices extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage message) {
         super.onMessageReceived(message);
-        Log.d("not", message.getNotification().getTitle());
         createNotificationChannel();
         try {
             showNotification(getPendingIntent(),message, Random.class.newInstance().nextInt());
@@ -70,19 +69,16 @@ public class FireBaseServices extends FirebaseMessagingService {
     }
 
     private void showNotification(PendingIntent pendingIntent,RemoteMessage remoteMessage, int id) {
-/*        Bitmap image = null;
-        try {
-            URL url = new URL(remoteMessage.getData().get("image"));
-            image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-        } catch (IOException e) {
-            System.out.println(e);
-        }*/
+
+        Bitmap icon = BitmapFactory.decodeResource(getResources(),
+                R.drawable.ic_notification);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, getResources().getString(R.string.default_notification_channel_id))
                 .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark_normal)
                 .setContentTitle(remoteMessage.getNotification().getTitle())
                 .setContentText(remoteMessage.getNotification().getBody())
                 .setAutoCancel(true)
+                .setLargeIcon(icon)
                 .setSubText("Incoming Client")
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(remoteMessage.getData().get("title")))
