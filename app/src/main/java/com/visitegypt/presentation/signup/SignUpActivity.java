@@ -19,12 +19,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 import com.shobhitpuri.custombuttons.GoogleSignInButton;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.visitegypt.R;
 import com.visitegypt.domain.usecase.UserValidation;
 import com.visitegypt.presentation.home.parent.Home;
@@ -123,10 +125,12 @@ public class SignUpActivity extends AppCompatActivity implements GoogleApiClient
                         password.getEditText().getText().toString());
                 signUpViewModel.setUserValidation(userValidation);
                 if (signUpViewModel.checkUserValidation()) {
+                    showLoading();
                     signUpViewModel.getUser();
                 }
             }
         });
+
     }
 
     public void signInButton(View view) {
@@ -281,6 +285,7 @@ public class SignUpActivity extends AppCompatActivity implements GoogleApiClient
     private void redirectHome() {
         Intent intent = new Intent(SignUpActivity.this, Home.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
         startActivity(intent);
         finish();
     }

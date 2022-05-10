@@ -101,6 +101,10 @@
     <string name="facebook_app_id">564583515004991</string>
     <string name="fb_login_protocol_scheme">fb564583515004991</string>
     <string name="facebook_client_token">56789</string>
+    <string name="channel_name" translatable="false">VisitEgypt</string>
+    <string name="channel_description" translatable="false">VisitEgypt</string>
+    <string name="default_notification_channel_id" translatable="false">com.visitegypt</string>
+
 
 
     <string name="complete">Completed</string>

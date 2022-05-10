@@ -12,6 +12,7 @@ import com.visitegypt.domain.usecase.ForgotPasswordUseCase;
 import com.visitegypt.domain.usecase.GetGoogleLoginTokenUseCase;
 import com.visitegypt.domain.usecase.GetUserUseCase;
 import com.visitegypt.domain.usecase.LoginUserUseCase;
+import com.visitegypt.domain.usecase.RegisterDeviceToNotificationUseCase;
 
 import org.json.JSONObject;
 
@@ -34,14 +35,19 @@ public class SignInViewModel extends ViewModel {
     private GetUserUseCase getUserUseCase;
     private GetGoogleLoginTokenUseCase getGoogleLoginTokenUseCase;
     private ForgotPasswordUseCase forgotPasswordUseCase;
+    private RegisterDeviceToNotificationUseCase registerDeviceToNotificationUseCase;
 
     @Inject
-    public SignInViewModel(GetGoogleLoginTokenUseCase getGoogleLoginTokenUseCase, ForgotPasswordUseCase forgotPasswordUseCase, LoginUserUseCase loginUserUseCase, SharedPreferences sharedPreferences, GetUserUseCase getUserUseCase) {
+    public SignInViewModel(GetGoogleLoginTokenUseCase getGoogleLoginTokenUseCase, ForgotPasswordUseCase forgotPasswordUseCase, LoginUserUseCase loginUserUseCase, SharedPreferences sharedPreferences, GetUserUseCase getUserUseCase
+    ,RegisterDeviceToNotificationUseCase registerDeviceToNotificationUseCase
+
+    ) {
         this.loginUserUseCase = loginUserUseCase;
         this.sharedPreferences = sharedPreferences;
         this.getUserUseCase = getUserUseCase;
         this.getGoogleLoginTokenUseCase = getGoogleLoginTokenUseCase;
         this.forgotPasswordUseCase = forgotPasswordUseCase;
+        this.registerDeviceToNotificationUseCase = registerDeviceToNotificationUseCase;
     }
 
     public void login(User user) {
@@ -124,6 +130,16 @@ public class SignInViewModel extends ViewModel {
 
         }, throwable -> Log.d(TAG, "signInWithGoogle: " + throwable.getMessage()));
 
+    }
+
+    public void registerDeviceToNotification(String st)
+    {
+        registerDeviceToNotificationUseCase.setMsg(st);
+        registerDeviceToNotificationUseCase.execute(map -> {
+            Log.d(TAG, "test: " + map.get("message"));
+        },throwable -> {
+            Log.d(TAG, "test: "+ throwable.getMessage());
+        });
     }
 
     public void forgotPassword(String email) {

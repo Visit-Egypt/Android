@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.usecase.GetGoogleRegisterTokenUseCase;
+import com.visitegypt.domain.usecase.RegisterDeviceToNotificationUseCase;
 import com.visitegypt.domain.usecase.RegisterUseCase;
 import com.visitegypt.domain.usecase.UpdateUserBadgeTaskProgUseCase;
 import com.visitegypt.domain.usecase.UserValidation;
@@ -29,14 +30,19 @@ public class SignUpViewModel extends ViewModel {
     private UpdateUserBadgeTaskProgUseCase updateUserBadgeTaskProgUseCase;
     private RegisterUseCase registerUseCase;
     private GetGoogleRegisterTokenUseCase getGoogleRegisterTokenUseCase;
+    private RegisterDeviceToNotificationUseCase registerDeviceToNotificationUseCase;
 
     @Inject
     public SignUpViewModel(GetGoogleRegisterTokenUseCase getGoogleRegisterTokenUseCase, RegisterUseCase registerUseCase, SharedPreferences sharedPreferences,
-                           UpdateUserBadgeTaskProgUseCase updateUserBadgeTaskProgUseCase) {
+                           UpdateUserBadgeTaskProgUseCase updateUserBadgeTaskProgUseCase,
+                           RegisterDeviceToNotificationUseCase registerDeviceToNotificationUseCase
+
+    ) {
         this.registerUseCase = registerUseCase;
         this.sharedPreferences = sharedPreferences;
         this.updateUserBadgeTaskProgUseCase = updateUserBadgeTaskProgUseCase;
         this.getGoogleRegisterTokenUseCase = getGoogleRegisterTokenUseCase;
+        this.registerDeviceToNotificationUseCase = registerDeviceToNotificationUseCase;
     }
 
     public void setUserValidation(UserValidation userValidation) {
@@ -100,5 +106,14 @@ public class SignUpViewModel extends ViewModel {
 
         }, throwable -> Log.d(TAG, "signUpWithGoogle: " + throwable.getMessage()));
 
+    }
+    public void test(String st)
+    {
+        registerDeviceToNotificationUseCase.setMsg(st);
+        registerDeviceToNotificationUseCase.execute(map -> {
+            Log.d(TAG, "test: " + map.get("message"));
+        },throwable -> {
+            Log.d(TAG, "test: "+ throwable.getMessage());
+        });
     }
 }

@@ -38,6 +38,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.android.material.textview.MaterialTextView;
 import com.shobhitpuri.custombuttons.GoogleSignInButton;
 import com.visitegypt.R;
@@ -255,6 +256,11 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     private void redirectHome() {
         Intent intent = new Intent(SignInActivity.this, Home.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(runnable -> {
+            String token = runnable.getResult();
+            Log.d(TAG, "redirectHome: woow" + token);
+            signInViewModel.test(token);
+        });
         startActivity(intent);
         finish();
     }
@@ -302,6 +308,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
 
             if (acct != null) {
                 String personName = acct.getDisplayName();
+
                 String idToken = acct.getIdToken();
                 Log.d(TAG, "handleSignInResult: " + personName);
                 Log.d(TAG, "handleSignInResult: " + idToken);
