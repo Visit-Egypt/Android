@@ -70,15 +70,15 @@ public class FireBaseServices extends FirebaseMessagingService {
 
     private void showNotification(PendingIntent pendingIntent,RemoteMessage remoteMessage, int id) {
 
-        Bitmap icon = BitmapFactory.decodeResource(getResources(),
-                R.drawable.ic_notification);
+//        Bitmap icon = BitmapFactory.decodeResource(getResources(),
+//                R.drawable.ic_notification);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, getResources().getString(R.string.default_notification_channel_id))
                 .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark_normal)
                 .setContentTitle(remoteMessage.getNotification().getTitle())
                 .setContentText(remoteMessage.getNotification().getBody())
                 .setAutoCancel(true)
-                .setLargeIcon(icon)
+//                .setLargeIcon(icon)
                 .setSubText("Incoming Client")
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(remoteMessage.getData().get("title")))
