@@ -2,7 +2,6 @@ package com.visitegypt.domain.usecase;
 
 import com.visitegypt.domain.repository.UserRepository;
 import com.visitegypt.domain.usecase.base.SingleUseCase;
-import com.visitegypt.presentation.tripmate.HashtagChipAdapter;
 
 import java.util.HashMap;
 
@@ -11,12 +10,11 @@ import javax.inject.Named;
 
 import io.reactivex.rxjava3.core.Single;
 
-public class FollowUserUseCase extends SingleUseCase<HashMap<String ,String>> {
+public class UnFollowUseCase extends SingleUseCase<HashMap<String ,String>> {
     UserRepository userRepository;
     private String userId;
-
     @Inject
-    public FollowUserUseCase(@Named("Normal") UserRepository userRepository) {
+    public UnFollowUseCase(@Named("Normal") UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -28,9 +26,8 @@ public class FollowUserUseCase extends SingleUseCase<HashMap<String ,String>> {
         this.userId = userId;
     }
 
-
     @Override
     protected Single<HashMap<String, String>> buildSingleUseCase() {
-        return userRepository.follow(userId);
+        return userRepository.unFollow(userId);
     }
 }

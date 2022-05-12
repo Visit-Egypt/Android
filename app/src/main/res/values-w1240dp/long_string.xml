@@ -1,5 +1,5 @@
-<resources>
-    <string name="be_honest">BE HONEST AND TRUE\n\n\n\n
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="be_honest" tools:ignore="ExtraTranslation">BE HONEST AND TRUE\n\n\n\n
           BY GEORGE BIRDSEYE\n\n\n\n
 Be honest and true, boys!\n\n
 Whatever you do, boys,\n\n
@@ -26,7 +26,7 @@ Be honest and true, boys,\n\n
 Whatever you do, boys,\n\n
 Let this be your motto through life!\n\n</string>
 
-  <string name="old_and_wise">Old and Wise\n\n\n\n
+  <string name="old_and_wise" tools:ignore="ExtraTranslation">Old and Wise\n\n\n\n
         by The Alan Parsons Project\n\n\n\n
         As far as my eyes can see\n\n
 There are Shadows approaching me\n\n

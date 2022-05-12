@@ -23,6 +23,8 @@ import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.presentation.gamification.BadgesSliderViewAdapter;
 import com.visitegypt.presentation.gamification.CitiesActivity;
+import com.visitegypt.presentation.home.parent.Home;
+import com.visitegypt.presentation.tripmateRequest.TripMateRequest;
 import com.visitegypt.utils.GamificationRules;
 import com.visitegypt.utils.MergeObjects;
 
@@ -43,7 +45,7 @@ public class AccountFragment extends Fragment {
     private TextView userTitleTextView;
     private LinearProgressIndicator xpLinearProgressIndicator;
     private AccountViewModel accountViewModel;
-    private Button gamificationStartPlayingButton;
+    private Button gamificationStartPlayingButton,tripMateRequestsButton;
     private CircularImageView circularAccountImageView;
     private RecyclerView badgesRecyclerView;
     private BadgesSliderViewAdapter badgesSliderViewAdapter;
@@ -57,6 +59,7 @@ public class AccountFragment extends Fragment {
         View accountView = inflater.inflate(R.layout.fragment_account, container, false);
         initViews(accountView);
         initViewModel();
+        initOnClick();
         return accountView;
     }
 
@@ -67,7 +70,7 @@ public class AccountFragment extends Fragment {
         followingNumberTextView = accountView.findViewById(R.id.followingNumberTextView);
         followersNumberTextView = accountView.findViewById(R.id.followersNumberTextView);
         circularAccountImageView = accountView.findViewById(R.id.circularAccountImageView);
-
+        tripMateRequestsButton = accountView.findViewById(R.id.tripMateRequestsAccountFragmentButton);
         levelTextView = accountView.findViewById(R.id.levelTextViewAccountFragment);
         currentLevelTextView = accountView.findViewById(R.id.userLevelLinearProgressIndicationTextViewAccountFragment);
         nextLevelTextView = accountView.findViewById(R.id.nextLevelProgressIndicatorTextViewAccountFragment);
@@ -161,5 +164,11 @@ public class AccountFragment extends Fragment {
         });
 
 
+    }
+    public void initOnClick()
+    {
+        tripMateRequestsButton.setOnClickListener(v -> {
+            ((Home)getParentFragment().getActivity()).changeFragment(new TripMateRequest());
+        });
     }
 }

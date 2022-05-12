@@ -39,6 +39,7 @@ import com.visitegypt.R;
 import com.visitegypt.databinding.ActivityNewHomeBinding;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.SearchPlace;
+import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
 import com.visitegypt.presentation.setting.SettingFragment;
@@ -60,7 +61,7 @@ public class Home extends AppCompatActivity {
     private NavController navController;
     private View header, searchViewLayout, homeViewLayout;
     private TextView txtName, txtEmail;
-    HomeViewModel homeViewModel;
+    private HomeViewModel homeViewModel;
     private SearchRecyclerViewAdapter searchRecyclerViewAdapter;
     private RecyclerView searchRecyclerView;
     private ArrayList<SearchPlace> searchPlaces = new ArrayList<>();
@@ -69,6 +70,7 @@ public class Home extends AppCompatActivity {
     private SearchViewModel searchViewModel;
     private MaterialButton editButton;
     private ImageView userImageView;
+    private List<TripMateRequest> tripMateRequests = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -230,7 +232,8 @@ public class Home extends AppCompatActivity {
                 R.id.nav_booking,
                 R.id.nav_subscription,
                 R.id.tripMate,
-                R.id.userProfile
+                R.id.userProfile,
+                R.id.tripMateRequest
         )
                 .setOpenableLayout(drawer)
                 .build();
@@ -372,7 +375,10 @@ public class Home extends AppCompatActivity {
     public void changeFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.nav_host_fragment_content_new_home, fragment).commit();
     }
-
+    public void changeFragmentWithBundle(Fragment fragment,Bundle bundle) {
+        fragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.nav_host_fragment_content_new_home, fragment).commit();
+    }
     private void ViewModelObserve() {
 
 
@@ -394,6 +400,8 @@ public class Home extends AppCompatActivity {
                     Log.d(TAG, "onChanged: "+user.getPhotoUrl());
                     homeViewModel.saveUserImage(user.getPhotoUrl());
                     Picasso.get().load(user.getPhotoUrl()).into(userImageView);
+                    tripMateRequests = user.getTripMateRequests();
+
                 }
 
             }
@@ -404,5 +412,9 @@ public class Home extends AppCompatActivity {
             homeViewModel.logOut();
             return false;
         });
+    }
+
+    public List<TripMateRequest> getTripMateRequests() {
+        return tripMateRequests;
     }
 }

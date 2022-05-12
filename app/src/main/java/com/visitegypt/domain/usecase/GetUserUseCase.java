@@ -3,10 +3,14 @@ package com.visitegypt.domain.usecase;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.repository.UserRepository;
 import com.visitegypt.domain.usecase.base.SingleUseCase;
 import com.visitegypt.utils.Constants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -43,7 +47,30 @@ public class GetUserUseCase extends SingleUseCase<User> {
                 .putString(Constants.SHARED_PREF_EMAIL,email)
                 .apply();
     }
+    public List<User> getUserTripMates(List<TripMateRequest> tripMateRequests )
+    {
 
+
+         User user1;
+         List<User> users = new ArrayList<>();
+        for (int i = 0; i < tripMateRequests.size(); i++) {
+            if (!tripMateRequests.get(i).isApproved())
+            {
+            userId = tripMateRequests.get(i).getUserID();
+            User user = userRepository.getUser(userId).cache().blockingGet();
+            user1 = new User(user.getFirstName(),
+                    user.getLastName(),
+                    user.getPhotoUrl(),
+                    user.getUserId()
+                    );
+            user1.setTripMateSentRequest(tripMateRequests.get(i));
+            users.add(user1);
+
+            }
+        }
+        return users;
+
+    }
 
     @Override
     protected Single<User> buildSingleUseCase() {

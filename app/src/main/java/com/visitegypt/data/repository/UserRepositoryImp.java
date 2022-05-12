@@ -13,6 +13,7 @@ import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.response.UploadResponse;
 import com.visitegypt.domain.repository.UserRepository;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -51,13 +52,23 @@ public class UserRepositoryImp implements UserRepository {
     }
 
     @Override
-    public Single<Boolean> follow(String userId) {
+    public Single<HashMap<String,String>> follow(String userId) {
         return retrofitService.follow(userId);
+    }
+
+    @Override
+    public Single<HashMap<String, String>> unFollow(String userId) {
+        return retrofitService.unfollow(userId);
     }
 
     @Override
     public Single<User> requestTripMate(String userId, TripMateRequest requestMateBody) {
         return retrofitService.requestTripMate(userId, requestMateBody);
+    }
+
+    @Override
+    public Single<User> approveTripMateRequest(String requestId) {
+        return retrofitService.approveTripMateRequest(requestId);
     }
 
     @Override

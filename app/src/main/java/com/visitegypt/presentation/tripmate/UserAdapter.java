@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
+import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
@@ -74,7 +75,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewAdapte
         notifyDataSetChanged();
     }
     public class UserViewAdapter extends RecyclerView.ViewHolder {
-        private final ShapeableImageView imgUser,imgSendRequest;
+        private final CircularImageView imgUser;
+        private final ShapeableImageView imgSendRequest;
         private final  MaterialTextView txtUserName;
 
         public UserViewAdapter(@NonNull View itemView) {
@@ -86,7 +88,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewAdapte
             itemView.setOnClickListener(v -> {
                 Bundle bundle = new Bundle();
                 bundle.putString(CHOSEN_USER_ID,users.get(getAdapterPosition()).getUserId());
-                ((Home) fragment.getActivity()).changeFragment(new UserProfile());
+                ((Home) fragment.getActivity()).changeFragmentWithBundle(new UserProfile(),bundle);
 
             });
         }

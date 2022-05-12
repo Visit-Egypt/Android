@@ -20,6 +20,7 @@ import com.visitegypt.domain.model.response.ItemPageResponse;
 import com.visitegypt.domain.model.response.PlacePageResponse;
 import com.visitegypt.domain.model.response.UploadResponse;
 
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
@@ -88,9 +89,18 @@ public interface RetrofitService {
 
     //    @GET("api/user/activity/{user_id}")
     @POST("api/user/{user_id}/follow")
-    public Single<Boolean> follow(@Path("user_id") String userId);
+    public Single<HashMap<String,String>> follow(@Path("user_id") String userId);
+    @POST("api/user/{user_id}/unfollow")
+    public Single<HashMap<String,String>> unfollow(@Path("user_id") String userId);
     @POST("api/user/{user_id}/mate")
     public Single<User> requestTripMate(@Path("user_id") String userId, @Body TripMateRequest requestMateBody);
+    @POST("api/user/trip-mate-reqs/{req_id}/approve")
+    public Single<User> approveTripMateRequest(@Path("req_id") String requestId);
+    @POST("api/user/interests")
+    public Single<String> addInterests(@Body HashMap<String,List<String>> interests);
+    @POST("api/user/interests/delete")
+    public Single<String> deleteInterests(@Body HashMap<String,List<String>> interests);
+
 
     /*******************************************************************/
     @GET("api/place/{id}")
@@ -166,4 +176,6 @@ public interface RetrofitService {
     /********************************************************************/
     @GET("api/tag")
     public Single<List<Tag>> getTags();
+    @GET("api/tag/users")
+    public Single<List<User>> getAllUserTags(HashMap<String,List<String>> tagsId);
 }

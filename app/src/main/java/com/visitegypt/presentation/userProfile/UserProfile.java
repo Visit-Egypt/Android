@@ -1,5 +1,7 @@
 package com.visitegypt.presentation.userProfile;
 
+import static com.visitegypt.utils.Constants.CHOSEN_USER_ID;
+
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Dialog;
@@ -25,6 +27,7 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.TripMateRequest;
+import com.visitegypt.presentation.home.HomeRecyclerViewAdapter;
 import com.visitegypt.utils.Chips;
 
 import java.util.ArrayList;
@@ -45,7 +48,7 @@ public class UserProfile extends Fragment {
     private ChipGroup chipGroup;
     private MaterialTextView myInterests;
     private LinearLayout userProfileLayout;
-    private String id = "615df4afdfb3336ce9448939";
+    private String id ;
 
     public static UserProfile newInstance() {
         return new UserProfile();
@@ -55,6 +58,16 @@ public class UserProfile extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         userProfileFragment = inflater.inflate(R.layout.user_profile_fragment, container, false);
+        if (savedInstanceState == null) {
+            Bundle extras = this.getArguments();
+            if (extras == null) {
+                id = null;
+            } else {
+                id = extras.getString(CHOSEN_USER_ID);
+            }
+        } else {
+            id = (String) savedInstanceState.getSerializable(CHOSEN_USER_ID);
+        }
         initView();
         Chips.setContext(getContext());
         setOnClickListeners();
@@ -86,11 +99,13 @@ public class UserProfile extends Fragment {
     }
 
     private void setOnClickListeners() {
-        btnFollow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnFollow.setOnClickListener(view -> {
+            if (btnFollow.getText().equals("Follow"))
                 userProfileViewModel.followUser();
-            }
+            else
+                userProfileViewModel.unFollow();
+
+
         });
         btnRequest.setOnClickListener(v -> {
             userProfileViewModel.setUserId(id);
@@ -103,13 +118,11 @@ public class UserProfile extends Fragment {
             userName.setText(user.getFirstName() + " " + user.getLastName());
             if ((user.getInterests() != null) && (user.getInterests().size() != 0)) {
                 myInterests.setVisibility(View.GONE);
-                for (String name : user.getInterests()){
+                for (String name : user.getInterests()) {
                     chipGroup.addView(Chips.createChipsLabel(name));
                 }
 
-            }
-            else
-            {
+            } else {
                 myInterests.setVisibility(View.GONE);
                 List<String> myLabel = new ArrayList<>();
                 myLabel.add("Travelling");
@@ -122,7 +135,7 @@ public class UserProfile extends Fragment {
                 myLabel.add("Reda");
                 myLabel.add("Reda");
                 myLabel.add("Reda");
-                for (String name : myLabel){
+                for (String name : myLabel) {
                     chipGroup.addView(Chips.createChipsLabel(name));
                 }
             }
@@ -135,15 +148,28 @@ public class UserProfile extends Fragment {
                     Picasso.get().load(user.getPhotoUrl()).into(userImage);
 
         });
-        userProfileViewModel.mutableLiveDataFollow.observe(getViewLifecycleOwner(), aBoolean -> {
-            if (aBoolean) {
-                btnFollow.setText("Following");
-                followersNumberTextView.setText(String.valueOf(Integer.parseInt(followersNumberTextView.getText().toString() + 1)));
+        userProfileViewModel.mutableLiveDataFollow.observe(getViewLifecycleOwner(), s -> {
+            if (s.equals("Error")) {
+                Toast.makeText(getContext(), "Sorry,Try again", Toast.LENGTH_LONG).show();
+            } else {
+                btnFollow.setText("UnFollow");
+                followersNumberTextView.setText(s);
+
             }
+        });
+        userProfileViewModel.mutableLiveDataUnFollow.observe(getViewLifecycleOwner(), s -> {
+            if (s.equals("Error")) {
+                Toast.makeText(getContext(), "Sorry,Try again", Toast.LENGTH_LONG).show();
+
+            } else {
+                btnFollow.setText("Follow");
+                followersNumberTextView.setText(s);
+            }
+
         });
         userProfileViewModel.mutableLiveDataIsFollowing.observe(getViewLifecycleOwner(), aBoolean -> {
             if (aBoolean)
-                btnFollow.setText("Following");
+                btnFollow.setText("UnFollow");
         });
         userProfileViewModel.mutableLiveDataIsRequested.observe(getViewLifecycleOwner(), aBoolean -> {
             if (aBoolean) {
@@ -159,36 +185,26 @@ public class UserProfile extends Fragment {
         requestMateDialog.setContentView(dialogLayout);
         requestMateDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         requestMateDialog.show();
-        requestMateDialog.findViewById(R.id.requrstTripMate).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TextInputEditText titleTextInput = requestMateDialog.findViewById(R.id.titleEditText);
-                String title = titleTextInput.getText().toString().trim();
-                TextInputEditText descriptionTextInput = requestMateDialog.findViewById(R.id.descriptionEditText);
-                String description = descriptionTextInput.getText().toString().trim();
+        MaterialButton requrstTripMate = requestMateDialog.findViewById(R.id.requrstTripMate);
 
+        requrstTripMate.setOnClickListener(view -> {
+            TextInputEditText titleTextInput = requestMateDialog.findViewById(R.id.titleEditText);
+            String title = titleTextInput.getText().toString().trim();
+            TextInputEditText descriptionTextInput = requestMateDialog.findViewById(R.id.descriptionEditText);
+            String description = descriptionTextInput.getText().toString().trim();
+            if (title.isEmpty()) {
+                titleTextInput.setError("Title can't be empty");
+            } else {
+                if (description.isEmpty()) {
+                    descriptionTextInput.setError("Description can't be empty");
+                } else {
+                    userProfileViewModel.setRequestMateBody(new TripMateRequest(title, description));
+                    requestMateDialog.dismiss();
+                    showLoading();
+                    userProfileViewModel.requestTripMate();
 
-                userProfileViewModel.setRequestMateBody(new TripMateRequest(title, description));
-                requestMateDialog.findViewById(R.id.requrstTripMate)
-                        .setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (title.isEmpty()) {
-                                    titleTextInput.setError("Title can't be empty");
-                                } else {
-                                    if (description.isEmpty()) {
-                                        descriptionTextInput.setError("Description can't be empty");
-                                    } else {
-                                        requestMateDialog.dismiss();
-                                        showLoading();
-                                        userProfileViewModel.requestTripMate();
-
-                                    }
-                                }
-                            }
-                        });
+                }
             }
-
         });
     }
 

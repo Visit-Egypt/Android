@@ -39,6 +39,10 @@ public class User {
     private List<String> followers;
     private List<String> interests;
     private ProfileFrame frame;
+    @SerializedName("trip_mate_requests")
+    private List<TripMateRequest> tripMateRequests;
+    private TripMateRequest tripMateSentRequest;
+
 
     /*******************************************************************************/
     public User() {
@@ -61,10 +65,11 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.photoUrl = photoUrl;
     }
-    public User(String firstName, String lastName, String photoUrl) {
+    public User(String firstName, String lastName, String photoUrl ,String userId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.photoUrl = photoUrl;
+        this.userId = userId;
     }
     public User(String email, String password) {
         this.email = email;
@@ -214,5 +219,21 @@ public class User {
 
     public void setFrame(ProfileFrame frame) {
         this.frame = frame;
+    }
+
+    public List<TripMateRequest> getTripMateRequests() {
+        return tripMateRequests;
+    }
+
+    public TripMateRequest getTripMateSentRequest() {
+        return tripMateSentRequest;
+    }
+
+    public void setTripMateSentRequest(TripMateRequest tripMateSentRequest) {
+        this.tripMateSentRequest = tripMateSentRequest;
+    }
+
+    public void setTripMateRequests(List<TripMateRequest> tripMateRequests) {
+        this.tripMateRequests = tripMateRequests;
     }
 }

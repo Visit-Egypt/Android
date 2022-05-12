@@ -54,7 +54,8 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:id="@+id/requrstTripMate"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:onClick="requestATripMate"
+        android:layout_height="60dp"
         android:text="Request" />
 
 </LinearLayout>

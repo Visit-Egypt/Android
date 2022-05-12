@@ -11,10 +11,12 @@ import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.response.UploadResponse;
 
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
+import retrofit2.http.Path;
 
 public interface UserRepository {
     /**
@@ -34,8 +36,11 @@ public interface UserRepository {
     Single<User> refreshUserToken(Token token);
 
     Single<User> getUser(String userId);
-    Single<Boolean> follow(String userId);
+    Single<HashMap<String,String>> follow(String userId);
+    Single<HashMap<String,String>> unFollow(String userId);
     Single<User> requestTripMate(String userId, TripMateRequest requestMateBody);
+    public Single<User> approveTripMateRequest( String requestId);
+
     Single<String> logOut(String userId);
 
     Single<User> updateUser(String userId, UserUpdateRequest user);
