@@ -20,13 +20,6 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -38,8 +31,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.shobhitpuri.custombuttons.GoogleSignInButton;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.home.parent.Home;
@@ -49,12 +43,11 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 @AndroidEntryPoint
-public class SignInActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, FacebookCallback<LoginResult> {
+public class SignInActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private static final String TAG = "Sign In Activity";
     private static final String USER_NAME = "user_name";
     private static final String USER_EMAIL = "user_email";
     private static final int RC_SIGN_IN = 1;
-    public int GoogleFlag = 0;
     public GoogleSignInClient mGoogleSignInClient;
     public GoogleApiClient googleApiClient;
     GoogleSignInButton googleSignInButton;
@@ -64,11 +57,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     View loadingLayout;
     String password, email, token;
     SignInViewModel signInViewModel;
-    CallbackManager callbackManager;
-    AccessTokenTracker accessTokenTracker;
-    AccessToken accessToken;
     MaterialTextView forgetPasswordTextView;
-    private LoginButton facebookSignInButton;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -93,9 +82,9 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
             }
         });
 
-        Log.d(TAG, "onCreate: tokennnnn   " + accessTokenTracker);
         signInViewModel = new ViewModelProvider(this).get(SignInViewModel.class);
         if (signInViewModel.checkUser()) {
+            Log.d(TAG, "onCreate: ");
             redirectHome();
         }
         btnSignIn = findViewById(R.id.btnSignIn);
@@ -117,7 +106,13 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
             @Override
             public void onChanged(String s) {
                 if (s.equals("Your login done")) {
+                    redirectHome();
+                    Toast.makeText(SignInActivity.this, s, Toast.LENGTH_LONG).show();
 
+                } else if (s.equals("Your google login done")) {
+                    redirectHome();
+                    logOut();
+                    Toast.makeText(SignInActivity.this, s, Toast.LENGTH_LONG).show();
                 } else {
                     hideLoading();
                     Toast.makeText(SignInActivity.this, s, Toast.LENGTH_LONG).show();
@@ -140,32 +135,11 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
             if (a.equals("reset done")) {
                 Toast.makeText(SignInActivity.this, "Reset password done.", Toast.LENGTH_LONG).show();
                 redirectSignup();
-
-
             } else {
                 Toast.makeText(SignInActivity.this, "Not found", Toast.LENGTH_LONG).show();
 
             }
         });
-    }
-
-    @Override
-    public void onCancel() {
-        Toast.makeText(this, "Login cancel, ", Toast.LENGTH_SHORT).show();
-
-    }
-
-    @Override
-    public void onError(@NonNull FacebookException e) {
-        Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        Log.d(TAG, "onError: " + e.getMessage());
-
-    }
-
-    @Override
-    public void onSuccess(LoginResult loginResult) {
-        Toast.makeText(this, "Login successfullyy, " + loginResult.getAccessToken(), Toast.LENGTH_SHORT).show();
-        Log.d(TAG, "onSuccess: " + loginResult.getAccessToken());
     }
 
     public void buttonOnClick(View view) {
@@ -272,14 +246,12 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.d(TAG, "onActivityResult:google " + GoogleFlag);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
-            Log.d(TAG, "onActivityResult: ");
-            logOut();
-            redirectHome();
-
+            Log.d(TAG, "onActivityResult:login done ");
+//            redirectHome();
+////            logOut();
         }
     }
 
@@ -300,9 +272,10 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
 
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        Log.d(TAG, "onActivityResult: ");
+        Log.d(TAG, "onActivityResult: handleSignInResult");
 
         try {
+            Log.d(TAG, "onActivityResult:done");
             GoogleSignInAccount acct = completedTask.getResult(ApiException.class);
 
             if (acct != null) {

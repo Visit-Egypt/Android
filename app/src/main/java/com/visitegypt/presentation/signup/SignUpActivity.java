@@ -22,6 +22,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
@@ -41,7 +42,6 @@ public class SignUpActivity extends AppCompatActivity implements GoogleApiClient
     TextInputLayout firstName, lastName, email, phoneNumber, password;
     SignUpViewModel signUpViewModel;
     SignInViewModel signInViewModel;
-
     MaterialTextView btnSignInTransfer;
     AppCompatButton btnSignUp;
     View loadingLayout;
@@ -101,13 +101,19 @@ public class SignUpActivity extends AppCompatActivity implements GoogleApiClient
             Log.d(TAG, "account change observed");
             if (s.equals("Your account was created successfully")) {
                 Toast.makeText(SignUpActivity.this, "Verfication email is sent, please verify your email", Toast.LENGTH_LONG).show();
+                Toast.makeText(SignUpActivity.this, s, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
+            } else if (s.equals("Your google account was created successfully")) {
+                Toast.makeText(SignUpActivity.this, s, Toast.LENGTH_LONG).show();
+                logOut();
+                redirectHome();
+            } else {
+                Toast.makeText(SignUpActivity.this, s, Toast.LENGTH_LONG).show();
             }
             hideLoading();
-            Toast.makeText(SignUpActivity.this, s, Toast.LENGTH_LONG).show();
         });
         btnSignUp.setOnClickListener(v -> {
             if (firstName.getEditText().getText().toString().isEmpty() ||
@@ -301,6 +307,8 @@ public class SignUpActivity extends AppCompatActivity implements GoogleApiClient
             handleSignInResult(task);
             Log.d(TAG, "onActivityResult:done ");
 
+        } else {
+            Log.d(TAG, "onActivityResult: not equal RC_SIGN_IN");
         }
     }
 
@@ -313,26 +321,28 @@ public class SignUpActivity extends AppCompatActivity implements GoogleApiClient
         Log.d(TAG, "onActivityResult:Start task ");
         try {
             GoogleSignInAccount acct = completedTask.getResult(ApiException.class);
-
             if (acct != null) {
                 String personName = acct.getDisplayName();
-
                 String idToken = acct.getIdToken();
                 Log.d(TAG, "handleSignInResult: " + personName);
                 Log.d(TAG, "handleSignInResult: " + idToken);
                 signUpViewModel.signUpWithGoogle(idToken, acct.getEmail());
-                signUpViewModel.mutableLiveDataResponse.observe(this, s -> {
-                    if (s.equals("Your account was created successfully")) {
-                        redirectHome();
-                    }
-                    Toast.makeText(SignUpActivity.this, s, Toast.LENGTH_LONG).show();
-                });
 
             }
 
         } catch (ApiException e) {
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
         }
+
+    }
+
+    public void logOut() {
+        mGoogleSignInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Log.d(TAG, "onComplete: logout from google acc done successfully");
+            }
+        });
 
     }
 }

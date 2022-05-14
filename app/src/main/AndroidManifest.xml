@@ -48,8 +48,7 @@
         </service>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDyX88ZuZ6_KrI2SqFLnWFe5e0-3L4IKNM"
-            />
+            android:value="AIzaSyDyX88ZuZ6_KrI2SqFLnWFe5e0-3L4IKNM" />
 
         <activity
             android:name=".presentation.signup.SignUpActivity"

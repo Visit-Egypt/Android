@@ -124,7 +124,7 @@ public class SignInViewModel extends ViewModel {
                 Log.d("TAG", "donee" + user);
                 loginUserUseCase.saveUserData(user);
                 userMutable.setValue(user);
-                msgMutableLiveData.setValue("Your login done");
+                msgMutableLiveData.setValue("Your google login done");
                 saveUserData(user.getUserId(), email);
             }
 
@@ -144,7 +144,7 @@ public class SignInViewModel extends ViewModel {
 
     public void forgotPassword(String email) {
         forgotPasswordUseCase.setEmail(email);
-        Log.d(TAG, "forgotPassword: "+email);
+        Log.d(TAG, "forgotPassword: " + email);
         forgotPasswordUseCase.execute(s -> {
             Log.d(TAG, "forgotPassword: donee");
             forgotPasswordResponse.setValue("reset done");
