@@ -47,13 +47,18 @@ public class SignUpViewModel extends ViewModel {
         User myUser = userValidation;
         registerUseCase.saveUser(userValidation);
         mutableLiveDataResponse.setValue("Your account was created successfully");
+        registerUseCase.execute(u -> {
+            mutableLiveDataResponse.setValue("Your account was created successfully");
 
-//                registerUseCase.execute(user -> {
+        }, throwable -> {
+            mutableLiveDataResponse.setValue("errorrr");
+
+        });
+        //                registerUseCase.execute(user -> {
 //            user.setFirstName(myUser.getFirstName());
 //            user.setLastName(myUser.getLastName());
 //            user.setEmail(myUser.getEmail());
 //            user.setPhoneNumber(myUser.getPhoneNumber());
-//            Log.d(TAG, "xxxxxxxxxxxxxxxxxxxlll: " +myUser.getFirstName());
 //
 ////            Log.d(TAG, "getUser: " + user.getFirstName());
 ////            Log.d(TAG, "getUser: " + user.getUserId());
@@ -95,10 +100,14 @@ public class SignUpViewModel extends ViewModel {
             public void accept(User user) throws Throwable {
                 Log.d("TAG", "donee" + user);
                 registerUseCase.saveUserData(user);
-                mutableLiveDataResponse.setValue("Your account was created successfully");
+                mutableLiveDataResponse.setValue("Your google account was created successfully");
             }
 
-        }, throwable -> Log.d(TAG, "signUpWithGoogle: " + throwable.getMessage()));
+        }, throwable -> {
+            mutableLiveDataResponse.setValue("There is an error may You already have an account ");
+            Log.d(TAG, "signUpWithGoogle: " + throwable.getMessage());
+        });
 
     }
+
 }

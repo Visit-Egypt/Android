@@ -118,7 +118,7 @@ public class SignInViewModel extends ViewModel {
                 Log.d("TAG", "donee" + user);
                 loginUserUseCase.saveUserData(user);
                 userMutable.setValue(user);
-                msgMutableLiveData.setValue("Your login done");
+                msgMutableLiveData.setValue("Your google login done");
                 saveUserData(user.getUserId(), email);
             }
 
