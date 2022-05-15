@@ -17,6 +17,7 @@ import com.google.android.material.textview.MaterialTextView;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
+import com.visitegypt.domain.model.TripMateSentRequest;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.callBacks.OnItemClickCallBack;
 import com.visitegypt.presentation.home.parent.Home;
@@ -25,12 +26,12 @@ import com.visitegypt.presentation.userProfile.UserProfile;
 import java.util.List;
 
 public class UserTripMateRequestAdapter extends RecyclerView.Adapter<UserTripMateRequestAdapter.UserTripMateRequestViewHolder> {
-    private List<User> users;
+    private List<TripMateSentRequest> tripMateSentRequests;
     int currentPosition = 0 ;
     private OnItemClickCallBack onItemClickCallBack;
 
-    public UserTripMateRequestAdapter( OnItemClickCallBack onItemClickCallBack, List<User> users) {
-        this.users = users;
+    public UserTripMateRequestAdapter( OnItemClickCallBack onItemClickCallBack, List<TripMateSentRequest> tripMateSentRequests) {
+        this.tripMateSentRequests = tripMateSentRequests;
         this.onItemClickCallBack = onItemClickCallBack;
     }
 
@@ -42,11 +43,11 @@ public class UserTripMateRequestAdapter extends RecyclerView.Adapter<UserTripMat
 
     @Override
     public void onBindViewHolder(@NonNull UserTripMateRequestViewHolder holder, int position) {
-        if (!users.isEmpty() && !users.get(position).getTripMateSentRequest().isApproved()) {
-            if (users.get(position).getFirstName() != null && users.get(position).getLastName() != null)
-                holder.userName.setText(users.get(position).getFirstName() + " " + users.get(position).getLastName());
-            if (users.get(position).getPhotoUrl() != null && !users.get(position).getPhotoUrl().isEmpty())
-                Picasso.get().load(users.get(position).getPhotoUrl()).into(holder.userImage);
+        if (!tripMateSentRequests.isEmpty() && !tripMateSentRequests.get(position).isApproved()) {
+            if (tripMateSentRequests.get(position).getUserName() != null)
+                holder.userName.setText(tripMateSentRequests.get(position).getUserName());
+            if (tripMateSentRequests.get(position).getPhotoUrl() != null && !tripMateSentRequests.get(position).getPhotoUrl().isEmpty())
+                Picasso.get().load(tripMateSentRequests.get(position).getPhotoUrl()).into(holder.userImage);
 
             holder.itemView.setOnClickListener(v -> {
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
@@ -59,16 +60,16 @@ public class UserTripMateRequestAdapter extends RecyclerView.Adapter<UserTripMat
                 txtDescriptionTripMateRequest = dialogLayout.findViewById(R.id.txtDescriptionTripMateRequest);
                 MaterialButton dialogMaterialButton = dialogLayout.findViewById(R.id.dialogProfileButton);
                 /************************************************************************************************/
-                if (users.get(position).getPhotoUrl() != null && !users.get(position).getPhotoUrl().isEmpty())
-                    Picasso.get().load(users.get(position).getPhotoUrl()).into(dialogUserImage);
-                if (users.get(position).getFirstName() != null && users.get(position).getLastName() != null)
-                    dialogUserName.setText(users.get(position).getFirstName() + " " + users.get(position).getLastName());
-                if (users.get(position).getTripMateSentRequest().getTitle() != null && !users.get(position).getTripMateSentRequest().getTitle().isEmpty()) {
-                    dialogTitleTripMateRequest.setText(users.get(position).getTripMateSentRequest().getTitle());
+                if (tripMateSentRequests.get(position).getPhotoUrl() != null && !tripMateSentRequests.get(position).getPhotoUrl().isEmpty())
+                    Picasso.get().load(tripMateSentRequests.get(position).getPhotoUrl()).into(dialogUserImage);
+                if (tripMateSentRequests.get(position).getUserName() != null )
+                    dialogUserName.setText(tripMateSentRequests.get(position).getUserName());
+                if (tripMateSentRequests.get(position).getTitle() != null && !tripMateSentRequests.get(position).getTitle().isEmpty()) {
+                    dialogTitleTripMateRequest.setText(tripMateSentRequests.get(position).getTitle());
 
                 }
-                if (users.get(position).getTripMateSentRequest().getDescription() != null && !users.get(position).getTripMateSentRequest().getDescription().isEmpty()) {
-                    txtDescriptionTripMateRequest.setText(users.get(position).getTripMateSentRequest().getDescription());
+                if (tripMateSentRequests.get(position).getDescription() != null && !tripMateSentRequests.get(position).getDescription().isEmpty()) {
+                    txtDescriptionTripMateRequest.setText(tripMateSentRequests.get(position).getDescription());
                 }
 
 
@@ -79,7 +80,7 @@ public class UserTripMateRequestAdapter extends RecyclerView.Adapter<UserTripMat
                 dialogMaterialButton.setOnClickListener(v1 -> {
                     Log.d("TAG", "onBindViewHolder: show user profile ");
                     alertDialog.dismiss();
-                    onItemClickCallBack.onItemCallBack(users.get(position).getTripMateSentRequest().getUserID(),1);
+                    onItemClickCallBack.onItemCallBack(tripMateSentRequests.get(position).getUserID(),1);
                 });
 
             });
@@ -89,17 +90,17 @@ public class UserTripMateRequestAdapter extends RecyclerView.Adapter<UserTripMat
 
     @Override
     public int getItemCount() {
-        return users.size() != 0 ? users.size() : 0;
+        return tripMateSentRequests.size() != 0 ? tripMateSentRequests.size() : 0;
     }
 
-    public void updateUserList(List<User> users) {
-        this.users = users;
+    public void updateTripMateSentRequestList(List<TripMateSentRequest> tripMateSentRequests) {
+        this.tripMateSentRequests = tripMateSentRequests;
         notifyDataSetChanged();
     }
     public void removeUser() {
-        users.remove(currentPosition);
+        tripMateSentRequests.remove(currentPosition);
         notifyItemRemoved(currentPosition);
-        notifyItemRangeChanged(currentPosition, users.size());
+        notifyItemRangeChanged(currentPosition, tripMateSentRequests.size());
     }
 
     public class UserTripMateRequestViewHolder extends RecyclerView.ViewHolder {
@@ -113,8 +114,8 @@ public class UserTripMateRequestAdapter extends RecyclerView.Adapter<UserTripMat
             userName = itemView.findViewById(R.id.txtUserName);
             userImage = itemView.findViewById(R.id.imgUser);
             acceptRequestButton.setOnClickListener(v -> {
-                onItemClickCallBack.onItemCallBack(users.get(getAdapterPosition()).getTripMateSentRequest().getId(),0);
-                if (users.get(getAdapterPosition()).getTripMateSentRequest().isApproved())
+                onItemClickCallBack.onItemCallBack(tripMateSentRequests.get(getAdapterPosition()).getId(),0);
+                if (tripMateSentRequests.get(getAdapterPosition()).isApproved())
                 {
                     currentPosition = getAdapterPosition();
                     Log.d("TAG", "UserTripMateRequestViewHolder: " + currentPosition);

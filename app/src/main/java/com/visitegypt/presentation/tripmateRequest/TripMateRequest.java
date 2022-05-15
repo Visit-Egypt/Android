@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.visitegypt.R;
+import com.visitegypt.domain.model.TripMateSentRequest;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.callBacks.OnItemClickCallBack;
 import com.visitegypt.presentation.home.parent.Home;
@@ -35,7 +36,7 @@ public class TripMateRequest extends Fragment implements OnItemClickCallBack {
     private View tripMateRequestView;
     private RecyclerView requestsRecyclerView;
     private UserTripMateRequestAdapter userTripMateRequestAdapter;
-    private List<User> users = new ArrayList<>();
+    private List<TripMateSentRequest> tripMateSentRequests = new ArrayList<>();
     private List<com.visitegypt.domain.model.TripMateRequest> tripMateRequests;
     private static final String TAG = "Trip Mate Requests";
 
@@ -59,14 +60,21 @@ public class TripMateRequest extends Fragment implements OnItemClickCallBack {
         tripMateRequestViewModel = new ViewModelProvider(this).get(TripMateRequestViewModel.class);
 
        // createFakeData();
-        getAllUserRequests();
+//        getAllUserRequests();
         mutableLiveDataObserve();
+        com.visitegypt.domain.model.TripMateRequest tripMateRequest = new com.visitegypt.domain.model.TripMateRequest("615df4afdfb3336ce9448939","Hi", "Helloooooooooo","615df4afdfb3336ce9448939",false);
+        com.visitegypt.domain.model.TripMateRequest tripMateRequest2 = new com.visitegypt.domain.model.TripMateRequest("615df4afdfb3336ce9448939","Hi", "Helloooooooooo","615df4afdfb3336ce9448939",false);
+        com.visitegypt.domain.model.TripMateRequest tripMateRequest3 = new com.visitegypt.domain.model.TripMateRequest("615df4afdfb3336ce9448939","Hi", "Helloooooooooo","615df4afdfb3336ce9448939",false);
+        tripMateRequests.add(tripMateRequest);
+        tripMateRequests.add(tripMateRequest2);
+        tripMateRequests.add(tripMateRequest3);
+        tripMateRequestViewModel.test(tripMateRequests);
 
     }
 
     private void initViews() {
         requestsRecyclerView = tripMateRequestView.findViewById(R.id.requestsRecyclerView);
-        userTripMateRequestAdapter = new UserTripMateRequestAdapter(this::onItemCallBack, users);
+        userTripMateRequestAdapter = new UserTripMateRequestAdapter(this::onItemCallBack, tripMateSentRequests);
         requestsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         requestsRecyclerView.setAdapter(userTripMateRequestAdapter);
         tripMateRequests = new ArrayList<>();
@@ -84,20 +92,13 @@ public class TripMateRequest extends Fragment implements OnItemClickCallBack {
         User user2 = new User("Yehia", "Hendy", "https://visitegypt-media-bucket.s3.us-west-2.amazonaws.com/uploads/users/617170dacb2e775f16fc54f2/47b5aa45-f328-4002-85af-bcbb34a28560.jpeg",
                 "615df4afdfb3336ce9448939"
         );
-        com.visitegypt.domain.model.TripMateRequest tripMateRequest = new com.visitegypt.domain.model.TripMateRequest("Hi", "Helloooooooooo");
-        com.visitegypt.domain.model.TripMateRequest tripMateRequest2 = new com.visitegypt.domain.model.TripMateRequest("Hi", "Helloooooooooo");
-        com.visitegypt.domain.model.TripMateRequest tripMateRequest3 = new com.visitegypt.domain.model.TripMateRequest("Hi", "Helloooooooooo");
+        com.visitegypt.domain.model.TripMateRequest tripMateRequest = new com.visitegypt.domain.model.TripMateRequest("615df4afdfb3336ce9448939","Hi", "Helloooooooooo","615df4afdfb3336ce9448939",false);
+        com.visitegypt.domain.model.TripMateRequest tripMateRequest2 = new com.visitegypt.domain.model.TripMateRequest("615df4afdfb3336ce9448939","Hi", "Helloooooooooo","615df4afdfb3336ce9448939",false);
+        com.visitegypt.domain.model.TripMateRequest tripMateRequest3 = new com.visitegypt.domain.model.TripMateRequest("615df4afdfb3336ce9448939","Hi", "Helloooooooooo","615df4afdfb3336ce9448939",false);
         ArrayList<com.visitegypt.domain.model.TripMateRequest> tripMateRequests = new ArrayList<>();
         tripMateRequests.add(tripMateRequest);
         tripMateRequests.add(tripMateRequest2);
         tripMateRequests.add(tripMateRequest3);
-        user1.setTripMateRequests(tripMateRequests);
-        user2.setTripMateRequests(tripMateRequests);
-        user3.setTripMateRequests(tripMateRequests);
-        users.add(user1);
-        users.add(user2);
-        users.add(user3);
-        userTripMateRequestAdapter.updateUserList(users);
     }
 
 
@@ -116,12 +117,13 @@ public class TripMateRequest extends Fragment implements OnItemClickCallBack {
     private void getAllUserRequests() {
 //        tripMateRequests = ((Home) getActivity()).getTripMateRequests();
         tripMateRequestViewModel.getTripRequests();
+
     }
 
     private void mutableLiveDataObserve() {
         tripMateRequestViewModel.mutableLiveDataUser.observe(getViewLifecycleOwner(),users1 -> {
-            Log.d(TAG, "mutableLiveDataObserve: " + users1.get(0).getTripMateRequests());
-            userTripMateRequestAdapter.updateUserList(users1);
+
+            userTripMateRequestAdapter.updateTripMateSentRequestList(tripMateSentRequests);
         });
         tripMateRequestViewModel.mutableLiveDataIsApproved.observe(getViewLifecycleOwner(),aBoolean -> {
             if(aBoolean)

@@ -32,6 +32,14 @@ public class TripMateRequest {
         this.description = description;
     }
 
+    public TripMateRequest(String id, String title, String description, String userID, boolean isApproved) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.userID = userID;
+        this.isApproved = isApproved;
+    }
+
     public String getTitle() {
         return title;
     }
