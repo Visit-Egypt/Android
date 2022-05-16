@@ -14,12 +14,11 @@ import org.reactivestreams.Publisher;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Function;
@@ -56,59 +55,6 @@ public class GetUserUseCase extends SingleUseCase<User> {
                 .apply();
     }
 
-    public List<User> getUserTripMates(List<TripMateRequest> tripMateRequests) {
-        User user1;
-        List<User> users = new ArrayList<>();
-        for (int i = 0; i < tripMateRequests.size(); i++) {
-            if (!tripMateRequests.get(i).isApproved()) {
-                userId = tripMateRequests.get(i).getUserID();
-                User user = userRepository.getUser(userId).cache().blockingGet();
-                user1 = new User(user.getFirstName(),
-                        user.getLastName(),
-                        user.getPhotoUrl(),
-                        user.getUserId()
-                );
-                user1.setTripMateSentRequest(tripMateRequests.get(i));
-                users.add(user1);
-
-            }
-        }
-        return users;
-
-    }
-
-    public Single<List<Object>> getUserTripMateEnhance(List<TripMateRequest> tripMateRequests) {
-        return Flowable
-                .fromIterable(tripMateRequests)
-                .parallel()
-                .runOn(Schedulers.io())
-                .flatMap(new Function<TripMateRequest, Publisher<?>>() {
-                    @Override
-                    public Publisher<?> apply(TripMateRequest tripMateRequest) throws Throwable {
-                        return userRepository.getUser(tripMateRequest.getUserID())
-                                .toFlowable()
-                                .flatMap(user1 -> {
-
-                                    return Flowable.just(new TripMateSentRequest(tripMateRequest.getId(),
-                                            tripMateRequest.getTitle(),
-                                            tripMateRequest.getDescription(),
-                                            tripMateRequest.getUserID(),
-                                            tripMateRequest.isApproved(),
-                                            user1.getFirstName() + " " + user.getLastName(),
-                                            user1.getPhotoUrl()
-                                    ));
-                                })
-                                ;
-                    }
-                })
-                .sequential()
-                .collect(Collectors.toList())
-
-                ;
-
-
-
-    }
 
     @Override
     protected Single<User> buildSingleUseCase() {

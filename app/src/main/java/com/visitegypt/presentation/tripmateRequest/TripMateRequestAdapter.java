@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
@@ -18,19 +17,16 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.TripMateSentRequest;
-import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.callBacks.OnItemClickCallBack;
-import com.visitegypt.presentation.home.parent.Home;
-import com.visitegypt.presentation.userProfile.UserProfile;
 
 import java.util.List;
 
-public class UserTripMateRequestAdapter extends RecyclerView.Adapter<UserTripMateRequestAdapter.UserTripMateRequestViewHolder> {
+public class TripMateRequestAdapter extends RecyclerView.Adapter<TripMateRequestAdapter.UserTripMateRequestViewHolder> {
     private List<TripMateSentRequest> tripMateSentRequests;
-    int currentPosition = 0 ;
+    int currentPosition = 0;
     private OnItemClickCallBack onItemClickCallBack;
 
-    public UserTripMateRequestAdapter( OnItemClickCallBack onItemClickCallBack, List<TripMateSentRequest> tripMateSentRequests) {
+    public TripMateRequestAdapter(OnItemClickCallBack onItemClickCallBack, List<TripMateSentRequest> tripMateSentRequests) {
         this.tripMateSentRequests = tripMateSentRequests;
         this.onItemClickCallBack = onItemClickCallBack;
     }
@@ -62,7 +58,7 @@ public class UserTripMateRequestAdapter extends RecyclerView.Adapter<UserTripMat
                 /************************************************************************************************/
                 if (tripMateSentRequests.get(position).getPhotoUrl() != null && !tripMateSentRequests.get(position).getPhotoUrl().isEmpty())
                     Picasso.get().load(tripMateSentRequests.get(position).getPhotoUrl()).into(dialogUserImage);
-                if (tripMateSentRequests.get(position).getUserName() != null )
+                if (tripMateSentRequests.get(position).getUserName() != null)
                     dialogUserName.setText(tripMateSentRequests.get(position).getUserName());
                 if (tripMateSentRequests.get(position).getTitle() != null && !tripMateSentRequests.get(position).getTitle().isEmpty()) {
                     dialogTitleTripMateRequest.setText(tripMateSentRequests.get(position).getTitle());
@@ -80,10 +76,12 @@ public class UserTripMateRequestAdapter extends RecyclerView.Adapter<UserTripMat
                 dialogMaterialButton.setOnClickListener(v1 -> {
                     Log.d("TAG", "onBindViewHolder: show user profile ");
                     alertDialog.dismiss();
-                    onItemClickCallBack.onItemCallBack(tripMateSentRequests.get(position).getUserID(),1);
+                    onItemClickCallBack.onItemCallBack(tripMateSentRequests.get(position).getUserID(), 1);
                 });
 
             });
+        } else {
+
         }
 
     }
@@ -97,6 +95,7 @@ public class UserTripMateRequestAdapter extends RecyclerView.Adapter<UserTripMat
         this.tripMateSentRequests = tripMateSentRequests;
         notifyDataSetChanged();
     }
+
     public void removeUser() {
         tripMateSentRequests.remove(currentPosition);
         notifyItemRemoved(currentPosition);
@@ -114,12 +113,8 @@ public class UserTripMateRequestAdapter extends RecyclerView.Adapter<UserTripMat
             userName = itemView.findViewById(R.id.txtUserName);
             userImage = itemView.findViewById(R.id.imgUser);
             acceptRequestButton.setOnClickListener(v -> {
-                onItemClickCallBack.onItemCallBack(tripMateSentRequests.get(getAdapterPosition()).getId(),0);
-                if (tripMateSentRequests.get(getAdapterPosition()).isApproved())
-                {
-                    currentPosition = getAdapterPosition();
-                    Log.d("TAG", "UserTripMateRequestViewHolder: " + currentPosition);
-                }
+                currentPosition = getAdapterPosition();
+                onItemClickCallBack.onItemCallBack(tripMateSentRequests.get(getAdapterPosition()).getId(), 0);
             });
 
         }

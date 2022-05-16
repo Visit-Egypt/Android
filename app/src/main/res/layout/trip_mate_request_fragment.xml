@@ -5,19 +5,65 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".presentation.tripmateRequest.TripMateRequest"
-    >
+    tools:context=".presentation.tripmateRequest.TripMateRequest">
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="8dp"
         android:fontFamily="@font/prata_regular"
-        android:padding="8dp"
         android:gravity="center_horizontal"
+        android:padding="8dp"
         android:text="Trip Mate Requests "
         android:textSize="20sp"
         android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/userProfileShimmer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/firstReq"
+            android:orientation="vertical">
+
+            <include layout="@layout/user_card_shimmer" />
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/secReq"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <include layout="@layout/user_card_shimmer" />
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/thirdReq"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <include layout="@layout/user_card_shimmer" />
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/fourthReq"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <include layout="@layout/user_card_shimmer" />
+        </com.facebook.shimmer.ShimmerFrameLayout>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/requestsRecyclerView"
@@ -26,6 +72,7 @@
         android:layout_margin="8dp"
         android:orientation="vertical"
         android:padding="8dp"
+        android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </LinearLayout>

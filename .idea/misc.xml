@@ -9,6 +9,7 @@
         <entry key="..\:/Work/Android/app/src/main/res/drawable/trip_mate.xml" value="0.2703125" />
         <entry key="..\:/Work/Android/app/src/main/res/drawable/user_msg.xml" value="0.2703125" />
         <entry key="..\:/Work/Android/app/src/main/res/layout/activity_gamification.xml" value="0.1361111111111111" />
+        <entry key="..\:/Work/Android/app/src/main/res/layout/card_shimmer_placeholder.xml" value="0.13020833333333334" />
         <entry key="..\:/Work/Android/app/src/main/res/layout/dialog_add_review.xml" value="0.25416666666666665" />
         <entry key="..\:/Work/Android/app/src/main/res/layout/dialog_add_trip_mate.xml" value="0.1398148148148148" />
         <entry key="..\:/Work/Android/app/src/main/res/layout/dialog_ar_explore.xml" value="0.25416666666666665" />
@@ -22,9 +23,12 @@
         <entry key="..\:/Work/Android/app/src/main/res/layout/item_hashtag.xml" value="0.72" />
         <entry key="..\:/Work/Android/app/src/main/res/layout/load_state_item.xml" value="0.1398148148148148" />
         <entry key="..\:/Work/Android/app/src/main/res/layout/loading.xml" value="0.25416666666666665" />
+        <entry key="..\:/Work/Android/app/src/main/res/layout/places_card_shimmer.xml" value="0.13020833333333334" />
         <entry key="..\:/Work/Android/app/src/main/res/layout/recommendation_card.xml" value="0.264" />
+        <entry key="..\:/Work/Android/app/src/main/res/layout/recommendation_card_shimmer.xml" value="0.13020833333333334" />
         <entry key="..\:/Work/Android/app/src/main/res/layout/trip_mate_fragment.xml" value="0.1398148148148148" />
-        <entry key="..\:/Work/Android/app/src/main/res/layout/trip_mate_request_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Work/Android/app/src/main/res/layout/trip_mate_request_fragment.xml" value="0.2" />
+        <entry key="..\:/Work/Android/app/src/main/res/layout/user_card_shimmer.xml" value="0.26024096385542167" />
         <entry key="..\:/Work/Android/app/src/main/res/layout/user_card_trip_mate_request.xml" value="0.25416666666666665" />
         <entry key="..\:/Work/Android/app/src/main/res/layout/user_card_trip_mate_request_card.xml" value="0.1361111111111111" />
         <entry key="..\:/Work/Android/app/src/main/res/layout/user_message.xml" value="0.25416666666666665" />

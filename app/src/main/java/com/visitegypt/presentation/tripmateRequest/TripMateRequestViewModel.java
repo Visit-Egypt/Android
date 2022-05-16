@@ -12,6 +12,7 @@ import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.TripMateSentRequest;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.usecase.ApproveTripMateUseCase;
+import com.visitegypt.domain.usecase.GetUserTripMates;
 import com.visitegypt.domain.usecase.GetUserUseCase;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class TripMateRequestViewModel extends ViewModel {
     private String requestId;
     private GetUserUseCase getUserUseCase;
+    private GetUserTripMates getUserTripMates;
     private ApproveTripMateUseCase approveTripMateUseCase;
     private static final String TAG = "Trip Mate Request View Model";
     private String userId;
@@ -38,10 +40,16 @@ public class TripMateRequestViewModel extends ViewModel {
     SharedPreferences sharedPreferences;
 
     @Inject
-    public TripMateRequestViewModel(GetUserUseCase getUserUseCase, ApproveTripMateUseCase approveTripMateUseCase, SharedPreferences sharedPreferences) {
+    public TripMateRequestViewModel(GetUserUseCase getUserUseCase,
+                                    ApproveTripMateUseCase approveTripMateUseCase,
+                                    SharedPreferences sharedPreferences,
+                                    GetUserTripMates getUserTripMates
+
+    ) {
         this.getUserUseCase = getUserUseCase;
         this.approveTripMateUseCase = approveTripMateUseCase;
         this.sharedPreferences = sharedPreferences;
+        this.getUserTripMates = getUserTripMates;
     }
 
     public void setRequestId(String requestId) {
@@ -52,21 +60,12 @@ public class TripMateRequestViewModel extends ViewModel {
         this.userId = userId;
     }
 
-    public void getTripMateUsers() {
-        List<User> users = getUserUseCase.getUserTripMates(tripMateRequests);
-//        List<User> users = test(tripMateRequests);
-//        Log.d(TAG, "getTripMateUsers: " + users.get(0).getUserId());
-//        if (users.size() != 0)
-////            mutableLiveDataUser.setValue(users);
-    }
-
     public void getTripRequests() {
         userId = sharedPreferences.getString(SHARED_PREF_USER_ID, "");
         getUserUseCase.setUser(userId, "");
         getUserUseCase.execute(user -> {
             tripMateRequests = user.getTripMateRequests();
-            test(tripMateRequests);
-            getTripMateUsers();
+            getAllTripMateRequests(tripMateRequests);
         }, throwable -> {
             Log.d(TAG, "getTripRequests: ");
 
@@ -90,15 +89,15 @@ public class TripMateRequestViewModel extends ViewModel {
         });
     }
 
-    public void test(List<TripMateRequest> tripMateRequests) {
-        getUserUseCase
-                .getUserTripMateEnhance(tripMateRequests)
-                .subscribe(objects -> {
-//                    Log.d(TAG, "test: " + ((TripMateSentRequest) objects.get(0)).getTitle());
-                    mutableLiveDataUser.setValue(Collections.singletonList((TripMateSentRequest) objects));
-                },throwable -> {
-                    Log.e(TAG, "test: " + throwable.getMessage());
+    public void getAllTripMateRequests(List<TripMateRequest> tripMateRequests) {
+        getUserTripMates.getUserTripMate(tripMateRequests)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(tripMateSentRequests -> {
+                    mutableLiveDataUser.setValue(tripMateSentRequests);
+                }, throwable -> {
+                    Log.d(TAG, "test: " + throwable.getMessage());
                 });
+
 
     }
 

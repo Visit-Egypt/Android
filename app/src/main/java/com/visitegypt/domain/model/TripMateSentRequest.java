@@ -1,5 +1,7 @@
 package com.visitegypt.domain.model;
 
+import java.util.List;
+
 public class TripMateSentRequest extends  TripMateRequest{
     private String userName;
     private String photoUrl;
@@ -22,6 +24,7 @@ public class TripMateSentRequest extends  TripMateRequest{
         this.userName = userName;
         this.photoUrl = photoUrl;
     }
+
 
     public String getUserName() {
         return userName;
