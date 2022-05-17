@@ -52,6 +52,11 @@ public class UserRepositoryImp implements UserRepository {
     }
 
     @Override
+    public Single<User> getUser(String userId, String email) {
+        return retrofitService.getUser(userId);
+    }
+
+    @Override
     public Single<User> googleLoginUserToken(Token token) {
         return retrofitService.googleLoginUserToken(token);
     }

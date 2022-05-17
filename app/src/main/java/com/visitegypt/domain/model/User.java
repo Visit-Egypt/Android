@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-    @SerializedName("id")
+    @SerializedName("user_id")
     private String userId;
     @SerializedName("first_name")
     private String firstName;

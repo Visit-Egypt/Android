@@ -56,7 +56,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class Home extends AppCompatActivity {
     private static final String TAG = "Home";
-    HomeViewModel homeViewModel;
     private BottomNavigationView navigation;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityNewHomeBinding binding;
@@ -68,7 +67,6 @@ public class Home extends AppCompatActivity {
     private SearchRecyclerViewAdapter searchRecyclerViewAdapter;
     private RecyclerView searchRecyclerView;
     private ArrayList<SearchPlace> searchPlaces = new ArrayList<>();
-    private static final String TAG = "Home";
     private TextView txtNotFound;
     private SearchViewModel searchViewModel;
     private MaterialButton editButton;
@@ -364,39 +362,35 @@ public class Home extends AppCompatActivity {
     public void changeFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.nav_host_fragment_content_new_home, fragment).commit();
     }
-    public void changeFragmentWithBundle(Fragment fragment,Bundle bundle) {
+
+    public void changeFragmentWithBundle(Fragment fragment, Bundle bundle) {
         fragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.nav_host_fragment_content_new_home, fragment).commit();
     }
+
     private void ViewModelObserve() {
         homeViewModel.isLogged.observe(this, aBoolean -> {
             if (!aBoolean) {
                 redirect();
             }
         });
-        homeViewModel.mutableLiveDataUser.observe(this, user -> {
-            txtName.setText(user.getFirstName() + " " + user.getLastName());
-            txtEmail.setText(user.getEmail());
-            if (user.getPhotoUrl() != null) {
-                Log.d(TAG, "onChanged: " + user.getPhotoUrl());
-                homeViewModel.saveUserImage(user.getPhotoUrl());
-                Picasso.get().load(user.getPhotoUrl()).into(userImageView);
-            }
+
         homeViewModel.mutableLiveDataUser.observe(this, new Observer<User>() {
             @Override
             public void onChanged(User user) {
                 txtName.setText(user.getFirstName() + " " + user.getLastName());
                 txtEmail.setText(user.getEmail());
-                if (user.getPhotoUrl() != null )
-                {
-                    Log.d(TAG, "onChanged: "+user.getPhotoUrl());
+                if (user.getPhotoUrl() != null) {
+                    Log.d(TAG, "onChanged: " + user.getPhotoUrl());
                     homeViewModel.saveUserImage(user.getPhotoUrl());
                     Picasso.get().load(user.getPhotoUrl()).into(userImageView);
                     tripMateRequests = user.getTripMateRequests();
 
                 }
 
+            }
         });
+
     }
 
     public void logOut() {

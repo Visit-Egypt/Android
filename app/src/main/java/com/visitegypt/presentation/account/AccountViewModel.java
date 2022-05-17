@@ -73,15 +73,12 @@ public class AccountViewModel extends ViewModel {
     public AccountViewModel(SharedPreferences sharedPreferences, GetPostsByUser getPostsByUser,
                             GetBadgesOfUserUseCase getBadgesOfUserUseCase,
                             GetAllBadgesUseCase getAllBadgesUseCase,
-                            GetUserUseCase getUserUseCase,
                             GetUserPlaceActivityUseCase getUserPlaceActivityUseCase,
                             GetPlacesUseCase getPlacesUseCase,
-                            GetPlacesByPlaceActivityIdUseCase getPlacesByPlaceActivityIdUseCase) {
+                            GetPlacesByPlaceActivityIdUseCase getPlacesByPlaceActivityIdUseCase,
                             GetUserUseCase getUserUseCase,
                             GetTagUseCase getTagUseCase,
-                            TagDao tagDao
-
-    ) {
+                            TagDao tagDao) {
         this.sharedPreferences = sharedPreferences;
         this.getPostsByUser = getPostsByUser;
         this.getBadgesOfUserUseCase = getBadgesOfUserUseCase;
@@ -116,14 +113,13 @@ public class AccountViewModel extends ViewModel {
         getUserUseCase.setUser(userId, email);
         getUserUseCase.execute(user -> {
                     userMutableLiveData.setValue(user);
-                    if (user.getInterests() != null && user.getInterests().size() != 0)
-                    {
-                    tagDao.getTagsNameByIds(user.getInterests())
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe((tags, throwable) -> {
-                                mutableLiveDataTagNames.setValue(tags);
-                            });
+                    if (user.getInterests() != null && user.getInterests().size() != 0) {
+                        tagDao.getTagsNameByIds(user.getInterests())
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe((tags, throwable) -> {
+                                    mutableLiveDataTagNames.setValue(tags);
+                                });
                     }
 
                 }
@@ -168,8 +164,6 @@ public class AccountViewModel extends ViewModel {
                 }
         );
     }
-
-
 
 
     public void getPlacesByPlaceActivities() {
