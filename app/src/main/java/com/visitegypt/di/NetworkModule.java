@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
 
+
 import androidx.annotation.NonNull;
 
 import com.visitegypt.data.repository.BadgesRepositoryImp;
@@ -17,8 +18,10 @@ import com.visitegypt.data.repository.ItemRepositoryImp;
 import com.visitegypt.data.repository.NotificationRepositoryImp;
 import com.visitegypt.data.repository.PlaceRepositoryImp;
 import com.visitegypt.data.repository.PostRepositoryImp;
+import com.visitegypt.data.repository.TagRepositoryImp;
 import com.visitegypt.data.repository.UploadToS3Imp;
 import com.visitegypt.data.repository.UserRepositoryImp;
+import com.visitegypt.data.source.local.dao.TagDao;
 import com.visitegypt.data.source.remote.RetrofitService;
 import com.visitegypt.data.source.remote.RetrofitServiceUpload;
 import com.visitegypt.domain.model.Token;
@@ -29,6 +32,7 @@ import com.visitegypt.domain.repository.ItemRepository;
 import com.visitegypt.domain.repository.NotificationRepository;
 import com.visitegypt.domain.repository.PlaceRepository;
 import com.visitegypt.domain.repository.PostsRepository;
+import com.visitegypt.domain.repository.TagRepository;
 import com.visitegypt.domain.repository.UploadToS3Repository;
 import com.visitegypt.domain.repository.UserRepository;
 import com.visitegypt.domain.usecase.GetRefreshTokenUseCase;
@@ -43,6 +47,8 @@ import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
+import io.reactivex.rxjava3.core.Single;
+import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -89,11 +95,11 @@ public class NetworkModule implements CallBack {
             @Override
             public Response intercept(@NonNull Chain chain) throws IOException {
                 token = sharedPreferences.getString(SHARED_PREF_USER_ACCESS_TOKEN, "");
-                String refreshToken = sharedPreferences.getString(SHARED_PREF_USER_REFRESH_TOKEN, "");
                 Request request = chain.request().newBuilder()
                         .addHeader("Authorization", "Bearer " + token)
                         .build();
                 Response response = chain.proceed(request);
+                response.cacheResponse();
                 if (response.code() == 403 || response.code() == 401) {
                     response.close();
                     getNewToken(userRepository, sharedPreferences);
@@ -103,7 +109,7 @@ public class NetworkModule implements CallBack {
                             .addHeader("Authorization", "Bearer " + newToken)
                             .build();
                     flag = true;
-                    Log.d("TAG", "callBack: new token  " + newToken + " " + flag);
+                    Log.d("TAG", "callBack: new token  " + newToken+ " " +flag);
 
                     return chain.proceed(newRequest);
 
@@ -270,6 +276,12 @@ public class NetworkModule implements CallBack {
         return new NotificationRepositoryImp(retrofitService);
     }
 
+    @Provides
+    @Singleton
+    public TagRepository provideTagRepository(@Named("Normal") RetrofitService retrofitService, TagDao tagDao) {
+        return new TagRepositoryImp(retrofitService,tagDao);
+    }
+
 
     private void getNewToken(GetRefreshTokenUseCase getRefreshTokenUseCase, SharedPreferences sharedPreferences) throws IOException {
         Log.d("TAG", "Threads: " + Thread.currentThread());
@@ -286,6 +298,6 @@ public class NetworkModule implements CallBack {
     public void callBack(String token) {
         Log.d("TAG", "callBack: " + token);
         newToken = token;
-        flag = false;
+       flag = false;
     }
 }

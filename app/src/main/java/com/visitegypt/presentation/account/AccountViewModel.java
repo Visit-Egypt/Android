@@ -8,10 +8,12 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.visitegypt.data.source.local.dao.TagDao;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.model.Post;
+import com.visitegypt.domain.model.Tag;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.usecase.GetAllBadgesUseCase;
 import com.visitegypt.domain.usecase.GetBadgesOfUserUseCase;
@@ -19,17 +21,22 @@ import com.visitegypt.domain.usecase.GetPlacesByPlaceActivityIdUseCase;
 import com.visitegypt.domain.usecase.GetPlacesUseCase;
 import com.visitegypt.domain.usecase.GetPostsByUser;
 import com.visitegypt.domain.usecase.GetUserPlaceActivityUseCase;
+import com.visitegypt.domain.usecase.GetTagUseCase;
 import com.visitegypt.domain.usecase.GetUserUseCase;
 import com.visitegypt.utils.Constants;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.BlockingDeque;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.HttpException;
 
@@ -41,6 +48,7 @@ public class AccountViewModel extends ViewModel {
     MutableLiveData<ArrayList<Place>> placesWithNeededPlaceActivities = new MutableLiveData<>();
 
     MutableLiveData<ArrayList<Badge>> userBadgesMutableLiveData = new MutableLiveData<>();
+
     MutableLiveData<List<Post>> mutableLiveDataMyPosts = new MutableLiveData<>();
     MutableLiveData<String> mutableLiveDataName = new MutableLiveData<>();
     MutableLiveData<String> mutableLiveDataUserImage = new MutableLiveData<>();
@@ -49,11 +57,14 @@ public class AccountViewModel extends ViewModel {
     MutableLiveData<ArrayList<PlaceActivity>> userPlaceActivityMutableLiveData = new MutableLiveData<>();
     private List<String> placeActivitiesId;
 
+    MutableLiveData<List<Tag>> mutableLiveDataTagNames = new MutableLiveData<>();
     private SharedPreferences sharedPreferences;
     private GetPostsByUser getPostsByUser;
     private GetBadgesOfUserUseCase getBadgesOfUserUseCase;
     private GetUserUseCase getUserUseCase;
     private GetAllBadgesUseCase getAllBadgesUseCase;
+    private GetTagUseCase getTagUseCase;
+    private TagDao tagDao;
     private GetUserPlaceActivityUseCase getUserPlaceActivityUseCase;
     private GetPlacesUseCase getPlacesUseCase;
     private GetPlacesByPlaceActivityIdUseCase getPlacesByPlaceActivityIdUseCase;
@@ -66,11 +77,18 @@ public class AccountViewModel extends ViewModel {
                             GetUserPlaceActivityUseCase getUserPlaceActivityUseCase,
                             GetPlacesUseCase getPlacesUseCase,
                             GetPlacesByPlaceActivityIdUseCase getPlacesByPlaceActivityIdUseCase) {
+                            GetUserUseCase getUserUseCase,
+                            GetTagUseCase getTagUseCase,
+                            TagDao tagDao
+
+    ) {
         this.sharedPreferences = sharedPreferences;
         this.getPostsByUser = getPostsByUser;
         this.getBadgesOfUserUseCase = getBadgesOfUserUseCase;
         this.getUserUseCase = getUserUseCase;
         this.getAllBadgesUseCase = getAllBadgesUseCase;
+        this.getTagUseCase = getTagUseCase;
+        this.tagDao = tagDao;
         this.getUserPlaceActivityUseCase = getUserPlaceActivityUseCase;
         this.getPlacesUseCase = getPlacesUseCase;
         this.getPlacesByPlaceActivityIdUseCase = getPlacesByPlaceActivityIdUseCase;
@@ -97,8 +115,17 @@ public class AccountViewModel extends ViewModel {
         String email = sharedPreferences.getString(Constants.SHARED_PREF_EMAIL, "");
         getUserUseCase.setUser(userId, email);
         getUserUseCase.execute(user -> {
-                    Log.d(TAG, "getUser: " + user.getUserId() + " retrieved");
                     userMutableLiveData.setValue(user);
+                    if (user.getInterests() != null && user.getInterests().size() != 0)
+                    {
+                    tagDao.getTagsNameByIds(user.getInterests())
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe((tags, throwable) -> {
+                                mutableLiveDataTagNames.setValue(tags);
+                            });
+                    }
+
                 }
                 ,
                 throwable -> {
@@ -141,6 +168,9 @@ public class AccountViewModel extends ViewModel {
                 }
         );
     }
+
+
+
 
     public void getPlacesByPlaceActivities() {
         if (placeActivitiesId == null) {

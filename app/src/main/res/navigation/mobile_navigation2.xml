@@ -48,5 +48,16 @@
         android:name="com.visitegypt.presentation.account.AccountFragment"
         android:label="@string/title_account"
         tools:layout="@layout/fragment_account" />
+    <fragment
+        android:id="@+id/tripMate"
+        android:name="com.visitegypt.presentation.tripmate.TripMate"
+        android:label="@string/trip_mate"
+        tools:layout="@layout/trip_mate_fragment" />
+    <fragment
+        android:id="@+id/tripMateRequest"
+        android:name="com.visitegypt.presentation.tripmateRequest.TripMateRequest"
+        android:label="@string/trip_mate_request"
+        tools:layout="@layout/trip_mate_request_fragment" />
+
 
 </navigation>

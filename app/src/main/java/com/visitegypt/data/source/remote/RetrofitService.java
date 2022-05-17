@@ -9,6 +9,8 @@ import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.model.Post;
 import com.visitegypt.domain.model.PostPage;
+import com.visitegypt.domain.model.Tag;
+import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.User;
@@ -64,7 +66,7 @@ public interface RetrofitService {
 
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @GET("api/user")
-    public Single<User> getUser(@Query("user_id") String userId, @Query("user_email") String email);
+    public Single<User> getUser(@Query("user_id") String userId);
 
     @PUT("api/user/{user_id}")
     public Single<User> updateUser(@Path("user_id") String userId, @Body UserUpdateRequest user);
@@ -96,7 +98,20 @@ public interface RetrofitService {
     @PUT("api/user/actvity/{activity_id}")
     public Single<List<PlaceActivity>> updateUserPlaceActivity(@Path("activity_id") String activityId, @Body PlaceActivity placeActivity);
 
-//    @GET("api/user/activity/{user_id}")
+    //    @GET("api/user/activity/{user_id}")
+    @POST("api/user/{user_id}/follow")
+    public Single<HashMap<String,String>> follow(@Path("user_id") String userId);
+    @POST("api/user/{user_id}/unfollow")
+    public Single<HashMap<String,String>> unfollow(@Path("user_id") String userId);
+    @POST("api/user/{user_id}/mate")
+    public Single<User> requestTripMate(@Path("user_id") String userId, @Body TripMateRequest requestMateBody);
+    @POST("api/user/trip-mate-reqs/{req_id}/approve")
+    public Single<User> approveTripMateRequest(@Path("req_id") String requestId);
+    @POST("api/user/interests")
+    public Single<String> addInterests(@Body HashMap<String,List<String>> interests);
+    @POST("api/user/interests/delete")
+    public Single<String> deleteInterests(@Body HashMap<String,List<String>> interests);
+
 
     /*******************************************************************/
     @GET("api/place/{id}")
@@ -178,4 +193,9 @@ public interface RetrofitService {
     /******************************************************************/
     @POST("api/notification/register-device")
     public Single<HashMap<Object,Object>> RegisterDeviceToNotification(@Body HashMap<Object,Object> deviceToken);
+    /********************************************************************/
+    @GET("api/tag")
+    public Single<List<Tag>> getTags();
+    @POST("api/tag/users")
+    public Single<List<User>> getAllUserTags(@Body HashMap<String,List<String>> tagsId);
 }

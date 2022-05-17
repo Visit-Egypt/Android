@@ -5,16 +5,19 @@ import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.ConfirmUploadModel;
 import com.visitegypt.domain.model.ConfirmUploadResponse;
 import com.visitegypt.domain.model.PlaceActivity;
+import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.response.UploadResponse;
 
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
+import retrofit2.http.Path;
 
 public interface UserRepository {
     /**
@@ -35,6 +38,11 @@ public interface UserRepository {
 
     Single<User> refreshUserToken(Token token);
 
+    Single<User> getUser(String userId);
+    Single<HashMap<String,String>> follow(String userId);
+    Single<HashMap<String,String>> unFollow(String userId);
+    Single<User> requestTripMate(String userId, TripMateRequest requestMateBody);
+    public Single<User> approveTripMateRequest( String requestId);
     Single<User> googleLoginUserToken(Token token);
 
     Single<User> googleRegisterUser(Token token);

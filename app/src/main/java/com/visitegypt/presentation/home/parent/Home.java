@@ -3,6 +3,7 @@ package com.visitegypt.presentation.home.parent;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -39,6 +40,8 @@ import com.visitegypt.R;
 import com.visitegypt.databinding.ActivityNewHomeBinding;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.SearchPlace;
+import com.visitegypt.domain.model.TripMateRequest;
+import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
 import com.visitegypt.presentation.setting.SettingFragment;
 import com.visitegypt.presentation.signin.SignInActivity;
@@ -61,14 +64,17 @@ public class Home extends AppCompatActivity {
     private NavController navController;
     private View header, searchViewLayout, homeViewLayout;
     private TextView txtName, txtEmail;
+    private HomeViewModel homeViewModel;
     private SearchRecyclerViewAdapter searchRecyclerViewAdapter;
     private RecyclerView searchRecyclerView;
     private ArrayList<SearchPlace> searchPlaces = new ArrayList<>();
+    private static final String TAG = "Home";
     private TextView txtNotFound;
     private SearchViewModel searchViewModel;
     private MaterialButton editButton;
     private ImageView userImageView;
     private SignInActivity signInActivity;
+    private List<TripMateRequest> tripMateRequests = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +88,7 @@ public class Home extends AppCompatActivity {
         searchResult();
         homeViewModel.getUserInfo();
         homeViewModel.getUserData();
+        homeViewModel.getAllTages();
         ViewModelObserve();
         logOut();
 
@@ -213,7 +220,9 @@ public class Home extends AppCompatActivity {
                 R.id.nav_map,
                 R.id.nav_booking,
                 R.id.nav_subscription,
-                R.id.setting
+                R.id.tripMate,
+                R.id.userProfile,
+                R.id.tripMateRequest
         )
                 .setOpenableLayout(drawer)
                 .build();
@@ -256,10 +265,12 @@ public class Home extends AppCompatActivity {
     }
 
     private void redirect() {
+
         Intent intent = new Intent(this, SignInActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
+
     }
 
     @Override
@@ -353,7 +364,10 @@ public class Home extends AppCompatActivity {
     public void changeFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.nav_host_fragment_content_new_home, fragment).commit();
     }
-
+    public void changeFragmentWithBundle(Fragment fragment,Bundle bundle) {
+        fragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.nav_host_fragment_content_new_home, fragment).commit();
+    }
     private void ViewModelObserve() {
         homeViewModel.isLogged.observe(this, aBoolean -> {
             if (!aBoolean) {
@@ -368,6 +382,19 @@ public class Home extends AppCompatActivity {
                 homeViewModel.saveUserImage(user.getPhotoUrl());
                 Picasso.get().load(user.getPhotoUrl()).into(userImageView);
             }
+        homeViewModel.mutableLiveDataUser.observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                txtName.setText(user.getFirstName() + " " + user.getLastName());
+                txtEmail.setText(user.getEmail());
+                if (user.getPhotoUrl() != null )
+                {
+                    Log.d(TAG, "onChanged: "+user.getPhotoUrl());
+                    homeViewModel.saveUserImage(user.getPhotoUrl());
+                    Picasso.get().load(user.getPhotoUrl()).into(userImageView);
+                    tripMateRequests = user.getTripMateRequests();
+
+                }
 
         });
     }
@@ -408,5 +435,9 @@ public class Home extends AppCompatActivity {
 
             return false;
         });
+    }
+
+    public List<TripMateRequest> getTripMateRequests() {
+        return tripMateRequests;
     }
 }

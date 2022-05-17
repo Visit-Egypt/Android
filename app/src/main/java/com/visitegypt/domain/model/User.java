@@ -6,11 +6,10 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 
-@Entity
 public class User {
-    @PrimaryKey
-    @SerializedName("user_id")
+    @SerializedName("id")
     private String userId;
     @SerializedName("first_name")
     private String firstName;
@@ -34,7 +33,14 @@ public class User {
     private ArrayList<Badge> badges;
     private int xp;
     private int level;
+    private List<String> following;
+    private List<String> followers;
+    private List<String> interests;
     private ProfileFrame frame;
+    @SerializedName("trip_mate_requests")
+    private List<TripMateRequest> tripMateRequests;
+    private TripMateRequest tripMateSentRequest;
+
 
     /*******************************************************************************/
     public User() {
@@ -57,7 +63,12 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.photoUrl = photoUrl;
     }
-
+    public User(String firstName, String lastName, String photoUrl ,String userId) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.photoUrl = photoUrl;
+        this.userId = userId;
+    }
     public User(String email, String password) {
         this.email = email;
         this.password = password;
@@ -180,7 +191,47 @@ public class User {
         return frame;
     }
 
+    public List<String> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(List<String> following) {
+        this.following = following;
+    }
+
+    public List<String> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(List<String> followers) {
+        this.followers = followers;
+    }
+
+    public List<String> getInterests() {
+        return interests;
+    }
+
+    public void setInterests(List<String> interests) {
+        this.interests = interests;
+    }
+
     public void setFrame(ProfileFrame frame) {
         this.frame = frame;
+    }
+
+    public List<TripMateRequest> getTripMateRequests() {
+        return tripMateRequests;
+    }
+
+    public TripMateRequest getTripMateSentRequest() {
+        return tripMateSentRequest;
+    }
+
+    public void setTripMateSentRequest(TripMateRequest tripMateSentRequest) {
+        this.tripMateSentRequest = tripMateSentRequest;
+    }
+
+    public void setTripMateRequests(List<TripMateRequest> tripMateRequests) {
+        this.tripMateRequests = tripMateRequests;
     }
 }

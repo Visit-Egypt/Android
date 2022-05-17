@@ -460,6 +460,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
 
     private void showPostPost() {
         Intent intent = new Intent(this, PostActivity.class);
+        Log.d(TAG, "showPostPost: this is show post place id" + placeId);
         intent.putExtra(PLACE_ID, placeId);
         startActivity(intent);
     }

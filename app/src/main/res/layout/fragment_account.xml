@@ -230,20 +230,88 @@
 
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/startPlayingGamificationButtonAccountFragment"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Start Playing"
-            android:textSize="19sp"
-            app:icon="@drawable/ic_gamepad"
-            app:iconGravity="textStart" />
+            android:layout_gravity="center"
+            android:orientation="horizontal">
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/startPlayingGamificationButtonAccountFragment"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Start Playing"
+                android:textSize="14sp"
+                app:icon="@drawable/ic_gamepad"
+                app:iconGravity="textStart" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tripMateRequestsAccountFragmentButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Requests"
+                android:textSize="14sp"
+                app:icon="@drawable/ic_trip_mate"
+                app:iconGravity="textStart" />
+
+        </LinearLayout>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="5dp"
+            android:background="?attr/colorSecondaryVariant" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/prata_regular"
+                android:padding="8dp"
+                android:text="@string/my_interests"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/myInterests"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/prata_regular"
+                android:padding="8dp"
+                android:text="I don't have any interests yet"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:padding="8dp"
+                app:singleSelection="false">
+
+                <!-- Chips can be declared here, or added dynamically. -->
+
+            </com.google.android.material.chip.ChipGroup>
+        </LinearLayout>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
             android:background="?attr/colorSecondaryVariant" />
 
         <LinearLayout
