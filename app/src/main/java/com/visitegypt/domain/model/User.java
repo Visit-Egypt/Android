@@ -39,7 +39,7 @@ public class User {
     private ProfileFrame frame;
     @SerializedName("trip_mate_requests")
     private List<TripMateRequest> tripMateRequests;
-    private TripMateRequest tripMateSentRequest;
+
 
 
     /*******************************************************************************/
@@ -223,15 +223,4 @@ public class User {
         return tripMateRequests;
     }
 
-    public TripMateRequest getTripMateSentRequest() {
-        return tripMateSentRequest;
-    }
-
-    public void setTripMateSentRequest(TripMateRequest tripMateSentRequest) {
-        this.tripMateSentRequest = tripMateSentRequest;
-    }
-
-    public void setTripMateRequests(List<TripMateRequest> tripMateRequests) {
-        this.tripMateRequests = tripMateRequests;
-    }
 }

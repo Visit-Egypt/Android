@@ -37,7 +37,7 @@ public class TripMateViewModel extends ViewModel {
                              TagDao tagDao,
                              SharedPreferences sharedPreferences,
                              GetAllUserTagUseCase getAllUserTagUseCase
-                             ) {
+    ) {
         this.getUserUseCase = getUserUseCase;
         this.tagDao = tagDao;
         this.sharedPreferences = sharedPreferences;

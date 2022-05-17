@@ -15,7 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.visitegypt.R;
@@ -39,6 +41,8 @@ public class TripMate extends Fragment implements OnFilterUpdate {
     private RecyclerView userRecyclerView;
     private RecyclerView recyclerViewHashtag;
     private UserAdapter userAdapter;
+    private ShimmerFrameLayout firstReq, secReq, thirdReq, fourthReq;
+    private LinearLayout linearLayout;
     private FilterChipAdapter hashtagChipAdapter;
     private ArrayList<User> users = new ArrayList<>();
     private List<String> myLabel;
@@ -73,10 +77,12 @@ public class TripMate extends Fragment implements OnFilterUpdate {
     private void mutableLiveDataObserver() {
         tripMateViewModel.mutableLiveDataTagNames.observe(getViewLifecycleOwner(), tags -> {
             Chips.createFilterChipsEnhance(tags, chipGroup);
+            stopShimmerAnimation();
+
         });
         tripMateViewModel.mutableLiveDataUsers.observe(getViewLifecycleOwner(), users1 -> {
-
             userAdapter.updateUserList(users1);
+            stopShimmerAnimation();
         });
     }
 
@@ -87,6 +93,11 @@ public class TripMate extends Fragment implements OnFilterUpdate {
         userRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         userRecyclerView.setAdapter(userAdapter);
         Chips.setOnFilterUpdate(this::onFilterUpdate);
+        firstReq = tripMateFargment.findViewById(R.id.firstReq);
+        secReq = tripMateFargment.findViewById(R.id.secReq);
+        thirdReq = tripMateFargment.findViewById(R.id.thirdReq);
+        fourthReq = tripMateFargment.findViewById(R.id.fourthReq);
+        linearLayout = tripMateFargment.findViewById(R.id.userProfileShimmer);
 
 //        hashtagChipAdapter = new FilterChipAdapter(myLabel);
 //        recyclerViewHashtag = tripMateFargment.findViewById(R.id.recyclerViewHashtag);
@@ -101,10 +112,49 @@ public class TripMate extends Fragment implements OnFilterUpdate {
     public void onFilterUpdate(List<String> filters) {
         //TODO
         if (filters != null && filters.size() != 0)
-            tripMateViewModel.getAllUserTag(filters);
-        else
         {
+            tripMateViewModel.getAllUserTag(filters);
+            startShimmerAnimation();
+        }
+        else {
             userAdapter.updateUserList(users);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        startShimmerAnimation();
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopShimmerAnimation();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        stopShimmerAnimation();
+    }
+
+    private void startShimmerAnimation() {
+        firstReq.startShimmerAnimation();
+        secReq.startShimmerAnimation();
+        thirdReq.startShimmerAnimation();
+        fourthReq.startShimmerAnimation();
+        userRecyclerView.setVisibility(View.GONE);
+        linearLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void stopShimmerAnimation() {
+        firstReq.stopShimmerAnimation();
+        secReq.stopShimmerAnimation();
+        thirdReq.stopShimmerAnimation();
+        fourthReq.stopShimmerAnimation();
+        userRecyclerView.setVisibility(View.VISIBLE);
+        linearLayout.setVisibility(View.GONE);
     }
 }
