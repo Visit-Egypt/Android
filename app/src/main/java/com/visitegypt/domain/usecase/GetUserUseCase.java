@@ -18,6 +18,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
@@ -60,5 +61,14 @@ public class GetUserUseCase extends SingleUseCase<User> {
     protected Single<User> buildSingleUseCase() {
         return userRepository
                 .getUser(userId);
+    }
+
+    public Single<List<String>> getUserInterest() {
+        return userRepository
+                .getUser(userId)
+                .subscribeOn(Schedulers.io())
+                .map(user1 -> user1.getInterests())
+                .observeOn(AndroidSchedulers.mainThread())
+                ;
     }
 }

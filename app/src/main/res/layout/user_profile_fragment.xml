@@ -288,22 +288,23 @@
                     android:textStyle="bold" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/myInterests"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginBottom="8dp"
                     android:layout_weight="1"
-                    android:id="@+id/myInterests"
                     android:fontFamily="@font/prata_regular"
                     android:padding="10dp"
                     android:text="I don't have any interests yet"
                     android:textSize="13sp"
                     android:textStyle="bold" />
+
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/chipGroup"
                     android:layout_width="match_parent"
-
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    app:singleSelection="false">
 
                     <!-- Chips can be declared here, or added dynamically. -->
 
@@ -382,6 +383,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone" />
-        </LinearLayout>
+    </LinearLayout>
 
 </ScrollView>

@@ -26,6 +26,7 @@ import com.google.android.material.textview.MaterialTextView;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
+import com.visitegypt.domain.model.Tag;
 import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.presentation.home.HomeRecyclerViewAdapter;
 import com.visitegypt.utils.Chips;
@@ -48,7 +49,8 @@ public class UserProfile extends Fragment {
     private ChipGroup chipGroup;
     private MaterialTextView myInterests;
     private LinearLayout userProfileLayout;
-    private String id ;
+    private String id;
+    private static final String TAG = "User Profile";
 
     public static UserProfile newInstance() {
         return new UserProfile();
@@ -96,6 +98,7 @@ public class UserProfile extends Fragment {
         myInterests = userProfileFragment.findViewById(R.id.myInterests);
         chipGroup = userProfileFragment.findViewById(R.id.chipGroup);
 
+
     }
 
     private void setOnClickListeners() {
@@ -116,29 +119,6 @@ public class UserProfile extends Fragment {
     private void mutableLiveDataObserve() {
         userProfileViewModel.mutableLiveDataUser.observe(getViewLifecycleOwner(), user -> {
             userName.setText(user.getFirstName() + " " + user.getLastName());
-            if ((user.getInterests() != null) && (user.getInterests().size() != 0)) {
-                myInterests.setVisibility(View.GONE);
-                for (String name : user.getInterests()) {
-                    chipGroup.addView(Chips.createChipsLabel(name));
-                }
-
-            } else {
-                myInterests.setVisibility(View.GONE);
-                List<String> myLabel = new ArrayList<>();
-                myLabel.add("Travelling");
-                myLabel.add("Beach");
-                myLabel.add("Reda");
-                myLabel.add("Reda");
-                myLabel.add("Reda");
-                myLabel.add("Reda");
-                myLabel.add("Reda");
-                myLabel.add("Reda");
-                myLabel.add("Reda");
-                myLabel.add("Reda");
-                for (String name : myLabel) {
-                    chipGroup.addView(Chips.createChipsLabel(name));
-                }
-            }
             if ((user.getFollowers() != null) && (user.getFollowers().size() != 0))
                 followersNumberTextView.setText(String.valueOf(user.getFollowers().size()));
             if ((user.getFollowing() != null) && (user.getFollowing().size() != 0))
@@ -175,6 +155,14 @@ public class UserProfile extends Fragment {
             if (aBoolean) {
                 hideLoading();
                 Toast.makeText(getContext(), "Your Request is sent successfully", Toast.LENGTH_LONG).show();
+            }
+        });
+        userProfileViewModel.mutableLiveDataTagNames.observe(getViewLifecycleOwner(), tags -> {
+            if ((tags != null) && (tags.size() != 0)) {
+                myInterests.setVisibility(View.GONE);
+                for (Tag tag : tags) {
+                    chipGroup.addView(Chips.createChipsLabel(tag.getName()));
+                }
             }
         });
     }

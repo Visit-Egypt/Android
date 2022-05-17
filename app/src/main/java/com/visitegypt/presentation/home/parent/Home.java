@@ -84,6 +84,7 @@ public class Home extends AppCompatActivity {
         searchResult();
         homeViewModel.getUserInfo();
         homeViewModel.getUserData();
+        homeViewModel.getAllTages();
         ViewModelObserve();
         logOut();
 

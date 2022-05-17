@@ -8,10 +8,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 public class User {
-    @PrimaryKey
-    @SerializedName("user_id")
+    @SerializedName("id")
     private String userId;
     @SerializedName("first_name")
     private String firstName;

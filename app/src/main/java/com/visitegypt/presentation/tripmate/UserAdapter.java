@@ -58,8 +58,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewAdapte
             holder.txtUserName.setText(users.get(position).getFirstName() + " " + users.get(position).getLastName() );
 
         }
-
-
+        Log.d(TAG, "onBindViewHolder: " + users.get(position).getUserId());
     }
 
     @Override

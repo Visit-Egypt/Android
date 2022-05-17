@@ -10,23 +10,28 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
+import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.visitegypt.R;
+import com.visitegypt.domain.model.Tag;
 import com.visitegypt.domain.model.User;
-import com.visitegypt.presentation.home.child.discover.DiscoverPlaceAdapter;
+import com.visitegypt.presentation.callBacks.OnFilterUpdate;
 import com.visitegypt.utils.Chips;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class TripMate extends Fragment {
+public class TripMate extends Fragment implements OnFilterUpdate {
 
     private TripMateViewModel tripMateViewModel;
     private View tripMateFargment;
@@ -34,9 +39,11 @@ public class TripMate extends Fragment {
     private RecyclerView userRecyclerView;
     private RecyclerView recyclerViewHashtag;
     private UserAdapter userAdapter;
-    private HashtagChipAdapter hashtagChipAdapter;
-    private ArrayList<User> users  = new ArrayList<>();
+    private FilterChipAdapter hashtagChipAdapter;
+    private ArrayList<User> users = new ArrayList<>();
     private List<String> myLabel;
+    private HashMap<Integer, String> chipIdMap = new HashMap<>();
+    private static final String TAG = "Trip Mate";
 
     public static TripMate newInstance() {
         return new TripMate();
@@ -50,64 +57,54 @@ public class TripMate extends Fragment {
         initViews();
         Chips.setContext(getContext());
         tripMateViewModel = new ViewModelProvider(this).get(TripMateViewModel.class);
-        createFakeData();
-        createFakeChips();
-
+//        createFakeData();
         return tripMateFargment;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        tripMateViewModel.getUserTags();
+        mutableLiveDataObserver();
 
 
     }
-    private void initViews()
-    {
+
+    private void mutableLiveDataObserver() {
+        tripMateViewModel.mutableLiveDataTagNames.observe(getViewLifecycleOwner(), tags -> {
+            Chips.createFilterChipsEnhance(tags, chipGroup);
+        });
+        tripMateViewModel.mutableLiveDataUsers.observe(getViewLifecycleOwner(), users1 -> {
+
+            userAdapter.updateUserList(users1);
+        });
+    }
+
+    private void initViews() {
         chipGroup = tripMateFargment.findViewById(R.id.chipGroup);
         userRecyclerView = tripMateFargment.findViewById(R.id.userRecyclerView);
-
-        userAdapter = new UserAdapter(getContext(),getParentFragment(), users);
+        userAdapter = new UserAdapter(getContext(), getParentFragment(), users);
         userRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         userRecyclerView.setAdapter(userAdapter);
-        hashtagChipAdapter = new HashtagChipAdapter(myLabel);
-        recyclerViewHashtag = tripMateFargment.findViewById(R.id.recyclerViewHashtag);
-        recyclerViewHashtag.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-        recyclerViewHashtag.setAdapter(hashtagChipAdapter);
+        Chips.setOnFilterUpdate(this::onFilterUpdate);
+
+//        hashtagChipAdapter = new FilterChipAdapter(myLabel);
+//        recyclerViewHashtag = tripMateFargment.findViewById(R.id.recyclerViewHashtag);
+//        recyclerViewHashtag.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+//        recyclerViewHashtag.setAdapter(hashtagChipAdapter);
 
 
     }
-    private void createFakeData()
-    {
-        User user1 = new User("Yehia","Hendy","https://visitegypt-media-bucket.s3.us-west-2.amazonaws.com/uploads/users/617170dacb2e775f16fc54f2/47b5aa45-f328-4002-85af-bcbb34a28560.jpeg",
-                "615df4afdfb3336ce9448939"
-        );
-        User user3 = new User("Yehia","Hendy","https://visitegypt-media-bucket.s3.us-west-2.amazonaws.com/uploads/users/617170dacb2e775f16fc54f2/47b5aa45-f328-4002-85af-bcbb34a28560.jpeg",
-                "615df4afdfb3336ce9448939"
-        );
-        User user2 = new User("Yehia","Hendy","https://visitegypt-media-bucket.s3.us-west-2.amazonaws.com/uploads/users/617170dacb2e775f16fc54f2/47b5aa45-f328-4002-85af-bcbb34a28560.jpeg",
-                "615df4afdfb3336ce9448939"
-                );
-        users.add(user1);
-        users.add(user2);
-        users.add(user3);
-        userAdapter.updateUserList(users);
-    }
-    private void createFakeChips()
-    {
-        myLabel = new ArrayList<>();
-        myLabel.add("Travelling");
-        myLabel.add("Beach");
-        myLabel.add("Reda");
-        myLabel.add("Reda");
-        myLabel.add("Reda");
-        myLabel.add("Reda");
-        myLabel.add("Reda");
-        myLabel.add("Reda");
-        myLabel.add("Reda");
-        myLabel.add("Reda");
-        hashtagChipAdapter.updateLabelesList(myLabel);
-    }
 
 
+    @Override
+    public void onFilterUpdate(List<String> filters) {
+        //TODO
+        if (filters != null && filters.size() != 0)
+            tripMateViewModel.getAllUserTag(filters);
+        else
+        {
+            userAdapter.updateUserList(users);
+        }
+    }
 }

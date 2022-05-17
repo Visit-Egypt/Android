@@ -12,10 +12,12 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
+import com.visitegypt.data.source.local.dao.TagDao;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.usecase.GetAllBadgesUseCase;
+import com.visitegypt.domain.usecase.GetTagUseCase;
 import com.visitegypt.domain.usecase.GetUserUseCase;
 import com.visitegypt.domain.usecase.LogOutUseCase;
 import com.visitegypt.domain.usecase.UpdateUserBadgeTaskProgUseCase;
@@ -28,7 +30,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.HttpException;
 
@@ -50,16 +54,21 @@ public class HomeViewModel extends ViewModel {
     private UpdateUserBadgeTaskProgUseCase updateUserBadgeTaskProgUseCase;
     private GetAllBadgesUseCase getAllBadgesUseCase;
     private BadgeTask badgeTask;
+    private GetTagUseCase getTagUseCase;
+
 
     @Inject
     public HomeViewModel(SharedPreferences sharedPreferences, LogOutUseCase logOutUseCase,
                          GetUserUseCase getUserUseCase, UpdateUserBadgeTaskProgUseCase updateUserBadgeTaskProgUseCase,
-                         GetAllBadgesUseCase getAllBadgesUseCase) {
+                         GetAllBadgesUseCase getAllBadgesUseCase,
+                         GetTagUseCase getTagUseCase
+    ) {
         this.sharedPreferences = sharedPreferences;
         this.logOutUseCase = logOutUseCase;
         this.getUserUseCase = getUserUseCase;
         this.updateUserBadgeTaskProgUseCase = updateUserBadgeTaskProgUseCase;
         this.getAllBadgesUseCase = getAllBadgesUseCase;
+        this.getTagUseCase = getTagUseCase;
     }
 
     public void earnFirstBadge() {
@@ -159,5 +168,12 @@ public class HomeViewModel extends ViewModel {
 
     public void setBadgeTask(BadgeTask badgeTask) {
         this.badgeTask = badgeTask;
+    }
+
+    public void getAllTages() {
+        getTagUseCase.buildSingleUseCase().subscribe(tags -> {
+        }, throwable -> {
+            Log.d(TAG, "Tag: from Home  " + throwable.getMessage());
+        });
     }
 }

@@ -4,12 +4,15 @@ import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
 import com.visitegypt.data.source.local.dao.PlaceDao;
+import com.visitegypt.data.source.local.dao.TagDao;
+import com.visitegypt.data.source.local.dao.UserDao;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.Tag;
+import com.visitegypt.domain.model.User;
 
-@Database(entities = {Place.class}, version = 1)
+@Database(entities = {Tag.class} , version = 1)
 public abstract class AppDatabase extends RoomDatabase {
-    // REF https://developer.android.com/training/data-storage/room
-    public static final String DATABASE_NAME = "PlacesDB.db";
+    public static final String DATABASE_NAME = "Visit Egypt";
 
-    public abstract PlaceDao userDao();
+    public abstract TagDao tagDao();
 }

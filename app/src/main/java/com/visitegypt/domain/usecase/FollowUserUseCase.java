@@ -2,7 +2,6 @@ package com.visitegypt.domain.usecase;
 
 import com.visitegypt.domain.repository.UserRepository;
 import com.visitegypt.domain.usecase.base.SingleUseCase;
-import com.visitegypt.presentation.tripmate.HashtagChipAdapter;
 
 import java.util.HashMap;
 

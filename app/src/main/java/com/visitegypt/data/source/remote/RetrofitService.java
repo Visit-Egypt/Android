@@ -176,6 +176,6 @@ public interface RetrofitService {
     /********************************************************************/
     @GET("api/tag")
     public Single<List<Tag>> getTags();
-    @GET("api/tag/users")
-    public Single<List<User>> getAllUserTags(HashMap<String,List<String>> tagsId);
+    @POST("api/tag/users")
+    public Single<List<User>> getAllUserTags(@Body HashMap<String,List<String>> tagsId);
 }

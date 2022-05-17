@@ -15,16 +15,20 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.android.material.textview.MaterialTextView;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.BadgeTask;
+import com.visitegypt.domain.model.Tag;
 import com.visitegypt.presentation.gamification.BadgesSliderViewAdapter;
 import com.visitegypt.presentation.gamification.CitiesActivity;
 import com.visitegypt.presentation.home.parent.Home;
 import com.visitegypt.presentation.tripmateRequest.TripMateRequest;
+import com.visitegypt.utils.Chips;
 import com.visitegypt.utils.GamificationRules;
 import com.visitegypt.utils.MergeObjects;
 
@@ -45,11 +49,12 @@ public class AccountFragment extends Fragment {
     private TextView userTitleTextView;
     private LinearProgressIndicator xpLinearProgressIndicator;
     private AccountViewModel accountViewModel;
-    private Button gamificationStartPlayingButton,tripMateRequestsButton;
+    private Button gamificationStartPlayingButton, tripMateRequestsButton;
     private CircularImageView circularAccountImageView;
     private RecyclerView badgesRecyclerView;
     private BadgesSliderViewAdapter badgesSliderViewAdapter;
-
+    private ChipGroup chipGroup;
+    private MaterialTextView myInterests;
     private ArrayList<Badge> userBadges;
     private ArrayList<Badge> placeBadges;
 
@@ -77,9 +82,10 @@ public class AccountFragment extends Fragment {
         xpProgressTextView = accountView.findViewById(R.id.xpProgressTextViewAccountFragment);
         xpRemainingTextView = accountView.findViewById(R.id.remainingXpTextViewAccountFragment);
         userTitleTextView = accountView.findViewById(R.id.titleTextViewAccountFragment);
-
+        myInterests = accountView.findViewById(R.id.myInterests);
+        chipGroup = accountView.findViewById(R.id.chipGroup);
+        Chips.setContext(getContext());
         xpLinearProgressIndicator = accountView.findViewById(R.id.userLevelLinearProgressIndicationAccountFragment);
-
         gamificationStartPlayingButton = accountView.findViewById(R.id.startPlayingGamificationButtonAccountFragment);
         gamificationStartPlayingButton.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), CitiesActivity.class);
@@ -113,6 +119,7 @@ public class AccountFragment extends Fragment {
             userTitleTextView.setText(GamificationRules.getTitleFromLevel(level));
             xpLinearProgressIndicator.setMax(GamificationRules.getLevelXp(level + 1));
             xpLinearProgressIndicator.setProgress(GamificationRules.getLevelXp(level), true);
+
         });
 
         accountViewModel.getUserInformation();
@@ -125,6 +132,14 @@ public class AccountFragment extends Fragment {
             if (s != null)
                 if (!s.isEmpty())
                     Picasso.get().load(s).into(circularAccountImageView);
+        });
+        accountViewModel.mutableLiveDataTagNames.observe(getViewLifecycleOwner(),tags -> {
+            if ((tags != null) && (tags.size() != 0)) {
+                myInterests.setVisibility(View.GONE);
+                for (Tag tag : tags) {
+                    chipGroup.addView(Chips.createChipsLabel(tag.getName()));
+                }
+            }
         });
 
         accountViewModel.getUserBadges();
@@ -163,12 +178,11 @@ public class AccountFragment extends Fragment {
             );
         });
 
-
     }
-    public void initOnClick()
-    {
+
+    public void initOnClick() {
         tripMateRequestsButton.setOnClickListener(v -> {
-            ((Home)getParentFragment().getActivity()).changeFragment(new TripMateRequest());
+            ((Home) getParentFragment().getActivity()).changeFragment(new TripMateRequest());
         });
     }
 }

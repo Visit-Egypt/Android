@@ -6,6 +6,7 @@ import androidx.room.Room;
 
 import com.visitegypt.data.source.local.AppDatabase;
 import com.visitegypt.data.source.local.dao.PlaceDao;
+import com.visitegypt.data.source.local.dao.TagDao;
 
 import javax.inject.Singleton;
 
@@ -24,11 +25,15 @@ public class DatabaseModule {
                 application,
                 AppDatabase.class,
                 AppDatabase.DATABASE_NAME
-        ).allowMainThreadQueries().build();
+        )
+                .fallbackToDestructiveMigration()
+                .build();
     }
 
     @Provides
-    public PlaceDao providePlacesDao(AppDatabase appDatabase) {
-        return appDatabase.userDao();
+    @Singleton
+    public static TagDao provideTagDao(AppDatabase appDatabase) {
+        return appDatabase.tagDao();
     }
+
 }
