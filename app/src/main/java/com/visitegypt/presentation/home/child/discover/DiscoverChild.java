@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,13 +18,12 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.smarteist.autoimageslider.SliderView;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
-import com.visitegypt.presentation.paging.CustomLoadStateAdapter;
 import com.visitegypt.presentation.home.child.discover.paging.PlacePagingAdapter;
 import com.visitegypt.presentation.home.child.discover.paging.PlaceserComparator;
 import com.visitegypt.presentation.home.parent.Home;
+import com.visitegypt.presentation.paging.CustomLoadStateAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -43,7 +41,6 @@ public class DiscoverChild extends Fragment {
     private PlacePagingAdapter placePagingAdapter;
     private LinearLayout discoverVerticalLayOut;
     private RecommendationPlaceAdapter recommendationPlaceAdapter;
-    private ArrayList<Place> placeArrayList;
     private ArrayList<Place> ourFavouritesArrayList;
     private DiscoverChildViewModel discoverChildViewModel;
     private ShimmerFrameLayout allPlacesShimmer;

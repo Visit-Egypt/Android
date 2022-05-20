@@ -34,7 +34,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,7 +53,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.smarteist.autoimageslider.SliderView;
 import com.visitegypt.R;
-import com.visitegypt.domain.model.Item;
+import com.visitegypt.domain.model.Explore;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.Slider;
@@ -71,7 +70,6 @@ import com.visitegypt.utils.GamificationRules;
 import com.visitegypt.utils.GeneralUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -153,18 +151,15 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         }
         chatBot();
         getAllItems();
-        reviewViewModel.mutableLiveDataResponseCode.observe(DetailActivity.this, code -> {
-            Log.d(TAG, "Submit review onclick " + code);
-            if (code == 400) {
-                Toast.makeText(DetailActivity.this, "This is offensive review",
-                        Toast.LENGTH_LONG).show();
-            } else {
-
-                addReviewDialog.dismiss();
-            }
-
-
-        });
+//        reviewViewModel.mutableLiveDataResponseCode.observe(DetailActivity.this, code -> {
+//            Log.d(TAG, "Submit review onclick " + code);
+//            if (code == 400) {
+//                Toast.makeText(DetailActivity.this, "This is offensive review",
+//                        Toast.LENGTH_LONG).show();
+//            } else {
+//                addReviewDialog.dismiss();
+//            }
+//        });
 
     }
 
@@ -198,7 +193,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         sliderView = findViewById(R.id.sliderSliderView);
         itemsRecyclerView = findViewById(R.id.itemsRecyclerView);
         itemPagingAdapter = new ItemPagingAdapter(new ItemComparator());
-        itemPagingAdapter.setContext(getApplicationContext());
+        itemPagingAdapter.setContext(this);
         itemsRecyclerView.setLayoutManager(new LinearLayoutManager(DetailActivity.this,
                 LinearLayoutManager.HORIZONTAL, true));
         itemsRecyclerView.setAdapter(itemPagingAdapter);
@@ -241,12 +236,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         reviewViewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
         detailViewModel.getPlace(placeId);
         detailViewModel.getItemsByPlaceId(placeId);
-        backArrowCircularImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                backPlace();
-            }
-        });
+        backArrowCircularImageButton.setOnClickListener(v -> backPlace());
 
         detailViewModel.itemMutableLiveData.observe(this, items -> {
             Log.d(TAG, "setting items to recycler view...");
@@ -280,6 +270,12 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
             stopShimmerAnimation();
             setLayoutVisible();
             setShimmersGone();
+
+            if (place.getExplores() != null) {
+                for (Explore explore : place.getExplores()) {
+                    place.getPlaceActivities().add(explore);
+                }
+            }
 
             mapView.getMapAsync(DetailActivity.this);
             mapView.onCreate(savedInstances);
@@ -333,9 +329,10 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
             if (place.getPlaceActivities() != null)
                 GeneralUtils.LiveDataUtil.observeOnce(detailViewModel.userPlaceActivitiesMutableLiveData,
                         placeActivities -> {
-                            if (placeActivities != null)
+                            if (placeActivities != null) {
                                 GamificationRules.mergeTwoPlaceActivities(place.getPlaceActivities(),
                                         placeActivities);
+                            }
                             int progress = place.getProgress();
                             Log.d(TAG, "initViewModel: progress: " + progress);
                             int maxProgress = place.getMaxProgress();
@@ -403,10 +400,22 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     protected void onPause() {
         super.onPause();
         stopShimmerAnimation();
-        if (mapView != null && place != null) {
+        if (mapView != null) {
             mapView.onPause();
         }
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mapView != null) {
+            try {
+                mapView.onStop();
+            } catch (Exception ignored) {
+            }
+        }
+    }
+
 
     private void showDialog() {
         View dialogLayout = LayoutInflater.from(DetailActivity.this).inflate(R.layout.dialog_add_review, null);
@@ -443,12 +452,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
     private void chatBot() {
-        chatbotFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(DetailActivity.this, ChatbotActivity.class));
-            }
-        });
+        chatbotFloatingActionButton.setOnClickListener(v -> startActivity(new Intent(DetailActivity.this, ChatbotActivity.class)));
     }
 
     public void showReviews(View view) {
@@ -484,16 +488,6 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 
             LatLng location = new LatLng(place.getLatitude(), place.getLongitude());
             googleMap.addMarker(new MarkerOptions().position(location).title(place.getTitle()));
-//            // Instantiating CircleOptions to draw a circle around the marker
-//            CircleOptions locationCircle = new CircleOptions();
-//            LatLng latLng = new LatLng(place.getLatitude(), place.getLongitude());
-//            locationCircle.center(latLng);
-//            locationCircle.radius(GamificationRules.CONFIRM_LOCATION_CIRCLE_RADIUS);
-//            locationCircle.strokeColor(Color.YELLOW);
-//            locationCircle.fillColor(0x30ff0000);
-//            locationCircle.strokeWidth(2);
-//            googleMap.addCircle(locationCircle);
-            // move camera to place location
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
 
             mapView.onResume();

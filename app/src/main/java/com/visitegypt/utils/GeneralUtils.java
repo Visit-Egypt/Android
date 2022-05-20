@@ -125,7 +125,7 @@ public class GeneralUtils {
 
     public static void showButtonLoadingRight(final Button button) {
         DrawableButtonExtensionsKt.showProgress(button, progressParams -> {
-            progressParams.setButtonTextRes(R.string.loading);
+            progressParams.setButtonText("  please wait");
             progressParams.setProgressColor(Color.WHITE);
             return Unit.INSTANCE;
         });

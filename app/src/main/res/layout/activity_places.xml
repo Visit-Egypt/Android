@@ -74,7 +74,7 @@
                 android:layout_gravity="start"
                 android:layout_marginHorizontal="8dp"
                 android:layout_weight="1"
-                android:text="32 Remaining Activities"
+                android:text="Remaining Activities"
                 android:textSize="20sp" />
 
             <RelativeLayout
@@ -86,8 +86,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
-                    android:max="600"
-                    android:progress="560"
                     app:trackCornerRadius="3dp"
                     app:trackThickness="20dp" />
 
@@ -115,15 +113,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:layout_weight="1"
-                    android:text="560/600" />
+                    android:layout_weight="1" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/nextLevelRemainingXPTextViewPlacesActivity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:text="40XP can be earned" />
+                    android:layout_gravity="end" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -21,9 +21,9 @@ public class GamificationRules {
     public static final int XP_GENERAL = 5;
 
     // TITLES LEVELS
-    public static final int EXPLORER_LEVEL = 3;
-    public static final int ADVENTURER_LEVEL = 7;
-    public static final int ADVANCED_TRAVELLER_LEVEL = 10;
+    public static final int EXPLORER_LEVEL = 1;
+    public static final int ADVENTURER_LEVEL = 4;
+    public static final int ADVANCED_TRAVELLER_LEVEL = 9;
     public static final int PHAROS_LEVEL = 15;
     public static final int ANUBIS_LEVEL = MAX_LEVEL - 1;
 
@@ -38,6 +38,8 @@ public class GamificationRules {
     public static final int SILVER_BADGE_XP = 70;
     public static final int GOLD_BADGE_XP = 300;
     public static final String FIRST_SIGN_IN_BADGE_ID = "623c9aa3de3a6b3d7c407f63";
+
+    public static final int EXPLORE_XP = 15;
 
     private static final String TAG = "gamification rules";
 
@@ -62,7 +64,7 @@ public class GamificationRules {
         return -1;
     }
 
-    public static final String getTitleFromLevel(int level) {
+    public static String getTitleFromLevel(int level) {
         if (level <= EXPLORER_LEVEL) {
             return "Explorer";
         } else if (level <= ADVENTURER_LEVEL) {

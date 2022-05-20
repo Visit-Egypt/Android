@@ -15,6 +15,14 @@
         android:label="@string/title_account"
         tools:layout="@layout/fragment_account" />
 
+
+    <fragment
+        android:id="@+id/gaming"
+        android:name="com.visitegypt.presentation.gamification.GamificationFragment"
+        android:label="@string/gamification"
+        tools:layout="@layout/gamification_fragment" />
+
+
     <fragment
         android:id="@+id/setting"
         android:name="com.visitegypt.presentation.setting.SettingFragment"

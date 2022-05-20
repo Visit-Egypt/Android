@@ -57,8 +57,7 @@
                     android:fontFamily="@font/prata_regular"
                     android:padding="8dp"
                     android:text="ABOUT "
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    style="@style/TextAppearance.MaterialComponents.Headline6" />
 
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/descriptionShimmerFrameLayout"
@@ -79,13 +78,12 @@
                     android:background="?attr/colorSecondaryVariant" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/prata_regular"
                     android:padding="8dp"
-                    android:text="@string/artifacts"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:text="@string/artifacts" />
 
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/artifactsShimmerFrameLayout"
@@ -106,13 +104,12 @@
                     android:background="?attr/colorSecondaryVariant" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/prata_regular"
                     android:padding="10dp"
-                    android:text="@string/location"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:text="@string/location" />
 
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/locationShimmerFrameLayout"
@@ -133,13 +130,12 @@
                     android:background="?attr/colorSecondaryVariant" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/prata_regular"
                     android:padding="10dp"
-                    android:text="@string/reviews"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:text="@string/reviews" />
 
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/reviewsShimmerFrameLayout"
@@ -192,8 +188,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/prata_regular"
                     android:text="@string/opening_hours"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:padding="10dp"
                     tools:ignore="MissingConstraints" />
 
                 <com.facebook.shimmer.ShimmerFrameLayout
@@ -215,13 +211,12 @@
                     android:background="?attr/colorSecondaryVariant" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/prata_regular"
                     android:padding="10dp"
                     android:text="@string/prices"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
                     tools:ignore="MissingConstraints" />
 
                 <com.facebook.shimmer.ShimmerFrameLayout
@@ -853,7 +848,6 @@
                     android:layout_height="8dp"
                     android:layout_marginVertical="10dp"
                     android:background="?attr/colorSecondaryVariant" />
-
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -867,7 +861,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/prata_regular"
                         android:padding="8dp"
-                        android:text="5 remaining activities"
+                        android:text="@string/remaining_activities"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -875,15 +869,15 @@
                         android:id="@+id/remainingActivitiesDetailActivityLinearProgressIndicator"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:max="8"
-                        android:progress="3" />
+                        android:max="1"
+                        android:progress="0" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/gamificationInDetailActivityImageView"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Start The Adventure"
+                        android:text="@string/start_the_adventure"
                         android:textSize="17sp"
                         app:icon="@drawable/ic_gamepad"
                         app:iconGravity="textStart" />
@@ -892,6 +886,8 @@
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
+
+
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

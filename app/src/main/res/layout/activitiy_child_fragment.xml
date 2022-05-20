@@ -11,8 +11,11 @@
         android:layout_height="150dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="20dp"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
         android:layout_marginRight="10dp"
-        app:cardCornerRadius="20dp">
+        app:cardCornerRadius="8dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -29,15 +32,14 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/placeCardNameTextView"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_marginHorizontal="8dp"
                 android:layout_marginTop="100dp"
-                android:fontFamily="@font/montserrat_alternates_bold"
                 android:gravity="left"
-                android:text="Nature’s Light "
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="18sp"
+                android:text="Nature’s Light"
                 android:textStyle="bold" />
 
         </RelativeLayout>
@@ -47,10 +49,13 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
-        app:cardCornerRadius="20dp">
+        app:cardCornerRadius="8dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -66,15 +71,14 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/txtPlaceCardName2"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_marginHorizontal="8dp"
                 android:layout_marginTop="100dp"
-                android:fontFamily="@font/montserrat_alternates_bold"
                 android:gravity="left"
-                android:text="Learn History "
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="18sp"
+                android:text="Learn History"
                 android:textStyle="bold" />
 
         </RelativeLayout>
@@ -83,11 +87,14 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
         android:layout_height="150dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
-        app:cardCornerRadius="20dp">
+        app:cardCornerRadius="8dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -103,15 +110,14 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/txtPlaceCardName1"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_marginHorizontal="8dp"
                 android:layout_marginTop="100dp"
-                android:fontFamily="@font/montserrat_alternates_bold"
                 android:gravity="left"
                 android:text="Learn About Egypt "
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="18sp"
                 android:textStyle="bold" />
 
         </RelativeLayout>

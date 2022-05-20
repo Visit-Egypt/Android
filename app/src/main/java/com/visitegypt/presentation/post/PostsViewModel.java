@@ -33,22 +33,24 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class PostsViewModel extends ViewModel implements UploadUserPhotoUseCase.uploadPhotoApiCallBack {
     private static final String TAG = "Posts ViewModel";
 
-    MutableLiveData<List<PlaceActivity>> placeActivitiesMutableLiveData = new MutableLiveData<>();
     private AddNewPostUseCase addNewPostUseCase;
     private UpdateUserPlaceActivityUseCase updateUserPlaceActivityUseCase;
     private UploadUserPhotoUseCase uploadUserPhotoUseCase;
     private UpdateBadgeOfUserUseCase updateBadgeOfUserUseCase;
-
-    SharedPreferences sharedPreferences;
     private UpdateUserBadgeTaskProgUseCase updateUserBadgeTaskProgUseCase;
-    private List<String> imageList = new ArrayList<>();
-    private PlaceActivity postPlaceActivity;
-    private Post post;
 
+    MutableLiveData<List<PlaceActivity>> placeActivitiesMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<List<BadgeTask>> badgeTaskMutableLiveData = new MutableLiveData<>();
     MutableLiveData<List<Badge>> badgesMutableLiveData = new MutableLiveData<>();
-    private Badge badge;
     MutableLiveData<Boolean> isImageUploaded = new MutableLiveData<>();
     MutableLiveData<Boolean> isPostUploaded = new MutableLiveData<>();
+    private SharedPreferences sharedPreferences;
+    private Badge badge;
+    private BadgeTask postBadgeTask;
+    private PlaceActivity postPlaceActivity;
+
+    private List<String> imageList = new ArrayList<>();
+    private Post post;
 
     @Inject
     public PostsViewModel(AddNewPostUseCase addNewPostUseCase,
@@ -126,30 +128,23 @@ public class PostsViewModel extends ViewModel implements UploadUserPhotoUseCase.
     }
 
     private void updateUserBadge() {
-        for (BadgeTask badgeTask : badge.getBadgeTasks()) {
-            if (badgeTask.getType().equals(BadgeTask.SOCIAL_BUTTERFLY)) {
-                if (badgeTask.getProgress() < badgeTask.getMaxProgress())
-                    badgeTask.setProgress(badgeTask.getProgress() + 1);
-                else
-                    Log.d(TAG, "updateUserBadge: already earned the badge");
-                updateUserBadgeTaskProgUseCase.setBadgeTask(badgeTask);
-                updateUserBadgeTaskProgUseCase.execute(badgeTasks -> {
-
-                }, throwable -> {
-
-                });
-            }
+        if (postBadgeTask != null) {
+            updateUserBadgeTaskProgUseCase.setBadgeTask(postBadgeTask);
+            updateUserBadgeTaskProgUseCase.execute(badgeTasks -> {
+                badgeTaskMutableLiveData.setValue(badgeTasks);
+            }, throwable -> {
+                Log.e(TAG, "updateUserBadge: " + throwable.getMessage());
+            });
+        } else {
+            Log.e(TAG, "updateUserBadge: you must call setPostBadgeTask()");
         }
-        updateBadgeOfUserUseCase.setBadge(badge);
-        updateBadgeOfUserUseCase.execute(badges -> {
-            badgesMutableLiveData.setValue(badges);
-        }, throwable -> {
 
-        });
     }
 
     private void updatePlaceActivity() {
-        if (postPlaceActivity.getProgress() < postPlaceActivity.getMaxProgress()) {
+        if (postPlaceActivity == null) {
+            Log.e(TAG, "updatePlaceActivity: you must call setPostPlaceActivity()");
+        } else if (postPlaceActivity.getProgress() < postPlaceActivity.getMaxProgress()) {
             postPlaceActivity.setProgress(postPlaceActivity.getProgress() + 1);
             if (postPlaceActivity.getProgress() == postPlaceActivity.getMaxProgress()) {
                 postPlaceActivity.setFinished(true);
@@ -170,5 +165,9 @@ public class PostsViewModel extends ViewModel implements UploadUserPhotoUseCase.
 
     public void setPostPlaceActivity(PlaceActivity postPlaceActivity) {
         this.postPlaceActivity = postPlaceActivity;
+    }
+
+    public void setPostBadgeTask(BadgeTask postBadgeTask) {
+        this.postBadgeTask = postBadgeTask;
     }
 }

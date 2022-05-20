@@ -1,30 +1,21 @@
 package com.visitegypt.domain.model;
 
+import com.visitegypt.utils.GamificationRules;
+
 import java.util.ArrayList;
 
-public class Explore {
-    private String id;
-    private String title;
+public class Explore extends PlaceActivity {
     private String imageUrl;
     private ArrayList<Hint> hints;
 
-    public Explore(String title, String imageUrl) {
-        this.title = title;
-        this.imageUrl = imageUrl;
+    @Override
+    public int getMaxProgress() {
+        return 1;
     }
 
-    public Explore(String title, String imageUrl, ArrayList<Hint> hints) {
-        this.title = title;
-        this.imageUrl = imageUrl;
-        this.hints = hints;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    @Override
+    public String getType() {
+        return PlaceActivity.EXPLORE;
     }
 
     public String getImageUrl() {
@@ -43,11 +34,8 @@ public class Explore {
         this.hints = hints;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    @Override
+    public int getXp() {
+        return GamificationRules.EXPLORE_XP;
     }
 }

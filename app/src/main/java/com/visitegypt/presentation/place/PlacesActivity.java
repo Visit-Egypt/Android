@@ -15,7 +15,9 @@ import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textview.MaterialTextView;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
+import com.visitegypt.domain.model.Explore;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.utils.GamificationRules;
 import com.visitegypt.utils.GeneralUtils;
 
@@ -104,9 +106,19 @@ public class PlacesActivity extends AppCompatActivity {
                     placeActivities -> {
                         if (placeActivities != null)
                             for (Place place : places) {
-                                if (place.getPlaceActivities() != null)
+                                if (place.getExplores() != null) {
+                                    for (Explore explore : place.getExplores()) {
+                                        for (PlaceActivity placeActivity : place.getPlaceActivities()) {
+                                            if (explore.getId().equals(placeActivity.getId())) {
+                                                placeActivities.add(explore);
+                                            }
+                                        }
+                                    }
+                                }
+                                if (place.getPlaceActivities() != null) {
                                     GamificationRules.mergeTwoPlaceActivities(place.getPlaceActivities(),
                                             placeActivities);
+                                }
                             }
                         for (Place place : places) {
                             progress.addAndGet(place.getProgress());

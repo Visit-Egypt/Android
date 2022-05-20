@@ -27,7 +27,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -75,16 +74,11 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
 
         googleSignInButton = findViewById(R.id.googleSignInButton);
 
-        googleSignInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn();
-            }
-        });
+        googleSignInButton.setOnClickListener(v -> signIn());
 
         signInViewModel = new ViewModelProvider(this).get(SignInViewModel.class);
         if (signInViewModel.checkUser()) {
-            Log.d(TAG, "onCreate: ");
+            Log.d(TAG, "onCreate: user signed in");
             redirectHome();
         }
         btnSignIn = findViewById(R.id.btnSignIn);
@@ -95,12 +89,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
             getSupportActionBar().hide();
         }
         forgetPasswordTextView.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        forgetPassword();
-                    }
-                }
+                v -> forgetPassword()
         );
         signInViewModel.msgMutableLiveData.observe(this, new Observer<String>() {
             @Override
@@ -119,16 +108,13 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 }
             }
         });
-        signInViewModel.userMutable.observe(this, new Observer<User>() {
-            @Override
-            public void onChanged(User user) {
-                Intent intent = new Intent(SignInActivity.this, Home.class);
-                intent.putExtra(USER_NAME, user.getFirstName() + " " + user.getLastName());
-                intent.putExtra(USER_EMAIL, user.getEmail());
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
-            }
+        signInViewModel.userMutable.observe(this, user -> {
+            Intent intent = new Intent(SignInActivity.this, Home.class);
+            intent.putExtra(USER_NAME, user.getFirstName() + " " + user.getLastName());
+            intent.putExtra(USER_EMAIL, user.getEmail());
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
         });
         signInViewModel.forgotPasswordResponse.observe(this, a -> {
 
@@ -137,7 +123,6 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 redirectSignup();
             } else {
                 Toast.makeText(SignInActivity.this, "Not found", Toast.LENGTH_LONG).show();
-
             }
         });
     }
@@ -240,6 +225,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        hideLoading();
     }
 
     @Override
@@ -249,7 +235,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
-            Log.d(TAG, "onActivityResult:login done ");
+            Log.d(TAG, "onActivityResult: requesting login");
 //            redirectHome();
 ////            logOut();
         }
@@ -261,13 +247,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     }
 
     public void logOut() {
-        mGoogleSignInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                Log.d(TAG, "onComplete: logout from google acc done successfully");
-            }
-        });
-
+        mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> Log.d(TAG, "onComplete: logout from google acc done successfully"));
     }
 
 
@@ -285,10 +265,12 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 Log.d(TAG, "handleSignInResult: " + personName);
                 Log.d(TAG, "handleSignInResult: " + idToken);
                 signInViewModel.signInWithGoogle(idToken, acct.getEmail());
+            } else {
+                Log.e(TAG, "handleSignInResult: account is null");
             }
 
         } catch (ApiException e) {
-            Log.d(TAG, "signInResult:failed code=" + e.getStatusCode());
+            Log.e(TAG, "signInResult:failed code=" + e.getStatusCode());
         }
 
     }

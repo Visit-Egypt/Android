@@ -26,6 +26,7 @@ import retrofit2.HttpException;
 @HiltViewModel
 public class SignInViewModel extends ViewModel {
     private static final String TAG = "Sign in view model test";
+
     MutableLiveData<String> msgMutableLiveData = new MutableLiveData<>();
     MutableLiveData<User> userMutable = new MutableLiveData<>();
     MutableLiveData<String> forgotPasswordResponse = new MutableLiveData<>();
@@ -38,8 +39,11 @@ public class SignInViewModel extends ViewModel {
     private RegisterDeviceToNotificationUseCase registerDeviceToNotificationUseCase;
 
     @Inject
-    public SignInViewModel(GetGoogleLoginTokenUseCase getGoogleLoginTokenUseCase, ForgotPasswordUseCase forgotPasswordUseCase, LoginUserUseCase loginUserUseCase, SharedPreferences sharedPreferences, GetUserUseCase getUserUseCase
-    ,RegisterDeviceToNotificationUseCase registerDeviceToNotificationUseCase
+    public SignInViewModel(GetGoogleLoginTokenUseCase getGoogleLoginTokenUseCase,
+                           ForgotPasswordUseCase forgotPasswordUseCase,
+                           LoginUserUseCase loginUserUseCase, SharedPreferences sharedPreferences,
+                           GetUserUseCase getUserUseCase
+            , RegisterDeviceToNotificationUseCase registerDeviceToNotificationUseCase
 
     ) {
         this.loginUserUseCase = loginUserUseCase;
@@ -110,7 +114,7 @@ public class SignInViewModel extends ViewModel {
                         msgMutableLiveData.setValue(jObjectError.getJSONArray("errors").toString());
                     }
                 } catch (Exception e) {
-                    Log.d("TAG", "accept catch: " + e.toString());
+                    Log.e("TAG", "accept catch: " + e.toString());
                 }
             }
         });
@@ -128,7 +132,7 @@ public class SignInViewModel extends ViewModel {
                 saveUserData(user.getUserId(), email);
             }
 
-        }, throwable -> Log.d(TAG, "signInWithGoogle: " + throwable.getMessage()));
+        }, throwable -> Log.e(TAG, "signInWithGoogle: " + throwable.getMessage()));
 
     }
 
@@ -150,7 +154,7 @@ public class SignInViewModel extends ViewModel {
             forgotPasswordResponse.setValue("reset done");
         }, throwable -> {
             forgotPasswordResponse.setValue("Not found");
-            Log.d("TAG", "forgetpassword: " + throwable.getMessage());
+            Log.e("TAG", "forgetpassword: " + throwable.getMessage());
 
         });
 

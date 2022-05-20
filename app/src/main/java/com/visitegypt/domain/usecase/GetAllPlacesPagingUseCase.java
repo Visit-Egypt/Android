@@ -1,16 +1,11 @@
 package com.visitegypt.domain.usecase;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.paging.PagingState;
 
 import com.visitegypt.domain.model.Place;
-import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.response.PlacePageResponse;
 import com.visitegypt.domain.repository.PlaceRepository;
 import com.visitegypt.domain.usecase.base.PagingUseCase;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -33,8 +28,7 @@ public class GetAllPlacesPagingUseCase extends PagingUseCase<Place,PlacePageResp
         return placeRepository.getPlacesPaging(page)
                 .subscribeOn(Schedulers.io())
                 .map(places -> toLoadResult(places))
-                .onErrorReturn(LoadResult.Error::new)
-                ;
+                .onErrorReturn(LoadResult.Error::new);
     }
 
     @Override

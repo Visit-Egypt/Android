@@ -6,9 +6,9 @@
         android:icon="@drawable/ic_discover"
         android:title="@string/title_home" />
     <item
-        android:id="@+id/chat"
-        android:icon="@drawable/ic_chatbot"
-        android:title="@string/chat" />
+        android:id="@+id/gaming"
+        android:icon="@drawable/ic_gamepad"
+        android:title="@string/gamification" />
 
     <item
         android:id="@+id/account"

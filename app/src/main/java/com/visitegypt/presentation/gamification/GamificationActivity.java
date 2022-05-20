@@ -62,6 +62,7 @@ import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.BadgeTask;
+import com.visitegypt.domain.model.Explore;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.model.Review;
@@ -127,7 +128,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private TextView insightsXpTextView, artifactsXpTextView;
     private TextView distanceAwayTextView;
     private ImageButton askAboutInsightsImageButton, askAboutArtifactsImageButton;
-    private LinearProgressIndicator placeProgressIndicator;
+    private LinearProgressIndicator placeProgressIndicator, adventureLinearProgressIndicator;
     private LinearLayout shimmerLayout, gamificationLayout;
     private ConstraintLayout postCardConstraintLayout;
     private final MutableLiveData<Boolean> userInsideCircuitMutableLiveData = new MutableLiveData<>();
@@ -135,11 +136,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private final MutableLiveData<Boolean> userLocationLoaded = new MutableLiveData<>();
     private final MutableLiveData<Boolean> placeBadgesLoaded = new MutableLiveData<>();
     private MaterialCardView reviewBorder, postBorder, storyBorder, artifactsBorder, insightsBorder;
-    private final MutableLiveData<Boolean> userBadgesLoaded = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> placeActivitiesLoaded = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> userPlaceActivitiesLoaded = new MutableLiveData<>();
-    private MutableLiveData<Boolean> reviewActivityDone = new MutableLiveData<>();
-    private MutableLiveData<Boolean> visitLocationActivityDone = new MutableLiveData<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,6 +173,11 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         try {
             gamificationViewModel.getPlaceDetail();
             observeOnce(gamificationViewModel.placesMutableLiveData, place -> {
+                for (Explore explore : place.getExplores()) {
+                    explore.setXp(GamificationRules.EXPLORE_XP);
+                    explore.setMaxProgress(1);
+                    place.getPlaceActivities().add(explore);
+                }
                 GamificationActivity.this.place = place;
                 GamificationActivity.this.placeActivities = place.getPlaceActivities();
                 Log.d(TAG, "initViewModels: loaded place: " + place.getTitle());
@@ -240,23 +241,22 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private void initPlaceActivitiesViewModel() {
         Log.d(TAG, "initPlaceActivitiesViewModel: loading...");
         gamificationViewModel.getUserPlaceActivity();
-        gamificationViewModel.userPlaceActivitiesMutableLiveData.observe(this, placeActivities -> {
+        gamificationViewModel.userPlaceActivitiesMutableLiveData.observe(this, userPlaceActivities -> {
             int totalActivities = 0;
             int doneActivities = 0;
             AtomicInteger totalXp = new AtomicInteger();
             AtomicInteger doneXp = new AtomicInteger();
-            Log.d(TAG, "initPlaceActivitiesViewModel: userPlaceActivities: " + new Gson().toJson(placeActivities));
+            Log.d(TAG, "initPlaceActivitiesViewModel: userPlaceActivities: " + new Gson().toJson(userPlaceActivities));
             if (place.getPlaceActivities() != null)
                 Log.d(TAG, "initPlaceActivitiesViewModel: placeActivities: " + new Gson().toJson(place.getPlaceActivities()));
             else
-                Log.d(TAG, "initPlaceActivitiesViewModel: no place activities");
-
+                Log.e(TAG, "initPlaceActivitiesViewModel: no place activities");
 
             for (PlaceActivity placeActivity : place.getPlaceActivities()) {
                 totalActivities += placeActivity.getMaxProgress();
                 totalXp.addAndGet(placeActivity.getXp());
-                if (placeActivities != null) {
-                    for (PlaceActivity userPlaceActivity : placeActivities) {
+                if (userPlaceActivities != null) {
+                    for (PlaceActivity userPlaceActivity : userPlaceActivities) {
                         if (placeActivity.getId().equals(userPlaceActivity.getId())) {
                             MergeObjects.MergeTwoObjects.merge(placeActivity, userPlaceActivity);
                             Log.d(TAG, "initPlaceActivitiesViewModel: " + new Gson().toJson(placeActivity));
@@ -279,10 +279,35 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                                     case PlaceActivity.POST_STORY:
                                         setStoryActivityComplete();
                                         break;
+                                    case PlaceActivity.EXPLORE:
+                                        //TODO;
+                                        break;
                                     default:
                                         break;
                                 }
                             }
+                            int explored = 0;
+                            for (Explore explore : place.getExplores()) {
+                                for (PlaceActivity placeActivity1 : userPlaceActivities) {
+                                    if (explore.getId().equals(placeActivity1.getId())) {
+                                        Log.d(TAG, "initPlaceActivitiesViewModel: found place activity: " + new Gson().toJson(placeActivity1));
+                                        Log.d(TAG, "initPlaceActivitiesViewModel: found explore: " + new Gson().toJson(explore));
+
+                                        //MergeObjects.MergeTwoObjects.merge(explore, placeActivity1);
+                                        explore.setProgress(placeActivity1.getProgress());
+                                        doneActivities += explore.getProgress();
+                                        explore.setXp(GamificationRules.EXPLORE_XP);
+                                        doneXp.addAndGet(explore.getXp());
+                                        Log.d(TAG, "initPlaceActivitiesViewModel: found explore: " + new Gson().toJson(explore));
+                                        if (explore.getProgress() == 1) {
+                                            explored += 1;
+                                        }
+                                    }
+                                }
+                            }
+                            artifactsRecyclerViewAdapter.setExploreArrayList(place.getExplores());
+                            adventureLinearProgressIndicator.setMax(place.getExplores().size());
+                            adventureLinearProgressIndicator.setProgress(explored);
                         }
                     }
                 }
@@ -336,36 +361,31 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         gamificationViewModel.setPlaceId(placeId);
         gamificationViewModel.getBadgesOfUser();
         gamificationViewModel.getPlaceBadges();
-        gamificationViewModel.userBadgesMutableLiveData.observe(this, userBadge -> {
+        gamificationViewModel.userBadgesMutableLiveData.observe(this, userBadges -> {
             observeOnce(gamificationViewModel.placeBadgesMutableLiveData, placeBadges -> {
                 this.placeBadges = (ArrayList<Badge>) placeBadges;
-                Log.d(TAG, "initBadgesViewModel: place badges: " + new Gson().toJson(placeBadges));
-                //Log.d(TAG, "initViewModel: BOOM" + new Gson().toJson(userBadges.get(1).getBadgeTasks()));
-                Log.d(TAG, "initViewModel: ");
-                for (Badge badge : userBadges) {
-                    for (Badge placeBadge : placeBadges) {
-                        if (badge.getId().equals(placeBadge.getId())) {
-                            // same badge -> merge them
-                            Log.d(TAG, "initBadgesViewModel: before original merge badge" + new Gson().toJson(placeBadge));
-                            Log.d(TAG, "initBadgesViewModel: before merge update badge" + new Gson().toJson(badge));
+                Log.d(TAG, "initBadgesViewModel before: user badges: " + new Gson().toJson(userBadges));
+                Log.d(TAG, "initBadgesViewModel before: place badges: " + new Gson().toJson(this.placeBadges));
 
-                            MergeObjects.MergeTwoObjects.merge(placeBadge, badge);
-
-                            for (BadgeTask badgeTask : badge.getBadgeTasks()) {
-                                for (BadgeTask placeBadgeTask : placeBadge.getBadgeTasks()) {
-                                    if (badgeTask.getTaskTitle().equals(placeBadgeTask.getTaskTitle())) {
-                                        // same badgeTask -> merge them
-                                        MergeObjects.MergeTwoObjects.merge(placeBadgeTask, badgeTask);
+                for (Badge fullBadge : placeBadges) {
+                    for (Badge userBadge : userBadges) {
+                        if (fullBadge.getId().equals(userBadge.getId())) {
+                            MergeObjects.MergeTwoObjects.merge(fullBadge, userBadge);
+                            for (BadgeTask badgeTask : fullBadge.getBadgeTasks()) {
+                                for (BadgeTask userBadgeTask : userBadge.getBadgeTasks()) {
+                                    if (badgeTask.getTaskTitle().equals(userBadgeTask.getTaskTitle())) {
+                                        MergeObjects.MergeTwoObjects.merge(badgeTask, userBadgeTask);
                                     }
                                 }
                             }
-                            Log.d(TAG, "initBadgesViewModel: merged badge" + new Gson().toJson(placeBadge));
 
                         }
                     }
                 }
+
+                Log.d(TAG, "initBadgesViewModel after: place badges: " + new Gson().toJson(this.placeBadges));
                 placeBadgesLoaded.setValue(true);
-                badgesSliderViewAdapter.setBadges((ArrayList<Badge>) placeBadges);
+                badgesSliderViewAdapter.setBadges(this.placeBadges);
             });
 
 
@@ -376,7 +396,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private void initViews() {
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         mapView = findViewById(R.id.mapViewGamificationActivity);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
         placeActivities = new ArrayList<>();
 
@@ -455,6 +475,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                     dummyTests();
                 }
         );
+        adventureLinearProgressIndicator = findViewById(R.id.adventureGamificationActivityProgress);
     }
 
 
@@ -524,7 +545,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         try {
             gamificationViewModel.updatePlaceActivityForUser();
         } catch (Exception e) {
-            // TODO store offline
             e.printStackTrace();
         }
     }
@@ -592,13 +612,14 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                 Review review = new Review(numStars, reviewText, firstName + " " + lastName, userId);
 
                 PlaceActivity reviewPlaceActivity = null;
-                for (PlaceActivity placeActivity : placeActivities) {
-                    if (placeActivity.getType().equals(POST_REVIEW)) {
-                        Log.d(TAG, "showReviewDialog: found activity review: " + new Gson().toJson(placeActivity));
-                        reviewPlaceActivity = placeActivity;
-                        reviewViewModel.setReviewPlaceActivity(placeActivity);
+                if (placeActivities != null)
+                    for (PlaceActivity placeActivity : placeActivities) {
+                        if (placeActivity.getType().equals(POST_REVIEW)) {
+                            Log.d(TAG, "showReviewDialog: found activity review: " + new Gson().toJson(placeActivity));
+                            reviewPlaceActivity = placeActivity;
+                            reviewViewModel.setReviewPlaceActivity(placeActivity);
+                        }
                     }
-                }
 
                 BadgeTask reviewBadgeTask = null;
                 for (Badge badge : placeBadges) {
@@ -647,7 +668,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                                     "failed to add review");
                         }
                     });
-
 
 
                     observeOnce(reviewViewModel.mutableLiveDataResponseCode, new Observer<Integer>() {
@@ -794,9 +814,25 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     protected void onResume() {
         super.onResume();
         startShimmerAnimation();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+            ActivityCompat.requestPermissions(this, permissions, 148914);
+        }
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
         if (mapView != null && place != null) {
             Log.d(TAG, "onResume: map resumed");
             mapView.onResume();
+
         }
     }
 
@@ -811,7 +847,12 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     @Override
     public void onPause() {
         super.onPause();
+        if (mapView != null) {
+            mapView.onPause();
+        }
         stopShimmerAnimation();
+        locationManager.removeUpdates(this);
+
     }
 
 

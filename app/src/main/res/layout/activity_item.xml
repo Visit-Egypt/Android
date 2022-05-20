@@ -34,13 +34,6 @@
                 app:sliderIndicatorSelectedColor="?attr/colorPrimary"
                 app:sliderIndicatorUnselectedColor="?attr/colorSecondaryVariant"
                 app:sliderScrollTimeInSec="1">
-
-                <com.mikhaellopez.circularimageview.CircularImageView
-                    android:id="@+id/backArrowCircularImageButton"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="10dp"
-                    android:src="@drawable/ic_baseline_arrow_back_24" />
             </com.smarteist.autoimageslider.SliderView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

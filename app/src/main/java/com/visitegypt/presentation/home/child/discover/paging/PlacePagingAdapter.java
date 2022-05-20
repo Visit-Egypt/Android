@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.Review;
 import com.visitegypt.presentation.detail.DetailActivity;
 
 public class PlacePagingAdapter extends PagingDataAdapter<Place, PlacePagingAdapter.PlacePagingHolder> {
@@ -43,14 +44,30 @@ public class PlacePagingAdapter extends PagingDataAdapter<Place, PlacePagingAdap
     public void onBindViewHolder(@NonNull PlacePagingHolder holder, int position) {
         Place place = getItem(position);
 
+        try {
+            int reviewsSize = place.getReviews().size();
+
+            if (place.getReviews() != null) {
+                holder.txtCommentsCount.setText("" + reviewsSize);
+            }
+
+            float averageReview = 0;
+            for (Review review : place.getReviews()) {
+                averageReview += review.getRating() / reviewsSize;
+            }
+            holder.txtRating.setText(String.format("%0.2f", averageReview));
+        } catch (Exception ignored) {
+
+        }
+
         if (place.getTitle() != null)
             holder.txtPlaceName.setText(place.getTitle());
         if (place.getCity() != null)
             holder.txtCityName.setText(place.getCity());
-        if (place.getDefaultImage() != null && !place.getDefaultImage().isEmpty() ) {
+        if (place.getDefaultImage() != null && !place.getDefaultImage().isEmpty()) {
             Log.d("TAG", "default image found for: " + place.getTitle());
             Picasso.get().load(place.getDefaultImage()).into(holder.imgPlace);
-        } else if (place.getImageUrls() != null && !place.getImageUrls().isEmpty()  ) {
+        } else if (place.getImageUrls() != null && !place.getImageUrls().isEmpty()) {
             Log.d("TAG", "default image not found! loading first image instead for: " + place.getTitle());
             Picasso.get().load(place.getImageUrls().get(0)).into(holder.imgPlace);
         } else {
@@ -67,8 +84,7 @@ public class PlacePagingAdapter extends PagingDataAdapter<Place, PlacePagingAdap
 
     public static class PlacePagingHolder extends RecyclerView.ViewHolder {
         private final ImageView imgPlace;
-        private final TextView txtCityName;
-        private final TextView txtPlaceName;
+        private final TextView txtCityName, txtPlaceName, txtCommentsCount, txtRating;
 
         public PlacePagingHolder(@NonNull View itemView) {
             super(itemView);
@@ -76,7 +92,8 @@ public class PlacePagingAdapter extends PagingDataAdapter<Place, PlacePagingAdap
             txtPlaceName = itemView.findViewById(R.id.txtPlaceCardNewTitle);
             imgPlace = itemView.findViewById(R.id.imgPlaceCardNew);
             txtCityName = itemView.findViewById(R.id.txtPlaceCardNewCity);
-
+            txtCommentsCount = itemView.findViewById(R.id.txtPlaceCardComment);
+            txtRating = itemView.findViewById(R.id.txtPlaceCardReviewsNumber);
         }
     }
 

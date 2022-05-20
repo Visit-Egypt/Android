@@ -3,7 +3,6 @@ package com.visitegypt.presentation.home.parent;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -218,6 +217,8 @@ public class Home extends AppCompatActivity {
                 R.id.nav_map,
                 R.id.nav_booking,
                 R.id.nav_subscription,
+                R.id.setting,
+                R.id.gaming,
                 R.id.tripMate,
                 R.id.userProfile,
                 R.id.tripMateRequest
@@ -263,12 +264,10 @@ public class Home extends AppCompatActivity {
     }
 
     private void redirect() {
-
         Intent intent = new Intent(this, SignInActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
-
     }
 
     @Override
@@ -387,10 +386,8 @@ public class Home extends AppCompatActivity {
                     tripMateRequests = user.getTripMateRequests();
 
                 }
-
             }
         });
-
     }
 
     public void logOut() {

@@ -12,16 +12,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.presentation.detail.DetailActivity;
-import com.visitegypt.presentation.gamification.GamificationActivity;
 
 import java.util.List;
-
-import dagger.hilt.android.AndroidEntryPoint;
 
 public class DiscoverPlaceAdapter extends RecyclerView.Adapter<DiscoverPlaceAdapter.PlaceViewHolder> {
     private static final String TAG = "Discover Place Adapter";
@@ -83,13 +79,10 @@ public class DiscoverPlaceAdapter extends RecyclerView.Adapter<DiscoverPlaceAdap
             txtPlaceName = itemView.findViewById(R.id.txtPlaceCardNewTitle);
             imgPlace = itemView.findViewById(R.id.imgPlaceCardNew);
             txtCityName = itemView.findViewById(R.id.txtPlaceCardNewCity);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, DetailActivity.class);
-                    intent.putExtra(CHOSEN_PLACE_ID, placesList.get(getAdapterPosition()).getId());
-                    context.startActivity(intent);
-                }
+            itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra(CHOSEN_PLACE_ID, placesList.get(getAdapterPosition()).getId());
+                context.startActivity(intent);
             });
 
         }

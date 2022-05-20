@@ -59,5 +59,11 @@
         android:label="@string/trip_mate_request"
         tools:layout="@layout/trip_mate_request_fragment" />
 
+    <fragment
+        android:id="@+id/gaming"
+        android:name="com.visitegypt.presentation.gamification.GamificationFragment"
+        android:label="@string/gamification"
+        tools:layout="@layout/gamification_fragment" />
+
 
 </navigation>
