@@ -23,6 +23,7 @@ import com.visitegypt.domain.model.response.UploadResponse;
 import java.util.HashMap;
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
@@ -108,9 +109,9 @@ public interface RetrofitService {
     @POST("api/user/trip-mate-reqs/{req_id}/approve")
     public Single<User> approveTripMateRequest(@Path("req_id") String requestId);
     @POST("api/user/interests")
-    public Single<String> addInterests(@Body HashMap<String,List<String>> interests);
+    public Completable addInterests(@Body HashMap<String,List<String>> interests);
     @POST("api/user/interests/delete")
-    public Single<String> deleteInterests(@Body HashMap<String,List<String>> interests);
+    public Completable deleteInterests(@Body HashMap<String,List<String>> interests);
 
 
     /*******************************************************************/

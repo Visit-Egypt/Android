@@ -13,13 +13,18 @@ import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.response.UploadResponse;
 import com.visitegypt.domain.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Call;
 
 public class UserRepositoryImp implements UserRepository {
@@ -68,7 +73,7 @@ public class UserRepositoryImp implements UserRepository {
     }
 
     @Override
-    public Single<HashMap<String,String>> follow(String userId) {
+    public Single<HashMap<String, String>> follow(String userId) {
         return retrofitService.follow(userId);
     }
 
@@ -85,6 +90,24 @@ public class UserRepositoryImp implements UserRepository {
     @Override
     public Single<User> approveTripMateRequest(String requestId) {
         return retrofitService.approveTripMateRequest(requestId);
+    }
+
+    @Override
+    public Completable addInterests(HashSet<String> interests) {
+        List<String> userInterests = new ArrayList<>();
+        userInterests.addAll(interests);
+        HashMap<String, List<String>> map = new HashMap<>();
+        map.put("pref_list", userInterests);
+        return retrofitService.addInterests(map);
+    }
+
+    @Override
+    public Completable deleteInterests(HashSet<String> interests) {
+        List<String> userInterests = new ArrayList<>();
+        userInterests.addAll(interests);
+        HashMap<String, List<String>> map = new HashMap<>();
+        map.put("pref_list", userInterests);
+        return retrofitService.deleteInterests(map);
     }
 
     @Override
@@ -136,5 +159,13 @@ public class UserRepositoryImp implements UserRepository {
     public Single<List<PlaceActivity>> updateUserPlaceActivity(String activityId, PlaceActivity placeActivity) {
         return retrofitService.updateUserPlaceActivity(activityId, placeActivity);
     }
+    public Completable updateUserInterests(HashSet<String> newInterest , HashSet<String> removedInterest )
+    {
+        Completable newInterestRqe = addInterests(newInterest);
+        Completable deleteInterestRqe = deleteInterests(removedInterest);
+        Completable request = Completable.mergeArray(newInterestRqe,deleteInterestRqe);
+        return request.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
 
+    }
 }

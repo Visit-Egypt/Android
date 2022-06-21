@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_round_corner"
+    android:orientation="vertical">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit your Interests"
+        android:textSize="18sp"
+        android:layout_margin="8dp"
+        android:padding="8dp"
+        android:fontFamily="@font/montserrat_alternates_bold"
+        android:textColor="?attr/colorOnSecondary"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:animateLayoutChanges="true"
+        android:padding="8dp">
+    </com.google.android.material.chip.ChipGroup>
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/saveButton"
+        android:background="@drawable/button_shape"
+        android:textColor="?attr/colorOnPrimary"
+        android:layout_margin="8dp"
+        android:padding="8dp"
+        android:layout_gravity="right"
+
+        />
+
+
+</LinearLayout>

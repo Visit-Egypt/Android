@@ -1,15 +1,20 @@
 package com.visitegypt.presentation.account;
 
+
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,8 +30,8 @@ import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
-import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.Tag;
+import com.visitegypt.presentation.callBacks.OnFilterUpdate;
 import com.visitegypt.presentation.gamification.BadgesSliderViewAdapter;
 import com.visitegypt.presentation.gamification.CitiesActivity;
 import com.visitegypt.presentation.home.parent.Home;
@@ -38,12 +43,14 @@ import com.visitegypt.utils.MergeObjects;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class AccountFragment extends Fragment {
+public class AccountFragment extends Fragment implements OnFilterUpdate {
 
     private static final String TAG = "Account Fragment";
 
@@ -55,14 +62,19 @@ public class AccountFragment extends Fragment {
     private LinearProgressIndicator xpLinearProgressIndicator;
     private AccountViewModel accountViewModel;
     private Button gamificationStartPlayingButton, tripMateRequestsButton;
-    private CircularImageView circularAccountImageView;
+    private CircularImageView circularAccountImageView, changeInterestIcon;
     private RecyclerView badgesRecyclerView;
     private BadgesSliderViewAdapter badgesSliderViewAdapter;
     private ChipGroup chipGroup;
+    private ChipGroup editChipGroup;
+    private View dialogLayout;
     private MaterialTextView myInterests;
     private ArrayList<Badge> userBadges;
     private ArrayList<Badge> placeBadges;
-
+    private HashSet<String> userTags;
+    private HashSet<String> addNewTags;
+    private HashSet<String> removedTags;
+    private AlertDialog dialog;
     private int generatedXp;
 
     @Nullable
@@ -90,8 +102,14 @@ public class AccountFragment extends Fragment {
         xpRemainingTextView = accountView.findViewById(R.id.remainingXpTextViewAccountFragment);
         userTitleTextView = accountView.findViewById(R.id.titleTextViewAccountFragment);
         myInterests = accountView.findViewById(R.id.myInterests);
+        changeInterestIcon = accountView.findViewById(R.id.changeInterestIcon);
         chipGroup = accountView.findViewById(R.id.chipGroup);
         Chips.setContext(getContext());
+        Chips.setOnFilterUpdate(this::onFilterUpdate);
+        Chips.setLayoutInflater(getLayoutInflater());
+        userTags = new HashSet<>();
+        addNewTags = new HashSet<>();
+        removedTags = new HashSet<>();
         xpLinearProgressIndicator = accountView.findViewById(R.id.userLevelLinearProgressIndicationAccountFragment);
 
         gamificationStartPlayingButton = accountView.findViewById(R.id.startPlayingGamificationButtonAccountFragment);
@@ -144,15 +162,26 @@ public class AccountFragment extends Fragment {
                 if (!s.isEmpty())
                     Picasso.get().load(s).into(circularAccountImageView);
         });
-        accountViewModel.mutableLiveDataTagNames.observe(getViewLifecycleOwner(),tags -> {
+        accountViewModel.mutableLiveDataUserTagNames.observe(getViewLifecycleOwner(), tags -> {
             if ((tags != null) && (tags.size() != 0)) {
                 myInterests.setVisibility(View.GONE);
                 for (Tag tag : tags) {
+                    userTags.add(tag.getId());
                     chipGroup.addView(Chips.createChipsLabel(tag.getName()));
                 }
             }
         });
+        accountViewModel.mutableLiveDataAllTags.observe(getViewLifecycleOwner(), tags -> {
+            showDialog(tags);
 
+        });
+        accountViewModel.mutableLiveUpdateIsDone.observe(getViewLifecycleOwner(),aBoolean -> {
+            if (aBoolean)
+            {
+                dialog.dismiss();
+
+            }
+        });
         accountViewModel.getUserBadges();
         accountViewModel.getAllBadges();
         accountViewModel.allBadgesMutableLiveData.observe(getViewLifecycleOwner(), placeBadges -> {
@@ -217,5 +246,83 @@ public class AccountFragment extends Fragment {
         tripMateRequestsButton.setOnClickListener(v -> {
             ((Home) getParentFragment().getActivity()).changeFragment(new TripMateRequest());
         });
+        changeInterestIcon.setOnClickListener(view -> {
+            accountViewModel.getAllTags();
+
+        });
+    }
+
+    private void showDialog(List<Tag> allTags) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        dialogLayout = LayoutInflater.from(getContext()).inflate(R.layout.dialog_user_interests, null);
+        editChipGroup = dialogLayout.findViewById(R.id.chipGroup);
+        if (dialog == null) {
+            Chips.createSelectChips(allTags, userTags, editChipGroup);
+            builder.setView(dialogLayout);
+            dialog = builder.create();
+            dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialogLayout.findViewById(R.id.saveButton).setOnClickListener(view -> {
+                accountViewModel.updateYourInterest(addNewTags,removedTags);
+            });
+            dialog.show();
+
+        } else {
+            dialog.show();
+        }
+    }
+
+    @Override
+    public void onFilterUpdate(List<String> filters) {
+        if(filters.size() != 0 && filters != null) {
+            Log.d(TAG, "onFilterUpdate: filter tags" + filters);
+            for (String filter : filters)
+            {
+                if (!userTags.contains(filter) && !addNewTags.contains(filter))
+                {
+                    addNewTags.add(filter);
+                    Log.d(TAG, "onFilterUpdate: add to following list " + addNewTags );
+                }
+            }
+            Iterator<String> userTagItr = userTags.iterator();
+            while (userTagItr.hasNext())
+            {
+                String userTag = userTagItr.next();
+                if (!filters.contains(userTag))
+                {
+                    removedTags.add(userTag);
+                    Log.d(TAG, "onFilterUpdate: add to unfollow list " + removedTags);
+                }
+
+            }
+            if (addNewTags.size() != 0)
+            {
+                Iterator<String> itr = addNewTags.iterator();
+
+                while (itr.hasNext())
+                {
+                    String tag = itr.next();
+                    if (!filters.contains(tag))
+                    {
+                        itr.remove();
+                    }
+                }
+
+            }
+                Iterator<String> itr = removedTags.iterator();
+
+                while (itr.hasNext())
+                {
+                    String tag = itr.next();
+                    if (filters.contains(tag))
+                    {
+                        itr.remove();
+                    }
+                }
+
+
+            Log.d(TAG, "onFilterUpdate: new follow  " +  addNewTags);
+            Log.d(TAG, "onFilterUpdate: unfollow  " +  removedTags);
+        }
     }
 }

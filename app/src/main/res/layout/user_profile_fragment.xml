@@ -40,6 +40,7 @@
                     android:layout_alignBottom="@id/circularAccountImageView"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="80dp"
+                    android:textColor="?attr/colorOnSecondary"
                     android:background="@color/camel"
                     android:gravity="center"
                     android:text="LVL 1" />

@@ -271,17 +271,29 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:orientation="vertical">
-
-            <com.google.android.material.textview.MaterialTextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:requiresFadingEdge="horizontal">
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:layout_weight="1"
                 android:fontFamily="@font/prata_regular"
                 android:padding="8dp"
                 android:text="@string/my_interests"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:id="@+id/changeInterestIcon"
+                    app:civ_shadow_gravity="end"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_baseline_edit_24" />
+
+            </LinearLayout>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/myInterests"
