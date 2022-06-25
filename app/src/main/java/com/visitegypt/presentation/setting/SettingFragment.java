@@ -36,7 +36,8 @@ import com.visitegypt.R;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.presentation.home.parent.Home;
-import com.visitegypt.presentation.signin.SignInActivity;
+import com.visitegypt.presentation.log.LogActivity;
+//import com.visitegypt.presentation.signin.SignInActivity;
 
 import java.io.File;
 
@@ -162,7 +163,7 @@ public class SettingFragment extends Fragment {
     /********************************************************/
     private void redirect() {
 
-        Intent intent = new Intent(getContext(), SignInActivity.class);
+        Intent intent = new Intent(getContext(), LogActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 

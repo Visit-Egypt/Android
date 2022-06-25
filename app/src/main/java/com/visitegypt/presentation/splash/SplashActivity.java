@@ -8,7 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import com.visitegypt.R;
-import com.visitegypt.presentation.signin.SignInActivity;
+import com.visitegypt.presentation.log.LogActivity;
+//import com.visitegypt.presentation.signin.SignInActivity;
 
 public class SplashActivity extends AppCompatActivity {
     private AppCompatButton btnGetStarted;
@@ -25,7 +26,7 @@ public class SplashActivity extends AppCompatActivity {
         btnGetStarted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(SplashActivity.this, SignInActivity.class));
+                startActivity(new Intent(SplashActivity.this, LogActivity.class));
                 finish();
             }
         });

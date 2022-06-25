@@ -42,8 +42,9 @@ import com.visitegypt.domain.model.SearchPlace;
 import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
+import com.visitegypt.presentation.log.LogActivity;
 import com.visitegypt.presentation.setting.SettingFragment;
-import com.visitegypt.presentation.signin.SignInActivity;
+//import com.visitegypt.presentation.signin.SignInActivity;
 import com.visitegypt.utils.GamificationRules;
 
 import java.lang.reflect.Type;
@@ -70,7 +71,8 @@ public class Home extends AppCompatActivity {
     private SearchViewModel searchViewModel;
     private MaterialButton editButton;
     private ImageView userImageView;
-    private SignInActivity signInActivity;
+//    private SignInActivity signInActivity;
+//    private LogActivity logActivity;
     private List<TripMateRequest> tripMateRequests = new ArrayList<>();
 
     @Override
@@ -229,7 +231,7 @@ public class Home extends AppCompatActivity {
         setSupportActionBar(binding.appBarNewHome.toolbar);
         header = navigationView.getHeaderView(0);
         txtName = header.findViewById(R.id.nameNavHeaderTextView);
-        txtEmail = header.findViewById(R.id.emailTextView);
+        txtEmail = header.findViewById(R.id.emailTextField);
         userImageView = header.findViewById(R.id.userImageImageView);
         editButton = header.findViewById(R.id.editButton);
 
@@ -264,7 +266,7 @@ public class Home extends AppCompatActivity {
     }
 
     private void redirect() {
-        Intent intent = new Intent(this, SignInActivity.class);
+        Intent intent = new Intent(this, LogActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();

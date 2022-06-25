@@ -99,6 +99,9 @@
             android:name=".presentation.signin.SignInActivity"
             android:exported="true"></activity>
         <activity
+            android:name=".presentation.log.LogActivity"
+            android:exported="true"></activity>
+        <activity
             android:name=".presentation.gamification.CitiesActivity"
             android:exported="true"></activity>
         <activity

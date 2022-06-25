@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.imageview.ShapeableImageView;
-import com.unity3d.player.UnityPlayerActivity;
+//import com.unity3d.player.UnityPlayerActivity;
 import com.visitegypt.R;
 import com.visitegypt.presentation.home.parent.Home;
 
@@ -65,18 +65,18 @@ public class ActivitiyChild extends Fragment {
             if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
             } else {
-                Intent intent = new Intent(getActivity(), UnityPlayerActivity.class);
-                intent.putExtra("sceneIndex", "1");
-                startActivity(intent);
+//                Intent intent = new Intent(getActivity(), UnityPlayerActivity.class);
+//                intent.putExtra("sceneIndex", "1");
+//                startActivity(intent);
             }
         });
         learnAboutEgypt.setOnClickListener(view -> {
             if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
             } else {
-                Intent intent = new Intent(getActivity(), UnityPlayerActivity.class);
-                intent.putExtra("sceneIndex", "4");
-                startActivity(intent);
+//                Intent intent = new Intent(getActivity(), UnityPlayerActivity.class);
+//                intent.putExtra("sceneIndex", "4");
+//                startActivity(intent);
             }
         });
     }
