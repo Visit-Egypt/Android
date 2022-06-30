@@ -9,7 +9,7 @@
 
     <com.smarteist.autoimageslider.SliderView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="125dp"
         android:background="?attr/colorSecondaryVariant"
         app:sliderAnimationDuration="600"
         app:sliderAutoCycleDirection="back_and_forth"

@@ -9,16 +9,26 @@ import com.visitegypt.domain.model.Place;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
+
 @Dao
 public interface PlaceDao {
     // TODO https://developer.android.com/training/data-storage/room
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Place place);
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    Completable insert(List<Place> places);
 
-    @Query("SELECT * FROM Place")
-    List<Place> getALLPlaces();
+    @Query("SELECT * FROM place_table")
+    Single<List<Place>> getALLCachedPlaces();
 
-    @Query("SELECT * FROM Place WHERE title=(:title)")
-    Place getPlaceByTitle(String title);
+    @Query("SELECT * FROM place_table WHERE title=(:title)")
+    Single<Place> getPlaceByTitle(String title);
+
+    @Query("SELECT * FROM place_table WHERE id = (:placeId)")
+    Single<Place> getPlaceById(String placeId);
+
+    @Query("SELECT * FROM place_table LIMIT (:numberOfPlaces)")
+    Single<List<Place>> getCachedPlaces(int numberOfPlaces);
+
 }

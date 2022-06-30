@@ -10,9 +10,10 @@ import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.Tag;
 import com.visitegypt.domain.model.User;
 
-@Database(entities = {Tag.class} , version = 1)
+@Database(entities = {Tag.class , Place.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     public static final String DATABASE_NAME = "Visit Egypt";
 
     public abstract TagDao tagDao();
+    public abstract PlaceDao placeDao();
 }

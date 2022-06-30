@@ -22,6 +22,7 @@ import java.util.List;
 public class DiscoverPlaceAdapter extends RecyclerView.Adapter<DiscoverPlaceAdapter.PlaceViewHolder> {
     private static final String TAG = "Discover Place Adapter";
     public static String CHOSEN_PLACE_ID = "placeId";
+    private final int maxSize = 5;
     private final Context context;
     private List<Place> placesList;
 
@@ -55,15 +56,18 @@ public class DiscoverPlaceAdapter extends RecyclerView.Adapter<DiscoverPlaceAdap
 
     @Override
     public int getItemCount() {
-        if (placesList == null)
+        if (placesList == null || placesList.isEmpty())
             return 0;
-        if (placesList.isEmpty())
-            return 0;
-        return placesList.size();
+        if (placesList.size() < maxSize) {
+            return placesList.size();
+
+        } else
+           return maxSize;
     }
 
     public void updatePlacesList(List<Place> placesList) {
         this.placesList = placesList;
+        Log.d(TAG, "updatePlacesList: is done");
         notifyDataSetChanged();
     }
 

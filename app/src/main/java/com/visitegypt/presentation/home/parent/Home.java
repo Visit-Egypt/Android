@@ -223,7 +223,8 @@ public class Home extends AppCompatActivity {
                 R.id.gaming,
                 R.id.tripMate,
                 R.id.userProfile,
-                R.id.tripMateRequest
+                R.id.tripMateRequest,
+                R.id.discoverChildAllPlaces
         )
                 .setOpenableLayout(drawer)
                 .build();
@@ -397,40 +398,8 @@ public class Home extends AppCompatActivity {
         navigationView.getMenu().findItem(R.id.logout).setOnMenuItemClickListener(menuItem -> {
             homeViewModel.logOut();
 
-//            if (new SignInActivity().GoogleFlag == 1) {
-//                Log.d(TAG, "logOut: done");
-//
-//                homeViewModel.logOut();
-//            }else {
-//                Log.d(TAG, "logOut: sssss");
-//
-//            }
-//            signInActivity.logOut();
-//            homeViewModel.logOut();
-//            Auth.GoogleSignInApi.signOut(signInActivity.googleApiClient).setResultCallback(
-//                    new ResultCallback<Status>() {
-//                        @Override
-//                        public void onResult(@NonNull Status status) {
-//                            Log.d(TAG, "onComplete: logout from google acc done successfully");
-//                            homeViewModel.logOut();
-//
-//                        }
-//                    }
-//            );
-//                signInActivity.mGoogleSignInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        Log.d(TAG, "onComplete: logout from google acc done successfully");
-//                        homeViewModel.logOut();
-//                    }
-//                });
-//            }
-
             return false;
         });
     }
 
-    public List<TripMateRequest> getTripMateRequests() {
-        return tripMateRequests;
-    }
 }

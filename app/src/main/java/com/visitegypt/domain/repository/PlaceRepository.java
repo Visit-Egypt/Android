@@ -6,6 +6,7 @@ import com.visitegypt.domain.model.response.PlacePageResponse;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 public interface PlaceRepository {
@@ -22,5 +23,11 @@ public interface PlaceRepository {
     Single<List<String>> getAllAvailableCities();
 
     Single<List<Place>> getPlacesByPlaceActivityIds(List<String> placeActivitiesId);
+
     public Single<PlacePageResponse> getPlacesPaging(int pageNumber);
+
+    public Completable cachingPlaces(List<Place> places);
+
+    Single<List<Place>> getALLCachedPlaces();
+    Single<List<Place>> getCachedPlaces(int numberOfPlaces);
 }

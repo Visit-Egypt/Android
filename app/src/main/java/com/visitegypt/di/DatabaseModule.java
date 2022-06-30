@@ -22,10 +22,10 @@ public class DatabaseModule {
     @Singleton
     public AppDatabase provideAppDatabase(Application application) {
         return Room.databaseBuilder(
-                application,
-                AppDatabase.class,
-                AppDatabase.DATABASE_NAME
-        )
+                        application,
+                        AppDatabase.class,
+                        AppDatabase.DATABASE_NAME
+                )
                 .fallbackToDestructiveMigration()
                 .build();
     }
@@ -34,6 +34,12 @@ public class DatabaseModule {
     @Singleton
     public static TagDao provideTagDao(AppDatabase appDatabase) {
         return appDatabase.tagDao();
+    }
+
+    @Provides
+    @Singleton
+    public static PlaceDao providePlaceDao(AppDatabase appDatabase) {
+        return appDatabase.placeDao();
     }
 
 }
