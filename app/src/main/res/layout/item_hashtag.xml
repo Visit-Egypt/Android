@@ -6,6 +6,4 @@
     android:layout_height="wrap_content"
     android:checkable="true"
     android:clickable="true"
-    android:text="Chip"
-
-    />
+    android:text="Chip" />

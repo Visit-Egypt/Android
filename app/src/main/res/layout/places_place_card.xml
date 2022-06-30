@@ -24,17 +24,13 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/luxor2" />
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@id/placeInCityImageView"
                 android:layout_alignRight="@id/placeInCityImageView"
                 android:layout_alignBottom="@id/placeInCityImageView"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="0dp"
-                android:layout_marginBottom="-1dp"
-                android:background="#28393333"
+                android:layout_margin="8dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -44,8 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:text="Zag"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/placesInCityRemainingTextView"
@@ -55,9 +50,7 @@
                     android:layout_alignLeft="@id/placeInCityImageView"
                     android:layout_alignTop="@id/placeInCityImageView"
                     android:layout_alignRight="@id/placeInCityImageView"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_margin="8dp"
                     android:text="No activities"
                     android:textColor="@color/white" />
 
@@ -65,8 +58,7 @@
                     android:id="@+id/placeInCityRemainingProgressIndicator"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_margin="8dp"
                     android:max="100"
                     android:progress="0"
                     android:visibility="gone"

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
+    android:alpha="0.9"
     android:background="@drawable/chatbot_background"
     android:orientation="vertical"
     tools:context=".presentation.chatbot.ChatbotActivity">
@@ -14,45 +15,28 @@
         android:layout_height="wrap_content"
         android:background="@drawable/chatbot_header"
         android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="4">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
+        <TextView
+            style="@style/TextAppearance.MaterialComponents.Headline4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="30dp"
-            android:orientation="vertical"
-            tools:ignore="MissingConstraints">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/montserrat_alternates_medium"
-                android:text="Anubis"
-                android:textColor="@color/white"
-                android:textSize="25sp" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:layout_weight="3"
+            android:fontFamily="@font/montserrat_alternates_medium"
+            android:gravity="center"
+            android:text="Anubis"
+            android:textColor="@color/white" />
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/userImageImageView"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="20dp"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
             android:contentDescription="@string/nav_header_desc"
             app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@drawable/anubis1" />
@@ -100,7 +84,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="4dp"
+                android:layout_margin="8dp"
                 android:backgroundTint="?attr/colorPrimary"
                 android:src="@drawable/ic_send"
                 android:tint="@color/semiWhite"

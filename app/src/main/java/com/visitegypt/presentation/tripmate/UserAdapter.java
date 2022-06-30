@@ -3,14 +3,11 @@ package com.visitegypt.presentation.tripmate;
 import static com.visitegypt.utils.Constants.CHOSEN_USER_ID;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -21,9 +18,7 @@ import com.google.android.material.textview.MaterialTextView;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
-import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.User;
-import com.visitegypt.presentation.detail.DetailActivity;
 import com.visitegypt.presentation.home.parent.Home;
 import com.visitegypt.presentation.userProfile.UserProfile;
 
@@ -81,7 +76,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewAdapte
         public UserViewAdapter(@NonNull View itemView) {
             super(itemView);
             imgUser = itemView.findViewById(R.id.imgUser);
-            txtUserName = itemView.findViewById(R.id.txtUserName);
+            txtUserName = itemView.findViewById(R.id.userNameRequestMaterialTextView);
             imgSendRequest = itemView.findViewById(R.id.imgSendRequest);
 
             itemView.setOnClickListener(v -> {

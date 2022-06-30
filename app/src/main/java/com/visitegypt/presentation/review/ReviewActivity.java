@@ -1,6 +1,5 @@
 package com.visitegypt.presentation.review;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.Review;
-import com.visitegypt.presentation.detail.DetailActivity;
 import com.visitegypt.presentation.detail.DetailViewModel;
 import com.visitegypt.presentation.detail.ReviewsRecyclerViewAdapter;
 
@@ -81,9 +79,4 @@ public class ReviewActivity extends AppCompatActivity {
         });
     }
 
-    public void backPlace(View view) {
-        Intent intent = new Intent(ReviewActivity.this, DetailActivity.class);
-        intent.putExtra("place_id", placeIdToDetail);
-        startActivity(intent);
-    }
 }

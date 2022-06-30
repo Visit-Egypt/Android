@@ -409,9 +409,7 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
         password.setVisibility(View.VISIBLE);
         signUpMaterialButton.setVisibility(View.VISIBLE);
         signUpMaterialButton.setVisibility(View.VISIBLE);
-
         signInMaterialButton.setVisibility(View.VISIBLE);
-
         passwordSignInTextField.setVisibility(View.VISIBLE);
         googleSignInButton.setVisibility(View.VISIBLE);
         emailTextField.setVisibility(View.VISIBLE);

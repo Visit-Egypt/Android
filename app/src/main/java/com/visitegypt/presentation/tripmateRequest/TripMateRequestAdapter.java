@@ -110,7 +110,7 @@ public class TripMateRequestAdapter extends RecyclerView.Adapter<TripMateRequest
         public UserTripMateRequestViewHolder(@NonNull View itemView) {
             super(itemView);
             acceptRequestButton = itemView.findViewById(R.id.acceptRequestButton);
-            userName = itemView.findViewById(R.id.txtUserName);
+            userName = itemView.findViewById(R.id.userNameRequestMaterialTextView);
             userImage = itemView.findViewById(R.id.imgUser);
             acceptRequestButton.setOnClickListener(v -> {
                 currentPosition = getAdapterPosition();

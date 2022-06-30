@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,11 +27,7 @@ import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Tag;
 import com.visitegypt.domain.model.TripMateRequest;
-import com.visitegypt.presentation.home.HomeRecyclerViewAdapter;
 import com.visitegypt.utils.Chips;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -91,10 +86,10 @@ public class UserProfile extends Fragment {
         userName = userProfileFragment.findViewById(R.id.nameTextView);
         followingNumberTextView = userProfileFragment.findViewById(R.id.followingNumberTextView);
         followersNumberTextView = userProfileFragment.findViewById(R.id.followersNumberTextView);
-        btnFollow = userProfileFragment.findViewById(R.id.follow);
+        btnFollow = userProfileFragment.findViewById(R.id.followMaterialButton);
         loadingLayout = userProfileFragment.findViewById(R.id.loadingLayout);
         userProfileLayout = userProfileFragment.findViewById(R.id.userProfile);
-        btnRequest = userProfileFragment.findViewById(R.id.request);
+        btnRequest = userProfileFragment.findViewById(R.id.requestMaterialButton);
         myInterests = userProfileFragment.findViewById(R.id.myInterests);
         chipGroup = userProfileFragment.findViewById(R.id.chipGroup);
 

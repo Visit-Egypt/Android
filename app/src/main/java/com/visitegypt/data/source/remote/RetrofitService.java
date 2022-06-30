@@ -9,10 +9,10 @@ import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.model.Post;
 import com.visitegypt.domain.model.PostPage;
-import com.visitegypt.domain.model.Tag;
-import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.Review;
+import com.visitegypt.domain.model.Tag;
 import com.visitegypt.domain.model.Token;
+import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.response.BadgeResponse;
@@ -101,17 +101,22 @@ public interface RetrofitService {
 
     //    @GET("api/user/activity/{user_id}")
     @POST("api/user/{user_id}/follow")
-    public Single<HashMap<String,String>> follow(@Path("user_id") String userId);
+    public Single<HashMap<String, String>> follow(@Path("user_id") String userId);
+
     @POST("api/user/{user_id}/unfollow")
-    public Single<HashMap<String,String>> unfollow(@Path("user_id") String userId);
+    public Single<HashMap<String, String>> unfollow(@Path("user_id") String userId);
+
     @POST("api/user/{user_id}/mate")
     public Single<User> requestTripMate(@Path("user_id") String userId, @Body TripMateRequest requestMateBody);
+
     @POST("api/user/trip-mate-reqs/{req_id}/approve")
     public Single<User> approveTripMateRequest(@Path("req_id") String requestId);
+
     @POST("api/user/interests")
-    public Completable addInterests(@Body HashMap<String,List<String>> interests);
+    public Completable addInterests(@Body HashMap<String, List<String>> interests);
+
     @POST("api/user/interests/delete")
-    public Completable deleteInterests(@Body HashMap<String,List<String>> interests);
+    public Completable deleteInterests(@Body HashMap<String, List<String>> interests);
 
 
     /*******************************************************************/
@@ -145,9 +150,13 @@ public interface RetrofitService {
      * Get place posts
      * Post add new post
      * Post add  Like to post
-     *
+     * Get User Posts
      * @return
      */
+
+    @GET("api/post")
+    public Single<List<Post>> getUserPosts(@Query("filters") String queryMap, @Query("page_num") int pageNumber, @Query("limit") int limit);
+
     @GET("api/post/place/{post_id}")
     public Single<Post> getPost(@Path("post_id") String postId);
 
@@ -191,12 +200,15 @@ public interface RetrofitService {
 
     @GET("/api/place/activityid")
     public Single<List<Place>> getPlacesByPlaceActivitiesId(@Query("id") List<String> placeActivitiesIds);
+
     /******************************************************************/
     @POST("api/notification/register-device")
-    public Single<HashMap<Object,Object>> RegisterDeviceToNotification(@Body HashMap<Object,Object> deviceToken);
+    public Single<HashMap<Object, Object>> RegisterDeviceToNotification(@Body HashMap<Object, Object> deviceToken);
+
     /********************************************************************/
     @GET("api/tag")
     public Single<List<Tag>> getTags();
+
     @POST("api/tag/users")
-    public Single<List<User>> getAllUserTags(@Body HashMap<String,List<String>> tagsId);
+    public Single<List<User>> getAllUserTags(@Body HashMap<String, List<String>> tagsId);
 }

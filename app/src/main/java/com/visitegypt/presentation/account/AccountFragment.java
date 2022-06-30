@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +31,7 @@ import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
+import com.visitegypt.domain.model.Post;
 import com.visitegypt.domain.model.Tag;
 import com.visitegypt.presentation.callBacks.OnFilterUpdate;
 import com.visitegypt.presentation.gamification.BadgesSliderViewAdapter;
@@ -76,6 +78,11 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
     private HashSet<String> removedTags;
     private AlertDialog dialog;
     private int generatedXp;
+
+    private PostsRecyclerViewAdapter postsRecyclerViewAdapter;
+    private RecyclerView postsRecyclerView;
+    private MaterialTextView noPostsMaterialTextView;
+
 
     @Nullable
     @Override
@@ -124,6 +131,13 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
         badgesRecyclerView.setLayoutManager(new LinearLayoutManager(accountView.getContext(), RecyclerView.HORIZONTAL, false));
         badgesSliderViewAdapter = new BadgesSliderViewAdapter(placeBadges, accountView.getContext());
         badgesRecyclerView.setAdapter(badgesSliderViewAdapter);
+
+
+        noPostsMaterialTextView = accountView.findViewById(R.id.noPostsMaterialTextView);
+        postsRecyclerView = accountView.findViewById(R.id.postsRecyclerView);
+        postsRecyclerViewAdapter = new PostsRecyclerViewAdapter(accountView.getContext());
+        postsRecyclerView.setLayoutManager(new LinearLayoutManager(accountView.getContext()));
+        postsRecyclerView.setAdapter(postsRecyclerViewAdapter);
     }
 
     private void setUserXp(int xp) {
@@ -175,9 +189,8 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
             showDialog(tags);
 
         });
-        accountViewModel.mutableLiveUpdateIsDone.observe(getViewLifecycleOwner(),aBoolean -> {
-            if (aBoolean)
-            {
+        accountViewModel.mutableLiveUpdateIsDone.observe(getViewLifecycleOwner(), aBoolean -> {
+            if (aBoolean) {
                 dialog.dismiss();
 
             }
@@ -213,6 +226,23 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
                 //generatedXp += placeActivity.getXp();
                 Log.d(TAG, "initViewModel: place activity generatedXp: " + generatedXp);
             }
+///////
+            accountViewModel.getUserPosts();
+            accountViewModel.mutableLiveDataMyPosts.observe(this, new Observer<List<Post>>() {
+                @Override
+                public void onChanged(List<Post> posts) {
+                    if (posts.size() != 0) {
+                        noPostsMaterialTextView.setVisibility(View.GONE);
+                        Log.d(TAG, "posts: " + posts.get(0).toString());
+                        postsRecyclerViewAdapter.setPostsArrayList(posts);
+                        Log.d(TAG, "posts available");
+                    } else {
+                        Log.d(TAG, "no posts available ");
+                    }
+                }
+            });
+
+
             accountViewModel.setPlaceActivitiesId(placeActivitiesIds);
             accountViewModel.getPlacesByPlaceActivities();
             GeneralUtils.LiveDataUtil.observeOnce(accountViewModel.placesWithNeededPlaceActivities, places -> {
@@ -263,7 +293,7 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
             dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialogLayout.findViewById(R.id.saveButton).setOnClickListener(view -> {
-                accountViewModel.updateYourInterest(addNewTags,removedTags);
+                accountViewModel.updateYourInterest(addNewTags, removedTags);
             });
             dialog.show();
 
@@ -274,55 +304,46 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
 
     @Override
     public void onFilterUpdate(List<String> filters) {
-        if(filters.size() != 0 && filters != null) {
+        if (filters.size() != 0 && filters != null) {
             Log.d(TAG, "onFilterUpdate: filter tags" + filters);
-            for (String filter : filters)
-            {
-                if (!userTags.contains(filter) && !addNewTags.contains(filter))
-                {
+            for (String filter : filters) {
+                if (!userTags.contains(filter) && !addNewTags.contains(filter)) {
                     addNewTags.add(filter);
-                    Log.d(TAG, "onFilterUpdate: add to following list " + addNewTags );
+                    Log.d(TAG, "onFilterUpdate: add to following list " + addNewTags);
                 }
             }
             Iterator<String> userTagItr = userTags.iterator();
-            while (userTagItr.hasNext())
-            {
+            while (userTagItr.hasNext()) {
                 String userTag = userTagItr.next();
-                if (!filters.contains(userTag))
-                {
+                if (!filters.contains(userTag)) {
                     removedTags.add(userTag);
                     Log.d(TAG, "onFilterUpdate: add to unfollow list " + removedTags);
                 }
 
             }
-            if (addNewTags.size() != 0)
-            {
+            if (addNewTags.size() != 0) {
                 Iterator<String> itr = addNewTags.iterator();
 
-                while (itr.hasNext())
-                {
+                while (itr.hasNext()) {
                     String tag = itr.next();
-                    if (!filters.contains(tag))
-                    {
+                    if (!filters.contains(tag)) {
                         itr.remove();
                     }
                 }
 
             }
-                Iterator<String> itr = removedTags.iterator();
+            Iterator<String> itr = removedTags.iterator();
 
-                while (itr.hasNext())
-                {
-                    String tag = itr.next();
-                    if (filters.contains(tag))
-                    {
-                        itr.remove();
-                    }
+            while (itr.hasNext()) {
+                String tag = itr.next();
+                if (filters.contains(tag)) {
+                    itr.remove();
                 }
+            }
 
 
-            Log.d(TAG, "onFilterUpdate: new follow  " +  addNewTags);
-            Log.d(TAG, "onFilterUpdate: unfollow  " +  removedTags);
+            Log.d(TAG, "onFilterUpdate: new follow  " + addNewTags);
+            Log.d(TAG, "onFilterUpdate: unfollow  " + removedTags);
         }
     }
 }

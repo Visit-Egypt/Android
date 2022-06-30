@@ -8,31 +8,19 @@
     tools:context=".presentation.tripmate.TripMate">
 
     <com.google.android.material.textview.MaterialTextView
+        style="@style/TextAppearance.MaterialComponents.Headline5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:fontFamily="@font/prata_regular"
-        android:padding="8dp"
-
-        android:text="Find Your Trip Mate "
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
+        android:text="Find Your Trip Mate " />
 
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chipGroup"
-        android:layout_margin="8dp"
-        android:padding="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
 
-<!--                <androidx.recyclerview.widget.RecyclerView-->
-<!--                    android:id="@+id/recyclerViewHashtag"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />-->
     </com.google.android.material.chip.ChipGroup>
 
     <LinearLayout
@@ -42,19 +30,19 @@
         android:orientation="vertical">
 
         <com.facebook.shimmer.ShimmerFrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
             android:id="@+id/firstReq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical">
 
             <include layout="@layout/user_card_shimmer" />
         </com.facebook.shimmer.ShimmerFrameLayout>
 
         <com.facebook.shimmer.ShimmerFrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/secReq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -62,9 +50,9 @@
         </com.facebook.shimmer.ShimmerFrameLayout>
 
         <com.facebook.shimmer.ShimmerFrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/thirdReq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -72,9 +60,9 @@
         </com.facebook.shimmer.ShimmerFrameLayout>
 
         <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/fourthReq"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/fourthReq"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -88,7 +76,6 @@
         android:layout_height="match_parent"
         android:layout_margin="8dp"
         android:orientation="vertical"
-        android:padding="8dp"
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 

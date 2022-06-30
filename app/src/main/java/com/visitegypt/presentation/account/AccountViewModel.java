@@ -19,9 +19,9 @@ import com.visitegypt.domain.usecase.GetBadgesOfUserUseCase;
 import com.visitegypt.domain.usecase.GetPlacesByPlaceActivityIdUseCase;
 import com.visitegypt.domain.usecase.GetPlacesUseCase;
 import com.visitegypt.domain.usecase.GetPostsByUser;
+import com.visitegypt.domain.usecase.GetTagUseCase;
 import com.visitegypt.domain.usecase.GetTagsNameByIds;
 import com.visitegypt.domain.usecase.GetUserPlaceActivityUseCase;
-import com.visitegypt.domain.usecase.GetTagUseCase;
 import com.visitegypt.domain.usecase.GetUserUseCase;
 import com.visitegypt.domain.usecase.UpdateUserInterestUseCase;
 import com.visitegypt.utils.Constants;
@@ -54,11 +54,10 @@ public class AccountViewModel extends ViewModel {
     MutableLiveData<ArrayList<Badge>> allBadgesMutableLiveData = new MutableLiveData<>();
     MutableLiveData<User> userMutableLiveData = new MutableLiveData<>();
     MutableLiveData<ArrayList<PlaceActivity>> userPlaceActivityMutableLiveData = new MutableLiveData<>();
-    private List<String> placeActivitiesId;
-
     MutableLiveData<List<Tag>> mutableLiveDataUserTagNames = new MutableLiveData<>();
     MutableLiveData<List<Tag>> mutableLiveDataAllTags = new MutableLiveData<>();
     MutableLiveData<Boolean> mutableLiveUpdateIsDone = new MutableLiveData<>();
+    private List<String> placeActivitiesId;
     private SharedPreferences sharedPreferences;
     private GetPostsByUser getPostsByUser;
     private GetBadgesOfUserUseCase getBadgesOfUserUseCase;
@@ -152,19 +151,19 @@ public class AccountViewModel extends ViewModel {
         });
     }
 
-    private void getUserPosts() {
+    public void getUserPosts() {
         //when backend finishes there work start to implement
-        Log.d("TAG", "accept List of posts:  welcome");
+        Log.d(TAG, "accept List of posts:  welcome");
         getPostsByUser.execute(postPage -> mutableLiveDataMyPosts.setValue(postPage.getPosts()), throwable -> {
                     try {
                         ResponseBody body = ((HttpException) throwable).response().errorBody();
                         JSONObject jObjectError = new JSONObject(body.string());
-                        Log.d("TAG", "accept try : " + jObjectError.getJSONArray("errors").toString());
+                        Log.d(TAG, "accept try : " + jObjectError.getJSONArray("errors").toString());
                         if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
                         } else {
                         }
                     } catch (Exception e) {
-                        Log.d("TAG", "accept catch: " + e.toString());
+                        Log.d(TAG, "accept catch: " + e.toString());
                     }
                 }
         );
