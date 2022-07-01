@@ -165,7 +165,6 @@ public class DiscoverChild extends Fragment {
         discoverChildViewModel.placesMutableLiveData.observe(getViewLifecycleOwner(), place -> {
             if (place != null) {
                 discoverPlacesArrayList.addAll(place);
-//                Log.d(TAG, "getAllPlaces: " + place.get(0).getTitle());
                 setRecyclerViewsVisible();
                 stopShimmerAnimation();
                 setLayoutVisible();

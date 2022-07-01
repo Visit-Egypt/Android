@@ -64,9 +64,12 @@ public class DiscoverChildViewModel extends ViewModel {
     public void getCachedPlaces() {
         getCachedPlacesUseCase.execute(places -> {
             if (places != null || places.size() > 0) {
-                placesMutableLiveData.setValue(places);
-            } else {
+
+                Log.d(TAG, "getCachedPlaces:  cache " + places.size());
                 getAllPlaces();
+            } else {
+                Log.d(TAG, "getCachedPlaces: no cache " + places.size());
+                placesMutableLiveData.setValue(places);
             }
         }, throwable -> {
             Log.e(TAG, "places retrieve error: " + throwable.getMessage());
