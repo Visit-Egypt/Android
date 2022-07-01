@@ -3,6 +3,7 @@ package com.visitegypt.data.repository;
 import com.visitegypt.data.source.remote.RetrofitService;
 import com.visitegypt.domain.model.Post;
 import com.visitegypt.domain.model.PostPage;
+import com.visitegypt.domain.model.response.PostPageResponse;
 import com.visitegypt.domain.repository.PostsRepository;
 
 import java.util.List;
@@ -13,9 +14,15 @@ import io.reactivex.rxjava3.core.Single;
 
 public class PostRepositoryImp implements PostsRepository {
     private RetrofitService retrofitService;
+
     @Inject
     public PostRepositoryImp(RetrofitService retrofitService) {
         this.retrofitService = retrofitService;
+    }
+    @Override
+    public Single<PostPageResponse> getPostsWithUserId(String userId) {
+        String userQuery = "{\"user_id\":\"" + userId + "\"}";
+        return retrofitService.getUserPosts(userQuery, 1, 10);
     }
 
     @Override
@@ -45,7 +52,7 @@ public class PostRepositoryImp implements PostsRepository {
 
     @Override
     public Single<Post> updatePost(String postId, Post post) {
-        return retrofitService.updatePost(postId,post);
+        return retrofitService.updatePost(postId, post);
     }
 
     @Override
@@ -57,4 +64,6 @@ public class PostRepositoryImp implements PostsRepository {
     public Single<Void> unLike(String postId) {
         return retrofitService.unLike(postId);
     }
+
+
 }

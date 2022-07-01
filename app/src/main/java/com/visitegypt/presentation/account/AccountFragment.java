@@ -31,8 +31,8 @@ import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
-import com.visitegypt.domain.model.Post;
 import com.visitegypt.domain.model.Tag;
+import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.callBacks.OnFilterUpdate;
 import com.visitegypt.presentation.gamification.BadgesSliderViewAdapter;
 import com.visitegypt.presentation.gamification.CitiesActivity;
@@ -56,7 +56,7 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
 
     private static final String TAG = "Account Fragment";
 
-    private TextView userName, country;
+    private TextView nameTextView, titleTextViewAccountFragment;
     private TextView likesNumberTextView, followingNumberTextView, followersNumberTextView;
     private TextView levelTextView, currentLevelTextView, nextLevelTextView,
             xpRemainingTextView, xpProgressTextView;
@@ -95,8 +95,8 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
     }
 
     private void initViews(View accountView) {
-        userName = accountView.findViewById(R.id.nameTextView);
-        country = accountView.findViewById(R.id.titleTextViewAccountFragment);
+        nameTextView = accountView.findViewById(R.id.nameTextView);
+        titleTextViewAccountFragment = accountView.findViewById(R.id.titleTextViewAccountFragment);
         likesNumberTextView = accountView.findViewById(R.id.likesNumberTextView);
         followingNumberTextView = accountView.findViewById(R.id.followingNumberTextView);
         followersNumberTextView = accountView.findViewById(R.id.followersNumberTextView);
@@ -132,11 +132,10 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
         badgesSliderViewAdapter = new BadgesSliderViewAdapter(placeBadges, accountView.getContext());
         badgesRecyclerView.setAdapter(badgesSliderViewAdapter);
 
-
         noPostsMaterialTextView = accountView.findViewById(R.id.noPostsMaterialTextView);
         postsRecyclerView = accountView.findViewById(R.id.postsRecyclerView);
         postsRecyclerViewAdapter = new PostsRecyclerViewAdapter(accountView.getContext());
-        postsRecyclerView.setLayoutManager(new LinearLayoutManager(accountView.getContext()));
+        postsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         postsRecyclerView.setAdapter(postsRecyclerViewAdapter);
     }
 
@@ -156,7 +155,18 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
 
     private void initViewModel() {
         accountViewModel = new ViewModelProvider(this).get(AccountViewModel.class);
-        accountViewModel.mutableLiveDataName.observe(getViewLifecycleOwner(), s -> userName.setText(s));
+        accountViewModel.userMutableLiveData.observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                nameTextView.setText(user.getFirstName() + " " + user.getLastName());
+                if (user.getPhotoUrl() != null) {
+                    Log.d(TAG, "onChanged: " + user.getPhotoUrl());
+                    accountViewModel.saveUserImage(user.getPhotoUrl());
+                    Picasso.get().load(user.getPhotoUrl()).into(circularAccountImageView);
+
+                }
+            }
+        });
 
         accountViewModel.getUser();
         accountViewModel.userMutableLiveData.observe(getViewLifecycleOwner(), user -> {
@@ -164,7 +174,19 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
             int xp = user.getXp();
             //setUserXp(xp);
         });
+        //get user posts
+        accountViewModel.getPostsByUserId();
 
+        accountViewModel.userPostsMutableLiveData.observe(this, posts -> {
+            if (posts.size() != 0) {
+                noPostsMaterialTextView.setVisibility(View.GONE);
+                Log.d(TAG, "setting posts to recycler view...");
+                postsRecyclerViewAdapter.setPostsArrayList(posts);
+                Log.d(TAG, "posts available  " + posts.size());
+            } else {
+                Log.d(TAG, "no posts available ");
+            }
+        });
         accountViewModel.getUserInformation();
         accountViewModel.mutableLiveDataMyPosts.observe(getViewLifecycleOwner(), posts -> {
             if (posts.get(0).getId() == null) {
@@ -226,23 +248,6 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
                 //generatedXp += placeActivity.getXp();
                 Log.d(TAG, "initViewModel: place activity generatedXp: " + generatedXp);
             }
-///////
-            accountViewModel.getUserPosts();
-            accountViewModel.mutableLiveDataMyPosts.observe(this, new Observer<List<Post>>() {
-                @Override
-                public void onChanged(List<Post> posts) {
-                    if (posts.size() != 0) {
-                        noPostsMaterialTextView.setVisibility(View.GONE);
-                        Log.d(TAG, "posts: " + posts.get(0).toString());
-                        postsRecyclerViewAdapter.setPostsArrayList(posts);
-                        Log.d(TAG, "posts available");
-                    } else {
-                        Log.d(TAG, "no posts available ");
-                    }
-                }
-            });
-
-
             accountViewModel.setPlaceActivitiesId(placeActivitiesIds);
             accountViewModel.getPlacesByPlaceActivities();
             GeneralUtils.LiveDataUtil.observeOnce(accountViewModel.placesWithNeededPlaceActivities, places -> {

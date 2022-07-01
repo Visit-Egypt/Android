@@ -2,6 +2,7 @@ package com.visitegypt.domain.repository;
 
 import com.visitegypt.domain.model.Post;
 import com.visitegypt.domain.model.PostPage;
+import com.visitegypt.domain.model.response.PostPageResponse;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ public interface PostsRepository {
     Single<Post> updatePost(String postId, Post post);
     Single<Void> deletePost(String postId);
     Single<Void> unLike(String postId);
+    Single<PostPageResponse> getPostsWithUserId(String userId);
+
 
 
 }

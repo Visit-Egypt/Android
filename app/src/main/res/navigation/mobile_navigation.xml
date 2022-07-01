@@ -33,10 +33,10 @@
         android:name="com.visitegypt.presentation.tripmate.TripMate"
         android:label="@string/trip_mate"
         tools:layout="@layout/trip_mate_fragment" />
-    <fragment
-        android:id="@+id/discoverChildAllPlaces"
-        android:name="com.visitegypt.presentation.home.child.discover.allPlaces.DiscoverChildAllPlaces"
-        android:label="@string/discover_places"
-        tools:layout="@layout/fragment_discover_child_all_places" />
+    <!--    <fragment-->
+    <!--        android:id="@+id/discoverChildAllPlaces"-->
+    <!--        android:name="com.visitegypt.presentation.home.child.discover.allPlaces.DiscoverChildAllPlaces"-->
+    <!--        android:label="@string/discover_places"-->
+    <!--        tools:layout="@layout/fragment_discover_child_all_places" />-->
 
 </navigation>

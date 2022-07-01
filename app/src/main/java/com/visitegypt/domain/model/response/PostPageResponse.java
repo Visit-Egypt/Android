@@ -1,15 +1,15 @@
-package com.visitegypt.domain.model;
-
+package com.visitegypt.domain.model.response;
 
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.google.gson.annotations.SerializedName;
+import com.visitegypt.domain.model.Post;
 import com.visitegypt.domain.model.converters.PostConverter;
 
 import java.util.List;
 
-public class PostPage {
+public class PostPageResponse {
     @SerializedName("current_page")
     int currentPage;
     @SerializedName("has_next")
@@ -19,6 +19,10 @@ public class PostPage {
     List<Post> posts;
     @PrimaryKey
     private String id;
+
+    public PostPageResponse() {
+
+    }
 
     public String getId() {
         return id;

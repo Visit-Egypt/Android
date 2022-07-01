@@ -3,27 +3,33 @@ package com.visitegypt.domain.usecase;
 import android.content.SharedPreferences;
 
 import com.visitegypt.domain.model.PostPage;
+import com.visitegypt.domain.model.response.PostPageResponse;
 import com.visitegypt.domain.repository.PostsRepository;
 import com.visitegypt.domain.usecase.base.SingleUseCase;
-import com.visitegypt.utils.Constants;
 
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Single;
 
-public class GetPostsByUser extends SingleUseCase<PostPage> {
+public class GetUserPostsUseCase extends SingleUseCase<PostPageResponse> {
     PostsRepository postsRepository;
     SharedPreferences sharedPreferences;
 
+    private String userId;
+
     @Inject
-    public GetPostsByUser(PostsRepository postsRepository, SharedPreferences sharedPreferences) {
+    public GetUserPostsUseCase(PostsRepository postsRepository, SharedPreferences sharedPreferences) {
         this.postsRepository = postsRepository;
         this.sharedPreferences = sharedPreferences;
     }
 
-    @Override
-    protected Single<PostPage> buildSingleUseCase() {
-        return postsRepository.getPostsByUser(sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, null));
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
+    @Override
+    protected Single<PostPageResponse> buildSingleUseCase() {
+        return postsRepository.getPostsWithUserId(userId);
     }
 }
+

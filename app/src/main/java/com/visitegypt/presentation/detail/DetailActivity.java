@@ -34,6 +34,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,6 +51,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textview.MaterialTextView;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.smarteist.autoimageslider.SliderView;
 import com.visitegypt.R;
@@ -95,7 +97,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 
     private LinearProgressIndicator remainingActivitiesProgressIndicator;
 
-    private MaterialButton addReviewButton, gamificationInDetailActivityImageView;
+    private MaterialButton addReviewButton, gamificationInDetailActivityImageView, seeAllButton;
     private FloatingActionButton chatbotFloatingActionButton;
 
     private DetailViewModel detailViewModel;
@@ -110,12 +112,14 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     private ShimmerFrameLayout sliderShimmerFrameLayout, titleShimmerFrameLayout,
             descriptionShimmerFrameLayout, artifactsShimmerFrameLayout;
     private ItemPagingAdapter itemPagingAdapter;
-    private LinearLayout detailLayout;
+    private LinearLayout detailLayout, firstReviewLinearLayout;
     private ScrollView shimmerScrollView;
     private CircularImageView backArrowCircularImageButton;
     private MapView mapView;
 
     private Place place;
+    private MaterialTextView noReviewsMaterialTextView, visitorNameFirstReviewTextView, reviewContentTextView;
+    private RatingBar firstReviewRatingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -207,12 +211,36 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 
         remainingActivitiesTextView = findViewById(R.id.remainingActivitiesDetailActivityTextView);
         remainingActivitiesProgressIndicator = findViewById(R.id.remainingActivitiesDetailActivityLinearProgressIndicator);
+
+        noReviewsMaterialTextView = findViewById(R.id.noReviewsMaterialTextView);
+        visitorNameFirstReviewTextView = findViewById(R.id.visitorNameFirstReviewTextView);
+        firstReviewRatingBar = findViewById(R.id.firstReviewRatingBar);
+        reviewContentTextView = findViewById(R.id.reviewContentTextView);
+        firstReviewLinearLayout = findViewById(R.id.firstReviewLinearLayout);
+        seeAllButton = findViewById(R.id.seeAllButton);
     }
 
     private void initViewModel(String placeId, Bundle savedInstances) {
         detailViewModel = new ViewModelProvider(this).get(DetailViewModel.class);
         reviewViewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
         detailViewModel.getPlace(placeId);
+        detailViewModel.placesMutableLiveData.observe(this, new Observer<Place>() {
+            @Override
+            public void onChanged(Place place) {
+                if (place.getReviews() != null && !place.getReviews().isEmpty()) {
+                    noReviewsMaterialTextView.setVisibility(View.GONE);
+                    Log.d(TAG, "reviews: " + place.getReviews().toString());
+                    firstReviewRatingBar.setRating(place.getReviews().get(0).getRating());
+                    reviewContentTextView.setText(place.getReviews().get(0).getReview());
+                    visitorNameFirstReviewTextView.setText(place.getReviews().get(0).getFullName());
+
+                } else {
+                    firstReviewLinearLayout.setVisibility(View.GONE);
+                    seeAllButton.setVisibility(View.GONE);
+                    Log.d(TAG, "no reviews available ");
+                }
+            }
+        });
         detailViewModel.getItemsByPlaceId(placeId);
         backArrowCircularImageButton.setOnClickListener(v -> backPlace());
 

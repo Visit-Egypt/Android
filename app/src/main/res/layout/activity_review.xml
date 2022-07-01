@@ -23,13 +23,13 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingVertical="20dp"
-        android:text="@string/no_reviews"
-        android:textStyle="bold" />
+        android:text="@string/no_reviews" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reviewsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:nestedScrollingEnabled="false" />
 
 </LinearLayout>

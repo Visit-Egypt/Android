@@ -18,6 +18,7 @@ import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.response.BadgeResponse;
 import com.visitegypt.domain.model.response.ItemPageResponse;
 import com.visitegypt.domain.model.response.PlacePageResponse;
+import com.visitegypt.domain.model.response.PostPageResponse;
 import com.visitegypt.domain.model.response.UploadResponse;
 
 import java.util.HashMap;
@@ -155,7 +156,7 @@ public interface RetrofitService {
      */
 
     @GET("api/post")
-    public Single<List<Post>> getUserPosts(@Query("filters") String queryMap, @Query("page_num") int pageNumber, @Query("limit") int limit);
+    public Single<PostPageResponse> getUserPosts(@Query("filters") String queryMap, @Query("page_num") int pageNumber, @Query("limit") int limit);
 
     @GET("api/post/place/{post_id}")
     public Single<Post> getPost(@Path("post_id") String postId);

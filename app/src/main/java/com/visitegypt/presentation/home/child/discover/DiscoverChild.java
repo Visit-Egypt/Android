@@ -24,13 +24,13 @@ import com.visitegypt.presentation.home.child.discover.allPlaces.DiscoverChildAl
 import com.visitegypt.presentation.home.parent.Home;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class DiscoverChild extends Fragment {
+    private static final String TAG = "Discover Child Fragment";
 
     private DiscoverChildViewModel mViewModel;
     private View discoverLayOut;
@@ -104,7 +104,7 @@ public class DiscoverChild extends Fragment {
         //init Places Recycler view
 
         discoverPlacesRecyclerView = discoverLayOut.findViewById(R.id.placeRecyclerView);
-        discoverPlacesArrayList = new  ArrayList<>();
+        discoverPlacesArrayList = new ArrayList<>();
         discoverPlacesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         discoverPlaceAdapter = new DiscoverPlaceAdapter(getContext(), discoverPlacesArrayList);
         discoverPlacesRecyclerView.setAdapter(discoverPlaceAdapter);
@@ -159,25 +159,19 @@ public class DiscoverChild extends Fragment {
     private void setLayoutVisible() {
         discoverVerticalLayOut.setVisibility(View.VISIBLE);
         shimmerLayout.setVisibility(View.GONE);
-
-
-    }
-
-    private void setShimmersGone() {
-
     }
 
     private void getAllPlaces() {
-    discoverChildViewModel.placesMutableLiveData.observe(getViewLifecycleOwner(),place -> {
-        if (place != null) {
-            discoverPlacesArrayList.addAll(place);
-            Log.d("TAG", "getAllPlaces: "  + place.get(0).getTitle());
-            setRecyclerViewsVisible();
-            stopShimmerAnimation();
-            setLayoutVisible();
-            discoverPlaceAdapter.updatePlacesList(discoverPlacesArrayList);
-        }
-    });
+        discoverChildViewModel.placesMutableLiveData.observe(getViewLifecycleOwner(), place -> {
+            if (place != null) {
+                discoverPlacesArrayList.addAll(place);
+//                Log.d(TAG, "getAllPlaces: " + place.get(0).getTitle());
+                setRecyclerViewsVisible();
+                stopShimmerAnimation();
+                setLayoutVisible();
+                discoverPlaceAdapter.updatePlacesList(discoverPlacesArrayList);
+            }
+        });
     }
 
     @Override
@@ -220,11 +214,11 @@ public class DiscoverChild extends Fragment {
         ourFavouritesArrayList.add(place2);
         recommendationPlaceAdapter.updatePlacesList(ourFavouritesArrayList);
     }
-    private void onClickListeners()
-    {
+
+    private void onClickListeners() {
         btnAllPlaces.setOnClickListener(view -> {
-            Log.d("TAG", "onClickListeners: wiwwwwwwwwwwwwww ");
-            ((Home) getActivity()).changeFragment( DiscoverChildAllPlaces.newInstance());
+            Log.d(TAG, "onClickListeners:  ");
+            ((Home) getActivity()).changeFragment(DiscoverChildAllPlaces.newInstance());
         });
     }
 

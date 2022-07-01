@@ -26,17 +26,13 @@ import retrofit2.Response;
 public class ReviewViewModel extends ViewModel {
 
     private static final String TAG = "Review View Model";
-
-    MutableLiveData<Place> placesMutableLiveData = new MutableLiveData<>();
     public MutableLiveData<List<Review>> reviewMutableLiveData = new MutableLiveData<>();
-
     public MutableLiveData<List<BadgeTask>> badgeTaskMutableLiveData = new MutableLiveData<>();
     public MutableLiveData<List<PlaceActivity>> placeActivitiesMutableLiveData = new MutableLiveData<>();
-
     public MutableLiveData<Integer> placeActivityUpdateResponseCode = new MutableLiveData<>();
     public MutableLiveData<Integer> badgeTaskUpdateResponseCode = new MutableLiveData<>();
     public MutableLiveData<Integer> mutableLiveDataResponseCode = new MutableLiveData<>();
-
+    MutableLiveData<Place> placesMutableLiveData = new MutableLiveData<>();
     private SubmitReviewUseCase submitReviewUseCase;
     private GetPlaceDetailUseCase getPlaceDetailUseCase;
     private UpdateUserPlaceActivityUseCase updateUserPlaceActivityUseCase;

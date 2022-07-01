@@ -41,24 +41,25 @@
 
         <TextView
             android:id="@+id/nameTextView"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
             android:text="xxx"
             android:textAlignment="center"
-            android:textColor="?attr/colorOnSecondary"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textColor="?attr/colorOnSecondary" />
 
         <TextView
             android:id="@+id/titleTextViewAccountFragment"
+            style="@style/TextAppearance.MaterialComponents.Subtitle1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"
             android:text="Explorer"
             android:textAlignment="center"
-            android:textColor="?attr/colorPrimaryVariant"
-            android:textSize="17sp" />
+            android:textColor="?attr/colorPrimaryVariant" />
 
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -136,7 +137,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="8dp"
             android:orientation="horizontal"
             android:weightSum="3">
 
@@ -149,23 +150,22 @@
 
                 <TextView
                     android:id="@+id/likesNumberTextView"
+                    style="@style/TextAppearance.MaterialComponents.Subtitle2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="0"
                     android:textAlignment="center"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textColor="?attr/colorOnSecondary" />
 
                 <TextView
+                    style="@style/TextAppearance.MaterialComponents.Subtitle2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="VISITED CITIES"
                     android:textAlignment="center"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textSize="14sp" />
+                    android:textColor="?attr/colorOnSecondary" />
 
             </LinearLayout>
 
@@ -178,23 +178,22 @@
 
                 <TextView
                     android:id="@+id/followingNumberTextView"
+                    style="@style/TextAppearance.MaterialComponents.Subtitle2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="0"
                     android:textAlignment="center"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textColor="?attr/colorOnSecondary" />
 
                 <TextView
+                    style="@style/TextAppearance.MaterialComponents.Subtitle2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="FOLLOWING"
                     android:textAlignment="center"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textSize="14sp" />
+                    android:textColor="?attr/colorOnSecondary" />
 
             </LinearLayout>
 
@@ -207,34 +206,32 @@
 
                 <TextView
                     android:id="@+id/followersNumberTextView"
+                    style="@style/TextAppearance.MaterialComponents.Subtitle2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="0"
                     android:textAlignment="center"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textColor="?attr/colorOnSecondary" />
 
                 <TextView
+                    style="@style/TextAppearance.MaterialComponents.Subtitle2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="FOLLOWERS"
                     android:textAlignment="center"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textSize="14sp" />
+                    android:textColor="?attr/colorOnSecondary" />
 
             </LinearLayout>
 
-
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginVertical="8dp"
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
@@ -261,13 +258,12 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="5dp"
+            android:layout_height="1dp"
             android:background="?attr/colorSecondaryVariant" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -276,14 +272,11 @@
                 android:requiresFadingEdge="horizontal">
 
                 <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:fontFamily="@font/prata_regular"
-                    android:padding="8dp"
-                    android:text="@string/my_interests"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:text="@string/my_interests" />
 
                 <com.mikhaellopez.circularimageview.CircularImageView
                     android:id="@+id/changeInterestIcon"
@@ -298,15 +291,11 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/myInterests"
+                style="@style/TextAppearance.MaterialComponents.Body1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:layout_marginHorizontal="5dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/prata_regular"
-                android:text="I don't have any interests yet"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:text="I don't have any interests yet" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipGroup"
@@ -322,24 +311,20 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="1dp"
             android:background="?attr/colorSecondaryVariant" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
             android:orientation="vertical">
 
             <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/prata_regular"
-                android:text="@string/user_badges"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:text="@string/user_badges" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/userBadgesRecyclerViewAccountFragment"
@@ -352,34 +337,28 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="1dp"
             android:background="?attr/colorSecondaryVariant" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
             android:orientation="horizontal">
 
             <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/prata_regular"
-                android:text="Cities"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:text="Cities" />
         </LinearLayout>
 
         <com.google.android.material.textview.MaterialTextView
+            style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/prata_regular"
-            android:text="You haven't visited any cities yet"
-            android:textStyle="bold" />
+            android:text="You haven't visited any cities yet" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/citiesRecyclerViewAccountFragment"
@@ -389,35 +368,31 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="1dp"
             android:background="?attr/colorSecondaryVariant" />
 
         <com.google.android.material.textview.MaterialTextView
+            style="@style/TextAppearance.MaterialComponents.Headline6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/prata_regular"
-            android:paddingVertical="10dp"
-            android:text="My Activities"
-            android:textStyle="bold" />
+            android:text="My Activities" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/noPostsMaterialTextView"
+            style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/prata_regular"
-            android:text="You don't have any activities yet"
-            android:textStyle="bold" />
+            android:text="You don't have any activities yet" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/postsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:nestedScrollingEnabled="false" />
+            android:layout_marginHorizontal="8dp"
+            android:nestedScrollingEnabled="false"
+            android:scrollbars="vertical" />
 
     </LinearLayout>
 </ScrollView>

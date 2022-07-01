@@ -35,14 +35,14 @@
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/default_notification_channel_id"/>
+            android:value="@string/default_notification_channel_id" />
 
         <service
             android:name=".presentation.services.FireBaseServices"
             android:exported="false"
             tools:ignore="Instantiatable">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
 
         </service>
@@ -50,9 +50,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDyX88ZuZ6_KrI2SqFLnWFe5e0-3L4IKNM" />
 
-        <activity
-            android:name=".presentation.signup.SignUpActivity"
-            android:exported="true"></activity>
         <activity
             android:name=".presentation.review.ReviewActivity"
             android:exported="true" />
@@ -78,7 +75,6 @@
             android:name=".presentation.gamification.GamificationActivity"
             android:exported="true"></activity>
 
-
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -95,9 +91,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".presentation.signin.SignInActivity"
-            android:exported="true"></activity>
+
         <activity
             android:name=".presentation.log.LogActivity"
             android:exported="true"></activity>
@@ -108,13 +102,6 @@
             android:name=".presentation.home.parent.Home"
             android:exported="true"
             android:windowSoftInputMode="adjustPan">
-
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
-
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
-
         </activity>
 
         <meta-data
