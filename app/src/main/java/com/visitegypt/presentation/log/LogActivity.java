@@ -54,11 +54,11 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
     Dialog forgetPasswordDialog;
     boolean checkSignUp;
     TextInputLayout emailTextField, passwordSignInTextField, firstNameSignUpTextField, lastNameSignUpTextField, emailSignUpTextField, phoneNumber, password;
-    MaterialButton signInMaterialButton, signUpMaterialButton;
+    MaterialButton signInMaterialButton, signUpMaterialButton, signInTransferMaterialButton, signUpTransferMaterialButton;
     View loadingLayout;
     String token, emaill, passwordd;
 
-    MaterialTextView forgetPasswordMaterialTextView, signInTransferMaterialButton, signUpTransferMaterialButton;
+    MaterialTextView forgetPasswordMaterialTextView;
     LogViewModel logViewModel;
 
 
@@ -67,141 +67,19 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log);
-        forgetPasswordMaterialTextView = findViewById(R.id.forgetPasswordMaterialTextView);
-        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.server_client_id))
-                .requestEmail()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
-
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-
-        googleSignInButton = findViewById(R.id.googleSignInButton);
-        googleSignUpButton = findViewById(R.id.googleSignUpButton);
-
-        googleSignInButton.setOnClickListener(v -> {
-            checkSignUp = false;
-            signIn();
-
-        });
-        googleSignUpButton.setOnClickListener(v -> {
-            checkSignUp = true;
-
-            signIn();
-        });
-        logViewModel = new ViewModelProvider(this).get(LogViewModel.class);
-        signInConstraintLayout = findViewById(R.id.signInConstraintLayout);
-        signUpConstraintLayout = findViewById(R.id.signUpConstraintLayout);
-        if (logViewModel.checkUser()) {
-            Log.d(TAG, "onCreate: user signed in");
-            redirectHome();
-        }
-        loadingLayout = findViewById(R.id.loadingLayout);
-        emailTextField = findViewById(R.id.emailTextField);
-        passwordSignInTextField = findViewById(R.id.passwordSignInTextField);
+        initViews();
+        initGoogleSignInAndUp();
+        initViewModels();
+        observeViewModelLiveData(); //observe the live data of the view model
+        setOnClickListeners();
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-        forgetPasswordMaterialTextView.setOnClickListener(
-                v -> forgetPassword()
-        );
-        logViewModel.msgMutableLiveData.observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if (s.equals("Your login done")) {
-                    redirectHome();
-                    Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
-
-                } else if (s.equals("Your google login done")) {
-                    redirectHome();
-                    logOut();
-                    Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
-                } else {
-                    hideLoading();
-                    Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-        logViewModel.userMutable.observe(this, user -> {
-            Intent intent = new Intent(LogActivity.this, Home.class);
-            intent.putExtra(USER_NAME, user.getFirstName() + " " + user.getLastName());
-            intent.putExtra(USER_EMAIL, user.getEmail());
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finish();
-        });
-        logViewModel.forgotPasswordResponse.observe(this, a -> {
-
-            if (a.equals("reset done")) {
-                Toast.makeText(LogActivity.this, "Reset password done.", Toast.LENGTH_LONG).show();
-                redirectSignup();
-            } else {
-                Toast.makeText(LogActivity.this, "Not found", Toast.LENGTH_LONG).show();
-            }
-        });
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-        loadingLayout = findViewById(R.id.loadingLayout);
-        signUpMaterialButton = findViewById(R.id.signUpMaterialButton);
-        firstNameSignUpTextField = findViewById(R.id.firstNameSignUpTextField);
-        lastNameSignUpTextField = findViewById(R.id.lastNameSignUpTextField);
-        emailSignUpTextField = findViewById(R.id.emailSignUpTextField);
-        phoneNumber = findViewById(R.id.txtPhoneNumber);
-        password = findViewById(R.id.passwordSignUpTextField);
-        logViewModel = new ViewModelProvider(this).get(LogViewModel.class);
-        logViewModel.mutableLiveDataErrors.observe(this, new Observer<String[]>() {
-            @Override
-            public void onChanged(String[] strings) {
-                if (!strings[0].isEmpty()) {
-                    firstNameSignUpTextField.setError(strings[0]);
-                }
-                if (!strings[1].isEmpty()) {
-                    lastNameSignUpTextField.setError(strings[1]);
-                }
-                if (!strings[2].isEmpty()) {
-                    emailSignUpTextField.setError(strings[2]);
-                }
-                if (!strings[3].isEmpty()) {
-                    password.setError(strings[3]);
-                }
-            }
-        });
-        logViewModel.mutableLiveDataResponse.observe(this, s -> {
-            Log.d(TAG, "account change observed");
-            if (s.equals("Your account was created successfully")) {
-                Toast.makeText(LogActivity.this, "Verfication email is sent, please verify your email", Toast.LENGTH_LONG).show();
-                Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
-                redirectSignIn();
-            } else if (s.equals("Your google account was created successfully")) {
-                Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
-                logOut();
-                redirectHome();
-            } else {
-                Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
-            }
-            hideLoading();
-        });
-        signUpMaterialButton.setOnClickListener(v -> {
-            if (firstNameSignUpTextField.getEditText().getText().toString().isEmpty() ||
-                    lastNameSignUpTextField.getEditText().getText().toString().isEmpty() ||
-                    emailSignUpTextField.getEditText().getText().toString().isEmpty() ||
-                    phoneNumber.getEditText().getText().toString().isEmpty() ||
-                    password.getEditText().getText().toString().isEmpty()) {
-                checkValidations();
-            } else {
-                UserValidation userValidation = new UserValidation(firstNameSignUpTextField.getEditText().getText().toString().trim(), lastNameSignUpTextField.getEditText().getText().toString(),
-                        emailSignUpTextField.getEditText().getText().toString().trim(),
-                        phoneNumber.getEditText().getText().toString().trim(),
-                        password.getEditText().getText().toString());
-                logViewModel.setUserValidation(userValidation);
-                if (logViewModel.checkUserValidation()) {
-                    showLoading();
-                    logViewModel.getUser();
-                }
-            }
-        });
+
 
     }
 
@@ -493,7 +371,7 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    public void logOut() {
+    private void logOut() {
         mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> Log.d(TAG, "onComplete: logout from google acc done successfully"));
     }
 
@@ -520,13 +398,211 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
         });
     }
 
-    public void redirectSignIn(View view) {
+    private void redirectSignIn(View view) {
         signUpConstraintLayout.setVisibility(View.GONE);
         signInConstraintLayout.setVisibility(View.VISIBLE);
     }
 
-    public void redirectSignIn() {
+    private void redirectSignIn() {
         signUpConstraintLayout.setVisibility(View.GONE);
         signInConstraintLayout.setVisibility(View.VISIBLE);
     }
+
+    private void initViewModels() {
+        logViewModel = new ViewModelProvider(this).get(LogViewModel.class);
+
+    }
+
+    private void observeViewModelLiveData() {
+        logViewModel.mutableLiveDataErrors.observe(this, new Observer<String[]>() {
+            @Override
+            public void onChanged(String[] strings) {
+                if (!strings[0].isEmpty()) {
+                    firstNameSignUpTextField.setError(strings[0]);
+                }
+                if (!strings[1].isEmpty()) {
+                    lastNameSignUpTextField.setError(strings[1]);
+                }
+                if (!strings[2].isEmpty()) {
+                    emailSignUpTextField.setError(strings[2]);
+                }
+                if (!strings[3].isEmpty()) {
+                    password.setError(strings[3]);
+                }
+            }
+        });
+        logViewModel.mutableLiveDataResponse.observe(this, s -> {
+            Log.d(TAG, "account change observed");
+            if (s.equals("Your account was created successfully")) {
+                Toast.makeText(LogActivity.this, "Verfication email is sent, please verify your email", Toast.LENGTH_LONG).show();
+                Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
+                redirectSignIn();
+            } else if (s.equals("Your google account was created successfully")) {
+                Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
+                logOut();
+                redirectHome();
+            } else {
+                Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
+            }
+            hideLoading();
+        });
+        logViewModel.userMutable.observe(this, user -> {
+            Intent intent = new Intent(LogActivity.this, Home.class);
+            intent.putExtra(USER_NAME, user.getFirstName() + " " + user.getLastName());
+            intent.putExtra(USER_EMAIL, user.getEmail());
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        });
+        logViewModel.forgotPasswordResponse.observe(this, a -> {
+
+            if (a.equals("reset done")) {
+                Toast.makeText(LogActivity.this, "Reset password done.", Toast.LENGTH_LONG).show();
+                redirectSignup();
+            } else {
+                Toast.makeText(LogActivity.this, "Not found", Toast.LENGTH_LONG).show();
+            }
+        });
+        logViewModel.msgMutableLiveData.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if (s.equals("Your login done")) {
+                    redirectHome();
+                    Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
+
+                } else if (s.equals("Your google login done")) {
+                    redirectHome();
+                    logOut();
+                    Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
+                } else {
+                    hideLoading();
+                    Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+    }
+
+    private void initViews() {
+        loadingLayout = findViewById(R.id.loadingLayout);
+        signUpMaterialButton = findViewById(R.id.signUpMaterialButton);
+        signInMaterialButton = findViewById(R.id.signInMaterialButton);
+        firstNameSignUpTextField = findViewById(R.id.firstNameSignUpTextField);
+        lastNameSignUpTextField = findViewById(R.id.lastNameSignUpTextField);
+        emailSignUpTextField = findViewById(R.id.emailSignUpTextField);
+        phoneNumber = findViewById(R.id.txtPhoneNumber);
+        password = findViewById(R.id.passwordSignUpTextField);
+        googleSignInButton = findViewById(R.id.googleSignInButton);
+        googleSignUpButton = findViewById(R.id.googleSignUpButton);
+        signInConstraintLayout = findViewById(R.id.signInConstraintLayout);
+        signUpConstraintLayout = findViewById(R.id.signUpConstraintLayout);
+        loadingLayout = findViewById(R.id.loadingLayout);
+        emailTextField = findViewById(R.id.emailTextField);
+        passwordSignInTextField = findViewById(R.id.passwordSignInTextField);
+        forgetPasswordMaterialTextView = findViewById(R.id.forgetPasswordMaterialTextView);
+        signUpTransferMaterialButton = findViewById(R.id.signUpTransferMaterialButton);
+    }
+
+    private void initGoogleSignInAndUp() {
+        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.server_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
+
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+    }
+
+    private void setOnClickListeners() {
+        googleSignInButton.setOnClickListener(v -> {
+            checkSignUp = false;
+            signIn();
+
+        });
+        googleSignUpButton.setOnClickListener(v -> {
+            checkSignUp = true;
+            signIn();
+        });
+
+        signUpMaterialButton.setOnClickListener(v -> {
+            if (firstNameSignUpTextField.getEditText().getText().toString().isEmpty() ||
+                    lastNameSignUpTextField.getEditText().getText().toString().isEmpty() ||
+                    emailSignUpTextField.getEditText().getText().toString().isEmpty() ||
+                    phoneNumber.getEditText().getText().toString().isEmpty() ||
+                    password.getEditText().getText().toString().isEmpty()) {
+                checkValidations();
+            } else {
+                UserValidation userValidation = new UserValidation(firstNameSignUpTextField.getEditText().getText().toString().trim(), lastNameSignUpTextField.getEditText().getText().toString(),
+                        emailSignUpTextField.getEditText().getText().toString().trim(),
+                        phoneNumber.getEditText().getText().toString().trim(),
+                        password.getEditText().getText().toString());
+                logViewModel.setUserValidation(userValidation);
+                if (logViewModel.checkUserValidation()) {
+                    showLoading();
+                    logViewModel.getUser();
+                }
+            }
+        });
+        forgetPasswordMaterialTextView.setOnClickListener(
+                v -> forgetPassword()
+        );
+        signInMaterialButton.setOnClickListener(view -> {
+            emaill = emailTextField.getEditText().getText().toString();
+            passwordd = passwordSignInTextField.getEditText().getText().toString();
+            if (emaill.isEmpty() || passwordd.isEmpty()) {
+                if (emaill.isEmpty()) {
+                    emailTextField.setError("Please Enter Your Email");
+                    emailTextField.getEditText().addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+                            if (emailTextField.getEditText().getText().toString().isEmpty()) {
+                                emailTextField.setError("Please Enter Your Email");
+                            } else {
+                                emailTextField.setError(null);
+                            }
+                        }
+                    });
+                }
+                if (passwordd.isEmpty()) {
+                    passwordSignInTextField.setError("Please,enter your password");
+                    passwordSignInTextField.getEditText().addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+                            if (passwordSignInTextField.getEditText().getText().toString().isEmpty()) {
+                                passwordSignInTextField.setError("Please,enter your password");
+                            } else {
+                                passwordSignInTextField.setError(null);
+                            }
+                        }
+                    });
+                }
+            } else {
+                User myUser = new User(emaill, passwordd);
+                showLoading();
+                logViewModel.login(myUser);
+            }
+        });
+
+    }
+
 }
