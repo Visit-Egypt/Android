@@ -12,9 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
-import com.smarteist.autoimageslider.SliderView;
 import com.visitegypt.R;
-import com.visitegypt.presentation.home.child.discover.SliderAdapter;
 import com.visitegypt.presentation.place.PlacesActivity;
 
 import javax.inject.Inject;
@@ -24,9 +22,6 @@ public class GamificationFragment extends Fragment {
     @Inject
     public SharedPreferences sharedPreferences;
     private ConstraintLayout luxorCityLayout, alexCityLayout, alsharkiaCityLayout, cairoCityLayout;
-    private SliderView slideCitiesActivitySliderView;
-    private SliderAdapter sliderAdapter;
-    private int[] sliderImages;
 
     private View gamificationLayout;
 
@@ -58,23 +53,6 @@ public class GamificationFragment extends Fragment {
     }
 
     private void init() {
-
-        sliderImages = new int[]{
-                R.drawable.alex,
-                R.drawable.alsharkia,
-                R.drawable.luxor,
-                R.drawable.luxor2,
-                R.drawable.cairo,
-        };
-
-        slideCitiesActivitySliderView = gamificationLayout.findViewById(R.id.slideCitiesActivitySliderView);
-        sliderAdapter = new SliderAdapter(sliderImages);
-        slideCitiesActivitySliderView.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
-        slideCitiesActivitySliderView.setSliderAdapter(sliderAdapter);
-        slideCitiesActivitySliderView.setScrollTimeInSec(3);
-        slideCitiesActivitySliderView.setAutoCycle(true);
-        slideCitiesActivitySliderView.startAutoCycle();
-
         luxorCityLayout.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), PlacesActivity.class);
             intent.putExtra("city_name", "Luxor");

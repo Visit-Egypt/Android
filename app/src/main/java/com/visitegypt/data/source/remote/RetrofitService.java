@@ -4,15 +4,18 @@ import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.ConfirmUploadModel;
 import com.visitegypt.domain.model.ConfirmUploadResponse;
+import com.visitegypt.domain.model.FullBadge;
+import com.visitegypt.domain.model.FullExplore;
+import com.visitegypt.domain.model.FullPlaceActivity;
 import com.visitegypt.domain.model.Message;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.model.Post;
 import com.visitegypt.domain.model.PostPage;
-import com.visitegypt.domain.model.Tag;
-import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.Review;
+import com.visitegypt.domain.model.Tag;
 import com.visitegypt.domain.model.Token;
+import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.response.BadgeResponse;
@@ -176,7 +179,6 @@ public interface RetrofitService {
     @GET("api/post/user/{user_id}")
     public Single<PostPage> getPostsByUser(@Path("user_id") String userId);
 
-
     //Chatbot
 
     @POST("/api/chatbot")
@@ -191,12 +193,51 @@ public interface RetrofitService {
 
     @GET("/api/place/activityid")
     public Single<List<Place>> getPlacesByPlaceActivitiesId(@Query("id") List<String> placeActivitiesIds);
+
     /******************************************************************/
     @POST("api/notification/register-device")
-    public Single<HashMap<Object,Object>> RegisterDeviceToNotification(@Body HashMap<Object,Object> deviceToken);
+    public Single<HashMap<Object, Object>> RegisterDeviceToNotification(@Body HashMap<Object, Object> deviceToken);
+
     /********************************************************************/
     @GET("api/tag")
     public Single<List<Tag>> getTags();
+
     @POST("api/tag/users")
-    public Single<List<User>> getAllUserTags(@Body HashMap<String,List<String>> tagsId);
+    public Single<List<User>> getAllUserTags(@Body HashMap<String, List<String>> tagsId);
+
+    /******* new gamification *********/
+
+    @PUT("api/user/scanobject/{place_Id}/{explore_id}")
+    public Single<Void> updateExploreUserActivity(@Path("place_id") String placeId, @Path("explore_id") String exploreId);
+
+    @PUT("api/user/chatbotartifact/{place_id}")
+    public Single<Void> updateChatBotArtifactUserActivity(@Path("place_id") String placeId);
+
+    @PUT("api/user/chatbotplace/{place_id}")
+    public Single<Void> updateChatBotPlaceUserActivity(@Path("place_id") String placeId);
+
+    @PUT("api/user/visitplace/{place_id}")
+    public Single<Void> updateVisitPlaceUserActivity(@Path("place_id") String placeId);
+
+    @PUT("api/user/reviewplace/{place_id}")
+    public Single<Void> updateUserReviewPlaceActivity(@Path("place_id") String placeId);
+
+    @PUT("api/user/addpost/{place_id}")
+    public Single<Void> updatePostUserActivity(@Path("place_id") String placeId);
+
+    @GET("/api/user/allactvitydetail/{user_id}")
+    public Single<List<FullPlaceActivity>> getUserFullPlaceActivitiesDetail(@Path("user_id") String userId,
+                                                                            @Query("place_id") String place_id);
+
+    @GET("/api/user/allactvitydetail/{user_id}")
+    public Single<List<FullPlaceActivity>> getUserFullActivitiesDetail(@Path("user_id") String userId);
+
+    @GET("/api/user/activitydetail/{user_id}")
+    public Single<List<FullPlaceActivity>> getUserFullPlaceActivityDetail(@Path("user_id") String userId);
+
+    @GET("/api/user/exploredetail/{user_id}")
+    public Single<List<FullExplore>> getUserFullExploreDetail(@Path("user_id") String userId);
+
+    @GET("/api/user/badgesdetail/{user_id}")
+    public Single<List<FullBadge>> getUserFullBadgesDetail(@Path("user_id") String userId);
 }

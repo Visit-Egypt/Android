@@ -128,7 +128,8 @@ public class CityBadgesRecyclerViewAdapter extends RecyclerView.Adapter<CityBadg
 
                 }
             };
-            Picasso.get().load(badges.get(position).getImageUrl()).into(target);
+            if (badges.get(position).getImageUrl() != null && !badges.get(position).getImageUrl().isEmpty())
+                Picasso.get().load(badges.get(position).getImageUrl()).into(target);
 
         }
     }

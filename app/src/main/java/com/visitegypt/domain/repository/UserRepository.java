@@ -4,9 +4,12 @@ import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.ConfirmUploadModel;
 import com.visitegypt.domain.model.ConfirmUploadResponse;
+import com.visitegypt.domain.model.FullBadge;
+import com.visitegypt.domain.model.FullExplore;
+import com.visitegypt.domain.model.FullPlaceActivity;
 import com.visitegypt.domain.model.PlaceActivity;
-import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.Token;
+import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.response.UploadResponse;
@@ -19,20 +22,8 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.Path;
 
 public interface UserRepository {
-    /**
-     * void getUser();
-     * <p>
-     * void deleteUser(User user);
-     * <p>
-     * <p>
-     * /
-     *
-     * @return
-     */
     Single<User> registerUser(User user);
 
     Single<String> forgotPassword(String email);
@@ -54,7 +45,9 @@ public interface UserRepository {
     public Completable addInterests(HashSet<String> interests);
 
     public Completable deleteInterests(HashSet<String> interests);
-    public Completable updateUserInterests(HashSet<String> newInterest , HashSet<String> removedInterest );
+
+    public Completable updateUserInterests(HashSet<String> newInterest, HashSet<String> removedInterest);
+
     Single<User> googleLoginUserToken(Token token);
 
     Single<User> googleRegisterUser(Token token);
@@ -79,4 +72,26 @@ public interface UserRepository {
 
     Single<List<PlaceActivity>> updateUserPlaceActivity(String activityId, PlaceActivity placeActivity);
 
+    /*********** gamification new requests ************/
+    Single<Void> updateExploreUserActivity(String placeId, String exploreId);
+
+    Single<Void> updateChatBotArtifactUserActivity(String placeId);
+
+    Single<Void> updateChatBotPlaceUserActivity(String placeId);
+
+    Single<Void> updateVisitPlaceUserActivity(String placeId);
+
+    Single<Void> updateUserReviewPlaceActivity(String placeId);
+
+    Single<Void> updatePostUserActivity(String placeId);
+
+    Single<List<FullPlaceActivity>> getUserFullPlaceActivitiesDetail(String userId, String placeId);
+
+    Single<List<FullPlaceActivity>> getUserFullPlaceActivityDetail(String userId);
+
+    Single<List<FullExplore>> getUserFullExploreDetail(String userId);
+
+    Single<List<FullBadge>> getUserFullBadgesDetail(String userId);
+
+    Single<List<FullPlaceActivity>> getFullActivities(String userId);
 }

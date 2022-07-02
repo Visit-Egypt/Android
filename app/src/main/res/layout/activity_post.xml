@@ -29,10 +29,11 @@
             android:layout_weight="1" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/postButtonPostActivity"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
-            android:background="@drawable/button_shape"
-            android:onClick="postOnClick"
+            android:enabled="false"
             android:text="Post" />
 
     </LinearLayout>

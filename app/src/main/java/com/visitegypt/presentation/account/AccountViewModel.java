@@ -9,6 +9,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.visitegypt.domain.model.Badge;
+import com.visitegypt.domain.model.FullBadge;
+import com.visitegypt.domain.model.FullPlaceActivity;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.model.Post;
@@ -16,12 +18,14 @@ import com.visitegypt.domain.model.Tag;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.usecase.GetAllBadgesUseCase;
 import com.visitegypt.domain.usecase.GetBadgesOfUserUseCase;
+import com.visitegypt.domain.usecase.GetFullActivitiesUseCase;
+import com.visitegypt.domain.usecase.GetFullBadgeUseCase;
 import com.visitegypt.domain.usecase.GetPlacesByPlaceActivityIdUseCase;
 import com.visitegypt.domain.usecase.GetPlacesUseCase;
 import com.visitegypt.domain.usecase.GetPostsByUser;
+import com.visitegypt.domain.usecase.GetTagUseCase;
 import com.visitegypt.domain.usecase.GetTagsNameByIds;
 import com.visitegypt.domain.usecase.GetUserPlaceActivityUseCase;
-import com.visitegypt.domain.usecase.GetTagUseCase;
 import com.visitegypt.domain.usecase.GetUserUseCase;
 import com.visitegypt.domain.usecase.UpdateUserInterestUseCase;
 import com.visitegypt.utils.Constants;
@@ -54,11 +58,15 @@ public class AccountViewModel extends ViewModel {
     MutableLiveData<ArrayList<Badge>> allBadgesMutableLiveData = new MutableLiveData<>();
     MutableLiveData<User> userMutableLiveData = new MutableLiveData<>();
     MutableLiveData<ArrayList<PlaceActivity>> userPlaceActivityMutableLiveData = new MutableLiveData<>();
-    private List<String> placeActivitiesId;
+    MutableLiveData<List<FullBadge>> fullBadgesMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<List<FullPlaceActivity>> fullActivitiesMutableLiveData = new MutableLiveData<>();
 
     MutableLiveData<List<Tag>> mutableLiveDataUserTagNames = new MutableLiveData<>();
     MutableLiveData<List<Tag>> mutableLiveDataAllTags = new MutableLiveData<>();
     MutableLiveData<Boolean> mutableLiveUpdateIsDone = new MutableLiveData<>();
+
+    private List<String> placeActivitiesId;
+
     private SharedPreferences sharedPreferences;
     private GetPostsByUser getPostsByUser;
     private GetBadgesOfUserUseCase getBadgesOfUserUseCase;
@@ -70,6 +78,8 @@ public class AccountViewModel extends ViewModel {
     private GetPlacesByPlaceActivityIdUseCase getPlacesByPlaceActivityIdUseCase;
     private GetTagsNameByIds getTagsNameByIds;
     private UpdateUserInterestUseCase userInterestUseCase;
+    private GetFullBadgeUseCase getFullBadgeUseCase;
+    private GetFullActivitiesUseCase getFullActivitiesUseCase;
 
     @Inject
     public AccountViewModel(SharedPreferences sharedPreferences, GetPostsByUser getPostsByUser,
@@ -81,7 +91,9 @@ public class AccountViewModel extends ViewModel {
                             GetUserUseCase getUserUseCase,
                             GetTagUseCase getTagUseCase,
                             GetTagsNameByIds getTagsNameByIds,
-                            UpdateUserInterestUseCase userInterestUseCase
+                            UpdateUserInterestUseCase userInterestUseCase,
+                            GetFullActivitiesUseCase getFullActivitiesUseCase,
+                            GetFullBadgeUseCase getFullBadgeUseCase
     ) {
         this.sharedPreferences = sharedPreferences;
         this.getPostsByUser = getPostsByUser;
@@ -94,6 +106,8 @@ public class AccountViewModel extends ViewModel {
         this.getPlacesByPlaceActivityIdUseCase = getPlacesByPlaceActivityIdUseCase;
         this.getTagsNameByIds = getTagsNameByIds;
         this.userInterestUseCase = userInterestUseCase;
+        this.getFullBadgeUseCase = getFullBadgeUseCase;
+        this.getFullActivitiesUseCase = getFullActivitiesUseCase;
     }
 
     public void getPlaceActivitiesOfUser() {
@@ -102,7 +116,7 @@ public class AccountViewModel extends ViewModel {
         getUserPlaceActivityUseCase.execute(placeActivities -> {
             userPlaceActivityMutableLiveData.setValue((ArrayList<PlaceActivity>) placeActivities);
         }, throwable -> {
-
+            Log.e(TAG, "getPlaceActivitiesOfUser: ", throwable);
         });
     }
 
@@ -149,6 +163,23 @@ public class AccountViewModel extends ViewModel {
             allBadgesMutableLiveData.setValue((ArrayList<Badge>) badgeResponse.getBadges());
         }, throwable -> {
             Log.e(TAG, "getAllBadges: " + throwable.getMessage());
+        });
+    }
+
+    public void getUserFullBadges() {
+        getFullBadgeUseCase.execute(fullBadges -> {
+            fullBadgesMutableLiveData.setValue(fullBadges);
+        }, throwable -> {
+            Log.e(TAG, "getUserFullBadges: ", throwable);
+        });
+    }
+
+    public void getFullActivities() {
+        getFullActivitiesUseCase.execute(fullPlaceActivities -> {
+            fullActivitiesMutableLiveData.setValue(fullPlaceActivities);
+        }, throwable -> {
+            fullActivitiesMutableLiveData.setValue(null);
+            Log.e(TAG, "getFullActivities: ", throwable);
         });
     }
 

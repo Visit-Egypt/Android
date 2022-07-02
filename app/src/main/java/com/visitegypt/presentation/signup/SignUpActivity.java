@@ -19,20 +19,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 import com.shobhitpuri.custombuttons.GoogleSignInButton;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.visitegypt.R;
 import com.visitegypt.domain.usecase.UserValidation;
 import com.visitegypt.presentation.home.parent.Home;
 import com.visitegypt.presentation.signin.SignInActivity;
 import com.visitegypt.presentation.signin.SignInViewModel;
+
 import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class SignUpActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -60,12 +58,7 @@ public class SignUpActivity extends AppCompatActivity implements GoogleApiClient
         mGoogleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         googleSignInButton = findViewById(R.id.googleSignInButton);
-        googleSignInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn();
-            }
-        });
+        googleSignInButton.setOnClickListener(v -> signIn());
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
@@ -331,18 +324,13 @@ public class SignUpActivity extends AppCompatActivity implements GoogleApiClient
             }
 
         } catch (ApiException e) {
-            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+            Log.e(TAG, "signInResult:failed code=" + e.getStatusCode());
         }
 
     }
 
     public void logOut() {
-        mGoogleSignInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                Log.d(TAG, "onComplete: logout from google acc done successfully");
-            }
-        });
+        mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> Log.d(TAG, "onComplete: logout from google acc done successfully"));
 
     }
 }

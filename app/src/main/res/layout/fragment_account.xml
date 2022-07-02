@@ -50,15 +50,15 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/titleTextViewAccountFragment"
+        <com.google.android.material.chip.Chip
+            android:id="@+id/titleChipViewAccountFragment"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="Explorer"
             android:textAlignment="center"
-            android:textColor="?attr/colorPrimaryVariant"
-            android:textSize="17sp" />
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            app:chipBackgroundColor="@color/camel" />
 
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -332,15 +332,27 @@
             android:layout_margin="5dp"
             android:orientation="vertical">
 
-            <com.google.android.material.textview.MaterialTextView
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/prata_regular"
-                android:padding="10dp"
-                android:text="@string/user_badges"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/prata_regular"
+                    android:padding="10dp"
+                    android:text="@string/user_badges"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/badgesSeeAllAccountFragmentButton"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/see_all" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/userBadgesRecyclerViewAccountFragment"

@@ -241,6 +241,13 @@ public class Place {
         return placeActivities;
     }
 
+    public ArrayList<PlaceActivity> getAllTypesOfActivities() {
+        ArrayList<PlaceActivity> placeActivities = new ArrayList<>();
+        placeActivities.addAll(getPlaceActivities());
+        placeActivities.addAll(getExplores());
+        return placeActivities;
+    }
+
     public void setPlaceActivities(ArrayList<PlaceActivity> placeActivities) {
         this.placeActivities = placeActivities;
     }
@@ -276,7 +283,7 @@ public class Place {
     }
 
     public boolean isOwned() {
-        return getProgress() == getMaxProgress();
+        return getProgress() == getMaxProgress() && getProgress() != 0;
     }
 
     public void setOwned(boolean owned) {

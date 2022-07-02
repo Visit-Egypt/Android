@@ -5,9 +5,12 @@ import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.ConfirmUploadModel;
 import com.visitegypt.domain.model.ConfirmUploadResponse;
+import com.visitegypt.domain.model.FullBadge;
+import com.visitegypt.domain.model.FullExplore;
+import com.visitegypt.domain.model.FullPlaceActivity;
 import com.visitegypt.domain.model.PlaceActivity;
-import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.Token;
+import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.response.UploadResponse;
@@ -159,11 +162,66 @@ public class UserRepositoryImp implements UserRepository {
     public Single<List<PlaceActivity>> updateUserPlaceActivity(String activityId, PlaceActivity placeActivity) {
         return retrofitService.updateUserPlaceActivity(activityId, placeActivity);
     }
-    public Completable updateUserInterests(HashSet<String> newInterest , HashSet<String> removedInterest )
-    {
+
+    @Override
+    public Single<Void> updateExploreUserActivity(String placeId, String exploreId) {
+        return retrofitService.updateExploreUserActivity(placeId, exploreId);
+    }
+
+    @Override
+    public Single<Void> updateChatBotArtifactUserActivity(String placeId) {
+        return retrofitService.updateChatBotArtifactUserActivity(placeId);
+    }
+
+    @Override
+    public Single<Void> updateChatBotPlaceUserActivity(String placeId) {
+        return retrofitService.updateChatBotPlaceUserActivity(placeId);
+    }
+
+    @Override
+    public Single<Void> updateVisitPlaceUserActivity(String placeId) {
+        return retrofitService.updateVisitPlaceUserActivity(placeId);
+    }
+
+    @Override
+    public Single<Void> updateUserReviewPlaceActivity(String placeId) {
+        return retrofitService.updateUserReviewPlaceActivity(placeId);
+    }
+
+    @Override
+    public Single<Void> updatePostUserActivity(String placeId) {
+        return retrofitService.updatePostUserActivity(placeId);
+    }
+
+    @Override
+    public Single<List<FullPlaceActivity>> getUserFullPlaceActivitiesDetail(String userId, String placeId) {
+        return retrofitService.getUserFullPlaceActivitiesDetail(userId, placeId);
+    }
+
+    @Override
+    public Single<List<FullPlaceActivity>> getUserFullPlaceActivityDetail(String userId) {
+        return retrofitService.getUserFullPlaceActivityDetail(userId);
+    }
+
+    @Override
+    public Single<List<FullExplore>> getUserFullExploreDetail(String userId) {
+        return retrofitService.getUserFullExploreDetail(userId);
+    }
+
+    @Override
+    public Single<List<FullBadge>> getUserFullBadgesDetail(String userId) {
+        return retrofitService.getUserFullBadgesDetail(userId);
+    }
+
+    @Override
+    public Single<List<FullPlaceActivity>> getFullActivities(String userId) {
+        return retrofitService.getUserFullActivitiesDetail(userId);
+    }
+
+    public Completable updateUserInterests(HashSet<String> newInterest, HashSet<String> removedInterest) {
         Completable newInterestRqe = addInterests(newInterest);
         Completable deleteInterestRqe = deleteInterests(removedInterest);
-        Completable request = Completable.mergeArray(newInterestRqe,deleteInterestRqe);
+        Completable request = Completable.mergeArray(newInterestRqe, deleteInterestRqe);
         return request.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
 

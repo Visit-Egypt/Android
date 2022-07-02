@@ -9,9 +9,6 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
 
-
-import androidx.annotation.NonNull;
-
 import com.visitegypt.data.repository.BadgesRepositoryImp;
 import com.visitegypt.data.repository.ChatbotRepositoryImp;
 import com.visitegypt.data.repository.ItemRepositoryImp;
@@ -47,9 +44,6 @@ import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
-import io.reactivex.rxjava3.core.Single;
-import okhttp3.Cache;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -90,35 +84,29 @@ public class NetworkModule implements CallBack {
                                             GetRefreshTokenUseCase userRepository) {
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         httpClient.addInterceptor(logging);
-        httpClient.addInterceptor(new Interceptor() {
-            @NonNull
-            @Override
-            public Response intercept(@NonNull Chain chain) throws IOException {
-                token = sharedPreferences.getString(SHARED_PREF_USER_ACCESS_TOKEN, "");
-                Request request = chain.request().newBuilder()
-                        .addHeader("Authorization", "Bearer " + token)
+        httpClient.addInterceptor(chain -> {
+            token = sharedPreferences.getString(SHARED_PREF_USER_ACCESS_TOKEN, "");
+            Request request = chain.request().newBuilder()
+                    .addHeader("Authorization", "Bearer " + token)
+                    .build();
+            Response response = chain.proceed(request);
+            response.cacheResponse();
+            if (response.code() == 403 || response.code() == 401) {
+                response.close();
+                getNewToken(userRepository, sharedPreferences);
+
+                while (flag) ;
+                Request newRequest = chain.request().newBuilder()
+                        .addHeader("Authorization", "Bearer " + newToken)
                         .build();
-                Response response = chain.proceed(request);
-                response.cacheResponse();
-                if (response.code() == 403 || response.code() == 401) {
-                    response.close();
-                    getNewToken(userRepository, sharedPreferences);
+                flag = true;
+                Log.d("TAG", "callBack: new token  " + newToken + " " + flag);
 
-                    while (flag) ;
-                    Request newRequest = chain.request().newBuilder()
-                            .addHeader("Authorization", "Bearer " + newToken)
-                            .build();
-                    flag = true;
-                    Log.d("TAG", "callBack: new token  " + newToken+ " " +flag);
+                return chain.proceed(newRequest);
 
-                    return chain.proceed(newRequest);
-
-                }
-
-                return response;
             }
 
-
+            return response;
         });
 
 
