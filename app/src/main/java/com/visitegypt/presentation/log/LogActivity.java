@@ -273,11 +273,11 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
 
     }
 
-    public void redirectSignup(View view) {
-        signInConstraintLayout.setVisibility(View.GONE);
-        signUpConstraintLayout.setVisibility(View.VISIBLE);
-
-    }
+//    public void redirectSignup(View view) {
+//        signInConstraintLayout.setVisibility(View.GONE);
+//        signUpConstraintLayout.setVisibility(View.VISIBLE);
+//
+//    }
 
     public void redirectSignup() {
         signInConstraintLayout.setVisibility(View.GONE);
@@ -291,7 +291,7 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
 //sign in
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(runnable -> {
             String token = runnable.getResult();
-            Log.d(TAG, "redirectHome: woow" + token);
+            Log.d(TAG, "redirectHome: " + token);
             logViewModel.registerDeviceToNotification(token);
         });
         startActivity(intent);
@@ -374,11 +374,6 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
             }
 
         });
-    }
-
-    private void redirectSignIn(View view) {
-        signUpConstraintLayout.setVisibility(View.GONE);
-        signInConstraintLayout.setVisibility(View.VISIBLE);
     }
 
     private void redirectSignIn() {
@@ -479,6 +474,7 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
         passwordSignInTextField = findViewById(R.id.passwordSignInTextField);
         forgetPasswordMaterialTextView = findViewById(R.id.forgetPasswordMaterialTextView);
         signUpTransferMaterialButton = findViewById(R.id.signUpTransferMaterialButton);
+        signInTransferMaterialButton = findViewById(R.id.signInTransferMaterialButton);
     }
 
     private void initGoogleSignInAndUp() {
@@ -551,6 +547,7 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
                         }
                     });
                 }
+
                 if (passwordd.isEmpty()) {
                     passwordSignInTextField.setError("Please,enter your password");
                     passwordSignInTextField.getEditText().addTextChangedListener(new TextWatcher() {
@@ -579,6 +576,14 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
                 showLoading();
                 logViewModel.login(myUser);
             }
+        });
+
+        signInTransferMaterialButton.setOnClickListener(view -> {
+            redirectSignIn();
+
+        });
+        signUpTransferMaterialButton.setOnClickListener(view -> {
+            redirectSignup();
         });
 
     }
