@@ -26,8 +26,7 @@ public interface PlaceRepository {
 
     public Single<PlacePageResponse> getPlacesPaging(int pageNumber);
 
-    public Completable cachingPlaces(List<Place> places);
+    Completable cachingPlaces(PlacePageResponse placePageResponse);
+    Single<PlacePageResponse> getALLCachedPlaces();
 
-    Single<List<Place>> getALLCachedPlaces();
-    Single<List<Place>> getCachedPlaces(int numberOfPlaces);
 }

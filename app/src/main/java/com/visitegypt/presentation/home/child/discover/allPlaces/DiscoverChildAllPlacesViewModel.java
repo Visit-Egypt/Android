@@ -1,7 +1,7 @@
 package com.visitegypt.presentation.home.child.discover.allPlaces;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -11,8 +11,10 @@ import androidx.paging.PagingConfig;
 import androidx.paging.PagingData;
 import androidx.paging.rxjava3.PagingRx;
 
+import com.visitegypt.data.source.local.dao.PlaceDao;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.usecase.GetAllPlacesPagingUseCase;
+import com.visitegypt.domain.usecase.GetAllPlacesPagingWithRoom;
 import com.visitegypt.domain.usecase.GetPlacesUseCase;
 import com.visitegypt.utils.Error;
 
@@ -30,13 +32,20 @@ public class DiscoverChildAllPlacesViewModel extends ViewModel {
     MutableLiveData placesMutableLiveData = new MutableLiveData<Place>();
     private GetPlacesUseCase getPlacesUseCase;
     private GetAllPlacesPagingUseCase getAllPlacesPagingUseCase;
+    private GetAllPlacesPagingWithRoom getAllPlacesPagingWithRoom;
     Flowable<PagingData<Place>> flowable;
 
 
     @Inject
-    public DiscoverChildAllPlacesViewModel(GetPlacesUseCase getPlacesUseCase, GetAllPlacesPagingUseCase getAllPlacesPagingUseCase) {
+    public DiscoverChildAllPlacesViewModel(GetPlacesUseCase getPlacesUseCase,
+                                           GetAllPlacesPagingUseCase getAllPlacesPagingUseCase,
+                                             GetAllPlacesPagingWithRoom getAllPlacesPagingWithRoom
+
+    ) {
+
         this.getPlacesUseCase = getPlacesUseCase;
         this.getAllPlacesPagingUseCase = getAllPlacesPagingUseCase;
+        this.getAllPlacesPagingWithRoom = getAllPlacesPagingWithRoom;
     }
 
     public void getAllPlaces() {
@@ -54,14 +63,15 @@ public class DiscoverChildAllPlacesViewModel extends ViewModel {
 
     public void init() {
         CoroutineScope viewModelScope = ViewModelKt.getViewModelScope(this);
-        Pager<Integer, Place> pager = new Pager(
+        @SuppressLint("UnsafeOptInUsageError") Pager<Integer, Place> pager = new Pager(
                 // Create new paging config
                 new PagingConfig(15, //  Count of items in one page
                         15, //  Number of items to prefetch
                         false, // Enable placeholders for data which is not yet loaded
                         15, // initialLoadSize - Count of items to be loaded initially
                         15 * 499),// maxSize - Count of total items to be shown in recyclerview
-                () -> getAllPlacesPagingUseCase); // set paging source
+                null,
+                () -> getAllPlacesPagingWithRoom); // set paging source
         flowable = PagingRx.getFlowable(pager);
         PagingRx.cachedIn(flowable, viewModelScope);
     }

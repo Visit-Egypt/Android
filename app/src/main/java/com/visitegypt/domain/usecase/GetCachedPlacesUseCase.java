@@ -4,6 +4,7 @@ package com.visitegypt.domain.usecase;
 import static com.visitegypt.utils.Constants.MAXIMNumberOfCities;
 
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.response.PlacePageResponse;
 import com.visitegypt.domain.repository.PlaceRepository;
 import com.visitegypt.domain.usecase.base.SingleUseCase;
 
@@ -13,7 +14,7 @@ import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Single;
 
-public class GetCachedPlacesUseCase extends SingleUseCase<List<Place>> {
+public class GetCachedPlacesUseCase extends SingleUseCase<PlacePageResponse> {
     private PlaceRepository placeRepository;
 
     @Inject
@@ -23,9 +24,9 @@ public class GetCachedPlacesUseCase extends SingleUseCase<List<Place>> {
 
 
     @Override
-    protected Single<List<Place>> buildSingleUseCase() {
+    protected Single<PlacePageResponse> buildSingleUseCase() {
 
-        return placeRepository.getCachedPlaces(MAXIMNumberOfCities);
+        return placeRepository.getALLCachedPlaces();
 
     }
 

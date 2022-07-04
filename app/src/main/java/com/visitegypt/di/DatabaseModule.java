@@ -6,6 +6,7 @@ import androidx.room.Room;
 
 import com.visitegypt.data.source.local.AppDatabase;
 import com.visitegypt.data.source.local.dao.PlaceDao;
+import com.visitegypt.data.source.local.dao.PlacePageResponseDao;
 import com.visitegypt.data.source.local.dao.TagDao;
 
 import javax.inject.Singleton;
@@ -27,6 +28,7 @@ public class DatabaseModule {
                         AppDatabase.DATABASE_NAME
                 )
                 .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
                 .build();
     }
 
@@ -41,5 +43,12 @@ public class DatabaseModule {
     public static PlaceDao providePlaceDao(AppDatabase appDatabase) {
         return appDatabase.placeDao();
     }
+
+    @Provides
+    @Singleton
+    public static PlacePageResponseDao providePlacePageResponseDao(AppDatabase appDatabase) {
+        return appDatabase.placePageResponseDao();
+    }
+
 
 }

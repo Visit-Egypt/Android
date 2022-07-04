@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.response.PlacePageResponse;
 import com.visitegypt.domain.usecase.CachePlacesUseCase;
 import com.visitegypt.domain.usecase.GetCachedPlacesUseCase;
 import com.visitegypt.domain.usecase.GetPlacesUseCase;
@@ -40,7 +41,7 @@ public class DiscoverChildViewModel extends ViewModel {
     public void getAllPlaces() {
         getPlacesUseCase.execute(placePageResponse -> {
             placesMutableLiveData.setValue(placePageResponse.getPlaces());
-            cachePlaces(placePageResponse.getPlaces());
+            cachePlaces(placePageResponse);
         }, throwable -> {
             Log.e(TAG, "places retrieve error: " + throwable.getMessage());
             Error error = new Error();
@@ -49,8 +50,8 @@ public class DiscoverChildViewModel extends ViewModel {
         });
     }
 
-    public void cachePlaces(List<Place> places) {
-        cachePlacesUseCase.setPlaces(places);
+    public void cachePlaces(PlacePageResponse placePageResponse) {
+        cachePlacesUseCase.setPlaces(placePageResponse);
         cachePlacesUseCase.execute(() -> {
 
         }, throwable -> {
@@ -63,13 +64,12 @@ public class DiscoverChildViewModel extends ViewModel {
 
     public void getCachedPlaces() {
         getCachedPlacesUseCase.execute(places -> {
-            if (places != null || places.size() > 0) {
+            if (places != null || places.getPlaces().size() > 0) {
 
-                Log.d(TAG, "getCachedPlaces:  cache " + places.size());
                 getAllPlaces();
             } else {
-                Log.d(TAG, "getCachedPlaces: no cache " + places.size());
-                placesMutableLiveData.setValue(places);
+
+                placesMutableLiveData.setValue(places.getPlaces());
             }
         }, throwable -> {
             Log.e(TAG, "places retrieve error: " + throwable.getMessage());

@@ -1,6 +1,6 @@
 package com.visitegypt.data.repository;
 
-import com.visitegypt.data.source.local.dao.PlaceDao;
+import com.visitegypt.data.source.local.dao.PlacePageResponseDao;
 import com.visitegypt.data.source.remote.RetrofitService;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.Review;
@@ -16,11 +16,11 @@ import io.reactivex.rxjava3.core.Single;
 public class PlaceRepositoryImp implements PlaceRepository {
     private static final String TAG = "Place Repository Impl";
     private RetrofitService retrofitService;
-    private PlaceDao placeDao;
+    private PlacePageResponseDao placePageResponseDao;
 
-    public PlaceRepositoryImp(RetrofitService retrofitService, PlaceDao placeDao) {
+    public PlaceRepositoryImp(RetrofitService retrofitService, PlacePageResponseDao placeDao) {
         this.retrofitService = retrofitService;
-        this.placeDao = placeDao;
+        this.placePageResponseDao = placeDao;
     }
 
 
@@ -65,18 +65,13 @@ public class PlaceRepositoryImp implements PlaceRepository {
     }
 
     @Override
-    public Completable cachingPlaces(List<Place> places) {
-        return placeDao.insert(places);
+    public Completable cachingPlaces(PlacePageResponse placePageResponse) {
+        return placePageResponseDao.insertAll(placePageResponse);
     }
 
     @Override
-    public Single<List<Place>> getALLCachedPlaces() {
-        return placeDao.getALLCachedPlaces();
-    }
-
-    @Override
-    public Single<List<Place>> getCachedPlaces(int numberOfPlaces) {
-        return placeDao.getCachedPlaces(numberOfPlaces);
+    public Single<PlacePageResponse> getALLCachedPlaces() {
+        return placePageResponseDao.getFavPlaces();
     }
 
 }
