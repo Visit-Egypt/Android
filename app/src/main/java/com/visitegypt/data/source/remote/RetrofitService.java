@@ -21,6 +21,7 @@ import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.response.BadgeResponse;
 import com.visitegypt.domain.model.response.ItemPageResponse;
 import com.visitegypt.domain.model.response.PlacePageResponse;
+import com.visitegypt.domain.model.response.PostPageResponse;
 import com.visitegypt.domain.model.response.UploadResponse;
 
 import java.util.HashMap;
@@ -104,17 +105,22 @@ public interface RetrofitService {
 
     //    @GET("api/user/activity/{user_id}")
     @POST("api/user/{user_id}/follow")
-    public Single<HashMap<String,String>> follow(@Path("user_id") String userId);
+    public Single<HashMap<String, String>> follow(@Path("user_id") String userId);
+
     @POST("api/user/{user_id}/unfollow")
-    public Single<HashMap<String,String>> unfollow(@Path("user_id") String userId);
+    public Single<HashMap<String, String>> unfollow(@Path("user_id") String userId);
+
     @POST("api/user/{user_id}/mate")
     public Single<User> requestTripMate(@Path("user_id") String userId, @Body TripMateRequest requestMateBody);
+
     @POST("api/user/trip-mate-reqs/{req_id}/approve")
     public Single<User> approveTripMateRequest(@Path("req_id") String requestId);
+
     @POST("api/user/interests")
-    public Completable addInterests(@Body HashMap<String,List<String>> interests);
+    public Completable addInterests(@Body HashMap<String, List<String>> interests);
+
     @POST("api/user/interests/delete")
-    public Completable deleteInterests(@Body HashMap<String,List<String>> interests);
+    public Completable deleteInterests(@Body HashMap<String, List<String>> interests);
 
 
     /*******************************************************************/
@@ -148,9 +154,13 @@ public interface RetrofitService {
      * Get place posts
      * Post add new post
      * Post add  Like to post
-     *
+     * Get User Posts
      * @return
      */
+
+    @GET("api/post")
+    public Single<PostPageResponse> getUserPosts(@Query("filters") String queryMap, @Query("page_num") int pageNumber, @Query("limit") int limit);
+
     @GET("api/post/place/{post_id}")
     public Single<Post> getPost(@Path("post_id") String postId);
 

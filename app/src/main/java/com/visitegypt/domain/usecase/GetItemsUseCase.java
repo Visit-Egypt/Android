@@ -1,11 +1,8 @@
 package com.visitegypt.domain.usecase;
 
-import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.response.ItemPageResponse;
 import com.visitegypt.domain.repository.ItemRepository;
 import com.visitegypt.domain.usecase.base.SingleUseCase;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -23,7 +20,6 @@ public class GetItemsUseCase extends SingleUseCase<ItemPageResponse> {
     public void setPlaceId(String placeId) {
         this.placeId = placeId;
     }
-
 
     @Override
     protected Single<ItemPageResponse> buildSingleUseCase() {

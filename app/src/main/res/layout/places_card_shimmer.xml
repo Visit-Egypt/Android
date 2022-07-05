@@ -17,9 +17,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_margin="8dp"
             app:cardCornerRadius="20dp">
 
             <com.google.android.material.imageview.ShapeableImageView
@@ -40,14 +38,12 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/txtPlaceCardNewTitle"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_margin="8dp"
                 android:background="?attr/colorSecondaryVariant"
-                android:fontFamily="@font/montserrat_alternates_semibold"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:fontFamily="@font/montserrat_alternates_semibold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,58 +55,49 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_margin="8dp"
                     android:background="@drawable/ic_pin" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtPlaceCardNewCity"
+                    style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:background="?attr/colorSecondaryVariant"
-                    android:fontFamily="@font/montserrat_alternates_medium"
-                    android:textSize="16sp" />
+                    android:layout_margin="8dp"
+                    android:background="?attr/colorSecondaryVariant" />
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_margin="8dp"
                     android:background="@drawable/ic_comment" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtPlaceCardComment"
+                    style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:background="?attr/colorSecondaryVariant"
-                    android:fontFamily="@font/montserrat_alternates_medium"
-                    android:textSize="16sp" />
+                    android:layout_margin="8dp"
+                    android:background="?attr/colorSecondaryVariant" />
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_margin="8dp"
                     android:background="@drawable/ic_star" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtPlaceCardReviewsNumber"
+                    style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:background="?attr/colorSecondaryVariant"
-                    android:fontFamily="@font/montserrat_alternates_medium"
-                    android:textSize="16sp" />
+                    android:layout_margin="8dp"
+                    android:background="?attr/colorSecondaryVariant" />
             </LinearLayout>
 
         </LinearLayout>

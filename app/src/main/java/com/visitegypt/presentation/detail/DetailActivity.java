@@ -34,6 +34,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,6 +51,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textview.MaterialTextView;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.smarteist.autoimageslider.SliderView;
 import com.visitegypt.R;
@@ -95,30 +97,29 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 
     private LinearProgressIndicator remainingActivitiesProgressIndicator;
 
-    private MaterialButton addReviewButton, gamificationInDetailActivityImageView;
+    private MaterialButton addReviewButton, gamificationInDetailActivityImageView, seeAllButton;
     private FloatingActionButton chatbotFloatingActionButton;
 
     private DetailViewModel detailViewModel;
     private ReviewViewModel reviewViewModel;
     private ItemsRecyclerViewAdapter itemsRecyclerViewAdapter;
     private RecyclerView itemsRecyclerView, reviewsRecyclerView;
-    private ReviewsRecyclerViewAdapter reviewsRecyclerViewAdapter;
     private SliderView sliderView;
     private SliderAdapter sliderAdapter;
     private ArrayList<Slider> sliderArrayList;
     private Dialog addReviewDialog;
     private String placeId;
     private ShimmerFrameLayout sliderShimmerFrameLayout, titleShimmerFrameLayout,
-            descriptionShimmerFrameLayout, artifactsShimmerFrameLayout,
-            locationShimmerFrameLayout, reviewsShimmerFrameLayout,
-            buttonShimmerFrameLayout, hoursShimmerFrameLayout, pricesShimmerFrameLayout;
+            descriptionShimmerFrameLayout, artifactsShimmerFrameLayout;
     private ItemPagingAdapter itemPagingAdapter;
-    private LinearLayout detailLayout;
+    private LinearLayout detailLayout, firstReviewLinearLayout;
     private ScrollView shimmerScrollView;
     private CircularImageView backArrowCircularImageButton;
     private MapView mapView;
 
     private Place place;
+    private MaterialTextView noReviewsMaterialTextView, visitorNameFirstReviewTextView, reviewContentTextView;
+    private RatingBar firstReviewRatingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,16 +152,6 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         }
         chatBot();
         getAllItems();
-//        reviewViewModel.mutableLiveDataResponseCode.observe(DetailActivity.this, code -> {
-//            Log.d(TAG, "Submit review onclick " + code);
-//            if (code == 400) {
-//                Toast.makeText(DetailActivity.this, "This is offensive review",
-//                        Toast.LENGTH_LONG).show();
-//            } else {
-//                addReviewDialog.dismiss();
-//            }
-//        });
-
     }
 
     private void initViews() {
@@ -198,20 +189,11 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
                 LinearLayoutManager.HORIZONTAL, true));
         itemsRecyclerView.setAdapter(itemPagingAdapter);
         /********************************************************************************/
-        reviewsRecyclerView = findViewById(R.id.reviewsRecyclerView);
-        reviewsRecyclerViewAdapter = new ReviewsRecyclerViewAdapter(this);
-        reviewsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        reviewsRecyclerView.setAdapter(reviewsRecyclerViewAdapter);
 
         sliderShimmerFrameLayout = findViewById(R.id.sliderShimmerFrameLayout);
         titleShimmerFrameLayout = findViewById(R.id.titleShimmerFrameLayout);
         descriptionShimmerFrameLayout = findViewById(R.id.descriptionShimmerFrameLayout);
         artifactsShimmerFrameLayout = findViewById(R.id.artifactsShimmerFrameLayout);
-        locationShimmerFrameLayout = findViewById(R.id.locationShimmerFrameLayout);
-        reviewsShimmerFrameLayout = findViewById(R.id.reviewsShimmerFrameLayout);
-        buttonShimmerFrameLayout = findViewById(R.id.buttonShimmerFrameLayout);
-        hoursShimmerFrameLayout = findViewById(R.id.hoursShimmerFrameLayout);
-        pricesShimmerFrameLayout = findViewById(R.id.pricesShimmerFrameLayout);
 
         detailLayout = findViewById(R.id.detailActivityLayout);
         shimmerScrollView = findViewById(R.id.shimmerScrollView);
@@ -229,12 +211,36 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 
         remainingActivitiesTextView = findViewById(R.id.remainingActivitiesDetailActivityTextView);
         remainingActivitiesProgressIndicator = findViewById(R.id.remainingActivitiesDetailActivityLinearProgressIndicator);
+
+        noReviewsMaterialTextView = findViewById(R.id.noReviewsMaterialTextView);
+        visitorNameFirstReviewTextView = findViewById(R.id.visitorNameFirstReviewTextView);
+        firstReviewRatingBar = findViewById(R.id.firstReviewRatingBar);
+        reviewContentTextView = findViewById(R.id.reviewContentTextView);
+        firstReviewLinearLayout = findViewById(R.id.firstReviewLinearLayout);
+        seeAllButton = findViewById(R.id.seeAllButton);
     }
 
     private void initViewModel(String placeId, Bundle savedInstances) {
         detailViewModel = new ViewModelProvider(this).get(DetailViewModel.class);
         reviewViewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
         detailViewModel.getPlace(placeId);
+        detailViewModel.placesMutableLiveData.observe(this, new Observer<Place>() {
+            @Override
+            public void onChanged(Place place) {
+                if (place.getReviews() != null && !place.getReviews().isEmpty()) {
+                    noReviewsMaterialTextView.setVisibility(View.GONE);
+                    Log.d(TAG, "reviews: " + place.getReviews().toString());
+                    firstReviewRatingBar.setRating(place.getReviews().get(0).getRating());
+                    reviewContentTextView.setText(place.getReviews().get(0).getReview());
+                    visitorNameFirstReviewTextView.setText(place.getReviews().get(0).getFullName());
+
+                } else {
+                    firstReviewLinearLayout.setVisibility(View.GONE);
+                    seeAllButton.setVisibility(View.GONE);
+                    Log.d(TAG, "no reviews available ");
+                }
+            }
+        });
         detailViewModel.getItemsByPlaceId(placeId);
         backArrowCircularImageButton.setOnClickListener(v -> backPlace());
 
@@ -360,11 +366,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         titleShimmerFrameLayout.startShimmerAnimation();
         descriptionShimmerFrameLayout.startShimmerAnimation();
         artifactsShimmerFrameLayout.startShimmerAnimation();
-        locationShimmerFrameLayout.startShimmerAnimation();
-        reviewsShimmerFrameLayout.startShimmerAnimation();
-        buttonShimmerFrameLayout.startShimmerAnimation();
-        hoursShimmerFrameLayout.startShimmerAnimation();
-        pricesShimmerFrameLayout.startShimmerAnimation();
+
     }
 
     private void stopShimmerAnimation() {
@@ -372,11 +374,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         titleShimmerFrameLayout.stopShimmerAnimation();
         descriptionShimmerFrameLayout.stopShimmerAnimation();
         artifactsShimmerFrameLayout.stopShimmerAnimation();
-        locationShimmerFrameLayout.stopShimmerAnimation();
-        reviewsShimmerFrameLayout.stopShimmerAnimation();
-        buttonShimmerFrameLayout.stopShimmerAnimation();
-        hoursShimmerFrameLayout.stopShimmerAnimation();
-        pricesShimmerFrameLayout.stopShimmerAnimation();
+
     }
 
     private void setLayoutVisible() {
@@ -493,8 +491,8 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
             mapView.onResume();
         }
     }
-    private void getAllItems()
-    {
+
+    private void getAllItems() {
         detailViewModel.flowable.subscribe(placePagingData -> {
 
             this.itemPagingAdapter.submitData(getLifecycle(), placePagingData);

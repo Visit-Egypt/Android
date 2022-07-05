@@ -34,21 +34,21 @@
                 android:layout_alignBottom="@id/circularAccountImageView"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="80dp"
-                android:background="@color/camel"
+                android:background="?attr/colorPrimary"
                 android:gravity="center"
                 android:text="LVL" />
         </RelativeLayout>
 
         <TextView
             android:id="@+id/nameTextView"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
             android:text="xxx"
             android:textAlignment="center"
-            android:textColor="?attr/colorOnSecondary"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textColor="?attr/colorOnSecondary" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/titleChipViewAccountFragment"
@@ -64,7 +64,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_margin="8dp"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -136,105 +136,101 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="8dp"
             android:orientation="horizontal"
             android:weightSum="3">
 
             <LinearLayout
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:padding="5dp">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/likesNumberTextView"
+                    style="@style/TextAppearance.MaterialComponents.Subtitle2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="0"
                     android:textAlignment="center"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textColor="?attr/colorOnSecondary" />
 
                 <TextView
+                    style="@style/TextAppearance.MaterialComponents.Subtitle2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="VISITED CITIES"
                     android:textAlignment="center"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textSize="14sp" />
+                    android:textColor="?attr/colorOnSecondary" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:padding="5dp">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/followingNumberTextView"
+                    style="@style/TextAppearance.MaterialComponents.Subtitle2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="0"
                     android:textAlignment="center"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textColor="?attr/colorOnSecondary" />
 
                 <TextView
+                    style="@style/TextAppearance.MaterialComponents.Subtitle2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="FOLLOWING"
                     android:textAlignment="center"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textSize="14sp" />
+                    android:textColor="?attr/colorOnSecondary" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:padding="5dp">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/followersNumberTextView"
+                    style="@style/TextAppearance.MaterialComponents.Subtitle2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="0"
                     android:textAlignment="center"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textColor="?attr/colorOnSecondary" />
 
                 <TextView
+                    style="@style/TextAppearance.MaterialComponents.Subtitle2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="FOLLOWERS"
                     android:textAlignment="center"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textSize="14sp" />
+                    android:textColor="?attr/colorOnSecondary" />
 
             </LinearLayout>
 
-
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginVertical="8dp"
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
@@ -244,7 +240,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Start Playing"
-                android:textSize="14sp"
                 app:icon="@drawable/ic_gamepad"
                 app:iconGravity="textStart" />
 
@@ -255,7 +250,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Requests"
-                android:textSize="14sp"
                 app:icon="@drawable/ic_trip_mate"
                 app:iconGravity="textStart" />
 
@@ -263,57 +257,50 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="5dp"
+            android:layout_height="1dp"
             android:background="?attr/colorSecondaryVariant" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:requiresFadingEdge="horizontal">
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:fontFamily="@font/prata_regular"
-                android:padding="8dp"
-                android:text="@string/my_interests"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/my_interests" />
+
                 <com.mikhaellopez.circularimageview.CircularImageView
                     android:id="@+id/changeInterestIcon"
-                    app:civ_shadow_gravity="end"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:layout_margin="8dp"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_baseline_edit_24" />
+                    android:layout_margin="8dp"
+                    android:src="@drawable/ic_baseline_edit_24"
+                    app:civ_shadow_gravity="end" />
 
             </LinearLayout>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/myInterests"
+                style="@style/TextAppearance.MaterialComponents.Body1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:layout_marginHorizontal="5dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/prata_regular"
-                android:padding="8dp"
-                android:text="I don't have any interests yet"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:text="I don't have any interests yet" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:padding="8dp"
                 app:singleSelection="false">
 
                 <!-- Chips can be declared here, or added dynamically. -->
@@ -323,13 +310,12 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="1dp"
             android:background="?attr/colorSecondaryVariant" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -337,14 +323,12 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:fontFamily="@font/prata_regular"
-                    android:padding="10dp"
-                    android:text="@string/user_badges"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:layout_margin="8dp"
+                    android:text="@string/user_badges" />
 
                 <com.google.android.material.button.MaterialButton
                     android:layout_marginRight="8dp"
@@ -360,42 +344,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:nestedScrollingEnabled="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
         </LinearLayout>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="1dp"
             android:background="?attr/colorSecondaryVariant" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             android:orientation="horizontal">
 
             <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/prata_regular"
-                android:padding="10dp"
-                android:text="Cities"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_margin="8dp"
+                android:text="Cities" />
         </LinearLayout>
 
         <com.google.android.material.textview.MaterialTextView
+            style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="5dp"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/prata_regular"
-            android:padding="10dp"
-            android:text="You haven't visited any cities yet"
-            android:textSize="13sp"
-            android:textStyle="bold" />
+            android:layout_margin="8dp"
+            android:text="You haven't visited any cities yet" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/citiesRecyclerViewAccountFragment"
@@ -405,275 +381,31 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="1dp"
             android:background="?attr/colorSecondaryVariant" />
 
         <com.google.android.material.textview.MaterialTextView
+            style="@style/TextAppearance.MaterialComponents.Headline6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/prata_regular"
-            android:paddingVertical="10dp"
-            android:paddingLeft="15dp"
-            android:text="My Activities"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:layout_margin="8dp"
+            android:text="My Activities" />
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/noPostsMaterialTextView"
+            style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="5dp"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/prata_regular"
-            android:padding="10dp"
-            android:text="You don't have any activities yet"
-            android:textSize="13sp"
-            android:textStyle="bold" />
+            android:layout_margin="8dp"
+            android:text="You don't have any activities yet" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/postsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:nestedScrollingEnabled="false"
+            android:scrollbars="vertical" />
 
     </LinearLayout>
 </ScrollView>
-
-
-    <!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--    xmlns:tools="http://schemas.android.com/tools"-->
-    <!--    android:layout_width="match_parent"-->
-    <!--    android:layout_height="match_parent"-->
-    <!--    android:importantForAutofill="noExcludeDescendants"-->
-    <!--    tools:context=".presentation.account.AccountFragment">-->
-
-    <!--    <View-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:background="@color/brown"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--    <ScrollView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent">-->
-
-    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent">-->
-
-    <!--            <LinearLayout-->
-    <!--                android:id="@+id/goldLinearLayout"-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="350dp"-->
-    <!--                android:background="@drawable/likes_background"-->
-    <!--                android:gravity="bottom"-->
-    <!--                android:orientation="horizontal"-->
-    <!--                android:paddingBottom="20dp"-->
-    <!--                android:weightSum="3"-->
-    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--                app:layout_constraintTop_toBottomOf="@+id/countryTextView"-->
-    <!--                app:layout_constraintTop_toTopOf="parent"-->
-    <!--                app:layout_constraintVertical_bias="0.0"-->
-    <!--                tools:layout_editor_absoluteX="0dp">-->
-
-    <!--                <LinearLayout-->
-    <!--                    android:layout_width="180dp"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:layout_weight="1"-->
-    <!--                    android:orientation="vertical">-->
-
-    <!--                    <TextView-->
-    <!--                        android:id="@+id/likesNumberTextView"-->
-    <!--                        android:layout_width="match_parent"-->
-    <!--                        android:layout_height="wrap_content"-->
-    <!--                        android:text="0"-->
-    <!--                        android:textAlignment="center"-->
-    <!--                        android:textColor="?attr/colorOnPrimary"-->
-    <!--                        android:textSize="18dp"-->
-    <!--                        android:textStyle="bold" />-->
-
-    <!--                    <TextView-->
-    <!--                        android:layout_width="match_parent"-->
-    <!--                        android:layout_height="wrap_content"-->
-    <!--                        android:text="LIKES"-->
-    <!--                        android:textAlignment="center"-->
-    <!--                        android:textColor="?attr/colorSecondaryVariant"-->
-    <!--                        android:textSize="15dp" />-->
-
-    <!--                </LinearLayout>-->
-
-    <!--                <LinearLayout-->
-    <!--                    android:layout_width="180dp"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:layout_weight="1"-->
-    <!--                    android:orientation="vertical">-->
-
-    <!--                    <TextView-->
-    <!--                        android:id="@+id/followingNumberTextView"-->
-    <!--                        android:layout_width="match_parent"-->
-    <!--                        android:layout_height="wrap_content"-->
-    <!--                        android:text="0"-->
-    <!--                        android:textAlignment="center"-->
-    <!--                        android:textColor="?attr/colorOnPrimary"-->
-    <!--                        android:textSize="18dp"-->
-    <!--                        android:textStyle="bold" />-->
-
-    <!--                    <TextView-->
-    <!--                        android:layout_width="match_parent"-->
-    <!--                        android:layout_height="wrap_content"-->
-    <!--                        android:text="FOLLOWING"-->
-    <!--                        android:textAlignment="center"-->
-    <!--                        android:textColor="?attr/colorSecondaryVariant"-->
-    <!--                        android:textSize="15dp" />-->
-
-    <!--                </LinearLayout>-->
-
-    <!--                <LinearLayout-->
-    <!--                    android:layout_width="180dp"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:layout_weight="1"-->
-    <!--                    android:orientation="vertical">-->
-
-    <!--                    <TextView-->
-    <!--                        android:id="@+id/followersNumberTextView"-->
-    <!--                        android:layout_width="match_parent"-->
-    <!--                        android:layout_height="wrap_content"-->
-    <!--                        android:text="0"-->
-    <!--                        android:textAlignment="center"-->
-    <!--                        android:textColor="?attr/colorOnPrimary"-->
-    <!--                        android:textSize="18dp"-->
-    <!--                        android:textStyle="bold" />-->
-
-    <!--                    <TextView-->
-    <!--                        android:layout_width="match_parent"-->
-    <!--                        android:layout_height="wrap_content"-->
-    <!--                        android:text="FOLLOWERS"-->
-    <!--                        android:textAlignment="center"-->
-    <!--                        android:textColor="?attr/colorSecondaryVariant"-->
-    <!--                        android:textSize="15dp" />-->
-
-    <!--                </LinearLayout>-->
-
-    <!--            </LinearLayout>-->
-
-    <!--            <View-->
-    <!--                android:id="@+id/view1"-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="260dp"-->
-    <!--                android:background="@drawable/setting_bg"-->
-    <!--                app:layout_constraintBottom_toTopOf="@+id/goldLinearLayout"-->
-    <!--                app:layout_constraintEnd_toEndOf="parent"-->
-    <!--                app:layout_constraintHorizontal_bias="0.0"-->
-    <!--                app:layout_constraintStart_toStartOf="parent"-->
-    <!--                app:layout_constraintTop_toTopOf="parent"-->
-    <!--                app:layout_constraintVertical_bias="0.0" />-->
-
-    <!--            <com.mikhaellopez.circularimageview.CircularImageView-->
-    <!--                android:id="@+id/circularAccountImageView"-->
-    <!--                android:layout_width="100dp"-->
-    <!--                android:layout_height="100dp"-->
-    <!--                android:src="@drawable/ic_baseline_account_circle_24"-->
-    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--                app:layout_constraintEnd_toEndOf="parent"-->
-    <!--                app:layout_constraintHorizontal_bias="0.5"-->
-    <!--                app:layout_constraintStart_toStartOf="parent"-->
-    <!--                app:layout_constraintTop_toTopOf="parent"-->
-    <!--                app:layout_constraintVertical_bias="0.102" />-->
-
-    <!--            <TextView-->
-    <!--                android:id="@+id/nameTextView"-->
-    <!--                android:layout_width="200dp"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:textAlignment="center"-->
-    <!--                android:textColor="?attr/colorOnSecondary"-->
-    <!--                android:textSize="18dp"-->
-    <!--                android:textStyle="bold"-->
-    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--                app:layout_constraintEnd_toEndOf="parent"-->
-    <!--                app:layout_constraintHorizontal_bias="0.5"-->
-    <!--                app:layout_constraintStart_toStartOf="parent"-->
-    <!--                app:layout_constraintTop_toBottomOf="@+id/circularAccountImageView"-->
-    <!--                app:layout_constraintVertical_bias="0.042" />-->
-
-    <!--            <TextView-->
-    <!--                android:id="@+id/countryTextView"-->
-    <!--                android:layout_width="100dp"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:text="Egypt"-->
-    <!--                android:textAlignment="center"-->
-    <!--                android:textColor="?attr/colorPrimaryVariant"-->
-    <!--                android:textSize="18dp"-->
-    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--                app:layout_constraintEnd_toEndOf="parent"-->
-    <!--                app:layout_constraintHorizontal_bias="0.5"-->
-    <!--                app:layout_constraintStart_toStartOf="parent"-->
-    <!--                app:layout_constraintTop_toBottomOf="@+id/nameTextView"-->
-    <!--                app:layout_constraintVertical_bias="0.028" />-->
-
-    <!--            <LinearLayout-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:orientation="vertical"-->
-    <!--                android:paddingTop="20dp"-->
-    <!--                android:paddingBottom="20dp"-->
-    <!--                app:layout_constraintTop_toBottomOf="@+id/goldLinearLayout">-->
-
-    <!--                <LinearLayout-->
-    <!--                    android:layout_width="match_parent"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:orientation="horizontal"-->
-    <!--                    android:paddingLeft="20dp">-->
-
-    <!--                    <com.mikhaellopez.circularimageview.CircularImageView-->
-    <!--                        android:id="@+id/userImgPostImageView"-->
-    <!--                        android:layout_width="70dp"-->
-    <!--                        android:layout_height="70dp"-->
-    <!--                        android:src="@drawable/ic_baseline_account_circle_24" />-->
-
-    <!--                    <LinearLayout-->
-    <!--                        android:layout_width="wrap_content"-->
-    <!--                        android:layout_height="wrap_content"-->
-    <!--                        android:orientation="vertical"-->
-    <!--                        android:paddingLeft="15dp">-->
-
-    <!--                        <TextView-->
-    <!--                            android:id="@+id/userNamePostTextView"-->
-    <!--                            android:layout_width="100dp"-->
-    <!--                            android:layout_height="wrap_content"-->
-    <!--                            android:textAlignment="textStart"-->
-    <!--                            android:textColor="?attr/colorOnPrimary"-->
-    <!--                            android:textSize="18dp"-->
-    <!--                            android:textStyle="bold" />-->
-
-    <!--                        <TextView-->
-    <!--                            android:id="@+id/datePostTextView"-->
-    <!--                            android:layout_width="70dp"-->
-    <!--                            android:layout_height="wrap_content"-->
-    <!--                            android:textAlignment="textStart"-->
-    <!--                            android:textColor="?attr/colorSecondaryVariant"-->
-    <!--                            android:textSize="18dp"-->
-    <!--                            android:textStyle="bold" />-->
-    <!--                    </LinearLayout>-->
-
-    <!--                </LinearLayout>-->
-
-    <!--                <TextView-->
-    <!--                    android:id="@+id/postCaptionTextView"-->
-    <!--                    android:layout_width="wrap_content"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:layout_marginLeft="90dp"-->
-    <!--                    android:inputType="textLongMessage"-->
-    <!--                    android:maxLines="3"-->
-    <!--                    android:textAlignment="textStart"-->
-    <!--                    android:textColor="?attr/colorSecondaryVariant"-->
-    <!--                    android:textSize="18dp" />-->
-
-    <!--                <ImageView-->
-    <!--                    android:id="@+id/postImageView"-->
-    <!--                    android:layout_width="wrap_content"-->
-    <!--                    android:layout_height="200dp"-->
-    <!--                    android:paddingTop="7dp"-->
-    <!--                    android:src="@drawable/home_search" />-->
-
-    <!--            </LinearLayout>-->
-    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
-    <!--    </ScrollView>-->
-    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->

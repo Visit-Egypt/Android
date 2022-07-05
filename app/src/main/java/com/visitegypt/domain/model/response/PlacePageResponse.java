@@ -1,15 +1,24 @@
 package com.visitegypt.domain.model.response;
 
+
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
 import com.google.gson.annotations.SerializedName;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.converters.PlacesTypeConverter;
 
 import java.util.List;
-
+@Entity(tableName = "place_page_response")
 public class PlacePageResponse {
+    @PrimaryKey
     @SerializedName("current_page")
     private int currentPage;
     @SerializedName("has_next")
     private boolean hasNext;
+    @TypeConverters(PlacesTypeConverter.class)
     private List<Place> places;
 
     public PlacePageResponse() {

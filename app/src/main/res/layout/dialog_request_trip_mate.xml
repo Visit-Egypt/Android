@@ -16,7 +16,7 @@
         android:adjustViewBounds="true"
         android:scaleType="centerInside"
         android:src="@drawable/ic_baseline_account_circle_24"
-        app:layout_constraintBottom_toTopOf="@+id/txtUserName"
+        app:layout_constraintBottom_toTopOf="@+id/userNameRequestMaterialTextView"
 
         />
 
@@ -32,10 +32,10 @@
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/txtUserfollow" />
+        app:layout_constraintBottom_toTopOf="@+id/userFollowRequestMaterialTextView" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/txtUserfollow"
+        android:id="@+id/userFollowRequestMaterialTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

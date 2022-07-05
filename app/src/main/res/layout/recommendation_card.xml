@@ -17,7 +17,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="8dp"
             app:cardCornerRadius="20dp">
 
             <com.google.android.material.imageview.ShapeableImageView
@@ -32,13 +32,12 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/placeCardNameTextView"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_margin="8dp"
             android:layout_marginTop="0dp"
-            style="@style/TextAppearance.MaterialComponents.Headline6"
-            android:fontFamily="@font/montserrat_alternates_bold"
-            android:text="Place Name"/>
+            android:text="Place Name" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,31 +46,27 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/stateTextView"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="0dp"
-                android:fontFamily="@font/montserrat_alternates_medium"
-                android:text="Open"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:text="Open" />
 
             <View
                 android:layout_width="10dp"
                 android:layout_height="10dp"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
+                android:layout_margin="8dp"
                 android:background="@drawable/dot_shape" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/cityTextView"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
-                android:fontFamily="@font/montserrat_alternates_medium"
-                android:text="City"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:text="City" />
 
         </LinearLayout>
 
@@ -80,54 +75,56 @@
             android:layout_height="wrap_content"
             android:stretchColumns="4">
 
-            <TableRow>
+            <!--            <TableRow>-->
 
-                <View
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/ic_sun" />
+            <!--                <View-->
+            <!--                    android:layout_width="30dp"-->
+            <!--                    android:layout_height="30dp"-->
+            <!--                    android:layout_gravity="center"-->
+            <!--                    android:layout_marginLeft="10dp"-->
+            <!--                    android:background="@drawable/ic_sun" />-->
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:fontFamily="@font/montserrat_alternates_bold"
-                    android:text="25\u00b0"
-                    android:textSize="18sp" />
-            </TableRow>
+            <!--                <com.google.android.material.textview.MaterialTextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginTop="0dp"-->
+            <!--                    android:fontFamily="@font/montserrat_alternates_bold"-->
+            <!--                    android:text="25\u00b0"-->
+            <!--                    android:textSize="18sp" />-->
+            <!--            </TableRow>-->
 
-            <TableRow>
+            <TableRow
+                android:layout_margin="8dp"
+                android:gravity="right">
 
                 <Space />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="0dp"
-                    android:fontFamily="@font/montserrat_alternates_semibold"
-                    android:text="Sunny"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                <!--                <com.google.android.material.textview.MaterialTextView-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginLeft="10dp"-->
+                <!--                    android:layout_marginTop="0dp"-->
+                <!--                    android:fontFamily="@font/montserrat_alternates_semibold"-->
+                <!--                    android:text="Sunny"-->
+                <!--                    android:textSize="16sp"-->
+                <!--                    android:textStyle="bold" />-->
 
                 <View
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginVertical="8dp"
                     android:background="@drawable/ic_star" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtPlaceCardRating"
+                    style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="1dp"
                     android:fontFamily="@font/montserrat_alternates_medium"
-                    android:text="4.5"
-                    android:textSize="16sp" />
+                    android:text="4.5" />
             </TableRow>
         </TableLayout>
     </LinearLayout>

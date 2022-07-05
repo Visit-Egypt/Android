@@ -18,6 +18,8 @@ import com.visitegypt.data.repository.PostRepositoryImp;
 import com.visitegypt.data.repository.TagRepositoryImp;
 import com.visitegypt.data.repository.UploadToS3Imp;
 import com.visitegypt.data.repository.UserRepositoryImp;
+import com.visitegypt.data.source.local.dao.PlaceDao;
+import com.visitegypt.data.source.local.dao.PlacePageResponseDao;
 import com.visitegypt.data.source.local.dao.TagDao;
 import com.visitegypt.data.source.remote.RetrofitService;
 import com.visitegypt.data.source.remote.RetrofitServiceUpload;
@@ -191,8 +193,8 @@ public class NetworkModule implements CallBack {
 
     @Provides
     @Singleton
-    public PlaceRepository providePlaceRepository(@Named("Normal") RetrofitService retrofitService) {
-        return new PlaceRepositoryImp(retrofitService);
+    public PlaceRepository providePlaceRepository(@Named("Normal") RetrofitService retrofitService , PlacePageResponseDao placeDao) {
+        return new PlaceRepositoryImp(retrofitService,placeDao);
     }
 
     @Provides

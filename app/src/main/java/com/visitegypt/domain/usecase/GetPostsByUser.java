@@ -3,12 +3,9 @@ package com.visitegypt.domain.usecase;
 import android.content.SharedPreferences;
 
 import com.visitegypt.domain.model.PostPage;
-import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.repository.PostsRepository;
 import com.visitegypt.domain.usecase.base.SingleUseCase;
 import com.visitegypt.utils.Constants;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -23,7 +20,6 @@ public class GetPostsByUser extends SingleUseCase<PostPage> {
         this.postsRepository = postsRepository;
         this.sharedPreferences = sharedPreferences;
     }
-
 
     @Override
     protected Single<PostPage> buildSingleUseCase() {

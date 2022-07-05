@@ -21,6 +21,7 @@ public class Constants {
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
     public static final String PLACE_ID = "placeId";
     private static final int PICK_FROM_GALLERY = 0;
+    public static final int MAXIMNumberOfCities = 5;
 
     public enum CustomerType {
         FOREIGNER_STUDENT("Foreigner Student"),

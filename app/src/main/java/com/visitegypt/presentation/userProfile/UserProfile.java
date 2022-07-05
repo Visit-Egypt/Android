@@ -84,10 +84,10 @@ public class UserProfile extends Fragment {
         userName = userProfileFragment.findViewById(R.id.nameTextView);
         followingNumberTextView = userProfileFragment.findViewById(R.id.followingNumberTextView);
         followersNumberTextView = userProfileFragment.findViewById(R.id.followersNumberTextView);
-        btnFollow = userProfileFragment.findViewById(R.id.follow);
+        btnFollow = userProfileFragment.findViewById(R.id.followMaterialButton);
         loadingLayout = userProfileFragment.findViewById(R.id.loadingLayout);
         userProfileLayout = userProfileFragment.findViewById(R.id.userProfile);
-        btnRequest = userProfileFragment.findViewById(R.id.request);
+        btnRequest = userProfileFragment.findViewById(R.id.requestMaterialButton);
         myInterests = userProfileFragment.findViewById(R.id.myInterests);
         chipGroup = userProfileFragment.findViewById(R.id.chipGroup);
     }

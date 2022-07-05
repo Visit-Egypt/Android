@@ -131,12 +131,17 @@ dependencies {
 
     // optional - RxJava3 support
     implementation "androidx.paging:paging-rxjava3:$paging_version"
+    implementation "androidx.room:room-rxjava3:$room_version"
+
+    implementation "androidx.room:room-paging:2.4.2"
 
 
     // optional - Jetpack Compose integration
     implementation "androidx.paging:paging-compose:1.0.0-alpha14"
     implementation "androidx.recyclerview:recyclerview:1.2.0-alpha03"
     implementation 'com.shobhitpuri.custombuttons:google-signin:1.0.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
 
     implementation 'com.hanks:htextview-base:0.1.6'
     implementation 'com.hanks:htextview-fade:0.1.6'

@@ -23,8 +23,6 @@ import retrofit2.Response;
 public class ReviewViewModel extends ViewModel {
 
     private static final String TAG = "Review View Model";
-
-    MutableLiveData<Place> placesMutableLiveData = new MutableLiveData<>();
     public MutableLiveData<List<Review>> reviewMutableLiveData = new MutableLiveData<>();
 
     public MutableLiveData<Integer> mutableLiveDataResponseCode = new MutableLiveData<>();

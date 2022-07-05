@@ -6,13 +6,10 @@ import androidx.room.TypeConverters;
 
 import com.google.gson.annotations.SerializedName;
 import com.visitegypt.domain.model.converters.PostConverter;
-import com.visitegypt.domain.model.converters.TicketPricesConverter;
 
 import java.util.List;
 
 public class PostPage {
-    @PrimaryKey
-    private String id;
     @SerializedName("current_page")
     int currentPage;
     @SerializedName("has_next")
@@ -20,6 +17,8 @@ public class PostPage {
     @TypeConverters(PostConverter.class)
     @SerializedName("posts")
     List<Post> posts;
+    @PrimaryKey
+    private String id;
 
     public String getId() {
         return id;

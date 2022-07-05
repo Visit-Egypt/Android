@@ -15,7 +15,8 @@
         <ScrollView
             android:id="@+id/shimmerScrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -47,17 +48,15 @@
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_margin="10dp"
-                    android:layout_marginHorizontal="15dp"
+                    android:layout_margin="8dp"
                     android:background="?attr/colorSecondaryVariant" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/prata_regular"
                     android:padding="8dp"
-                    android:text="ABOUT "
-                    style="@style/TextAppearance.MaterialComponents.Headline6" />
+                    android:text="ABOUT " />
 
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/descriptionShimmerFrameLayout"
@@ -73,15 +72,13 @@
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_margin="10dp"
-                    android:layout_marginHorizontal="15dp"
+                    android:layout_margin="8dp"
                     android:background="?attr/colorSecondaryVariant" />
 
                 <com.google.android.material.textview.MaterialTextView
                     style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/prata_regular"
                     android:padding="8dp"
                     android:text="@string/artifacts" />
 
@@ -96,139 +93,6 @@
 
                 </com.facebook.shimmer.ShimmerFrameLayout>
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_margin="10dp"
-                    android:layout_marginHorizontal="15dp"
-                    android:background="?attr/colorSecondaryVariant" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    style="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/prata_regular"
-                    android:padding="10dp"
-                    android:text="@string/location" />
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/locationShimmerFrameLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <include layout="@layout/detail_table_shimmer_placeholder_layout" />
-
-                </com.facebook.shimmer.ShimmerFrameLayout>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_margin="10dp"
-                    android:layout_marginHorizontal="15dp"
-                    android:background="?attr/colorSecondaryVariant" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    style="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/prata_regular"
-                    android:padding="10dp"
-                    android:text="@string/reviews" />
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/reviewsShimmerFrameLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <include layout="@layout/detail_box_shimmer_placeholder_layout" />
-
-                </com.facebook.shimmer.ShimmerFrameLayout>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_margin="10dp"
-                    android:layout_marginHorizontal="15dp"
-                    android:background="?attr/colorSecondaryVariant" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:fontFamily="@font/prata_regular"
-                    android:padding="10dp"
-                    android:text="@string/know_this_place"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    tools:ignore="MissingConstraints" />
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/buttonShimmerFrameLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <include layout="@layout/detail_button_shimmer_placeholder_layout" />
-
-                </com.facebook.shimmer.ShimmerFrameLayout>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_margin="10dp"
-                    android:layout_marginHorizontal="15dp"
-                    android:background="?attr/colorSecondaryVariant" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/prata_regular"
-                    android:text="@string/opening_hours"
-                    style="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:padding="10dp"
-                    tools:ignore="MissingConstraints" />
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/hoursShimmerFrameLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <include layout="@layout/detail_table_shimmer_placeholder_layout" />
-
-                </com.facebook.shimmer.ShimmerFrameLayout>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_margin="10dp"
-                    android:layout_marginHorizontal="15dp"
-                    android:background="?attr/colorSecondaryVariant" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    style="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/prata_regular"
-                    android:padding="10dp"
-                    android:text="@string/prices"
-                    tools:ignore="MissingConstraints" />
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/pricesShimmerFrameLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <include layout="@layout/detail_table_shimmer_placeholder_layout" />
-
-                </com.facebook.shimmer.ShimmerFrameLayout>
 
             </LinearLayout>
 
@@ -244,7 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -272,12 +136,12 @@
                         app:sliderScrollTimeInSec="1">
 
                         <com.mikhaellopez.circularimageview.CircularImageView
-                            android:visibility="gone"
                             android:id="@+id/backArrowCircularImageButton"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_margin="10dp"
-                            android:src="@drawable/ic_baseline_arrow_back_24" />
+                            android:src="@drawable/ic_baseline_arrow_back_24"
+                            android:visibility="gone" />
 
                     </com.smarteist.autoimageslider.SliderView>
 
@@ -285,585 +149,34 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/placeTitleTextView"
+                    style="@style/TextAppearance.MaterialComponents.Headline5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/prata_regular"
+                    android:text="The Pyramids"
                     android:textAlignment="center"
-                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_margin="10dp"
-                    android:layout_marginHorizontal="15dp"
-                    android:background="?attr/colorSecondaryVariant" />
-
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/prata_regular"
-                    android:padding="8dp"
-                    android:text="ABOUT "
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <com.borjabravo.readmoretextview.ReadMoreTextView
-                    android:id="@+id/descriptionTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/prata_regular"
-                    android:padding="10dp"
-                    app:colorClickableText="?attr/colorPrimary"
-                    app:trimCollapsedText="@string/read_more"
-                    app:trimExpandedText="@string/read_less"
-                    app:trimLength="150"
-                    app:trimMode="trimModeLength" />
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    android:layout_marginVertical="10dp"
+                    android:layout_margin="8dp"
                     android:background="?attr/colorSecondaryVariant" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/remainingActivitiesDetailActivityTextView"
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/prata_regular"
-                    android:padding="8dp"
-                    android:text="@string/artifacts"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:layout_margin="8dp"
+                    android:text="@string/remaining_activities"
+                    android:visibility="gone" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/itemsRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layoutDirection="rtl" />
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_margin="10dp"
-                    android:layout_marginHorizontal="15dp"
-                    android:background="?attr/colorSecondaryVariant" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/prata_regular"
-                    android:padding="10dp"
-                    android:text="@string/location"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <com.google.android.gms.maps.MapView
-                    android:id="@+id/detailActivityMapView"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginVertical="8dp" />
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_margin="10dp"
-                    android:layout_marginHorizontal="15dp"
-                    android:background="?attr/colorSecondaryVariant" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/prata_regular"
-                    android:padding="10dp"
-                    android:text="@string/reviews"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginRight="30dp"
-                    android:onClick="showReviews">
-
-                    <com.mikhaellopez.circularimageview.CircularImageView
-                        android:id="@+id/thirdUserImageView"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:src="@drawable/ic_baseline_person_24"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <com.mikhaellopez.circularimageview.CircularImageView
-                        android:id="@+id/secondUserImageView"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:src="@drawable/ic_baseline_person_24"
-                        app:layout_constraintEnd_toStartOf="@+id/thirdUserImageView"
-                        app:layout_constraintStart_toStartOf="@+id/thirdUserImageView"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <com.mikhaellopez.circularimageview.CircularImageView
-                        android:id="@+id/firstUserImageView"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:src="@drawable/ic_baseline_person_24"
-                        app:layout_constraintEnd_toStartOf="@+id/secondUserImageView"
-                        app:layout_constraintStart_toStartOf="@+id/secondUserImageView"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/reviewsRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="20dp"
-                    android:fontFamily="@font/prata_regular"
-                    android:padding="10dp"
-                    android:text="@string/know_this_place"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/writeReviewButton"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="40dp"
-                    android:layout_marginVertical="10dp"
-                    android:onClick="addReview"
-                    android:paddingVertical="10dp"
-                    android:text="@string/review" />
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    android:layout_marginVertical="10dp"
-                    android:background="?attr/colorSecondaryVariant" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/prata_regular"
-                    android:padding="10dp"
-                    android:text="@string/opening_hours"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/saturdayOpeningHoursTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/prata_regular"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="9 to 17"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="20dp" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/sundayOpeningHoursTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/prata_regular"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="9 to 17"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="20dp" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/mondayOpeningHoursTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/prata_regular"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="9 to 17"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="20dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:orientation="horizontal">
-
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/prata_regular"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="@string/saturday" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/prata_regular"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="@string/sunday" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/prata_regular"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="@string/monday" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:orientation="horizontal">
-
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tuesdayOpeningHoursTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/prata_regular"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="9 to 17"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="20dp" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/wednesdayOpeningHoursTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/prata_regular"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="9 to 17"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="20dp" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/thursdayOpeningHoursTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/prata_regular"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="9 to 17"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="20dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:orientation="horizontal">
-
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/prata_regular"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="@string/tuesday" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/prata_regular"
-                        android:gravity="center"
-                        android:paddingVertical="8dp"
-                        android:paddingLeft="10dp"
-                        android:text="@string/wednesday" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/prata_regular"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="@string/thursday" />
-
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/fridayOpeningHoursTextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:fontFamily="@font/prata_regular"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="9 to 17"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="20dp" />
-
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:fontFamily="@font/prata_regular"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="@string/friday" />
-                </LinearLayout>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    android:layout_marginVertical="10dp"
-                    android:background="?attr/colorSecondaryVariant" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/prata_regular"
-                    android:padding="10dp"
-                    android:text="@string/prices"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TableRow>
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="20dp"
-                            android:fontFamily="@font/prata_regular"
-                            android:paddingTop="10dp"
-                            android:text="@string/egyptian_student" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/egyptianStudentTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/prata_regular"
-                            android:padding="10dp" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="20dp"
-                            android:fontFamily="@font/prata_regular"
-                            android:paddingTop="10dp"
-                            android:text="@string/egyptian_adult" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/egyptianAdultPriceTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/prata_regular"
-                            android:padding="10dp" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="20dp"
-                            android:fontFamily="@font/prata_regular"
-                            android:paddingTop="10dp"
-                            android:text="@string/egyptian_personal_photo" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/egyptianPhotoPriceTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/prata_regular"
-                            android:padding="10dp" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="20dp"
-                            android:fontFamily="@font/prata_regular"
-                            android:paddingTop="10dp"
-                            android:text="@string/egyptian_personal_video" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/egyptianVideoPriceTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/prata_regular"
-                            android:padding="10dp" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="20dp"
-                            android:fontFamily="@font/prata_regular"
-                            android:paddingTop="10dp"
-                            android:text="@string/foreigner_student" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/foreignerStudentPriceTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/prata_regular"
-                            android:padding="10dp" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="20dp"
-                            android:fontFamily="@font/prata_regular"
-                            android:paddingTop="10dp"
-                            android:text="@string/foreigner_adult" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/foreignerAdultPriceTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/prata_regular"
-                            android:padding="10dp" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="20dp"
-                            android:fontFamily="@font/prata_regular"
-                            android:paddingTop="10dp"
-                            android:text="@string/foreigner_personal_photo" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/foreignerPhotoPriceTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/prata_regular"
-                            android:padding="10dp" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="20dp"
-                            android:fontFamily="@font/prata_regular"
-                            android:paddingTop="10dp"
-                            android:text="@string/foreigner_personal_video" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/foreignerVideoPriceTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/prata_regular"
-                            android:padding="10dp" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="20dp"
-                            android:fontFamily="@font/prata_regular"
-                            android:paddingTop="10dp"
-                            android:text="@string/children" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/childrenPriceTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/prata_regular"
-                            android:padding="10dp" />
-                    </TableRow>
-                </TableLayout>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    android:layout_marginVertical="10dp"
-                    android:background="?attr/colorSecondaryVariant" />
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginBottom="16dp"
+                    android:layout_margin="8dp"
                     android:orientation="vertical">
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/remainingActivitiesDetailActivityTextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/prata_regular"
-                        android:padding="8dp"
-                        android:text="@string/remaining_activities"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
 
                     <com.google.android.material.progressindicator.LinearProgressIndicator
                         android:id="@+id/remainingActivitiesDetailActivityLinearProgressIndicator"
@@ -881,7 +194,589 @@
                         android:textSize="17sp"
                         app:icon="@drawable/ic_gamepad"
                         app:iconGravity="textStart" />
+
                 </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="8dp"
+                    android:background="?attr/colorSecondaryVariant" />
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="About" />
+
+                <com.borjabravo.readmoretextview.ReadMoreTextView
+                    android:id="@+id/descriptionTextView"
+                    style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    app:colorClickableText="?attr/colorPrimary"
+                    app:trimCollapsedText="@string/read_more"
+                    app:trimExpandedText="@string/read_less"
+                    app:trimLength="150"
+                    app:trimMode="trimModeLength" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="8dp"
+                    android:background="?attr/colorSecondaryVariant" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/artifacts" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/itemsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layoutDirection="rtl" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="8dp"
+                    android:background="?attr/colorSecondaryVariant" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/location" />
+
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/detailActivityMapView"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginVertical="8dp" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="8dp"
+                    android:layout_marginHorizontal="15dp"
+                    android:background="?attr/colorSecondaryVariant" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/TextAppearance.MaterialComponents.Headline6"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/reviews" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/seeAllButton"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:onClick="showReviews"
+                        android:text="SEE ALL"
+                        android:textAllCaps="false"
+                        android:textSize="17dp"
+                        app:iconGravity="textStart" />
+                </LinearLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/noReviewsMaterialTextView"
+                    style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:gravity="center"
+                    android:text="@string/no_reviews" />
+
+                <LinearLayout
+                    android:id="@+id/firstReviewLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/visitorImageFirstReviewImageView"
+                                    android:layout_width="100dp"
+                                    android:layout_height="90dp"
+                                    android:src="@drawable/ic_baseline_person_24" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:id="@+id/visitorNameFirstReviewTextView"
+                                        style="@style/TextAppearance.MaterialComponents.Headline6"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="8dp"
+                                        android:text="John"
+                                        android:textColor="?attr/colorOnSecondary" />
+
+                                    <RatingBar
+                                        android:id="@+id/firstReviewRatingBar"
+                                        style="@style/Widget.AppCompat.RatingBar.Small"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="8dp"
+                                        android:isIndicator="true"
+                                        android:numStars="5" />
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginLeft="100dp"
+                                android:background="?attr/colorSecondaryVariant" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/reviewContentTextView"
+                                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="100dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/montserrat_light"
+                                android:text="Nice Place" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/reviewsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/know_this_place" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/writeReviewButton"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:onClick="addReview"
+                    android:text="@string/review"
+                    android:textSize="17dp"
+                    app:iconGravity="textStart" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="8dp"
+                    android:background="?attr/colorSecondaryVariant" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/opening_hours" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/saturdayOpeningHoursTextView"
+                        style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="9 to 17"
+                        android:textColor="?attr/colorPrimary" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/sundayOpeningHoursTextView"
+                        style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="9 to 17"
+                        android:textColor="?attr/colorPrimary" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/mondayOpeningHoursTextView"
+                        style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="9 to 17"
+                        android:textColor="?attr/colorPrimary" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="horizontal">
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/saturday" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/sunday" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/monday" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="horizontal">
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tuesdayOpeningHoursTextView"
+                        style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="9 to 17"
+                        android:textColor="?attr/colorPrimary" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/wednesdayOpeningHoursTextView"
+                        style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="9 to 17"
+                        android:textColor="?attr/colorPrimary" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/thursdayOpeningHoursTextView"
+                        style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="9 to 17"
+                        android:textColor="?attr/colorPrimary" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="horizontal">
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/tuesday" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/wednesday" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/thursday" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/fridayOpeningHoursTextView"
+                        style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:gravity="center"
+                        android:text="9 to 17"
+                        android:textColor="?attr/colorPrimary" />
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:gravity="center"
+                        android:text="@string/friday" />
+                </LinearLayout>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="8dp"
+                    android:background="?attr/colorSecondaryVariant" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/prices" />
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TableRow>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="@string/egyptian_student" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/egyptianStudentTextView"
+                            style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="@string/egyptian_adult" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/egyptianAdultPriceTextView"
+                            style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="@string/egyptian_personal_photo" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/egyptianPhotoPriceTextView"
+                            style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="@string/egyptian_personal_video" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/egyptianVideoPriceTextView"
+                            style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="@string/foreigner_student" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/foreignerStudentPriceTextView"
+                            style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="@string/foreigner_adult" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/foreignerAdultPriceTextView"
+                            style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="@string/foreigner_personal_photo" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/foreignerPhotoPriceTextView"
+                            style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="@string/foreigner_personal_video" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/foreignerVideoPriceTextView"
+                            style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="@string/children" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/childrenPriceTextView"
+                            style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp" />
+                    </TableRow>
+                </TableLayout>
 
             </LinearLayout>
 
@@ -894,7 +789,7 @@
         android:id="@+id/chatbotFloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_margin="16dp"
         android:backgroundTint="?attr/colorSecondaryVariant"
         android:src="@drawable/ic_chat"
         app:backgroundTint="@color/white"

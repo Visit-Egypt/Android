@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -17,13 +16,10 @@
             android:orientation="vertical">
 
             <LinearLayout
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:layout_marginRight="8dp"
-                android:orientation="vertical"
-                tools:ignore="MissingConstraints">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -46,22 +42,21 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/reviewCardVisitorNameTextView"
+                            style="@style/TextAppearance.MaterialComponents.Headline6"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/prata_regular"
+                            android:layout_margin="8dp"
                             android:text="John"
-                            android:textColor="?attr/colorOnSecondary"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:textColor="?attr/colorOnSecondary" />
 
                         <RatingBar
                             android:id="@+id/reviewCardRatingBar"
                             style="@style/Widget.AppCompat.RatingBar.Small"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
                             android:isIndicator="true"
-                            android:numStars="5"
-                            android:paddingTop="5dp" />
+                            android:numStars="5" />
                     </LinearLayout>
 
                     <TextView
@@ -74,25 +69,25 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
+                    android:layout_height="1dp"
                     android:layout_marginLeft="100dp"
                     android:background="?attr/colorSecondaryVariant" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/reviewCardTextView"
+                    style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="100dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/montserrat_light"
-                    android:text="Nice Place"
-                    android:textSize="18sp" />
+                    android:text="Nice Place" />
 
             </LinearLayout>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
+                android:layout_height="5dp"
                 android:layout_marginTop="10dp"
                 android:background="?attr/colorSecondaryVariant" />
         </LinearLayout>

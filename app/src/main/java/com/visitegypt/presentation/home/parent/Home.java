@@ -42,8 +42,8 @@ import com.visitegypt.domain.model.SearchPlace;
 import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
+import com.visitegypt.presentation.log.LogActivity;
 import com.visitegypt.presentation.setting.SettingFragment;
-import com.visitegypt.presentation.signin.SignInActivity;
 import com.visitegypt.utils.GamificationRules;
 
 import java.lang.reflect.Type;
@@ -54,14 +54,14 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class Home extends AppCompatActivity {
-    private static final String TAG = "Home";
+    private static final String TAG = "Home Activity";
     private BottomNavigationView navigation;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityNewHomeBinding binding;
     private NavigationView navigationView;
     private NavController navController;
     private View header, searchViewLayout, homeViewLayout;
-    private TextView txtName, txtEmail;
+    private TextView nameNavHeaderTextView, txtEmail;
     private HomeViewModel homeViewModel;
     private SearchRecyclerViewAdapter searchRecyclerViewAdapter;
     private RecyclerView searchRecyclerView;
@@ -70,7 +70,7 @@ public class Home extends AppCompatActivity {
     private SearchViewModel searchViewModel;
     private MaterialButton editButton;
     private ImageView userImageView;
-    private SignInActivity signInActivity;
+    private LogActivity logActivity;
     private List<TripMateRequest> tripMateRequests = new ArrayList<>();
 
     @Override
@@ -184,7 +184,7 @@ public class Home extends AppCompatActivity {
             Intent intent = new Intent(Home.this, ChatbotActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-            //finish();
+            finish();
 
         });
     }
@@ -212,24 +212,25 @@ public class Home extends AppCompatActivity {
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_discover,
                 R.id.account,
-                R.id.nav_near_me,
+//                R.id.nav_near_me,
                 R.id.nav_activities,
                 R.id.nav_map,
-                R.id.nav_booking,
-                R.id.nav_subscription,
+//                R.id.nav_booking,
+//                R.id.nav_subscription,
                 R.id.setting,
                 R.id.gaming,
                 R.id.tripMate,
                 R.id.userProfile,
                 R.id.tripMateRequest
+//                R.id.discoverChildAllPlaces
         )
                 .setOpenableLayout(drawer)
                 .build();
         /**************************************************/
         setSupportActionBar(binding.appBarNewHome.toolbar);
         header = navigationView.getHeaderView(0);
-        txtName = header.findViewById(R.id.nameNavHeaderTextView);
-        txtEmail = header.findViewById(R.id.emailTextView);
+        nameNavHeaderTextView = header.findViewById(R.id.nameNavHeaderTextView);
+        txtEmail = header.findViewById(R.id.emailTextField);
         userImageView = header.findViewById(R.id.userImageImageView);
         editButton = header.findViewById(R.id.editButton);
 
@@ -264,7 +265,7 @@ public class Home extends AppCompatActivity {
     }
 
     private void redirect() {
-        Intent intent = new Intent(this, SignInActivity.class);
+        Intent intent = new Intent(this, LogActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
@@ -377,7 +378,7 @@ public class Home extends AppCompatActivity {
         homeViewModel.mutableLiveDataUser.observe(this, new Observer<User>() {
             @Override
             public void onChanged(User user) {
-                txtName.setText(user.getFirstName() + " " + user.getLastName());
+                nameNavHeaderTextView.setText(user.getFirstName() + " " + user.getLastName());
                 txtEmail.setText(user.getEmail());
                 if (user.getPhotoUrl() != null) {
                     Log.d(TAG, "onChanged: " + user.getPhotoUrl());
@@ -395,40 +396,8 @@ public class Home extends AppCompatActivity {
         navigationView.getMenu().findItem(R.id.logout).setOnMenuItemClickListener(menuItem -> {
             homeViewModel.logOut();
 
-//            if (new SignInActivity().GoogleFlag == 1) {
-//                Log.d(TAG, "logOut: done");
-//
-//                homeViewModel.logOut();
-//            }else {
-//                Log.d(TAG, "logOut: sssss");
-//
-//            }
-//            signInActivity.logOut();
-//            homeViewModel.logOut();
-//            Auth.GoogleSignInApi.signOut(signInActivity.googleApiClient).setResultCallback(
-//                    new ResultCallback<Status>() {
-//                        @Override
-//                        public void onResult(@NonNull Status status) {
-//                            Log.d(TAG, "onComplete: logout from google acc done successfully");
-//                            homeViewModel.logOut();
-//
-//                        }
-//                    }
-//            );
-//                signInActivity.mGoogleSignInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        Log.d(TAG, "onComplete: logout from google acc done successfully");
-//                        homeViewModel.logOut();
-//                    }
-//                });
-//            }
-
             return false;
         });
     }
 
-    public List<TripMateRequest> getTripMateRequests() {
-        return tripMateRequests;
-    }
 }

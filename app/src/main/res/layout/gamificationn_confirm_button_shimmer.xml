@@ -8,6 +8,7 @@
     android:elevation="4dp"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="12dp">
+
     <Button
         android:id="@+id/confirmLocationGamificationActivityButton"
         android:layout_width="wrap_content"
@@ -15,6 +16,6 @@
         android:layout_below="@+id/mapView"
         android:layout_gravity="center"
         android:layout_margin="16dp"
-        android:background="@drawable/input_button"
+        android:foreground="?android:selectableItemBackground"
         android:text="Confirm Location" />
 </com.google.android.material.card.MaterialCardView>

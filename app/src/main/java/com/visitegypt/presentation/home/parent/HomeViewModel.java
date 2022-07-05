@@ -12,7 +12,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
-import com.visitegypt.data.source.local.dao.TagDao;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.User;
@@ -30,9 +29,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.functions.Consumer;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.HttpException;
 
@@ -132,7 +129,6 @@ public class HomeViewModel extends ViewModel {
     }
 
     public void getUserData() {
-
         getUserUseCase.setUser(sharedPreferences.getString(SHARED_PREF_USER_ID, null),
                 sharedPreferences.getString(Constants.SHARED_PREF_EMAIL, null));
         getUserUseCase.execute(new Consumer<User>() {

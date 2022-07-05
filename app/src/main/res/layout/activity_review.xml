@@ -6,47 +6,30 @@
     android:orientation="vertical"
     tools:context=".presentation.review.ReviewActivity">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/textView"
+        style="@style/TextAppearance.MaterialComponents.Headline5"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/backArrowCircularImageButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp"
-            android:onClick="backPlace"
-            android:src="@drawable/ic_baseline_arrow_back_24" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:gravity="center"
-            android:text="Reviews"
-            android:textColor="?attr/colorOnSecondary"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-
-    </LinearLayout>
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:text="Reviews"
+        android:textColor="?attr/colorOnSecondary"
+        android:textStyle="bold" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/noReviewsTextView"
+        style="@style/TextAppearance.MaterialComponents.Subtitle1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingVertical="20dp"
-        android:text="@string/no_reviews"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        android:text="@string/no_reviews" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reviewsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:nestedScrollingEnabled="false" />
 
 </LinearLayout>

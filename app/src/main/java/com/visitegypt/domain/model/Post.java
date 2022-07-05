@@ -7,6 +7,20 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Post {
+    /*****************************************************************************************************/
+    @PrimaryKey
+    private String id;
+    private String caption;
+    @SerializedName("list_of_images")
+    private List<String> listOfImages;
+    @SerializedName("place_id")
+    private String placeId;
+    @SerializedName("user_id")
+    private String userId;
+    @SerializedName("user_name")
+    private String userName;
+    @SerializedName("likes")
+    private List<String> likes;
     public Post(String caption, List<String> listOfImages, String placeId, String userId, String userName, List<String> likes) {
         this.caption = caption;
         this.listOfImages = listOfImages;
@@ -24,20 +38,7 @@ public class Post {
     }
     public Post() {
     }
-    /*****************************************************************************************************/
-    @PrimaryKey
-    private String id;
-    private String caption;
-    @SerializedName("list_of_images")
-    private List<String> listOfImages;
-    @SerializedName("place_id")
-    private String placeId;
-    @SerializedName("user_id")
-    private String userId;
-    @SerializedName("user_name")
-    private String userName;
-    @SerializedName("likes")
-    private List<String> likes;
+
     /*****************************************************************************/
     public String getId() {
         return id;

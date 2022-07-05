@@ -20,11 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@Entity
+@Entity(tableName = "place_table")
 public class Place {
     @PrimaryKey
     @NonNull
     private String id;
+    @SerializedName("title")
     private String title;
 
     @SerializedName("long_description")

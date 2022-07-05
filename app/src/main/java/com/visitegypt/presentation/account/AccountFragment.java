@@ -20,6 +20,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,6 +36,7 @@ import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.FullBadge;
 import com.visitegypt.domain.model.Tag;
 import com.visitegypt.presentation.badges.BadgeActivity;
+import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.callBacks.OnFilterUpdate;
 import com.visitegypt.presentation.gamification.BadgesSliderViewAdapter;
 import com.visitegypt.presentation.gamification.CitiesActivity;
@@ -57,7 +59,7 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
 
     private static final String TAG = "Account Fragment";
 
-    private TextView userName, country;
+    private TextView nameTextView, titleTextViewAccountFragment;
     private TextView likesNumberTextView, followingNumberTextView, followersNumberTextView;
     private TextView levelTextView, currentLevelTextView, nextLevelTextView,
             xpRemainingTextView, xpProgressTextView;
@@ -78,6 +80,11 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
 
     private int level;
 
+    private PostsRecyclerViewAdapter postsRecyclerViewAdapter;
+    private RecyclerView postsRecyclerView;
+    private MaterialTextView noPostsMaterialTextView;
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -91,6 +98,8 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
     private void initViews(View accountView) {
         userName = accountView.findViewById(R.id.nameTextView);
         country = accountView.findViewById(R.id.titleChipViewAccountFragment);
+        nameTextView = accountView.findViewById(R.id.nameTextView);
+        titleTextViewAccountFragment = accountView.findViewById(R.id.titleTextViewAccountFragment);
         likesNumberTextView = accountView.findViewById(R.id.likesNumberTextView);
         followingNumberTextView = accountView.findViewById(R.id.followingNumberTextView);
         followersNumberTextView = accountView.findViewById(R.id.followersNumberTextView);
@@ -131,6 +140,12 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
         badgesSliderViewAdapter = new BadgesSliderViewAdapter(placeBadges, accountView.getContext());
         badgesRecyclerView.setAdapter(badgesSliderViewAdapter);
 
+        noPostsMaterialTextView = accountView.findViewById(R.id.noPostsMaterialTextView);
+        postsRecyclerView = accountView.findViewById(R.id.postsRecyclerView);
+        postsRecyclerViewAdapter = new PostsRecyclerViewAdapter(accountView.getContext());
+        postsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        postsRecyclerView.setAdapter(postsRecyclerViewAdapter);
+
         userTitleChipView.setOnClickListener(view -> {
             showTitleDialog(getContext());
         });
@@ -167,14 +182,37 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
 
     private void initViewModel() {
         accountViewModel = new ViewModelProvider(this).get(AccountViewModel.class);
-        accountViewModel.mutableLiveDataName.observe(getViewLifecycleOwner(), s -> userName.setText(s));
+        accountViewModel.userMutableLiveData.observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                nameTextView.setText(user.getFirstName() + " " + user.getLastName());
+                if (user.getPhotoUrl() != null) {
+                    Log.d(TAG, "onChanged: " + user.getPhotoUrl());
+                    accountViewModel.saveUserImage(user.getPhotoUrl());
+                    Picasso.get().load(user.getPhotoUrl()).into(circularAccountImageView);
+
+                }
+            }
+        });
 
         accountViewModel.getUser();
         accountViewModel.userMutableLiveData.observe(getViewLifecycleOwner(), user -> {
             Log.d(TAG, "initViewModel: filling user data... " + user.getUserId());
             setUserXp(user.getXp());
         });
+        //get user posts
+        accountViewModel.getPostsByUserId();
 
+        accountViewModel.userPostsMutableLiveData.observe(this, posts -> {
+            if (posts.size() != 0) {
+                noPostsMaterialTextView.setVisibility(View.GONE);
+                Log.d(TAG, "setting posts to recycler view...");
+                postsRecyclerViewAdapter.setPostsArrayList(posts);
+                Log.d(TAG, "posts available  " + posts.size());
+            } else {
+                Log.d(TAG, "no posts available ");
+            }
+        });
         accountViewModel.getUserInformation();
         accountViewModel.mutableLiveDataMyPosts.observe(getViewLifecycleOwner(), posts -> {
             if (posts.get(0).getId() == null) {
@@ -195,6 +233,12 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
                 }
             }
         });
+        accountViewModel.mutableLiveDataAllTags.observe(getViewLifecycleOwner(), tags -> {
+            showDialog(tags);
+
+        });
+        accountViewModel.mutableLiveUpdateIsDone.observe(getViewLifecycleOwner(), aBoolean -> {
+            if (aBoolean) {
         accountViewModel.mutableLiveDataAllTags.observe(getViewLifecycleOwner(), this::showDialog);
         accountViewModel.mutableLiveUpdateIsDone.observe(getViewLifecycleOwner(), aBoolean -> {
             if (aBoolean) {
@@ -301,55 +345,46 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
 
     @Override
     public void onFilterUpdate(List<String> filters) {
-        if(filters.size() != 0 && filters != null) {
+        if (filters.size() != 0 && filters != null) {
             Log.d(TAG, "onFilterUpdate: filter tags" + filters);
-            for (String filter : filters)
-            {
-                if (!userTags.contains(filter) && !addNewTags.contains(filter))
-                {
+            for (String filter : filters) {
+                if (!userTags.contains(filter) && !addNewTags.contains(filter)) {
                     addNewTags.add(filter);
-                    Log.d(TAG, "onFilterUpdate: add to following list " + addNewTags );
+                    Log.d(TAG, "onFilterUpdate: add to following list " + addNewTags);
                 }
             }
             Iterator<String> userTagItr = userTags.iterator();
-            while (userTagItr.hasNext())
-            {
+            while (userTagItr.hasNext()) {
                 String userTag = userTagItr.next();
-                if (!filters.contains(userTag))
-                {
+                if (!filters.contains(userTag)) {
                     removedTags.add(userTag);
                     Log.d(TAG, "onFilterUpdate: add to unfollow list " + removedTags);
                 }
 
             }
-            if (addNewTags.size() != 0)
-            {
+            if (addNewTags.size() != 0) {
                 Iterator<String> itr = addNewTags.iterator();
 
-                while (itr.hasNext())
-                {
+                while (itr.hasNext()) {
                     String tag = itr.next();
-                    if (!filters.contains(tag))
-                    {
+                    if (!filters.contains(tag)) {
                         itr.remove();
                     }
                 }
 
             }
-                Iterator<String> itr = removedTags.iterator();
+            Iterator<String> itr = removedTags.iterator();
 
-                while (itr.hasNext())
-                {
-                    String tag = itr.next();
-                    if (filters.contains(tag))
-                    {
-                        itr.remove();
-                    }
+            while (itr.hasNext()) {
+                String tag = itr.next();
+                if (filters.contains(tag)) {
+                    itr.remove();
                 }
+            }
 
 
-            Log.d(TAG, "onFilterUpdate: new follow  " +  addNewTags);
-            Log.d(TAG, "onFilterUpdate: unfollow  " +  removedTags);
+            Log.d(TAG, "onFilterUpdate: new follow  " + addNewTags);
+            Log.d(TAG, "onFilterUpdate: unfollow  " + removedTags);
         }
     }
 }

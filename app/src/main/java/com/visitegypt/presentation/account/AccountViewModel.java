@@ -26,6 +26,7 @@ import com.visitegypt.domain.usecase.GetPostsByUser;
 import com.visitegypt.domain.usecase.GetTagUseCase;
 import com.visitegypt.domain.usecase.GetTagsNameByIds;
 import com.visitegypt.domain.usecase.GetUserPlaceActivityUseCase;
+import com.visitegypt.domain.usecase.GetUserPostsUseCase;
 import com.visitegypt.domain.usecase.GetUserUseCase;
 import com.visitegypt.domain.usecase.UpdateUserInterestUseCase;
 import com.visitegypt.utils.Constants;
@@ -53,6 +54,7 @@ public class AccountViewModel extends ViewModel {
     MutableLiveData<ArrayList<Badge>> userBadgesMutableLiveData = new MutableLiveData<>();
 
     MutableLiveData<List<Post>> mutableLiveDataMyPosts = new MutableLiveData<>();
+    MutableLiveData<List<Post>> userPostsMutableLiveData = new MutableLiveData<>();
     MutableLiveData<String> mutableLiveDataName = new MutableLiveData<>();
     MutableLiveData<String> mutableLiveDataUserImage = new MutableLiveData<>();
     MutableLiveData<ArrayList<Badge>> allBadgesMutableLiveData = new MutableLiveData<>();
@@ -78,6 +80,7 @@ public class AccountViewModel extends ViewModel {
     private GetPlacesByPlaceActivityIdUseCase getPlacesByPlaceActivityIdUseCase;
     private GetTagsNameByIds getTagsNameByIds;
     private UpdateUserInterestUseCase userInterestUseCase;
+    private GetUserPostsUseCase getUserPostsUseCase;
     private GetFullBadgeUseCase getFullBadgeUseCase;
     private GetFullActivitiesUseCase getFullActivitiesUseCase;
 
@@ -91,6 +94,8 @@ public class AccountViewModel extends ViewModel {
                             GetUserUseCase getUserUseCase,
                             GetTagUseCase getTagUseCase,
                             GetTagsNameByIds getTagsNameByIds,
+                            UpdateUserInterestUseCase userInterestUseCase,
+                            GetUserPostsUseCase getUserPostsUseCase
                             UpdateUserInterestUseCase userInterestUseCase,
                             GetFullActivitiesUseCase getFullActivitiesUseCase,
                             GetFullBadgeUseCase getFullBadgeUseCase
@@ -106,6 +111,7 @@ public class AccountViewModel extends ViewModel {
         this.getPlacesByPlaceActivityIdUseCase = getPlacesByPlaceActivityIdUseCase;
         this.getTagsNameByIds = getTagsNameByIds;
         this.userInterestUseCase = userInterestUseCase;
+        this.getUserPostsUseCase = getUserPostsUseCase;
         this.getFullBadgeUseCase = getFullBadgeUseCase;
         this.getFullActivitiesUseCase = getFullActivitiesUseCase;
     }
@@ -120,8 +126,18 @@ public class AccountViewModel extends ViewModel {
         });
     }
 
+    public void getPostsByUserId() {
+        getUserPostsUseCase.setUserId(sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, null));
+        getUserPostsUseCase.execute(postPageResponse -> {
+                    userPostsMutableLiveData.setValue(postPageResponse.getPosts());
+                },
+                throwable -> {
+                    Log.e(TAG, "error retrieving posts: " + throwable.getMessage());
+                });
+    }
+
     public void getUserInformation() {
-        mutableLiveDataName.setValue(sharedPreferences.getString(Constants.SHARED_PREF_FIRST_NAME, null));
+        mutableLiveDataName.setValue(sharedPreferences.getString(Constants.SHARED_PREF_FIRST_NAME, ""));
         mutableLiveDataUserImage.setValue(sharedPreferences.getString(SHARED_PREF_USER_IMAGE, ""));
         getUserPosts();
     }
@@ -140,13 +156,16 @@ public class AccountViewModel extends ViewModel {
                             Log.e(TAG, "getUser: ", throwable);
                         });
                     }
-
-                }
-                ,
+                },
                 throwable -> {
                     Log.e(TAG, "getUser: error retrieving user: " + throwable.getMessage());
                 });
     }
+
+    public void saveUserImage(String url) {
+        sharedPreferences.edit().putString(SHARED_PREF_USER_IMAGE, url).apply();
+    }
+
 
     public void getUserBadges() {
         Log.d(TAG, "getUserBadges: getting user badges...");
@@ -185,17 +204,17 @@ public class AccountViewModel extends ViewModel {
 
     private void getUserPosts() {
         //when backend finishes there work start to implement
-        Log.d("TAG", "accept List of posts:  welcome");
+        Log.d(TAG, "accept List of posts:  welcome");
         getPostsByUser.execute(postPage -> mutableLiveDataMyPosts.setValue(postPage.getPosts()), throwable -> {
-                    try {
-                        ResponseBody body = ((HttpException) throwable).response().errorBody();
-                        JSONObject jObjectError = new JSONObject(body.string());
-                        Log.d("TAG", "accept try : " + jObjectError.getJSONArray("errors").toString());
-                        if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
-                        } else {
-                        }
-                    } catch (Exception e) {
-                        Log.d("TAG", "accept catch: " + e.toString());
+            try {
+                ResponseBody body = ((HttpException) throwable).response().errorBody();
+                JSONObject jObjectError = new JSONObject(body.string());
+                Log.d(TAG, "accept try : " + jObjectError.getJSONArray("errors").toString());
+                if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
+                } else {
+                }
+            } catch (Exception e) {
+                Log.d(TAG, "accept catch: " + e.toString());
                     }
                 }
         );
@@ -226,9 +245,7 @@ public class AccountViewModel extends ViewModel {
                     mutableLiveDataAllTags.setValue(tags);
                 }, throwable -> {
                     Log.e(TAG, "getAllTags: ", throwable);
-                })
-
-        ;
+                });
     }
 
     public void updateYourInterest(HashSet<String> newInterests, HashSet<String> removedInterests) {
@@ -241,8 +258,6 @@ public class AccountViewModel extends ViewModel {
                     Log.d(TAG, "updateYourInterest: woooooooooow ");
                 }, throwable -> {
                     Log.e(TAG, "updateYourInterest: ", throwable);
-                })
-
-        ;
+                });
     }
 }
