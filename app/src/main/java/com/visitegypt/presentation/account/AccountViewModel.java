@@ -95,8 +95,7 @@ public class AccountViewModel extends ViewModel {
                             GetTagUseCase getTagUseCase,
                             GetTagsNameByIds getTagsNameByIds,
                             UpdateUserInterestUseCase userInterestUseCase,
-                            GetUserPostsUseCase getUserPostsUseCase
-                            UpdateUserInterestUseCase userInterestUseCase,
+                            GetUserPostsUseCase getUserPostsUseCase,
                             GetFullActivitiesUseCase getFullActivitiesUseCase,
                             GetFullBadgeUseCase getFullBadgeUseCase
     ) {

@@ -27,6 +27,7 @@ public class ReviewViewModel extends ViewModel {
 
     public MutableLiveData<Integer> mutableLiveDataResponseCode = new MutableLiveData<>();
     public MutableLiveData<Boolean> activityUpdatedMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<Place> placesMutableLiveData = new MutableLiveData<>();
 
     private SubmitReviewUseCase submitReviewUseCase;
     private GetPlaceDetailUseCase getPlaceDetailUseCase;

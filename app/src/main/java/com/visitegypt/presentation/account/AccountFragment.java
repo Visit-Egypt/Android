@@ -35,8 +35,8 @@ import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.FullBadge;
 import com.visitegypt.domain.model.Tag;
-import com.visitegypt.presentation.badges.BadgeActivity;
 import com.visitegypt.domain.model.User;
+import com.visitegypt.presentation.badges.BadgeActivity;
 import com.visitegypt.presentation.callBacks.OnFilterUpdate;
 import com.visitegypt.presentation.gamification.BadgesSliderViewAdapter;
 import com.visitegypt.presentation.gamification.CitiesActivity;
@@ -59,7 +59,7 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
 
     private static final String TAG = "Account Fragment";
 
-    private TextView nameTextView, titleTextViewAccountFragment;
+    private TextView nameTextView, titleTextViewAccountFragment, userName, country;
     private TextView likesNumberTextView, followingNumberTextView, followersNumberTextView;
     private TextView levelTextView, currentLevelTextView, nextLevelTextView,
             xpRemainingTextView, xpProgressTextView;
@@ -239,10 +239,7 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
         });
         accountViewModel.mutableLiveUpdateIsDone.observe(getViewLifecycleOwner(), aBoolean -> {
             if (aBoolean) {
-        accountViewModel.mutableLiveDataAllTags.observe(getViewLifecycleOwner(), this::showDialog);
-        accountViewModel.mutableLiveUpdateIsDone.observe(getViewLifecycleOwner(), aBoolean -> {
-            if (aBoolean) {
-                dialog.dismiss();
+                accountViewModel.mutableLiveDataAllTags.observe(getViewLifecycleOwner(), this::showDialog);
             }
         });
 
@@ -254,62 +251,6 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
             }
             badgesSliderViewAdapter.setBadges(badges);
         });
-//        accountViewModel.allBadgesMutableLiveData.observe(getViewLifecycleOwner(), placeBadges -> {
-//            this.placeBadges = placeBadges;
-//            GeneralUtils.LiveDataUtil.observeOnce(accountViewModel.userBadgesMutableLiveData, userBadges -> {
-//                GamificationRules.mergeTwoBadges(placeBadges, userBadges);
-//
-//                ArrayList<Badge> progressBadges = new ArrayList<>();
-//                for (Badge badge : placeBadges) {
-//                    if (badge.getProgress() != 0) {
-//                        progressBadges.add(badge);
-//                        if (badge.isOwned()) {
-//                            Log.d(TAG, "initViewModel: found an owned badge" +
-//                                    badge.getTitle() + ": " + badge.getXp() + " xp");
-//                            generatedXp += badge.getXp();
-//                        }
-//                    }
-//                }
-//                badgesSliderViewAdapter.setBadges(progressBadges);
-//                setUserXp(generatedXp);
-//            });
-//        });
-
-//        accountViewModel.getPlaceActivitiesOfUser();
-//        accountViewModel.userPlaceActivityMutableLiveData.observe(getViewLifecycleOwner(), placeActivities -> {
-//            List<String> placeActivitiesIds = new ArrayList<>();
-//            for (PlaceActivity placeActivity : placeActivities) {
-//                placeActivitiesIds.add(placeActivity.getId());
-//                //generatedXp += placeActivity.getXp();
-//                Log.d(TAG, "initViewModel: place activity generatedXp: " + generatedXp);
-//            }
-//            accountViewModel.setPlaceActivitiesId(placeActivitiesIds);
-//            accountViewModel.getPlacesByPlaceActivities();
-//            GeneralUtils.LiveDataUtil.observeOnce(accountViewModel.placesWithNeededPlaceActivities, places -> {
-//                Log.d(TAG, "initViewModel: finding the actual place activities");
-//                List<PlaceActivity> placeActivityList = new ArrayList<>();
-//                for (Place place : places) {
-//                    for (PlaceActivity placeActivity : place.getPlaceActivities()) {
-//                        Log.d(TAG, "initViewModel: " + new Gson().toJson(placeActivity));
-//
-//                        for (PlaceActivity userPlaceActivity : placeActivities) {
-//                            if (userPlaceActivity.getId().equals(placeActivity.getId())) {
-//                                MergeObjects.MergeTwoObjects.merge(placeActivity, userPlaceActivity);
-//                                if (placeActivity.isFinished()) {
-//                                    Log.d(TAG, "initViewModel: " + new Gson().toJson(placeActivity));
-//                                    generatedXp += placeActivity.getXp();
-//                                }
-//                                placeActivityList.add(placeActivity);
-//                            }
-//                        }
-//                        Log.d(TAG, "initViewModel: place activity generatedXp: " + generatedXp);
-//                    }
-//                }
-//                setUserXp(generatedXp);
-//            });
-//
-//        });
-
     }
 
     public void initOnClick() {

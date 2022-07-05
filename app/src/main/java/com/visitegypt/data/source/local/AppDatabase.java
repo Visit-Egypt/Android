@@ -10,7 +10,7 @@ import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.Tag;
 import com.visitegypt.domain.model.response.PlacePageResponse;
 
-@Database(entities = {Tag.class , Place.class, PlacePageResponse.class}, version = 1)
+@Database(entities = {Tag.class, Place.class, PlacePageResponse.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
     public static final String DATABASE_NAME = "Visit Egypt";
 
