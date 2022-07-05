@@ -3,6 +3,8 @@ package com.visitegypt.presentation.account;
 
 import static com.visitegypt.utils.GeneralUtils.LiveDataUtil.observeOnce;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -22,6 +24,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textview.MaterialTextView;
@@ -35,6 +38,7 @@ import com.visitegypt.presentation.badges.BadgeActivity;
 import com.visitegypt.presentation.callBacks.OnFilterUpdate;
 import com.visitegypt.presentation.gamification.BadgesSliderViewAdapter;
 import com.visitegypt.presentation.gamification.CitiesActivity;
+import com.visitegypt.presentation.gamification.UserTitlesRecyclerViewAdapter;
 import com.visitegypt.presentation.home.parent.Home;
 import com.visitegypt.presentation.tripmateRequest.TripMateRequest;
 import com.visitegypt.utils.Chips;
@@ -57,7 +61,7 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
     private TextView likesNumberTextView, followingNumberTextView, followersNumberTextView;
     private TextView levelTextView, currentLevelTextView, nextLevelTextView,
             xpRemainingTextView, xpProgressTextView;
-    private TextView userTitleTextView;
+    private Chip userTitleChipView;
     private LinearProgressIndicator xpLinearProgressIndicator;
     private AccountViewModel accountViewModel;
     private Button gamificationStartPlayingButton, tripMateRequestsButton, seeAllBadgesButton;
@@ -71,6 +75,8 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
     private ArrayList<Badge> userBadges, placeBadges;
     private HashSet<String> userTags, addNewTags, removedTags;
     private AlertDialog dialog;
+
+    private int level;
 
     @Nullable
     @Override
@@ -95,7 +101,7 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
         nextLevelTextView = accountView.findViewById(R.id.nextLevelProgressIndicatorTextViewAccountFragment);
         xpProgressTextView = accountView.findViewById(R.id.xpProgressTextViewAccountFragment);
         xpRemainingTextView = accountView.findViewById(R.id.remainingXpTextViewAccountFragment);
-        userTitleTextView = accountView.findViewById(R.id.titleChipViewAccountFragment);
+        userTitleChipView = accountView.findViewById(R.id.titleChipViewAccountFragment);
         myInterests = accountView.findViewById(R.id.myInterests);
         changeInterestIcon = accountView.findViewById(R.id.changeInterestIcon);
         chipGroup = accountView.findViewById(R.id.chipGroup);
@@ -124,20 +130,38 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
         badgesRecyclerView.setLayoutManager(new LinearLayoutManager(accountView.getContext(), RecyclerView.HORIZONTAL, false));
         badgesSliderViewAdapter = new BadgesSliderViewAdapter(placeBadges, accountView.getContext());
         badgesRecyclerView.setAdapter(badgesSliderViewAdapter);
+
+        userTitleChipView.setOnClickListener(view -> {
+            showTitleDialog(getContext());
+        });
+    }
+
+    private void showTitleDialog(Context context) {
+        Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.dialog_titles);
+
+        RecyclerView recyclerView = dialog.findViewById(R.id.userTitleDialogRecyclerView);
+        UserTitlesRecyclerViewAdapter userTitlesRecyclerViewAdapter = new UserTitlesRecyclerViewAdapter(GamificationRules.getAllUserTitles(level));
+        recyclerView.setAdapter(userTitlesRecyclerViewAdapter);
+
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
     private void setUserXp(int xp) {
         Log.d(TAG, "setUserXp: user with xp: " + xp);
-        int level = GamificationRules.getLevelFromXp(xp);
+        level = GamificationRules.getLevelFromXp(xp);
         Log.d(TAG, "setUserXp: level of user: " + level);
+
         levelTextView.setText(MessageFormat.format("LVL {0}", level));
         currentLevelTextView.setText(Integer.toString(level));
         nextLevelTextView.setText(Integer.toString(level + 1));
-        xpRemainingTextView.setText((GamificationRules.getLevelXp(level + 1) - xp +
-                (GamificationRules.getLevelXp(level))) + "XP remaining to next level");
-        xpProgressTextView.setText(xp - GamificationRules.getLevelXp(level) + "/" + GamificationRules.getLevelXp(level + 1));
-        userTitleTextView.setText(GamificationRules.getTitleFromLevel(level));
-        xpLinearProgressIndicator.setMax(GamificationRules.getLevelXp(level + 1));
+
+        xpRemainingTextView.setText(GamificationRules.getRemainingXPToNextLevel(xp) + "XP remaining to next level");
+        xpProgressTextView.setText(xp - GamificationRules.getLevelXp(level) + "/" +
+                ((GamificationRules.getLevelXp(level + 1)) - GamificationRules.getLevelXp(level)));
+        userTitleChipView.setText(GamificationRules.getTitleFromLevel(level));
+        xpLinearProgressIndicator.setMax(((GamificationRules.getLevelXp(level + 1)) - GamificationRules.getLevelXp(level)));
         xpLinearProgressIndicator.setProgress(xp - GamificationRules.getLevelXp(level), true);
     }
 

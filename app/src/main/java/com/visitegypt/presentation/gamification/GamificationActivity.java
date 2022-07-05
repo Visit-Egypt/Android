@@ -137,6 +137,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private User user;
 
     private MaterialCardView reviewBorder, postBorder, storyBorder, artifactsBorder, insightsBorder;
+    private int timeout = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -562,6 +563,8 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                             Log.d(TAG, "showReviewDialog: update review successful");
                             // TODO update UI
                             setReviewActivityComplete();
+                            Log.d(TAG, "updateUserXP: old XP " + user.getXp());
+                            gamificationViewModel.getUser();
                             observeOnce(gamificationViewModel.userMutableLiveData, this::updateUserXP);
                         }
                         addReviewDialog.dismiss();
@@ -579,16 +582,32 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     }
 
     private void updateUserXP(User newUser) {
-        User prevUser = user;
+        timeout++;
+        Log.d(TAG, "updateUserXP: " + user.getXp());
+        User prevUser = null;
+        try {
+            prevUser = (User) user.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
         user = newUser;
+        Log.d(TAG, "updateUserXP: " + user.getXp());
 
-        GeneralUtils.showUserProgress(this,
-                confirmLocationButton,
-                null,
-                null,
-                prevUser.getXp(),
-                newUser.getXp()
-        );
+        if (prevUser.getXp() == newUser.getXp() && timeout < 3) {
+            gamificationViewModel.getUser();
+            observeOnce(gamificationViewModel.userMutableLiveData, user -> {
+                updateUserXP(newUser);
+            });
+        } else {
+            timeout = 0;
+            GeneralUtils.showUserProgress(this,
+                    confirmLocationButton,
+                    null,
+                    null,
+                    prevUser.getXp(),
+                    newUser.getXp()
+            );
+        }
     }
 
     @Override
@@ -682,7 +701,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                     Location.distanceBetween(latitude, longitude, place.getLatitude(), place.getLongitude(), distance);
                     Log.d(TAG, "onMapReady: " + distance[0] + " distance between you and location");
 
-                    //distance[0] = 100;
+                    distance[0] = 100;
                     if (distance[0] > GamificationRules.CONFIRM_LOCATION_CIRCLE_RADIUS) {
                         // confirmLocation();
                         distanceAwayTextView.setText(String.format(Locale.CANADA, "You are %,.2f metres away!", distance[0]));
@@ -746,7 +765,10 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     public void onPause() {
         super.onPause();
         if (mapView != null) {
-            mapView.onPause();
+            try {
+                mapView.onPause();
+            } catch (Exception ignored) {
+            }
         }
         stopShimmerAnimation();
         locationManager.removeUpdates(this);

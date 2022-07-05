@@ -72,7 +72,7 @@ public class PlacesCityRecyclerViewAdapter extends RecyclerView.Adapter<com.visi
                 holder.placeInCityRemainingProgressProgressIndicator.setMax(maxProgress);
                 holder.placeInCityRemainingProgressProgressIndicator.setProgress(progress, true);
             } else {
-                holder.placesInCityRemainingTextView.setText(placeList.get(position).getPlaceActivities().size() + " activities");
+                holder.placesInCityRemainingTextView.setText(remaining + " remaining activities");
                 holder.placeInCityRemainingProgressProgressIndicator.setMax(maxProgress);
                 holder.placeInCityRemainingProgressProgressIndicator.setProgress(progress, true);
             }

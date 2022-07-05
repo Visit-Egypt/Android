@@ -347,6 +347,7 @@
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:layout_marginRight="8dp"
                     android:id="@+id/badgesSeeAllAccountFragmentButton"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"

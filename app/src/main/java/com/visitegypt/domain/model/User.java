@@ -1,14 +1,13 @@
 package com.visitegypt.domain.model;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User implements Cloneable {
     @SerializedName("user_id")
     private String userId;
     @SerializedName("first_name")
@@ -223,4 +222,9 @@ public class User {
         return tripMateRequests;
     }
 
+    @NonNull
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

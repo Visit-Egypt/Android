@@ -55,7 +55,7 @@ public class PlacesActivity extends AppCompatActivity {
         cityName = getIntent().getStringExtra("city_name");
 
         initViews();
-        initViewModel(cityName);
+//        initViewModel(cityName);
     }
 
     @Override
@@ -94,48 +94,55 @@ public class PlacesActivity extends AppCompatActivity {
         placesViewModel.setCityName(cityName);
         placesViewModel.getUserPlaceActivities();
         placesViewModel.getPlacesInCity(cityName);
+        placesViewModel.getFullPlaceActivities();
 
         observeOnce(placesViewModel.placesMutableLiveData, (Observer<List<Place>>) places -> {
             Log.d(TAG, " getting places to recycler view");
             int totalPlaces = 0;
 
+            Log.d(TAG, "initViewModel: " + places.size());
             for (Place place : places) {
-                if (place.getExplores() != null && place.getPlaceActivities() != null) {
-                    ;
-                    place.getPlaceActivities().addAll(place.getExplores());
+                if (place.getExplores() != null || place.getPlaceActivities() != null) {
+                    if (place.getExplores() != null && !place.isExploresAdded()) {
+                        place.getPlaceActivities().addAll(place.getExplores());
+                        place.setExploresAdded(true);
+                    }
+
                     totalPlaces++;
                 }
             }
 
-            placesViewModel.getFullPlaceActivities();
             int finalTotalPlaces = totalPlaces;
-            observeOnce(placesViewModel.fullPlaceActivitiesMutableLiveData, fullPlaceActivities -> {
-                        if (fullPlaceActivities != null) {
-                            for (FullPlaceActivity fullPlaceActivity : fullPlaceActivities) {
-                                for (Place place : places) {
-                                    if (place.getPlaceActivities() != null)
-                                        for (PlaceActivity placeActivity : place.getAllTypesOfActivities()) {
-                                            Log.d(TAG, "initViewModel all activities: " + new Gson().toJson(place.getAllTypesOfActivities()));
-                                            if (placeActivity.getId().equals(fullPlaceActivity.getId())) {
-                                                placeActivity.setProgress(fullPlaceActivity.getProgress());
-                                                placeActivity.setFinished(fullPlaceActivity.isFinished());
-                                            }
-                                        }
-                                }
-                            }
-                        }
-                        int ownedPlaces = 0;
+            placesViewModel.fullPlaceActivitiesMutableLiveData.observe(this, fullPlaceActivities -> {
+                if (fullPlaceActivities != null) {
+                    for (FullPlaceActivity fullPlaceActivity : fullPlaceActivities) {
                         for (Place place : places) {
-                            if (place.isOwned()) {
-                                ownedPlaces += 1;
-                            }
+                            if (place.getPlaceActivities() != null)
+                                for (PlaceActivity placeActivity : place.getAllTypesOfActivities()) {
+//                                            Log.d(TAG, "initViewModel all activities: " + new Gson().toJson(place.getAllTypesOfActivities()));
+                                    if (placeActivity.getId().equals(fullPlaceActivity.getId())) {
+                                        placeActivity.setProgress(fullPlaceActivity.getProgress());
+                                        placeActivity.setFinished(fullPlaceActivity.isFinished());
+                                    }
+                                }
                         }
-                        remainingActivitiesTextView.setText(ownedPlaces + "/" + finalTotalPlaces + " places complete");
-                        cityRemainingProgressPlacesActivityProgressIndicator.setMax(finalTotalPlaces);
-                        cityRemainingProgressPlacesActivityProgressIndicator.setProgress(ownedPlaces);
-                        placesCityRecyclerViewAdapter.setplaceList(places);
                     }
-            );
+                }
+                int ownedPlaces = 0;
+                for (Place place : places) {
+                    if (place.isOwned()) {
+                        ownedPlaces += 1;
+                    }
+//                            if (place.getPlaceActivities() != null){
+//                                totalPlaces++;
+//                            }
+                }
+                remainingActivitiesTextView.setText(ownedPlaces + "/" + finalTotalPlaces + " places complete");
+                cityRemainingProgressPlacesActivityProgressIndicator.setMax(finalTotalPlaces);
+                cityRemainingProgressPlacesActivityProgressIndicator.setProgress(ownedPlaces);
+                Log.d(TAG, "initViewModel: sharqia" + new Gson().toJson(places));
+                placesCityRecyclerViewAdapter.setplaceList(places);
+            });
         });
         initBadges();
         //initActivities();
@@ -146,6 +153,7 @@ public class PlacesActivity extends AppCompatActivity {
         cityBadges.clear();
         placesViewModel.getCityFullBadges();
         placesViewModel.setCityName(cityName);
+
         observeOnce(placesViewModel.fullBadgesMutableLiveData, fullBadges -> {
                     if (fullBadges != null) {
                         for (FullBadge fullBadge : fullBadges) {

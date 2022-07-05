@@ -7,7 +7,9 @@ import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.FullBadge;
 import com.visitegypt.domain.model.PlaceActivity;
+import com.visitegypt.domain.model.UserTitle;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GamificationRules {
@@ -47,18 +49,17 @@ public class GamificationRules {
 
     public static int getLevelXp(int level) {
         float boom = Math.round(3 * Math.pow(level - 1, 1.5) * 10);
-        //Log.d(TAG, "getLevelXp: real level value: " + boom);
         return 5 * Math.round(boom / 5);
     }
 
     public static int getLevelFromXp(int xp) {
 
         for (int i = 1; i < GamificationRules.MAX_LEVEL; i++) {
-            if (getLevelXp(i + 1) >= xp) {
+            if (getLevelXp(i + 1) > xp) {
                 return i;
             }
         }
-        return -1;
+        return MAX_LEVEL;
     }
 
     // 300 XP
@@ -68,7 +69,7 @@ public class GamificationRules {
                 return getLevelXp(i + 1) - xp;
             }
         }
-        return -1;
+        return 0;
     }
 
     public static String getTitleFromLevel(int level) {
@@ -130,5 +131,17 @@ public class GamificationRules {
             }
         }
         return badge;
+    }
+
+    public static ArrayList<UserTitle> getAllUserTitles(int userLevel) {
+        ArrayList<UserTitle> userTitles = new ArrayList<>();
+        for (Integer level : ALL_LEVELS) {
+            if (userLevel >= level) {
+                userTitles.add(new UserTitle(level, getTitleFromLevel(level), true));
+            } else {
+                userTitles.add(new UserTitle(level, getTitleFromLevel(level)));
+            }
+        }
+        return userTitles;
     }
 }

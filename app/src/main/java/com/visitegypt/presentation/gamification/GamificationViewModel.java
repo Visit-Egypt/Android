@@ -177,7 +177,7 @@ public class GamificationViewModel extends ViewModel {
 
     public void getFullPlaceActivities() {
         getFullPlaceActivitiesUseCase.setPlaceId(placeId);
-        Log.d(TAG, "getFullPlaceActivities: getting place activities");
+        Log.d(TAG, "getFullPlaceActivities: getting place activities: " + placeId);
         getFullPlaceActivitiesUseCase.execute(fullPlaceActivities -> {
             fullPlaceActivitiesMutableLiveData.setValue(fullPlaceActivities);
         }, throwable -> {

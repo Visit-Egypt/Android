@@ -52,6 +52,8 @@ public class GeneralUtils {
 
 
         if (userXp != -1) {
+            Log.d(TAG, "showUserProgress: old XP: " + userXp);
+            Log.d(TAG, "showUserProgress: new XP: " + newXp);
             View levelView = LayoutInflater.from(context).inflate(R.layout.snack_level, null, false);
 
             int userLevel = GamificationRules.getLevelFromXp(userXp);
@@ -106,7 +108,7 @@ public class GeneralUtils {
                                     Log.d(TAG, "run: " + GamificationRules.getRemainingXPToNextLevel(newXp));
                                     linearProgressIndicator.setProgress(linearProgressIndicator.getMax() -
                                             GamificationRules.getRemainingXPToNextLevel(newXp), true);
-                                    userXPFadeTextView.post(() -> userXPFadeTextView.animateText(GamificationRules.getRemainingXPToNextLevel(newXp) + ""));
+                                    userXPFadeTextView.post(() -> userXPFadeTextView.animateText(GamificationRules.getRemainingXPToNextLevel(newXp) + "XP"));
                                 }
                             }
                         },
