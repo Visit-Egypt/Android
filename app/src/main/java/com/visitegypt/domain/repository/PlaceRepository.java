@@ -28,5 +28,6 @@ public interface PlaceRepository {
 
     Completable cachingPlaces(PlacePageResponse placePageResponse);
     Single<PlacePageResponse> getALLCachedPlaces();
+    Single<Integer> getCountOfPlaces();
 
 }

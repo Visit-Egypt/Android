@@ -36,9 +36,6 @@ public interface PlaceDao {
     @Query("SELECT * FROM place_table LIMIT (:numberOfPlaces)")
     Single<List<Place>> getCachedPlaces(int numberOfPlaces);
 
-    @Query("SELECT * FROM place_table ")
-    PagingSource<Integer, Place> pagingSource();
-
     @Query("DELETE FROM place_table")
     @Transaction
     Completable clearAll();

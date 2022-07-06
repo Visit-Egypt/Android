@@ -45,12 +45,6 @@ public class GetAllPlacesPagingUseCase extends PagingUseCase<Place, PlacePageRes
     @Override
     protected LoadResult<Integer, Place> toLoadResult(@NonNull PlacePageResponse response) {
         int page = response.getCurrentPage();
-
-//        placeDao.insertAll(response.getPlaces())
-//                .subscribeOn(Schedulers.io())
-//                .subscribe(() -> {
-//
-//                }, Throwable::printStackTrace);
         placePageResponseDao.insertAll(response)
                 .subscribeOn(Schedulers.io())
                 .subscribe(() -> {

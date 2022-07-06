@@ -23,7 +23,8 @@ public interface PlacePageResponseDao {
     Single<PlacePageResponse> getALLCachedPlaces(int currentPage);
     @Query("SELECT * FROM place_page_response WHERE currentPage = 1")
     Single<PlacePageResponse> getFavPlaces();
-
+    @Query("SELECT COUNT(*) FROM place_page_response")
+    Single<Integer> getCountOfPlaces();
 
 
 }

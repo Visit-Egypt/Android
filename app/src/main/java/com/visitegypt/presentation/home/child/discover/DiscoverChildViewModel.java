@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.response.PlacePageResponse;
 import com.visitegypt.domain.usecase.CachePlacesUseCase;
+import com.visitegypt.domain.usecase.GetCachedPlacesCount;
 import com.visitegypt.domain.usecase.GetCachedPlacesUseCase;
 import com.visitegypt.domain.usecase.GetPlacesUseCase;
 import com.visitegypt.utils.Error;
@@ -26,16 +27,19 @@ public class DiscoverChildViewModel extends ViewModel {
     private GetPlacesUseCase getPlacesUseCase;
     private CachePlacesUseCase cachePlacesUseCase;
     private GetCachedPlacesUseCase getCachedPlacesUseCase;
+    private GetCachedPlacesCount getCachedPlacesCount;
 
     /***********************************************************/
 
     @Inject
     public DiscoverChildViewModel(GetPlacesUseCase getPlacesUseCase,
                                   CachePlacesUseCase cachePlacesUseCase,
+                                  GetCachedPlacesCount getCachedPlacesCount,
                                   GetCachedPlacesUseCase getCachedPlacesUseCase) {
         this.getPlacesUseCase = getPlacesUseCase;
         this.cachePlacesUseCase = cachePlacesUseCase;
         this.getCachedPlacesUseCase = getCachedPlacesUseCase;
+        this.getCachedPlacesCount = getCachedPlacesCount;
     }
 
     public void getAllPlaces() {
@@ -63,19 +67,27 @@ public class DiscoverChildViewModel extends ViewModel {
     }
 
     public void getCachedPlaces() {
-        getCachedPlacesUseCase.execute(places -> {
-            if (places != null || places.getPlaces().size() > 0) {
-
-                getAllPlaces();
+        getCachedPlacesCount.execute(count -> {
+            if (count != 0) {
+                getCachedPlacesUseCase.execute(places -> {
+                    placesMutableLiveData.setValue(places.getPlaces());
+                }, throwable -> {
+                    Log.e(TAG, "places retrieve error: " + throwable.getMessage());
+                    Error error = new Error();
+                    String errorMsg = error.errorType(throwable);
+                    Log.d(TAG, "error is:" + errorMsg);
+                });
             } else {
-
-                placesMutableLiveData.setValue(places.getPlaces());
+                getAllPlaces();
             }
+
+
         }, throwable -> {
             Log.e(TAG, "places retrieve error: " + throwable.getMessage());
             Error error = new Error();
             String errorMsg = error.errorType(throwable);
             Log.d(TAG, "error is:" + errorMsg);
         });
+
     }
 }

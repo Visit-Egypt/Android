@@ -74,4 +74,9 @@ public class PlaceRepositoryImp implements PlaceRepository {
         return placePageResponseDao.getFavPlaces();
     }
 
+    @Override
+    public Single<Integer> getCountOfPlaces() {
+        return placePageResponseDao.getCountOfPlaces();
+    }
+
 }
