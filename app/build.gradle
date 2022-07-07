@@ -143,4 +143,8 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
 
+    implementation 'com.hanks:htextview-base:0.1.6'
+    implementation 'com.hanks:htextview-fade:0.1.6'
+
+
 }

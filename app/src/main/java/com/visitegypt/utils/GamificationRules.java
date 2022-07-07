@@ -2,10 +2,14 @@ package com.visitegypt.utils;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.BadgeTask;
+import com.visitegypt.domain.model.FullBadge;
 import com.visitegypt.domain.model.PlaceActivity;
+import com.visitegypt.domain.model.UserTitle;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GamificationRules {
@@ -39,29 +43,33 @@ public class GamificationRules {
     public static final int GOLD_BADGE_XP = 300;
     public static final String FIRST_SIGN_IN_BADGE_ID = "623c9aa3de3a6b3d7c407f63";
 
-    public static final int EXPLORE_XP = 15;
+    public static final int EXPLORE_XP = 25;
 
     private static final String TAG = "gamification rules";
 
     public static int getLevelXp(int level) {
         float boom = Math.round(3 * Math.pow(level - 1, 1.5) * 10);
-        //Log.d(TAG, "getLevelXp: real level value: " + boom);
         return 5 * Math.round(boom / 5);
     }
 
     public static int getLevelFromXp(int xp) {
+
         for (int i = 1; i < GamificationRules.MAX_LEVEL; i++) {
-            int levelXp = GamificationRules.getLevelXp(i); // 2
-            Log.d(TAG, "getLevelFromXp: levelXp for " + i + ": " + levelXp);
-            xp -= levelXp; // 30
-            Log.d(TAG, "getLevelFromXp: " + xp);
-            if (xp == 0)
+            if (getLevelXp(i + 1) > xp) {
                 return i;
-            if (xp < 0) {
-                return i - 1; // 1
             }
         }
-        return -1;
+        return MAX_LEVEL;
+    }
+
+    // 300 XP
+    public static int getRemainingXPToNextLevel(int xp) {
+        for (int i = 1; i < 30; i++) {
+            if (getLevelXp(i + 1) > xp) {
+                return getLevelXp(i + 1) - xp;
+            }
+        }
+        return 0;
     }
 
     public static String getTitleFromLevel(int level) {
@@ -107,5 +115,33 @@ public class GamificationRules {
                 }
             }
         }
+    }
+
+    public static Badge fullBadgeToBadge(FullBadge fullBadge) {
+        Badge badge = fullBadge.getBadge();
+        badge.setPinned(fullBadge.isPinned());
+        badge.setProgress(fullBadge.getProgress());
+        badge.setOwned(fullBadge.isOwned());
+        Log.d(TAG, "fullBadgeToBadge: " + new Gson().toJson(fullBadge));
+        for (BadgeTask badgeTask : badge.getBadgeTasks()) {
+            for (BadgeTask fullBadgeTask : fullBadge.getBadgeTasks()) {
+                if (badgeTask.getTaskTitle().equals(fullBadgeTask.getTaskTitle())) {
+                    badgeTask.setProgress(fullBadgeTask.getProgress());
+                }
+            }
+        }
+        return badge;
+    }
+
+    public static ArrayList<UserTitle> getAllUserTitles(int userLevel) {
+        ArrayList<UserTitle> userTitles = new ArrayList<>();
+        for (Integer level : ALL_LEVELS) {
+            if (userLevel >= level) {
+                userTitles.add(new UserTitle(level, getTitleFromLevel(level), true));
+            } else {
+                userTitles.add(new UserTitle(level, getTitleFromLevel(level)));
+            }
+        }
+        return userTitles;
     }
 }

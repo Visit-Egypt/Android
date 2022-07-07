@@ -68,7 +68,7 @@ public class GamificationCardRecyclerViewAdapter extends RecyclerView.Adapter<Ga
                     }
                 });
                 break;
-            case PlaceActivity.ASK_CHAT_BOT:
+            case PlaceActivity.ASK_CHAT_BOT_PLACE:
                 holder.button.setText("Head to Chat Bot");
                 holder.button.setOnClickListener(new View.OnClickListener() {
                     @Override

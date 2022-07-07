@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:cardBackgroundColor="@color/camel">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.hanks.htextview.fade.FadeTextView
+                android:id="@+id/userTitleFadeTextView"
+                style="@style/TextAppearance.MaterialComponents.Headline5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Explorer"
+                android:textAlignment="center"
+                android:textColor="?attr/colorPrimaryVariant" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/snackUserXPProgressIndicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    app:trackColor="@color/black"
+                    app:trackCornerRadius="3dp"
+                    app:trackThickness="30dp" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/snackUserXPProgressIndicator"
+                    android:layout_alignTop="@id/snackUserXPProgressIndicator"
+                    android:layout_alignRight="@id/snackUserXPProgressIndicator"
+                    android:layout_alignBottom="@id/snackUserXPProgressIndicator">
+
+
+                    <com.hanks.htextview.fade.FadeTextView
+                        android:id="@+id/snackUserLevelFadeTextView"
+                        style="@style/TextAppearance.MaterialComponents.Body2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="8dp"
+                        android:background="#00000000"
+                        android:gravity="center"
+                        android:text="4" />
+
+                    <com.hanks.htextview.fade.FadeTextView
+                        android:id="@+id/snackUserXPFadeTextView"
+                        style="@style/TextAppearance.MaterialComponents.Body1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="#00000000"
+                        android:gravity="center"
+                        android:text="32XP"
+                        android:textSize="18sp" />
+
+                    <com.hanks.htextview.fade.FadeTextView
+                        android:id="@+id/snackUserNextLevelFadeTextView"
+                        style="@style/TextAppearance.MaterialComponents.Body2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="8dp"
+                        android:background="#00000000"
+                        android:gravity="center"
+                        android:text="5" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </RelativeLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

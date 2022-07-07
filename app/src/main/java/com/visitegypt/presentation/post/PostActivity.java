@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,7 +25,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
+import com.visitegypt.domain.model.User;
 import com.visitegypt.utils.Constants;
+import com.visitegypt.utils.GeneralUtils;
 
 import java.io.File;
 
@@ -41,6 +44,9 @@ public class PostActivity extends AppCompatActivity {
 
     private CircularImageView userImageView;
     private EditText postTxt;
+    private Button postButton;
+
+    private User user;
 
 
     @Override
@@ -62,7 +68,7 @@ public class PostActivity extends AppCompatActivity {
 
         initViews();
         setUserImageImageView();
-        liveDataObserev();
+        liveDataObsereve();
     }
 
     private void initViews() {
@@ -70,6 +76,17 @@ public class PostActivity extends AppCompatActivity {
         postsViewModel = new ViewModelProvider(this).get(PostsViewModel.class);
         postsViewModel.initCallBack();
         userImageView = findViewById(R.id.userImageView);
+        postButton = findViewById(R.id.postButtonPostActivity);
+
+        postButton.setOnClickListener(view -> {
+            postTxt.getText().toString();
+            if (postTxt.getText().toString().isEmpty()) {
+                Toast.makeText(PostActivity.this, "You can't make empty post", Toast.LENGTH_LONG).show();
+            } else {
+                postsViewModel.setPostData(postTxt.getText().toString(), placeId);
+                postsViewModel.addPost();
+            }
+        });
     }
 
 
@@ -84,16 +101,6 @@ public class PostActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    public void postOnClick(View view) {
-        if (postTxt.getText().toString() == null || postTxt.getText().toString().isEmpty()) {
-            Toast.makeText(PostActivity.this, "You can't make empty post", Toast.LENGTH_LONG).show();
-        } else {
-
-            postsViewModel.setPostData(postTxt.getText().toString(), placeId);
-            postsViewModel.addPost();
-        }
-
-    }
 
     public void selectPhotoOnClick(View view) {
         if (checkAndRequestPermissions(PostActivity.this)) {
@@ -102,7 +109,12 @@ public class PostActivity extends AppCompatActivity {
         }
     }
 
-    private void liveDataObserev() {
+    private void liveDataObsereve() {
+        postsViewModel.getUser();
+        GeneralUtils.LiveDataUtil.observeOnce(postsViewModel.userMutableLiveData, user1 -> {
+            postButton.setEnabled(true);
+            user = user1;
+        });
         postsViewModel.isImageUploaded.observe(this, aBoolean -> {
             if (!aBoolean)
                 Toast.makeText(PostActivity.this, "Upload Failed", Toast.LENGTH_LONG).show();
@@ -112,10 +124,28 @@ public class PostActivity extends AppCompatActivity {
             if (aBoolean) {
                 Toast.makeText(PostActivity.this, "Your Post is Created ", Toast.LENGTH_LONG).show();
                 postTxt.getText().clear();
+                GeneralUtils.LiveDataUtil.observeOnce(postsViewModel.userMutableLiveData, newUser -> {
+                    updateUserXP(newUser);
+                });
             } else {
                 Toast.makeText(PostActivity.this, "Please,try again ", Toast.LENGTH_LONG).show();
             }
         });
+
+
+    }
+
+    private void updateUserXP(User newUser) {
+        User prevUser = user;
+        user = newUser;
+
+        GeneralUtils.showUserProgress(this,
+                postTxt,
+                null,
+                null,
+                prevUser.getXp(),
+                newUser.getXp()
+        );
     }
 
     @Override

@@ -24,8 +24,8 @@ public class PlacesCityRecyclerViewAdapter extends RecyclerView.Adapter<com.visi
 
     private static final String TAG = "Places Adapter";
     public static String CHOSEN_PLACE_ID = "placeId";
-    private static List<Place> placeList;
-    private static   Context context;
+    private List<Place> placeList;
+    private static Context context;
 
     public PlacesCityRecyclerViewAdapter(Context context) {
         this.context = context;
@@ -72,7 +72,7 @@ public class PlacesCityRecyclerViewAdapter extends RecyclerView.Adapter<com.visi
                 holder.placeInCityRemainingProgressProgressIndicator.setMax(maxProgress);
                 holder.placeInCityRemainingProgressProgressIndicator.setProgress(progress, true);
             } else {
-                holder.placesInCityRemainingTextView.setText(placeList.get(position).getPlaceActivities().size() + " activities");
+                holder.placesInCityRemainingTextView.setText(remaining + " remaining activities");
                 holder.placeInCityRemainingProgressProgressIndicator.setMax(maxProgress);
                 holder.placeInCityRemainingProgressProgressIndicator.setProgress(progress, true);
             }
@@ -103,7 +103,7 @@ public class PlacesCityRecyclerViewAdapter extends RecyclerView.Adapter<com.visi
         notifyDataSetChanged();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView placesInCityRemainingTextView, placeInCityTextView;
         private LinearProgressIndicator placeInCityRemainingProgressProgressIndicator;
         private ImageView placeInCityImageView;

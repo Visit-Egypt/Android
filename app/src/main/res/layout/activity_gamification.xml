@@ -373,7 +373,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start"
                                 android:fontFamily="@font/prata_regular"
-                                android:text="remaining activities"
+                                android:text="loading activities"
                                 android:textSize="16sp" />
 
 
@@ -383,33 +383,25 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start"
                                 android:fontFamily="@font/prata_regular"
-                                android:text="xp"
+                                android:text="loading XP"
                                 android:textSize="16sp" />
 
-                            <com.google.android.material.progressindicator.LinearProgressIndicator
-                                android:id="@+id/placeRemainingProgressGamificationActivityProgressIndicator"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="left"
-                                android:layout_marginVertical="8dp"
-                                android:layout_marginRight="4dp"
-                                android:max="100"
-                                android:visibility="visible"
-                                app:trackCornerRadius="10dp"
-                                app:trackThickness="25dp" />
 
                         </LinearLayout>
+
                     </LinearLayout>
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/claimPlaceGamificationButton"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/placeRemainingProgressGamificationActivityProgressIndicator"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="8dp"
-                        android:text="Claim PLACE"
-                        app:icon="@drawable/ic_flag"
-                        app:iconGravity="textStart" />
+                        android:layout_marginVertical="8dp"
+                        android:max="100"
+                        android:visibility="visible"
+                        app:trackCornerRadius="10dp"
+                        app:trackThickness="25dp" />
+
                 </LinearLayout>
 
 
@@ -463,6 +455,7 @@
                         android:weightSum="3">
 
                         <com.google.android.material.card.MaterialCardView
+                            android:visibility="gone"
                             android:id="@+id/cardStoryBorderGamificationActivity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -546,7 +539,7 @@
 
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:id="@+id/postCardConstraintLayout"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
 
                                 <ImageButton
@@ -620,7 +613,7 @@
                             app:strokeWidth="1dp">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
 
                                 <ImageButton
@@ -782,8 +775,8 @@
                         android:layout_gravity="left"
                         android:layout_marginHorizontal="20dp"
                         android:layout_marginVertical="8dp"
-                        android:max="100"
-                        android:progress="80"
+                        android:max="10"
+                        android:progress="0"
                         android:visibility="visible"
                         app:trackCornerRadius="10dp"
                         app:trackThickness="20dp" />

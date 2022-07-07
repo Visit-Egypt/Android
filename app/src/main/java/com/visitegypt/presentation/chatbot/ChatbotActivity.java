@@ -2,6 +2,7 @@ package com.visitegypt.presentation.chatbot;
 
 import static com.visitegypt.presentation.gamification.GamificationActivity.ARTIFACTS;
 import static com.visitegypt.presentation.gamification.GamificationActivity.INSIGHTS;
+import static com.visitegypt.utils.GeneralUtils.LiveDataUtil.observeOnce;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +10,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Chatbot;
+import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.gamification.GamificationActivity;
+import com.visitegypt.utils.GeneralUtils;
 
 import java.util.ArrayList;
 
@@ -36,6 +38,8 @@ public class ChatbotActivity extends AppCompatActivity {
     private ChatbotViewModel chatbotViewModel;
     private String type;
     private String placeTitle;
+
+    User user;
 //    public String s;
 //    public String x;
 
@@ -73,26 +77,40 @@ public class ChatbotActivity extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         chatbotRecyclerView.setAdapter(ChatRecyclerViewAdapter);
         chatbotViewModel = new ViewModelProvider(this).get(ChatbotViewModel.class);
+
+        chatbotViewModel.getUser();
+        observeOnce(chatbotViewModel.userMutableLiveData, user1 -> {
+            user = user1;
+        });
+
         if (type != null) {
             if (type.equals(ARTIFACTS)) {
                 getResponse("Tell me about the artifacts of " + placeTitle);
-                chatbotViewModel.botResponseMutableLiveData.observe(ChatbotActivity.this, new Observer() {
-                    @Override
-                    public void onChanged(Object o) {
-                        Log.d(TAG, "Bot response delivered: " + o);
-                        chatbotArrayList.add(new Chatbot(o.toString(), BOT_KEY));
-                        ChatRecyclerViewAdapter.notifyDataSetChanged();
-                    }
+                chatbotViewModel.botResponseMutableLiveData.observe(ChatbotActivity.this, o -> {
+                    Log.d(TAG, "Bot response delivered: " + o);
+                    chatbotArrayList.add(new Chatbot(o.toString(), BOT_KEY));
+                    ChatRecyclerViewAdapter.notifyItemInserted(chatbotArrayList.size() - 1);
+                    chatbotViewModel.updateChatBotArtifact();
+                    observeOnce(chatbotViewModel.chatBotArtifactsMutableLiveData, aBoolean -> {
+                        if (aBoolean) {
+                            observeOnce(chatbotViewModel.userMutableLiveData, this::updateUserXP);
+                        }
+                    });
+
                 });
             } else if (type.equals(INSIGHTS)) {
                 getResponse("Tell me about the insights of " + placeTitle);
-                chatbotViewModel.botResponseMutableLiveData.observe(ChatbotActivity.this, new Observer() {
-                    @Override
-                    public void onChanged(Object o) {
-                        Log.d(TAG, "Bot response delivered: " + o);
-                        chatbotArrayList.add(new Chatbot(o.toString(), BOT_KEY));
-                        ChatRecyclerViewAdapter.notifyDataSetChanged();
-                    }
+                chatbotViewModel.botResponseMutableLiveData.observe(ChatbotActivity.this, o -> {
+                    Log.d(TAG, "Bot response delivered: " + o);
+                    chatbotArrayList.add(new Chatbot(o.toString(), BOT_KEY));
+                    ChatRecyclerViewAdapter.notifyItemInserted(chatbotArrayList.size() - 1);
+                    chatbotViewModel.updateChatBotPlace();
+                    observeOnce(chatbotViewModel.chatBotPlaceMutableLiveData, aBoolean -> {
+                        if (aBoolean) {
+                            observeOnce(chatbotViewModel.userMutableLiveData, this::updateUserXP);
+                        }
+                    });
+
                 });
             }
         }
@@ -103,21 +121,31 @@ public class ChatbotActivity extends AppCompatActivity {
             }
             getResponse(edtTxtMessage.getText().toString());
             edtTxtMessage.setText("");
-            chatbotViewModel.botResponseMutableLiveData.observe(ChatbotActivity.this, new Observer() {
-                @Override
-                public void onChanged(Object o) {
-                    Log.d(TAG, "Bot response delivered: " + o);
-                    chatbotArrayList.add(new Chatbot(o.toString(), BOT_KEY));
-                    ChatRecyclerViewAdapter.notifyDataSetChanged();
-                }
+            chatbotViewModel.botResponseMutableLiveData.observe(ChatbotActivity.this, o -> {
+                Log.d(TAG, "Bot response delivered: " + o);
+                chatbotArrayList.add(new Chatbot(o.toString(), BOT_KEY));
+                ChatRecyclerViewAdapter.notifyItemInserted(chatbotArrayList.size() - 1);
             });
         });
     }
 
     private void getResponse(String message) {
         chatbotArrayList.add(new Chatbot(message, USER_KEY));
-        ChatRecyclerViewAdapter.notifyDataSetChanged();
+        ChatRecyclerViewAdapter.notifyItemInserted(chatbotArrayList.size() - 1);
         Log.d(TAG, "chatbot activity: " + message);
         chatbotViewModel.setMessage(message);
+    }
+
+    private void updateUserXP(User newUser) {
+        User prevUser = user;
+        user = newUser;
+
+        GeneralUtils.showUserProgress(this,
+                fBtnSendMessage,
+                null,
+                null,
+                prevUser.getXp(),
+                newUser.getXp()
+        );
     }
 }

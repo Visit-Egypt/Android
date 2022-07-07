@@ -1,5 +1,7 @@
 package com.visitegypt.presentation.place;
 
+import static com.visitegypt.utils.GeneralUtils.LiveDataUtil.observeOnce;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,18 +15,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.gson.Gson;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
-import com.visitegypt.domain.model.Explore;
+import com.visitegypt.domain.model.FullBadge;
+import com.visitegypt.domain.model.FullPlaceActivity;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
+import com.visitegypt.presentation.gamification.BadgesSliderViewAdapter;
 import com.visitegypt.utils.GamificationRules;
-import com.visitegypt.utils.GeneralUtils;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 
@@ -43,7 +45,7 @@ public class PlacesActivity extends AppCompatActivity {
             remainingXpTextView, remainingActivitiesTextView;
     private LinearProgressIndicator cityRemainingProgressPlacesActivityProgressIndicator;
     private ArrayList<Badge> badges, cityBadges;
-    private CityBadgesRecyclerViewAdapter cityBadgesRecyclerViewAdapter;
+    private BadgesSliderViewAdapter cityBadgesRecyclerViewAdapter;
 
 
     @Override
@@ -53,7 +55,7 @@ public class PlacesActivity extends AppCompatActivity {
         cityName = getIntent().getStringExtra("city_name");
 
         initViews();
-        initViewModel(cityName);
+//        initViewModel(cityName);
     }
 
     @Override
@@ -81,106 +83,101 @@ public class PlacesActivity extends AppCompatActivity {
         cityBadges = new ArrayList<>();
 
         cityBadgesPlacesActivityRecyclerView = findViewById(R.id.cityBadgesPlacesActivityRecyclerView);
-        cityBadgesRecyclerViewAdapter = new CityBadgesRecyclerViewAdapter(cityBadges, this);
+        cityBadgesRecyclerViewAdapter = new BadgesSliderViewAdapter(cityBadges, this);
         cityBadgesPlacesActivityRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         cityBadgesPlacesActivityRecyclerView.setAdapter(cityBadgesRecyclerViewAdapter);
-
     }
 
     private void initViewModel(String cityName) {
         placesViewModel = new ViewModelProvider(this).get(PlacesViewModel.class);
 
-
+        placesViewModel.setCityName(cityName);
         placesViewModel.getUserPlaceActivities();
         placesViewModel.getPlacesInCity(cityName);
-        placesViewModel.placesMutableLiveData.observe(this, (Observer<List<Place>>) places -> {
+        placesViewModel.getFullPlaceActivities();
+
+        observeOnce(placesViewModel.placesMutableLiveData, (Observer<List<Place>>) places -> {
             Log.d(TAG, " getting places to recycler view");
-            AtomicInteger progress = new AtomicInteger();
-            AtomicInteger maxProgress = new AtomicInteger();
+            int totalPlaces = 0;
 
-            AtomicInteger ownedPlaces = new AtomicInteger();
-            AtomicInteger totalPlaces = new AtomicInteger();
+            Log.d(TAG, "initViewModel: " + places.size());
+            for (Place place : places) {
+                if (place.getExplores() != null || place.getPlaceActivities() != null) {
+                    if (place.getExplores() != null && !place.isExploresAdded()) {
+                        place.getPlaceActivities().addAll(place.getExplores());
+                        place.setExploresAdded(true);
+                    }
 
-            placesCityRecyclerViewAdapter.setplaceList(places);
-            GeneralUtils.LiveDataUtil.observeOnce(placesViewModel.userPlaceActivitiesMutableLiveData,
-                    placeActivities -> {
-                        if (placeActivities != null)
-                            for (Place place : places) {
-                                if (place.getExplores() != null) {
-                                    for (Explore explore : place.getExplores()) {
-                                        for (PlaceActivity placeActivity : place.getPlaceActivities()) {
-                                            if (explore.getId().equals(placeActivity.getId())) {
-                                                placeActivities.add(explore);
-                                            }
-                                        }
+                    totalPlaces++;
+                }
+            }
+
+            int finalTotalPlaces = totalPlaces;
+            placesViewModel.fullPlaceActivitiesMutableLiveData.observe(this, fullPlaceActivities -> {
+                if (fullPlaceActivities != null) {
+                    for (FullPlaceActivity fullPlaceActivity : fullPlaceActivities) {
+                        for (Place place : places) {
+                            if (place.getPlaceActivities() != null)
+                                for (PlaceActivity placeActivity : place.getAllTypesOfActivities()) {
+//                                            Log.d(TAG, "initViewModel all activities: " + new Gson().toJson(place.getAllTypesOfActivities()));
+                                    if (placeActivity.getId().equals(fullPlaceActivity.getId())) {
+                                        placeActivity.setProgress(fullPlaceActivity.getProgress());
+                                        placeActivity.setFinished(fullPlaceActivity.isFinished());
                                     }
                                 }
-                                if (place.getPlaceActivities() != null) {
-                                    GamificationRules.mergeTwoPlaceActivities(place.getPlaceActivities(),
-                                            placeActivities);
+                        }
+                    }
+                }
+                int ownedPlaces = 0;
+                for (Place place : places) {
+                    if (place.isOwned()) {
+                        ownedPlaces += 1;
+                    }
+//                            if (place.getPlaceActivities() != null){
+//                                totalPlaces++;
+//                            }
+                }
+                remainingActivitiesTextView.setText(ownedPlaces + "/" + finalTotalPlaces + " places complete");
+                cityRemainingProgressPlacesActivityProgressIndicator.setMax(finalTotalPlaces);
+                cityRemainingProgressPlacesActivityProgressIndicator.setProgress(ownedPlaces);
+                Log.d(TAG, "initViewModel: sharqia" + new Gson().toJson(places));
+                placesCityRecyclerViewAdapter.setplaceList(places);
+            });
+        });
+        initBadges();
+        //initActivities();
+    }
+
+
+    private void initBadges() {
+        cityBadges.clear();
+        placesViewModel.getCityFullBadges();
+        placesViewModel.setCityName(cityName);
+
+        observeOnce(placesViewModel.fullBadgesMutableLiveData, fullBadges -> {
+                    if (fullBadges != null) {
+                        for (FullBadge fullBadge : fullBadges) {
+                            cityBadges.add(GamificationRules.fullBadgeToBadge(fullBadge));
+                        }
+                    } else {
+                        placesViewModel.getAllBadges();
+                        observeOnce(placesViewModel.badgesMutableLiveData, badges -> {
+                            for (Badge badge : badges) {
+                                if (badge.getCity().equals(cityName)) {
+                                    cityBadges.add(badge);
                                 }
                             }
-                        for (Place place : places) {
-                            progress.addAndGet(place.getProgress());
-                            maxProgress.addAndGet(place.getMaxProgress());
-                            Log.d(TAG, "initViewModel: place progress: " + place.getProgress());
-                            Log.d(TAG, "initViewModel: place max progress: " + place.getMaxProgress());
-                            if (progress.get() == place.getMaxProgress() && (place.getProgress() != 0)) {
-                                ownedPlaces.getAndIncrement();
-                                Log.d(TAG, "initViewModel: incremented owned places: " + ownedPlaces.get());
-                            }
-                            if (place.getMaxProgress() != 0) {
-                                totalPlaces.getAndIncrement();
-                                Log.d(TAG, "initViewModel: incremented total places: " + totalPlaces.get());
-                            }
-                        }
-
-                        if (ownedPlaces.get() == 1) {
-                            remainingXpTextView.setText(MessageFormat.format("{0} place completed", 1));
-                        } else {
-                            remainingXpTextView.setText(MessageFormat.format("{0} places completed", ownedPlaces.get()));
-                        }
-
-                        if (totalPlaces.get() - ownedPlaces.get() == 1) {
-                            nextLevelXPTextView.setText(MessageFormat.format("{0} places remaining", totalPlaces.get() - ownedPlaces.get()));
-                        } else if (totalPlaces.get() - ownedPlaces.get() == 0) {
-                            nextLevelXPTextView.setText("no places remaining");
-
-                        } else {
-                            nextLevelXPTextView.setText(MessageFormat.format("{0} places remaining", totalPlaces.get() - ownedPlaces.get()));
-                        }
-
-                        cityRemainingProgressPlacesActivityProgressIndicator.setMax(totalPlaces.get());
-                        cityRemainingProgressPlacesActivityProgressIndicator.setProgress(ownedPlaces.get(), true);
-
-
-                        Log.d(TAG, "initViewModel: max progress of city: " + maxProgress.get());
-                        Log.d(TAG, "initViewModel: progress of city: " + progress.get());
-
-                        int remaining = maxProgress.get() - progress.get();
-
-                        if (remaining == 0) {
-                            remainingActivitiesTextView.setText("City complete");
-                        } else if (remaining == 1) {
-                            remainingActivitiesTextView.setText("1 activity remaining");
-                        } else {
-                            remainingActivitiesTextView.setText(maxProgress.get() - progress.get() + " activities remaining");
-                        }
-                    });
-
-
-        });
-
-        placesViewModel.getBadges();
-        placesViewModel.badgesMutableLiveData.observe(this, badges -> {
-            this.badges = (ArrayList<Badge>) badges;
-            for (int i = 0; i < badges.size(); i++) {
-                if (badges.get(i).getCity() != null)
-                    if (badges.get(i).getCity().equals(cityName)) {
-                        cityBadges.add(badges.get(i));
+                        });
                     }
-            }
-            cityBadgesRecyclerViewAdapter.setBadges(cityBadges);
-        });
+                    cityBadgesRecyclerViewAdapter.setBadges(cityBadges);
+                }
+        );
     }
+
+//    private void initActivities() {
+//        placesViewModel.getFullPlaceActivities();
+//        observeOnce(placesViewModel.fullPlaceActivitiesMutableLiveData, fullPlaceActivities -> {
+//
+//        });
+//    }
 }

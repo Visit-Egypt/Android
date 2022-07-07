@@ -2,21 +2,19 @@ package com.visitegypt.presentation.userProfile;
 
 import static com.visitegypt.utils.Constants.CHOSEN_USER_ID;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.app.Dialog;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.ChipGroup;
@@ -92,8 +90,6 @@ public class UserProfile extends Fragment {
         btnRequest = userProfileFragment.findViewById(R.id.requestMaterialButton);
         myInterests = userProfileFragment.findViewById(R.id.myInterests);
         chipGroup = userProfileFragment.findViewById(R.id.chipGroup);
-
-
     }
 
     private void setOnClickListeners() {

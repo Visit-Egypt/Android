@@ -8,15 +8,18 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.visitegypt.domain.model.Badge;
+import com.visitegypt.domain.model.FullBadge;
+import com.visitegypt.domain.model.FullPlaceActivity;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.usecase.GetAllBadgesUseCase;
 import com.visitegypt.domain.usecase.GetBadgesOfUserUseCase;
+import com.visitegypt.domain.usecase.GetFullActivitiesUseCase;
+import com.visitegypt.domain.usecase.GetFullBadgeUseCase;
 import com.visitegypt.domain.usecase.GetPlacesOfCityUseCase;
 import com.visitegypt.domain.usecase.GetUserPlaceActivityUseCase;
 import com.visitegypt.utils.Constants;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -28,44 +31,44 @@ public class PlacesViewModel extends ViewModel {
 
     private static final String TAG = "Places View Model";
 
+    MutableLiveData<List<FullBadge>> fullBadgesMutableLiveData = new MutableLiveData<>();
+
     MutableLiveData placesMutableLiveData = new MutableLiveData<Place>();
     MutableLiveData<List<Badge>> badgesMutableLiveData = new MutableLiveData<>();
     MutableLiveData<List<PlaceActivity>> userPlaceActivitiesMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<List<FullPlaceActivity>> fullPlaceActivitiesMutableLiveData = new MutableLiveData<>();
+    private SharedPreferences sharedPreferences;
 
     private GetPlacesOfCityUseCase getPlacesOfCityUseCase;
     private GetAllBadgesUseCase getAllBadgesUseCase;
     private GetBadgesOfUserUseCase getBadgesOfUserUseCase;
-    @Inject
-    SharedPreferences sharedPreferences;
+    private GetFullBadgeUseCase getFullBadgeUseCase;
     private GetUserPlaceActivityUseCase getUserPlaceActivityUseCase;
+    private GetFullActivitiesUseCase getFullActivitiesUseCase;
+
+    private String cityName;
 
     @Inject
     public PlacesViewModel(GetPlacesOfCityUseCase getPlacesOfCityUseCase,
                            GetBadgesOfUserUseCase getBadgesOfUserUseCase,
                            GetAllBadgesUseCase getAllBadgesUseCase,
-                           GetUserPlaceActivityUseCase getUserPlaceActivityUseCase) {
+                           GetUserPlaceActivityUseCase getUserPlaceActivityUseCase,
+                           GetFullBadgeUseCase getFullBadgeUseCase,
+                           GetFullActivitiesUseCase getFullActivitiesUseCase,
+                           SharedPreferences sharedPreferences) {
         this.getPlacesOfCityUseCase = getPlacesOfCityUseCase;
         this.getAllBadgesUseCase = getAllBadgesUseCase;
         this.getBadgesOfUserUseCase = getBadgesOfUserUseCase;
-
         this.getUserPlaceActivityUseCase = getUserPlaceActivityUseCase;
+        this.getFullBadgeUseCase = getFullBadgeUseCase;
+        this.getFullActivitiesUseCase = getFullActivitiesUseCase;
+        this.sharedPreferences = sharedPreferences;
     }
 
     public void getPlacesInCity(String cityName) {
         getPlacesOfCityUseCase.setCityName(cityName);
-        List<Place> filteredPlaces = new ArrayList<>();
         getPlacesOfCityUseCase.execute(getPlacesOfCity -> {
             Log.d(TAG, "getPlacesInCity: done");
-            List<Place> places = getPlacesOfCity.getPlaces();
-
-//            for (Place place : places) {
-//                if (place.getPlaceActivities() != null){
-//                    if (!place.getPlaceActivities().isEmpty()){
-//                        filteredPlaces.add(place);
-//                    }
-//                }
-//            }
-
             placesMutableLiveData.setValue(getPlacesOfCity.getPlaces());
         }, throwable -> Log.e(TAG, "places retrieve error: " + throwable.getMessage()));
 
@@ -82,16 +85,32 @@ public class PlacesViewModel extends ViewModel {
         });
     }
 
-    public void getBadges() {
+    public void getAllBadges() {
         getAllBadgesUseCase.execute(badgeResponse -> {
             badgesMutableLiveData.setValue(badgeResponse.getBadges());
         }, throwable -> Log.e(TAG, "error retrieving badges: " + throwable.getMessage()));
+    }
 
-        getBadgesOfUserUseCase.execute(badges -> {
-            badgesMutableLiveData.setValue(badges);
+    public void getCityFullBadges() {
+        getFullBadgeUseCase.execute(fullBadges -> {
+            fullBadges.removeIf(fullBadge -> !fullBadge.getBadge().getCity().equals(cityName));
+            fullBadgesMutableLiveData.setValue(fullBadges);
         }, throwable -> {
-            Log.e(TAG, "error getting user badges: " + throwable.getMessage());
+            fullBadgesMutableLiveData.setValue(null);
+            Log.e(TAG, "getFullBadges: ", throwable);
         });
     }
 
+    public void getFullPlaceActivities() {
+        getFullActivitiesUseCase.execute(fullPlaceActivities -> {
+            fullPlaceActivitiesMutableLiveData.setValue(fullPlaceActivities);
+        }, throwable -> {
+            fullPlaceActivitiesMutableLiveData.setValue(null);
+            Log.e(TAG, "getFullPlaceActivities: ", throwable);
+        });
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
 }

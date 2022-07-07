@@ -9,6 +9,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.visitegypt.domain.model.Badge;
+import com.visitegypt.domain.model.FullBadge;
+import com.visitegypt.domain.model.FullPlaceActivity;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.model.Post;
@@ -16,6 +18,8 @@ import com.visitegypt.domain.model.Tag;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.usecase.GetAllBadgesUseCase;
 import com.visitegypt.domain.usecase.GetBadgesOfUserUseCase;
+import com.visitegypt.domain.usecase.GetFullActivitiesUseCase;
+import com.visitegypt.domain.usecase.GetFullBadgeUseCase;
 import com.visitegypt.domain.usecase.GetPlacesByPlaceActivityIdUseCase;
 import com.visitegypt.domain.usecase.GetPlacesUseCase;
 import com.visitegypt.domain.usecase.GetPostsByUser;
@@ -56,10 +60,15 @@ public class AccountViewModel extends ViewModel {
     MutableLiveData<ArrayList<Badge>> allBadgesMutableLiveData = new MutableLiveData<>();
     MutableLiveData<User> userMutableLiveData = new MutableLiveData<>();
     MutableLiveData<ArrayList<PlaceActivity>> userPlaceActivityMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<List<FullBadge>> fullBadgesMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<List<FullPlaceActivity>> fullActivitiesMutableLiveData = new MutableLiveData<>();
+
     MutableLiveData<List<Tag>> mutableLiveDataUserTagNames = new MutableLiveData<>();
     MutableLiveData<List<Tag>> mutableLiveDataAllTags = new MutableLiveData<>();
     MutableLiveData<Boolean> mutableLiveUpdateIsDone = new MutableLiveData<>();
+
     private List<String> placeActivitiesId;
+
     private SharedPreferences sharedPreferences;
     private GetPostsByUser getPostsByUser;
     private GetBadgesOfUserUseCase getBadgesOfUserUseCase;
@@ -72,6 +81,8 @@ public class AccountViewModel extends ViewModel {
     private GetTagsNameByIds getTagsNameByIds;
     private UpdateUserInterestUseCase userInterestUseCase;
     private GetUserPostsUseCase getUserPostsUseCase;
+    private GetFullBadgeUseCase getFullBadgeUseCase;
+    private GetFullActivitiesUseCase getFullActivitiesUseCase;
 
     @Inject
     public AccountViewModel(SharedPreferences sharedPreferences, GetPostsByUser getPostsByUser,
@@ -84,7 +95,9 @@ public class AccountViewModel extends ViewModel {
                             GetTagUseCase getTagUseCase,
                             GetTagsNameByIds getTagsNameByIds,
                             UpdateUserInterestUseCase userInterestUseCase,
-                            GetUserPostsUseCase getUserPostsUseCase
+                            GetUserPostsUseCase getUserPostsUseCase,
+                            GetFullActivitiesUseCase getFullActivitiesUseCase,
+                            GetFullBadgeUseCase getFullBadgeUseCase
     ) {
         this.sharedPreferences = sharedPreferences;
         this.getPostsByUser = getPostsByUser;
@@ -98,6 +111,8 @@ public class AccountViewModel extends ViewModel {
         this.getTagsNameByIds = getTagsNameByIds;
         this.userInterestUseCase = userInterestUseCase;
         this.getUserPostsUseCase = getUserPostsUseCase;
+        this.getFullBadgeUseCase = getFullBadgeUseCase;
+        this.getFullActivitiesUseCase = getFullActivitiesUseCase;
     }
 
     public void getPlaceActivitiesOfUser() {
@@ -106,7 +121,7 @@ public class AccountViewModel extends ViewModel {
         getUserPlaceActivityUseCase.execute(placeActivities -> {
             userPlaceActivityMutableLiveData.setValue((ArrayList<PlaceActivity>) placeActivities);
         }, throwable -> {
-
+            Log.e(TAG, "getPlaceActivitiesOfUser: ", throwable);
         });
     }
 
@@ -145,6 +160,7 @@ public class AccountViewModel extends ViewModel {
                     Log.e(TAG, "getUser: error retrieving user: " + throwable.getMessage());
                 });
     }
+
     public void saveUserImage(String url) {
         sharedPreferences.edit().putString(SHARED_PREF_USER_IMAGE, url).apply();
     }
@@ -168,19 +184,36 @@ public class AccountViewModel extends ViewModel {
         });
     }
 
-    public void getUserPosts() {
+    public void getUserFullBadges() {
+        getFullBadgeUseCase.execute(fullBadges -> {
+            fullBadgesMutableLiveData.setValue(fullBadges);
+        }, throwable -> {
+            Log.e(TAG, "getUserFullBadges: ", throwable);
+        });
+    }
+
+    public void getFullActivities() {
+        getFullActivitiesUseCase.execute(fullPlaceActivities -> {
+            fullActivitiesMutableLiveData.setValue(fullPlaceActivities);
+        }, throwable -> {
+            fullActivitiesMutableLiveData.setValue(null);
+            Log.e(TAG, "getFullActivities: ", throwable);
+        });
+    }
+
+    private void getUserPosts() {
         //when backend finishes there work start to implement
         Log.d(TAG, "accept List of posts:  welcome");
         getPostsByUser.execute(postPage -> mutableLiveDataMyPosts.setValue(postPage.getPosts()), throwable -> {
-                    try {
-                        ResponseBody body = ((HttpException) throwable).response().errorBody();
-                        JSONObject jObjectError = new JSONObject(body.string());
-                        Log.d(TAG, "accept try : " + jObjectError.getJSONArray("errors").toString());
-                        if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
-                        } else {
-                        }
-                    } catch (Exception e) {
-                        Log.d(TAG, "accept catch: " + e.toString());
+            try {
+                ResponseBody body = ((HttpException) throwable).response().errorBody();
+                JSONObject jObjectError = new JSONObject(body.string());
+                Log.d(TAG, "accept try : " + jObjectError.getJSONArray("errors").toString());
+                if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
+                } else {
+                }
+            } catch (Exception e) {
+                Log.d(TAG, "accept catch: " + e.toString());
                     }
                 }
         );

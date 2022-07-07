@@ -11,15 +11,13 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.visitegypt.domain.model.Badge;
-import com.visitegypt.domain.model.BadgeTask;
-import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.model.Post;
+import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.usecase.AddNewPostUseCase;
-import com.visitegypt.domain.usecase.UpdateBadgeOfUserUseCase;
-import com.visitegypt.domain.usecase.UpdateUserBadgeTaskProgUseCase;
-import com.visitegypt.domain.usecase.UpdateUserPlaceActivityUseCase;
+import com.visitegypt.domain.usecase.GetUserUseCase;
+import com.visitegypt.domain.usecase.UpdatePostAPostActivityUseCase;
 import com.visitegypt.domain.usecase.UploadUserPhotoUseCase;
+import com.visitegypt.utils.Constants;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -34,20 +32,16 @@ public class PostsViewModel extends ViewModel implements UploadUserPhotoUseCase.
     private static final String TAG = "Posts ViewModel";
 
     private AddNewPostUseCase addNewPostUseCase;
-    private UpdateUserPlaceActivityUseCase updateUserPlaceActivityUseCase;
     private UploadUserPhotoUseCase uploadUserPhotoUseCase;
-    private UpdateBadgeOfUserUseCase updateBadgeOfUserUseCase;
-    private UpdateUserBadgeTaskProgUseCase updateUserBadgeTaskProgUseCase;
+    MutableLiveData<Boolean> postActivityState = new MutableLiveData<>();
+    MutableLiveData<User> userMutableLiveData = new MutableLiveData<>();
 
-    MutableLiveData<List<PlaceActivity>> placeActivitiesMutableLiveData = new MutableLiveData<>();
-    MutableLiveData<List<BadgeTask>> badgeTaskMutableLiveData = new MutableLiveData<>();
-    MutableLiveData<List<Badge>> badgesMutableLiveData = new MutableLiveData<>();
     MutableLiveData<Boolean> isImageUploaded = new MutableLiveData<>();
     MutableLiveData<Boolean> isPostUploaded = new MutableLiveData<>();
+    private UpdatePostAPostActivityUseCase updatePostAPostActivityUseCase;
+    private GetUserUseCase getUserUseCase;
+
     private SharedPreferences sharedPreferences;
-    private Badge badge;
-    private BadgeTask postBadgeTask;
-    private PlaceActivity postPlaceActivity;
 
     private List<String> imageList = new ArrayList<>();
     private Post post;
@@ -56,15 +50,13 @@ public class PostsViewModel extends ViewModel implements UploadUserPhotoUseCase.
     public PostsViewModel(AddNewPostUseCase addNewPostUseCase,
                           SharedPreferences sharedPreferences,
                           UploadUserPhotoUseCase uploadUserPhotoUseCase,
-                          UpdateBadgeOfUserUseCase updateBadgeOfUserUseCase,
-                          UpdateUserPlaceActivityUseCase updateUserPlaceActivityUseCase,
-                          UpdateUserBadgeTaskProgUseCase updateUserBadgeTaskProgUseCase) {
+                          UpdatePostAPostActivityUseCase updatePostAPostActivityUseCase,
+                          GetUserUseCase getUserUseCase) {
         this.addNewPostUseCase = addNewPostUseCase;
         this.sharedPreferences = sharedPreferences;
         this.uploadUserPhotoUseCase = uploadUserPhotoUseCase;
-        this.updateBadgeOfUserUseCase = updateBadgeOfUserUseCase;
-        this.updateUserPlaceActivityUseCase = updateUserPlaceActivityUseCase;
-        this.updateUserBadgeTaskProgUseCase = updateUserBadgeTaskProgUseCase;
+        this.updatePostAPostActivityUseCase = updatePostAPostActivityUseCase;
+        this.getUserUseCase = getUserUseCase;
     }
 
     public void createFakePost() {
@@ -90,18 +82,26 @@ public class PostsViewModel extends ViewModel implements UploadUserPhotoUseCase.
         addNewPostUseCase.setPost(post);
     }
 
+    private void updateUserPostActivity() {
+        updatePostAPostActivityUseCase.setPlaceId(post.getPlaceId());
+        updatePostAPostActivityUseCase.execute(unused -> {
+            postActivityState.setValue(true);
+            Log.d(TAG, "updateUserPostActivity: updated post activity");
+        }, throwable -> {
+            Log.e(TAG, "updateUserPostActivity: " + throwable.getMessage());
+            postActivityState.setValue(false);
+        });
+    }
+
     public void addPost() {
         addNewPostUseCase.execute(post1 -> {
             Log.d(TAG, "addPost: success");
             isPostUploaded.setValue(true);
-
             Log.d(TAG, "addPost: updating badge");
-            updateUserBadge();
-
             Log.d(TAG, "addPost: updating post activity");
-            updatePlaceActivity();
+            updateUserPostActivity();
         }, throwable -> {
-            Log.d(TAG, "addPost: error" + throwable.getMessage());
+            Log.e(TAG, "addPost: error" + throwable.getMessage());
         });
     }
 
@@ -123,51 +123,21 @@ public class PostsViewModel extends ViewModel implements UploadUserPhotoUseCase.
         }
     }
 
-    public void setBadge(Badge badge) {
-        this.badge = badge;
-    }
-
-    private void updateUserBadge() {
-        if (postBadgeTask != null) {
-            updateUserBadgeTaskProgUseCase.setBadgeTask(postBadgeTask);
-            updateUserBadgeTaskProgUseCase.execute(badgeTasks -> {
-                badgeTaskMutableLiveData.setValue(badgeTasks);
-            }, throwable -> {
-                Log.e(TAG, "updateUserBadge: " + throwable.getMessage());
-            });
-        } else {
-            Log.e(TAG, "updateUserBadge: you must call setPostBadgeTask()");
-        }
-
-    }
-
-    private void updatePlaceActivity() {
-        if (postPlaceActivity == null) {
-            Log.e(TAG, "updatePlaceActivity: you must call setPostPlaceActivity()");
-        } else if (postPlaceActivity.getProgress() < postPlaceActivity.getMaxProgress()) {
-            postPlaceActivity.setProgress(postPlaceActivity.getProgress() + 1);
-            if (postPlaceActivity.getProgress() == postPlaceActivity.getMaxProgress()) {
-                postPlaceActivity.setFinished(true);
-            }
-            updateUserPlaceActivityUseCase.setPlaceActivity(postPlaceActivity);
-            updateUserPlaceActivityUseCase.execute(placeActivities -> placeActivitiesMutableLiveData.setValue(placeActivities),
-                    throwable -> {
-                        Log.e(TAG, "updatePlaceActivity: " + throwable.getMessage());
-                    });
-        } else {
-            Log.d(TAG, "updatePlaceActivity: already granted");
-        }
-    }
 
     public String getUserImage() {
         return sharedPreferences.getString(SHARED_PREF_USER_IMAGE, "");
     }
 
-    public void setPostPlaceActivity(PlaceActivity postPlaceActivity) {
-        this.postPlaceActivity = postPlaceActivity;
+    public void getUser() {
+        String userId = sharedPreferences.getString(SHARED_PREF_USER_ID, "");
+        String email = sharedPreferences.getString(Constants.SHARED_PREF_EMAIL, "");
+        getUserUseCase.setUser(userId, email);
+        getUserUseCase.execute(user -> {
+            userMutableLiveData.setValue(user);
+        }, throwable -> {
+            Log.e(TAG, "getUser: ", throwable);
+            userMutableLiveData.setValue(null);
+        });
     }
 
-    public void setPostBadgeTask(BadgeTask postBadgeTask) {
-        this.postBadgeTask = postBadgeTask;
-    }
 }

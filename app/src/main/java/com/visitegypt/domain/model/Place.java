@@ -68,6 +68,8 @@ public class Place {
     @TypeConverters(PlaceActivityConverter.class)
     private ArrayList<PlaceActivity> placeActivities;
 
+    private boolean exploresAdded;
+
     private int progress;
     private int maxProgress;
 
@@ -242,6 +244,13 @@ public class Place {
         return placeActivities;
     }
 
+    public ArrayList<PlaceActivity> getAllTypesOfActivities() {
+        ArrayList<PlaceActivity> placeActivities2 = new ArrayList<>();
+        placeActivities2.addAll(getPlaceActivities());
+        placeActivities2.addAll(getExplores());
+        return placeActivities2;
+    }
+
     public void setPlaceActivities(ArrayList<PlaceActivity> placeActivities) {
         this.placeActivities = placeActivities;
     }
@@ -277,10 +286,18 @@ public class Place {
     }
 
     public boolean isOwned() {
-        return getProgress() == getMaxProgress();
+        return getProgress() == getMaxProgress() && getProgress() != 0;
     }
 
     public void setOwned(boolean owned) {
         this.owned = owned;
+    }
+
+    public boolean isExploresAdded() {
+        return exploresAdded;
+    }
+
+    public void setExploresAdded(boolean exploresAdded) {
+        this.exploresAdded = exploresAdded;
     }
 }

@@ -25,17 +25,16 @@
         android:animateLayoutChanges="true"
         android:padding="8dp">
     </com.google.android.material.chip.ChipGroup>
+
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"
-        android:id="@+id/saveButton"
-        android:background="@drawable/button_shape"
-        android:textColor="?attr/colorOnPrimary"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_margin="8dp"
-        android:padding="8dp"
         android:layout_gravity="right"
-
+        android:padding="8dp"
+        android:text="Save"
         />
 
 

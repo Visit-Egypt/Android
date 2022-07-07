@@ -4,8 +4,15 @@ import java.util.ArrayList;
 
 public class PlaceActivity {
     // Types
-    public static final String VISIT_LOCATION = "0", POST_STORY = "1", POST_POST = "2",
-            ASK_CHAT_BOT = "3", POST_REVIEW = "4", GENERAL = "5", EXPLORE = "6";
+    public static final String VISIT_LOCATION = "0",
+            POST_POST = "1",
+            ASK_CHAT_BOT_ARTIFACTS = "2",
+            ASK_CHAT_BOT_PLACE = "3",
+            POST_REVIEW = "4",
+            EXPLORE = "5",
+            POST_STORY = "6",
+            GENERAL = "7";
+
     private String id;
     private int progress;
     boolean customXp = false;

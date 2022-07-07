@@ -50,16 +50,15 @@
             android:textAlignment="center"
             android:textColor="?attr/colorOnSecondary" />
 
-        <TextView
-            android:id="@+id/titleTextViewAccountFragment"
-            style="@style/TextAppearance.MaterialComponents.Subtitle1"
+        <com.google.android.material.chip.Chip
+            android:id="@+id/titleChipViewAccountFragment"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="8dp"
             android:text="Explorer"
             android:textAlignment="center"
-            android:textColor="?attr/colorPrimaryVariant" />
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            app:chipBackgroundColor="@color/camel" />
 
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -319,12 +318,26 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/TextAppearance.MaterialComponents.Headline6"
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="@string/user_badges" />
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:text="@string/user_badges" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_marginRight="8dp"
+                    android:id="@+id/badgesSeeAllAccountFragmentButton"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/see_all" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/userBadgesRecyclerViewAccountFragment"
@@ -389,6 +402,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/postsRecyclerView"
             android:layout_width="match_parent"
+            android:layout_marginBottom="64dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:nestedScrollingEnabled="false"
