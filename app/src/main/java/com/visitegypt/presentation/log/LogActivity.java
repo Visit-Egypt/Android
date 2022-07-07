@@ -9,12 +9,16 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -50,16 +54,18 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
     public GoogleSignInClient mGoogleSignInClient;
     public GoogleApiClient googleApiClient;
     public ConstraintLayout signInConstraintLayout, signUpConstraintLayout;
-    GoogleSignInButton googleSignInButton, googleSignUpButton;
-    Dialog forgetPasswordDialog;
+    private GoogleSignInButton googleSignInButton, googleSignUpButton;
+    private Dialog forgetPasswordDialog;
     boolean checkSignUp;
-    TextInputLayout emailTextField, passwordSignInTextField, firstNameSignUpTextField, lastNameSignUpTextField, emailSignUpTextField, phoneNumber, password;
-    MaterialButton signInMaterialButton, signUpMaterialButton, signInTransferMaterialButton, signUpTransferMaterialButton;
-    View loadingLayout;
-    String token, emaill, passwordd;
-
-    MaterialTextView forgetPasswordMaterialTextView;
-    LogViewModel logViewModel;
+    private TextInputLayout emailTextField, passwordSignInTextField, firstNameSignUpTextField,
+            lastNameSignUpTextField, emailSignUpTextField, phoneNumber, password;
+    private MaterialButton signInMaterialButton, signUpMaterialButton,
+            signInTransferMaterialButton, signUpTransferMaterialButton;
+    private LinearLayoutCompat signInLinearLayout, signupLinearLayout;
+    private View loadingLayout;
+    private String token, emaill, passwordd;
+    private MaterialTextView forgetPasswordMaterialTextView;
+    private LogViewModel logViewModel;
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -280,6 +286,16 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
 //    }
 
     public void redirectSignup() {
+        Animation fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setInterpolator(new DecelerateInterpolator());
+        fadeIn.setDuration(500);
+
+        Animation fadeout = new AlphaAnimation(1, 0);
+        fadeout.setInterpolator(new DecelerateInterpolator());
+        fadeout.setDuration(500);
+
+        signupLinearLayout.startAnimation(fadeIn);
+        signInLinearLayout.startAnimation(fadeout);
         signInConstraintLayout.setVisibility(View.GONE);
         signUpConstraintLayout.setVisibility(View.VISIBLE);
     }
@@ -376,6 +392,16 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
     }
 
     private void redirectSignIn() {
+        Animation fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setInterpolator(new DecelerateInterpolator());
+        fadeIn.setDuration(500);
+
+        Animation fadeout = new AlphaAnimation(1, 0);
+        fadeout.setInterpolator(new DecelerateInterpolator());
+        fadeout.setDuration(500);
+
+        signInLinearLayout.startAnimation(fadeIn);
+        signupLinearLayout.startAnimation(fadeout);
         signUpConstraintLayout.setVisibility(View.GONE);
         signInConstraintLayout.setVisibility(View.VISIBLE);
     }
@@ -474,6 +500,8 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
         forgetPasswordMaterialTextView = findViewById(R.id.forgetPasswordMaterialTextView);
         signUpTransferMaterialButton = findViewById(R.id.signUpTransferMaterialButton);
         signInTransferMaterialButton = findViewById(R.id.signInTransferMaterialButton);
+        signInLinearLayout = findViewById(R.id.signInLinearLayout);
+        signupLinearLayout = findViewById(R.id.signupLinearLayout);
     }
 
     private void initGoogleSignInAndUp() {
@@ -579,10 +607,13 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
 
         signInTransferMaterialButton.setOnClickListener(view -> {
             redirectSignIn();
-
+//            signInTransferMaterialButton.setEnabled(false);
+//            signUpTransferMaterialButton.setEnabled(true);
         });
         signUpTransferMaterialButton.setOnClickListener(view -> {
             redirectSignup();
+//            signInTransferMaterialButton.setEnabled(true);
+//            signUpTransferMaterialButton.setEnabled(false);
         });
 
     }
