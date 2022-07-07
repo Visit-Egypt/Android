@@ -45,8 +45,8 @@ public class Error {
                 return throwable.getMessage();
             }
         } catch (Exception e) {
-            Log.d(TAG, "accept catch: " + e.toString());
-            return "no error";
+
+            return throwable.getMessage();
         }
 
     }
