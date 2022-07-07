@@ -46,6 +46,7 @@ import com.visitegypt.utils.JWT;
 import com.visitegypt.utils.error.NoConnectivityException;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -81,26 +82,27 @@ public class NetworkModule implements CallBack {
     @Provides
     @Singleton
     public OkHttpClient.Builder provideOkHttpClientBuilder() {
-        return new OkHttpClient.Builder();
+        return new OkHttpClient
+                .Builder()
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS);
     }
 
     @Provides
     @Singleton
     public HttpLoggingInterceptor provideHttpLoggingInterceptor(OkHttpClient.Builder httpClient) {
+
+
         return new HttpLoggingInterceptor();
     }
+
     @Provides
     @Singleton
     public ConnectivityManager provideConnectivityManager(Application context) {
 
         return (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
-//    @Provides
-//    @Singleton
-//    public NetworkInfo provideNetworkInfo(ConnectivityManager connectivityManager) {
-//
-//        return connectivityManager.getActiveNetworkInfo();
-//    }
+
 
     @Provides
     @Singleton
@@ -111,36 +113,36 @@ public class NetworkModule implements CallBack {
                                             GetRefreshTokenUseCase userRepository) {
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         httpClient.addInterceptor(logging);
+
+
         httpClient.addInterceptor(new Interceptor() {
             @NonNull
             @Override
             public Response intercept(@NonNull Chain chain) throws IOException {
                 token = sharedPreferences.getString(SHARED_PREF_USER_ACCESS_TOKEN, "");
                 NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-                if (activeNetwork != null )
-                {
-                Request request = chain.request().newBuilder()
-                        .addHeader("Authorization", "Bearer " + token)
-                        .build();
-                Response response = chain.proceed(request);
-                response.cacheResponse();
-                if (response.code() == 403 || response.code() == 401) {
-                    response.close();
-                    getNewToken(userRepository, sharedPreferences);
-
-                    while (flag) ;
-                    Request newRequest = chain.request().newBuilder()
-                            .addHeader("Authorization", "Bearer " + newToken)
+                if (activeNetwork != null) {
+                    Request request = chain.request().newBuilder()
+                            .addHeader("Authorization", "Bearer " + token)
                             .build();
-                    flag = true;
-                    return chain.proceed(newRequest);
+                    Response response = chain.proceed(request);
+                    response.cacheResponse();
+                    if (response.code() == 403 || response.code() == 401) {
+                        response.close();
+                        getNewToken(userRepository, sharedPreferences);
 
-                }
+                        while (flag) ;
+                        Request newRequest = chain.request().newBuilder()
+                                .addHeader("Authorization", "Bearer " + newToken)
+                                .build();
+                        flag = true;
+                        return chain.proceed(newRequest);
 
-                return response;
+                    }
 
-                }
-                else
+                    return response;
+
+                } else
                     throw new NoConnectivityException();
             }
 
@@ -229,8 +231,8 @@ public class NetworkModule implements CallBack {
 
     @Provides
     @Singleton
-    public PlaceRepository providePlaceRepository(@Named("Normal") RetrofitService retrofitService , PlacePageResponseDao placeDao) {
-        return new PlaceRepositoryImp(retrofitService,placeDao);
+    public PlaceRepository providePlaceRepository(@Named("Normal") RetrofitService retrofitService, PlacePageResponseDao placeDao) {
+        return new PlaceRepositoryImp(retrofitService, placeDao);
     }
 
     @Provides
@@ -296,6 +298,7 @@ public class NetworkModule implements CallBack {
     public GetRefreshTokenUseCase provideGetRefreshToken(@Named("RefreshToken") UserRepository userRepository, SharedPreferences sharedPreferences) {
         return new GetRefreshTokenUseCase(userRepository, sharedPreferences);
     }
+
     @Provides
     @Singleton
     public NotificationRepository provideNotificationRepository(@Named("Normal") RetrofitService retrofitService) {
@@ -305,7 +308,7 @@ public class NetworkModule implements CallBack {
     @Provides
     @Singleton
     public TagRepository provideTagRepository(@Named("Normal") RetrofitService retrofitService, TagDao tagDao) {
-        return new TagRepositoryImp(retrofitService,tagDao);
+        return new TagRepositoryImp(retrofitService, tagDao);
     }
 
 
@@ -324,6 +327,6 @@ public class NetworkModule implements CallBack {
     public void callBack(String token) {
         Log.d("TAG", "callBack: " + token);
         newToken = token;
-       flag = false;
+        flag = false;
     }
 }
