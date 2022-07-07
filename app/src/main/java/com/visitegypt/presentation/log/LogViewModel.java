@@ -170,28 +170,19 @@ public class LogViewModel extends ViewModel {
 
     private void saveUserData(String userID, String email) {
         getUserUseCase.setUser(userID, email);
-        getUserUseCase.execute(new Consumer<User>() {
-            @Override
-            public void accept(User user) throws Throwable {
-                getUserUseCase.saveUserData(user);
+        getUserUseCase.execute(user -> getUserUseCase.saveUserData(user), throwable -> {
+            try {
+                ResponseBody body = ((HttpException) throwable).response().errorBody();
+                JSONObject jObjectError = new JSONObject(body.string());
+                Log.d("TAG", "accept try : " + jObjectError.getJSONArray("errors").toString());
+                if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
 
-            }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Throwable {
-                try {
-                    ResponseBody body = ((HttpException) throwable).response().errorBody();
-                    JSONObject jObjectError = new JSONObject(body.string());
-                    Log.d("TAG", "accept try : " + jObjectError.getJSONArray("errors").toString());
-                    if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
-
-                        msgMutableLiveData.setValue(jObjectError.getJSONArray("errors").getJSONObject(0).getString("msg"));
-                    } else {
-                        msgMutableLiveData.setValue(jObjectError.getJSONArray("errors").toString());
-                    }
-                } catch (Exception e) {
-                    Log.e("TAG", "accept catch: " + e.toString());
+                    msgMutableLiveData.setValue(jObjectError.getJSONArray("errors").getJSONObject(0).getString("msg"));
+                } else {
+                    msgMutableLiveData.setValue(jObjectError.getJSONArray("errors").toString());
                 }
+            } catch (Exception e) {
+                Log.e("TAG", "accept catch: " + e.toString());
             }
         });
     }

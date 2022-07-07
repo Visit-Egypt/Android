@@ -29,7 +29,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import io.reactivex.rxjava3.functions.Consumer;
 import okhttp3.ResponseBody;
 import retrofit2.HttpException;
 
@@ -39,13 +38,14 @@ public class HomeViewModel extends ViewModel {
     private static final String TAG = "home view model";
 
     SharedPreferences sharedPreferences;
+
     MutableLiveData<Boolean> isLogged = new MutableLiveData<>();
     MutableLiveData<User> mutableLiveDataUser = new MutableLiveData<>();
-    MutableLiveData<List<BadgeTask>> userBadgeTasksMutableLiveData = new MutableLiveData<List<BadgeTask>>();
+    MutableLiveData<List<BadgeTask>> userBadgeTasksMutableLiveData = new MutableLiveData<>();
     MutableLiveData<List<Badge>> allBadgesMutableLiveData = new MutableLiveData<>();
-
     MutableLiveData<String> userNameMutable = new MutableLiveData<>();
     MutableLiveData<String> userEmailMutable = new MutableLiveData<>();
+
     private LogOutUseCase logOutUseCase;
     private GetUserUseCase getUserUseCase;
     private UpdateUserBadgeTaskProgUseCase updateUserBadgeTaskProgUseCase;
@@ -69,20 +69,6 @@ public class HomeViewModel extends ViewModel {
     }
 
     public void earnFirstBadge() {
-//        String badgeId = GamificationRules.FIRST_SIGN_IN_BADGE_ID;
-//        String imgUrl = "https://cdn1.iconfinder.com/data/icons/arrows-vol-1-4/24/login_circle-512.png";
-//
-//        Badge badge = new Badge(badgeId, imgUrl, true, Badge.Type.GENERAL, 30, "");
-//        badge.setTitle("First sign in");
-//        badge.setDescription("New buddy joined in");
-//        ArrayList<BadgeTask> badgeTasks = new ArrayList<>();
-//        BadgeTask badgeTask = new BadgeTask(badge.getId(), "sign up", 1, 1);
-//        badgeTask.setImageUrl(imgUrl);
-//        badgeTasks.add(badgeTask);
-//        badge.setBadgeTasks(badgeTasks);
-//        badge.setProgress(1);
-//        badge.setMaxProgress(1);
-//        badge.setPinned(true);
         if (badgeTask == null) {
             Log.e(TAG, "earnFirstBadge: must call setBadgeTask()");
         }
@@ -123,36 +109,29 @@ public class HomeViewModel extends ViewModel {
             sharedPreferences.edit().clear().commit();
             isLogged.setValue(false);
         }, throwable -> {
-            Log.d("TAG", "logOut: " + throwable.getMessage());
-
+            // TODO delete on 403 error only
+            sharedPreferences.edit().clear().commit();
+            isLogged.setValue(false);
+            Log.e("TAG", "logOut: " + throwable.getMessage());
         });
     }
 
     public void getUserData() {
         getUserUseCase.setUser(sharedPreferences.getString(SHARED_PREF_USER_ID, null),
                 sharedPreferences.getString(Constants.SHARED_PREF_EMAIL, null));
-        getUserUseCase.execute(new Consumer<User>() {
-            @Override
-            public void accept(User user) throws Throwable {
-                Log.d("TAG", "onChanged: setting ++" + user.getFirstName());
-                mutableLiveDataUser.setValue(user);
-            }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Throwable {
-                try {
-                    ResponseBody body = ((HttpException) throwable).response().errorBody();
-                    JSONObject jObjectError = new JSONObject(body.string());
-                    Log.d("TAG", "accept try : " + jObjectError.getJSONArray("errors").toString());
-                    if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
-
-
-                    } else {
-
-                    }
-                } catch (Exception e) {
-                    Log.d("TAG", "accept catch: " + e.toString());
+        getUserUseCase.execute(user -> {
+            Log.d("TAG", "onChanged: setting ++" + user.getFirstName());
+            mutableLiveDataUser.setValue(user);
+        }, throwable -> {
+            try {
+                ResponseBody body = ((HttpException) throwable).response().errorBody();
+                JSONObject jObjectError = new JSONObject(body.string());
+                Log.d("TAG", "accept try : " + jObjectError.getJSONArray("errors").toString());
+                if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
+                } else {
                 }
+            } catch (Exception e) {
+                Log.e("TAG", "accept catch: " + e.toString());
             }
         });
     }
@@ -165,10 +144,10 @@ public class HomeViewModel extends ViewModel {
         this.badgeTask = badgeTask;
     }
 
-    public void getAllTages() {
+    public void getAllTags() {
         getTagUseCase.buildSingleUseCase().subscribe(tags -> {
         }, throwable -> {
-            Log.d(TAG, "Tag: from Home  " + throwable.getMessage());
+            Log.e(TAG, "Tag: from Home  " + throwable.getMessage());
         });
     }
 }

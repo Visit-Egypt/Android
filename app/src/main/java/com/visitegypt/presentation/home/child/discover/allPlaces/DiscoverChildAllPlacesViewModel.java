@@ -15,9 +15,10 @@ import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.usecase.GetAllPlacesPagingUseCase;
 import com.visitegypt.domain.usecase.GetAllPlacesPagingWithRoom;
 import com.visitegypt.domain.usecase.GetPlacesUseCase;
+import com.visitegypt.utils.error.Error;
 
 import javax.inject.Inject;
-import com.visitegypt.utils.error.Error;
+
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.core.Flowable;
 import kotlinx.coroutines.CoroutineScope;
@@ -26,7 +27,7 @@ import kotlinx.coroutines.CoroutineScope;
 public class DiscoverChildAllPlacesViewModel extends ViewModel {
 
     // TODO: Implement the ViewModel
-    private static final String TAG = "Home View Model";
+    private static final String TAG = "Discover View Model";
     MutableLiveData placesMutableLiveData = new MutableLiveData<Place>();
     private GetPlacesUseCase getPlacesUseCase;
     private GetAllPlacesPagingUseCase getAllPlacesPagingUseCase;
@@ -54,7 +55,7 @@ public class DiscoverChildAllPlacesViewModel extends ViewModel {
             Log.e(TAG, "places retrieve error: " + throwable.getMessage());
             Error error = new Error();
             String errorMsg = error.errorType(throwable);
-            Log.d(TAG, "error is:" + errorMsg);
+            Log.e(TAG, "error is: " + errorMsg);
         });
 
     }

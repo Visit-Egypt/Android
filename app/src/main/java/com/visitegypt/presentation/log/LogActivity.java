@@ -282,7 +282,6 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
     public void redirectSignup() {
         signInConstraintLayout.setVisibility(View.GONE);
         signUpConstraintLayout.setVisibility(View.VISIBLE);
-
     }
 
     private void redirectHome() {

@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -40,7 +39,6 @@ import com.visitegypt.databinding.ActivityNewHomeBinding;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.SearchPlace;
 import com.visitegypt.domain.model.TripMateRequest;
-import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
 import com.visitegypt.presentation.log.LogActivity;
 import com.visitegypt.presentation.setting.SettingFragment;
@@ -85,7 +83,7 @@ public class Home extends AppCompatActivity {
         searchResult();
         homeViewModel.getUserInfo();
         homeViewModel.getUserData();
-        homeViewModel.getAllTages();
+        homeViewModel.getAllTags();
         ViewModelObserve();
         logOut();
 
@@ -332,25 +330,22 @@ public class Home extends AppCompatActivity {
     }
 
     private void searchResult() {
-        searchViewModel.mutableLiveDataText.observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                Log.d(TAG, "Web sockets Test onChanged: " + s);
-                if (!s.contains("errors")) {
-                    txtNotFound.setVisibility(View.GONE);
-                    Gson gson = new Gson();
-                    Type listType = new TypeToken<List<SearchPlace>>() {
-                    }.getType();
-                    searchPlaces = gson.fromJson(s, listType);
-                    searchRecyclerViewAdapter.updatePlacesList(searchPlaces);
-                } else {
-                    txtNotFound.setVisibility(View.VISIBLE);
-                    searchPlaces.clear();
-                    searchRecyclerViewAdapter.updatePlacesList(searchPlaces);
-                }
-
-
+        searchViewModel.mutableLiveDataText.observe(this, s -> {
+            Log.d(TAG, "Web sockets Test onChanged: " + s);
+            if (!s.contains("errors")) {
+                txtNotFound.setVisibility(View.GONE);
+                Gson gson = new Gson();
+                Type listType = new TypeToken<List<SearchPlace>>() {
+                }.getType();
+                searchPlaces = gson.fromJson(s, listType);
+                searchRecyclerViewAdapter.updatePlacesList(searchPlaces);
+            } else {
+                txtNotFound.setVisibility(View.VISIBLE);
+                searchPlaces.clear();
+                searchRecyclerViewAdapter.updatePlacesList(searchPlaces);
             }
+
+
         });
     }
 
@@ -375,18 +370,15 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        homeViewModel.mutableLiveDataUser.observe(this, new Observer<User>() {
-            @Override
-            public void onChanged(User user) {
-                nameNavHeaderTextView.setText(user.getFirstName() + " " + user.getLastName());
-                txtEmail.setText(user.getEmail());
-                if (user.getPhotoUrl() != null) {
-                    Log.d(TAG, "onChanged: " + user.getPhotoUrl());
-                    homeViewModel.saveUserImage(user.getPhotoUrl());
-                    Picasso.get().load(user.getPhotoUrl()).into(userImageView);
-                    tripMateRequests = user.getTripMateRequests();
+        homeViewModel.mutableLiveDataUser.observe(this, user -> {
+            nameNavHeaderTextView.setText(user.getFirstName() + " " + user.getLastName());
+            txtEmail.setText(user.getEmail());
+            if (user.getPhotoUrl() != null) {
+                Log.d(TAG, "onChanged: " + user.getPhotoUrl());
+                homeViewModel.saveUserImage(user.getPhotoUrl());
+                Picasso.get().load(user.getPhotoUrl()).into(userImageView);
+                tripMateRequests = user.getTripMateRequests();
 
-                }
             }
         });
     }

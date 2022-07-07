@@ -1,23 +1,19 @@
 package com.visitegypt.presentation.home.child.discover.allPlaces;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.visitegypt.R;
-import com.visitegypt.domain.model.Token;
 import com.visitegypt.presentation.home.child.discover.paging.PlacePagingAdapter;
 import com.visitegypt.presentation.home.child.discover.paging.PlaceserComparator;
 import com.visitegypt.presentation.paging.CustomLoadStateAdapter;
@@ -44,7 +40,7 @@ public class DiscoverChildAllPlaces extends Fragment {
         root = inflater.inflate(R.layout.fragment_discover_child_all_places, container, false);
 
         initViews();
-        initPageing();
+        initPaging();
         return root;
     }
 
@@ -67,7 +63,7 @@ public class DiscoverChildAllPlaces extends Fragment {
         });
     }
 
-    private void initPageing() {
+    private void initPaging() {
 
         placePagingAdapter = new PlacePagingAdapter(new PlaceserComparator());
         placePagingAdapter.setContext(getContext());
