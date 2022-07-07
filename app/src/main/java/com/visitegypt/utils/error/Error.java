@@ -1,4 +1,4 @@
-package com.visitegypt.utils;
+package com.visitegypt.utils.error;
 
 import android.util.Log;
 
@@ -42,7 +42,7 @@ public class Error {
             } else if (response.code() == 401) {
                 return "was not authenticated";
             } else {
-                return "";
+                return throwable.getMessage();
             }
         } catch (Exception e) {
             Log.d(TAG, "accept catch: " + e.toString());

@@ -5,9 +5,16 @@ import static com.visitegypt.utils.Constants.S3_URL;
 import static com.visitegypt.utils.Constants.SHARED_PREF_USER_ACCESS_TOKEN;
 import static com.visitegypt.utils.Constants.SHARED_PREF_USER_REFRESH_TOKEN;
 
+import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.util.Log;
+
+
+import androidx.annotation.NonNull;
 
 import com.visitegypt.data.repository.BadgesRepositoryImp;
 import com.visitegypt.data.repository.ChatbotRepositoryImp;
@@ -36,6 +43,7 @@ import com.visitegypt.domain.repository.UploadToS3Repository;
 import com.visitegypt.domain.repository.UserRepository;
 import com.visitegypt.domain.usecase.GetRefreshTokenUseCase;
 import com.visitegypt.utils.JWT;
+import com.visitegypt.utils.error.NoConnectivityException;
 
 import java.io.IOException;
 
@@ -45,7 +53,11 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
+import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
+import io.reactivex.rxjava3.core.Single;
+import okhttp3.Cache;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -60,6 +72,7 @@ public class NetworkModule implements CallBack {
     private String token;
     private String newToken;
     private boolean flag = true;
+    private static final String TAG = "NetworkModule";
 
     public NetworkModule() {
 
@@ -76,39 +89,62 @@ public class NetworkModule implements CallBack {
     public HttpLoggingInterceptor provideHttpLoggingInterceptor(OkHttpClient.Builder httpClient) {
         return new HttpLoggingInterceptor();
     }
+    @Provides
+    @Singleton
+    public ConnectivityManager provideConnectivityManager(Application context) {
 
+        return (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    }
+//    @Provides
+//    @Singleton
+//    public NetworkInfo provideNetworkInfo(ConnectivityManager connectivityManager) {
+//
+//        return connectivityManager.getActiveNetworkInfo();
+//    }
 
     @Provides
     @Singleton
     public OkHttpClient provideOkHttpClient(OkHttpClient.Builder httpClient,
                                             HttpLoggingInterceptor logging,
                                             SharedPreferences sharedPreferences,
+                                            ConnectivityManager connectivityManager,
                                             GetRefreshTokenUseCase userRepository) {
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         httpClient.addInterceptor(logging);
-        httpClient.addInterceptor(chain -> {
-            token = sharedPreferences.getString(SHARED_PREF_USER_ACCESS_TOKEN, "");
-            Request request = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer " + token)
-                    .build();
-            Response response = chain.proceed(request);
-            response.cacheResponse();
-            if (response.code() == 403 || response.code() == 401) {
-                response.close();
-                getNewToken(userRepository, sharedPreferences);
-
-                while (flag) ;
-                Request newRequest = chain.request().newBuilder()
-                        .addHeader("Authorization", "Bearer " + newToken)
+        httpClient.addInterceptor(new Interceptor() {
+            @NonNull
+            @Override
+            public Response intercept(@NonNull Chain chain) throws IOException {
+                token = sharedPreferences.getString(SHARED_PREF_USER_ACCESS_TOKEN, "");
+                NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+                if (activeNetwork != null )
+                {
+                Request request = chain.request().newBuilder()
+                        .addHeader("Authorization", "Bearer " + token)
                         .build();
-                flag = true;
-                Log.d("TAG", "callBack: new token  " + newToken + " " + flag);
+                Response response = chain.proceed(request);
+                response.cacheResponse();
+                if (response.code() == 403 || response.code() == 401) {
+                    response.close();
+                    getNewToken(userRepository, sharedPreferences);
 
-                return chain.proceed(newRequest);
+                    while (flag) ;
+                    Request newRequest = chain.request().newBuilder()
+                            .addHeader("Authorization", "Bearer " + newToken)
+                            .build();
+                    flag = true;
+                    return chain.proceed(newRequest);
 
+                }
+
+                return response;
+
+                }
+                else
+                    throw new NoConnectivityException();
             }
 
-            return response;
+
         });
 
 

@@ -11,7 +11,7 @@ import com.visitegypt.domain.usecase.CachePlacesUseCase;
 import com.visitegypt.domain.usecase.GetCachedPlacesCount;
 import com.visitegypt.domain.usecase.GetCachedPlacesUseCase;
 import com.visitegypt.domain.usecase.GetPlacesUseCase;
-import com.visitegypt.utils.Error;
+import com.visitegypt.utils.error.Error;
 
 import java.util.List;
 

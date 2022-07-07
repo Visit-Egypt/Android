@@ -17,6 +17,7 @@ import com.visitegypt.domain.usecase.RegisterDeviceToNotificationUseCase;
 import com.visitegypt.domain.usecase.RegisterUseCase;
 import com.visitegypt.domain.usecase.UpdateUserBadgeTaskProgUseCase;
 import com.visitegypt.domain.usecase.UserValidation;
+import com.visitegypt.utils.error.Error;
 
 import org.json.JSONObject;
 
@@ -152,34 +153,14 @@ public class LogViewModel extends ViewModel {
     public void login(User user) {
         String email = user.getEmail();
         loginUserUseCase.saveUser(user);
-        loginUserUseCase.execute(new Consumer<User>() {
-            @Override
-            public void accept(User user) throws Throwable {
-                Log.d("TAG", "accept: Token " + user.getAccessToken());
-                Log.d("TAG", "accept: Token " + user.getRefreshToken());
-                loginUserUseCase.saveUserData(user);
-                saveUserData(user.getUserId(), email);
-                userMutable.setValue(user);
-                msgMutableLiveData.setValue("Your login done");
-
-            }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Throwable {
-                try {
-                    ResponseBody body = ((HttpException) throwable).response().errorBody();
-                    JSONObject jObjectError = new JSONObject(body.string());
-                    Log.d("TAG", "accept try : " + jObjectError.getJSONArray("errors").toString());
-                    if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
-
-                        msgMutableLiveData.setValue(jObjectError.getJSONArray("errors").getJSONObject(0).getString("msg"));
-                    } else {
-                        msgMutableLiveData.setValue(jObjectError.getJSONArray("errors").toString());
-                    }
-                } catch (Exception e) {
-                    Log.d("TAG", "accept catch: " + e.toString());
-                }
-            }
+        loginUserUseCase.execute(user1 -> {
+            loginUserUseCase.saveUserData(user1);
+            saveUserData(user1.getUserId(), email);
+            userMutable.setValue(user1);
+            msgMutableLiveData.setValue("Your login done");
+        }, throwable -> {
+            Error error = new Error();
+            msgMutableLiveData.setValue(error.errorType(throwable));
         });
     }
 

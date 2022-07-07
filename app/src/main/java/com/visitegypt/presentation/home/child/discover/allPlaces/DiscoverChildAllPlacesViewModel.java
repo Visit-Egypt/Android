@@ -11,15 +11,13 @@ import androidx.paging.PagingConfig;
 import androidx.paging.PagingData;
 import androidx.paging.rxjava3.PagingRx;
 
-import com.visitegypt.data.source.local.dao.PlaceDao;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.usecase.GetAllPlacesPagingUseCase;
 import com.visitegypt.domain.usecase.GetAllPlacesPagingWithRoom;
 import com.visitegypt.domain.usecase.GetPlacesUseCase;
-import com.visitegypt.utils.Error;
 
 import javax.inject.Inject;
-
+import com.visitegypt.utils.error.Error;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.core.Flowable;
 import kotlinx.coroutines.CoroutineScope;
