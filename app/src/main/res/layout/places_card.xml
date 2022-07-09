@@ -5,7 +5,9 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:elevation="4dp"
+    android:layout_margin="8dp"
     android:foreground="?android:attr/selectableItemBackground"
+    android:focusable="true"
     app:cardCornerRadius="12dp">
 
     <LinearLayout
@@ -19,14 +21,14 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            app:cardCornerRadius="20dp">
+            app:cardCornerRadius="5dp">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imgPlaceCardNew"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
-                android:scaleType="centerInside"
+                android:scaleType="fitXY"
                 android:src="@drawable/visitegypt" />
 
         </com.google.android.material.card.MaterialCardView>
@@ -59,12 +61,12 @@
                 android:weightSum="9">
 
                 <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
-                    android:background="@drawable/ic_pin" />
+                    android:background="@drawable/ic_baseline_location_on_24" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtPlaceCardNewCity"
@@ -77,12 +79,12 @@
                     android:text="City" />
 
                 <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
-                    android:background="@drawable/ic_comment" />
+                    android:background="@drawable/ic_baseline_mode_comment_24" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtPlaceCardComment"
@@ -95,12 +97,12 @@
                     android:text="755" />
 
                 <ImageView
-                    android:layout_width="13dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
-                    android:background="@drawable/ic_star" />
+                    android:background="@drawable/ic_baseline_star_24" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtPlaceCardReviewsNumber"

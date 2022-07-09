@@ -294,10 +294,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:onClick="showReviews"
-                        android:text="SEE ALL"
-                        android:textAllCaps="false"
-                        android:textSize="17dp"
-                        app:iconGravity="textStart" />
+                        android:text="@string/see_all" />
                 </LinearLayout>
 
                 <com.google.android.material.textview.MaterialTextView
@@ -409,7 +406,6 @@
                     android:layout_margin="8dp"
                     android:onClick="addReview"
                     android:text="@string/review"
-                    android:textSize="17dp"
                     app:iconGravity="textStart" />
 
                 <TableRow
