@@ -6,16 +6,14 @@
     android:orientation="vertical">
 
     <com.google.android.material.textview.MaterialTextView
+        style="@style/TextAppearance.MaterialComponents.Headline5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Edit your Interests"
-        android:textSize="18sp"
-        android:layout_margin="8dp"
-        android:padding="8dp"
-        android:fontFamily="@font/montserrat_alternates_bold"
-        android:textColor="?attr/colorOnSecondary"
         android:layout_gravity="center_horizontal"
-        />
+        android:layout_margin="8dp"
+        android:text="Edit your Interests"
+        android:textColor="?attr/colorOnSecondary"
+        android:textStyle="bold" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chipGroup"
@@ -23,19 +21,16 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:animateLayoutChanges="true"
-        android:padding="8dp">
-    </com.google.android.material.chip.ChipGroup>
+        android:padding="8dp"></com.google.android.material.chip.ChipGroup>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/saveButton"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_margin="8dp"
         android:layout_gravity="right"
-        android:padding="8dp"
-        android:text="Save"
-        />
+        android:layout_margin="8dp"
+        android:text="Save" />
 
 
 </LinearLayout>
