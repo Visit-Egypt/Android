@@ -16,6 +16,7 @@ import static com.visitegypt.utils.Constants.Days.SUNDAY;
 import static com.visitegypt.utils.Constants.Days.THURSDAY;
 import static com.visitegypt.utils.Constants.Days.TUESDAY;
 import static com.visitegypt.utils.Constants.Days.WEDNESDAY;
+import static com.visitegypt.utils.GeneralUtils.LiveDataUtil.observeOnce;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.ScrollView;
@@ -35,7 +37,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.widget.NestedScrollView;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -230,21 +231,18 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         detailViewModel = new ViewModelProvider(this).get(DetailViewModel.class);
         reviewViewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
         detailViewModel.getPlace(placeId);
-        detailViewModel.placesMutableLiveData.observe(this, new Observer<Place>() {
-            @Override
-            public void onChanged(Place place) {
-                if (place.getReviews() != null && !place.getReviews().isEmpty()) {
-                    noReviewsMaterialTextView.setVisibility(View.GONE);
-                    Log.d(TAG, "reviews: " + place.getReviews().toString());
-                    firstReviewRatingBar.setRating(place.getReviews().get(0).getRating());
-                    reviewContentTextView.setText(place.getReviews().get(0).getReview());
-                    visitorNameFirstReviewTextView.setText(place.getReviews().get(0).getFullName());
+        detailViewModel.placesMutableLiveData.observe(this, place -> {
+            if (place.getReviews() != null && !place.getReviews().isEmpty()) {
+                noReviewsMaterialTextView.setVisibility(View.GONE);
+                Log.d(TAG, "reviews: " + place.getReviews().toString());
+                firstReviewRatingBar.setRating(place.getReviews().get(0).getRating());
+                reviewContentTextView.setText(place.getReviews().get(0).getReview());
+                visitorNameFirstReviewTextView.setText(place.getReviews().get(0).getFullName());
 
-                } else {
-                    firstReviewLinearLayout.setVisibility(View.GONE);
-                    seeAllButton.setVisibility(View.GONE);
-                    Log.d(TAG, "no reviews available ");
-                }
+            } else {
+                firstReviewLinearLayout.setVisibility(View.GONE);
+                seeAllButton.setVisibility(View.GONE);
+                Log.d(TAG, "no reviews available ");
             }
         });
         detailViewModel.getItemsByPlaceId(placeId);
@@ -339,7 +337,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 
             detailViewModel.getUserPlaceActivity();
             if (place.getPlaceActivities() != null)
-                GeneralUtils.LiveDataUtil.observeOnce(detailViewModel.userPlaceActivitiesMutableLiveData,
+                observeOnce(detailViewModel.userPlaceActivitiesMutableLiveData,
                         placeActivities -> {
                             if (placeActivities != null) {
                                 GamificationRules.mergeTwoPlaceActivities(place.getPlaceActivities(),
@@ -427,25 +425,32 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         addReviewDialog.setContentView(dialogLayout);
         addReviewDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         addReviewDialog.show();
-        addReviewDialog.findViewById(R.id.submitReviewButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TextInputEditText textInputEditText = addReviewDialog.findViewById(R.id.reviewEditText);
-                String reviewText = textInputEditText.getText().toString().trim();
-                float numStars = ((RatingBar) addReviewDialog.findViewById(R.id.ratingBar)).getRating();
-                Log.d(TAG, "onClick: " + reviewText);
-                if (reviewText.isEmpty()) {
-                    textInputEditText.setError("Review can't be empty");
-                } else {
-                    String firstName = sharedPreferences.getString(Constants.SHARED_PREF_FIRST_NAME, "");
-                    String lastName = sharedPreferences.getString(Constants.SHARED_PREF_LAST_NAME, "");
-                    String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
-                    Review review = new Review(numStars, reviewText, firstName + " " + lastName, userId);
-                    reviewViewModel.submitReview(placeId, review);
-                    addReviewDialog.dismiss();
-                }
-            }
 
+        Button submitReview = addReviewDialog.findViewById(R.id.submitReviewButton);
+        submitReview.setOnClickListener(view -> {
+            TextInputEditText textInputEditText = addReviewDialog.findViewById(R.id.reviewEditText);
+            String reviewText = textInputEditText.getText().toString().trim();
+            float numStars = ((RatingBar) addReviewDialog.findViewById(R.id.ratingBar)).getRating();
+            Log.d(TAG, "onClick: " + reviewText);
+            if (reviewText.isEmpty()) {
+                textInputEditText.setError("Review can't be empty");
+            } else {
+                GeneralUtils.showButtonLoading(submitReview);
+                String firstName = sharedPreferences.getString(Constants.SHARED_PREF_FIRST_NAME, "");
+                String lastName = sharedPreferences.getString(Constants.SHARED_PREF_LAST_NAME, "");
+                String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
+                Review review = new Review(numStars, reviewText, firstName + " " + lastName, userId);
+                reviewViewModel.submitReview(placeId, review);
+                observeOnce(reviewViewModel.mutableLiveDataResponseCode, response -> {
+                    if (response == 200) {
+                        GeneralUtils.showButtonLoaded(submitReview, null);
+                        addReviewDialog.dismiss();
+                    } else {
+                        GeneralUtils.showButtonFailed(submitReview, "Failed to submit review", "submit");
+                    }
+                });
+//                addReviewDialog.dismiss();
+            }
         });
     }
 

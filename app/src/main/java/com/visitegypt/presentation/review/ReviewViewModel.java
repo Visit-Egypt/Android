@@ -81,6 +81,7 @@ public class ReviewViewModel extends ViewModel {
                 Response<?> response = ((HttpException) throwable).response();
                 mutableLiveDataResponseCode.setValue(response.code());
             } catch (Exception e) {
+                mutableLiveDataResponseCode.setValue(-1);
                 Log.e(TAG, "accept catch: " + e.getMessage());
             }
         });
