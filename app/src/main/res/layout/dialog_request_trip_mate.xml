@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
@@ -16,9 +15,7 @@
         android:adjustViewBounds="true"
         android:scaleType="centerInside"
         android:src="@drawable/ic_baseline_account_circle_24"
-        app:layout_constraintBottom_toTopOf="@+id/userNameRequestMaterialTextView"
-
-        />
+        app:layout_constraintBottom_toTopOf="@+id/userNameRequestMaterialTextView" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/dialogUserName"
@@ -42,17 +39,16 @@
         android:fontFamily="@font/montserrat_light"
         android:text="450 Follower"
         android:textAlignment="center"
-
         android:textSize="14sp"
         android:textStyle="normal" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/dialogProfileButton"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="150dp"
         android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
-        android:id="@+id/dialogProfileButton"
         android:gravity="center"
         android:text="Profile"
         android:textAllCaps="false" />
@@ -62,11 +58,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:textSize="24sp"
+        android:layout_marginLeft="8dp"
         android:fontFamily="@font/montserrat_alternates_bold"
         android:text="Title"
-        android:layout_marginLeft="8dp"
+        android:textSize="24sp"
         android:textStyle="bold" />
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/txtDescriptionTripMateRequest"
         android:layout_width="wrap_content"

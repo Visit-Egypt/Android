@@ -18,9 +18,9 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class HomeFragment extends Fragment {
 
+    TabLayout tabLayout;
     private FragmentHomeParentBinding binding;
     private ViewPager2 viewPager;
-    TabLayout tabLayout;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

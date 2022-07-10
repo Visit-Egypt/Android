@@ -73,8 +73,8 @@
 
         <ImageButton
             android:id="@+id/likePostImageView"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_margin="8dp"
             android:background="?attr/colorOnPrimary"
             android:scaleType="centerInside"

@@ -71,12 +71,12 @@
     <com.google.android.material.button.MaterialButton
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="8dp"
-        app:icon="@drawable/ar_icon"
-        app:iconGravity="textStart"
-        app:iconSize="28dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginHorizontal="8dp"
         android:layout_marginBottom="8dp"
-        android:text="start exploring" />
+        android:text="start exploring"
+        app:icon="@drawable/ar_icon"
+        app:iconGravity="textStart"
+        app:iconSize="28dp" />
 </LinearLayout>

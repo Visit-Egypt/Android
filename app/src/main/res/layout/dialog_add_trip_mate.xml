@@ -51,11 +51,11 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:id="@+id/requrstTripMate"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
-        android:onClick="requestATripMate"
         android:layout_height="60dp"
+        android:onClick="requestATripMate"
         android:text="Request" />
 
 </LinearLayout>

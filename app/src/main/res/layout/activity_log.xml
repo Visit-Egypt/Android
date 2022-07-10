@@ -7,10 +7,10 @@
     tools:context=".presentation.log.LogActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:animateLayoutChanges="true"
         android:id="@+id/signInConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         android:importantForAutofill="noExcludeDescendants"
         android:visibility="visible">
 
@@ -81,12 +81,12 @@
 
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_marginTop="32dp"
                     android:id="@+id/emailTextField"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="32dp"
                     android:layout_marginBottom="8dp"
                     android:hint="@string/Email"
                     app:boxCornerRadiusBottomEnd="8dp"
@@ -228,6 +228,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/container2"
                 app:layout_constraintEnd_toEndOf="parent" />
         </androidx.appcompat.widget.LinearLayoutCompat>
+
         <View
             android:id="@+id/container2"
             android:layout_width="340dp"

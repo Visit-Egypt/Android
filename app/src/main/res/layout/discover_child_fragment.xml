@@ -59,7 +59,7 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="24dp"
                     android:gravity="center"
                     android:text="See all >"
                     android:textAllCaps="false" />
@@ -97,17 +97,39 @@
 
             </TableLayout>
 
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/TextAppearance.MaterialComponents.Headline5"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="center"
                 android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:shadowColor="?attr/colorSecondaryVariant"
-                android:text="@string/places_to_visit"
-                android:textColor="?attr/colorPrimaryVariant"
-                android:textSize="28sp" />
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.MaterialComponents.Headline5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:shadowColor="?attr/colorSecondaryVariant"
+                    android:text="@string/places_to_visit"
+                    android:textColor="?attr/colorPrimaryVariant"
+                    android:textSize="28sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="24dp"
+                    android:gravity="center"
+                    android:text="See all >"
+                    android:textAllCaps="false" />
+            </LinearLayout>
+
 
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:id="@+id/allPlacesShimmer"

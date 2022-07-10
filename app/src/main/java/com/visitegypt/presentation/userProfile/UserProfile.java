@@ -32,6 +32,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class UserProfile extends Fragment {
 
+    private static final String TAG = "User Profile";
     private UserProfileViewModel userProfileViewModel;
     private View userProfileFragment;
     private CircularImageView userImage;
@@ -43,7 +44,6 @@ public class UserProfile extends Fragment {
     private MaterialTextView myInterests;
     private LinearLayout userProfileLayout;
     private String id;
-    private static final String TAG = "User Profile";
 
     public static UserProfile newInstance() {
         return new UserProfile();

@@ -12,12 +12,6 @@
 
     </fragment>
 
-    <!--    <fragment-->
-    <!--        android:id="@+id/nav_near_me"-->
-    <!--        android:name="com.visitegypt.ui.nearMe.NearMeFragment"-->
-    <!--        android:label="@string/menu_near_me"-->
-    <!--        tools:layout="@layout/fragment_near_me" />-->
-
     <fragment
         android:id="@+id/nav_activities"
         android:name="com.visitegypt.ui.activities.ActivitiesFragment"
@@ -28,21 +22,12 @@
         android:name="com.visitegypt.ui.map.MapFragment"
         android:label="@string/menu_map"
         tools:layout="@layout/fragment_map" />
-    <!--    <fragment-->
-    <!--        android:id="@+id/nav_booking"-->
-    <!--        android:name="com.visitegypt.ui.booking.BookingFragment"-->
-    <!--        android:label="@string/menu_booking"-->
-    <!--        tools:layout="@layout/fragment_booking" />-->
-    <!--    <fragment-->
-    <!--        android:id="@+id/nav_subscription"-->
-    <!--        android:name="com.visitegypt.ui.subscription.SubscriptionFragment"-->
-    <!--        android:label="@string/menu_subscription"-->
-    <!--        tools:layout="@layout/fragment_subscription" />-->
-    <fragment
+
+    <activity
         android:id="@+id/setting"
-        android:name="com.visitegypt.presentation.setting.SettingFragment"
+        android:name="com.visitegypt.presentation.setting.SettingActivity"
         android:label="@string/setting"
-        tools:layout="@layout/fragment_setting" />
+        tools:layout="@layout/activity_setting" />
     <fragment
         android:id="@+id/account"
         android:name="com.visitegypt.presentation.account.AccountFragment"
@@ -64,7 +49,6 @@
         android:name="com.visitegypt.presentation.gamification.GamificationFragment"
         android:label="@string/gamification"
         tools:layout="@layout/gamification_fragment" />
-
 
 
 </navigation>

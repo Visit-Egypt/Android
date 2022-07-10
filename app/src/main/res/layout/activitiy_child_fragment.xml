@@ -11,10 +11,10 @@
         android:layout_height="150dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
         android:background="?android:selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:layout_marginRight="10dp"
         app:cardCornerRadius="8dp">
 
         <RelativeLayout
@@ -49,12 +49,12 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="?android:selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
         app:cardCornerRadius="8dp">
 
         <RelativeLayout
@@ -87,13 +87,13 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:background="?android:selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
         android:layout_height="150dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
         app:cardCornerRadius="8dp">
 
         <RelativeLayout

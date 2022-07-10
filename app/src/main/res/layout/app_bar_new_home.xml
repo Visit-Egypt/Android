@@ -77,8 +77,8 @@
         android:backgroundTint="?attr/colorSecondaryVariant"
         app:backgroundTint="?attr/colorSecondaryVariant"
         app:layout_anchor="@id/navigation"
-        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
         app:layout_anchorGravity="top|end"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
         app:srcCompat="@drawable/ic_chat"
         tools:ignore="SpeakableTextPresentCheck" />
 

@@ -33,8 +33,7 @@
                 app:sliderIndicatorRadius="2dp"
                 app:sliderIndicatorSelectedColor="?attr/colorPrimary"
                 app:sliderIndicatorUnselectedColor="?attr/colorSecondaryVariant"
-                app:sliderScrollTimeInSec="1">
-            </com.smarteist.autoimageslider.SliderView>
+                app:sliderScrollTimeInSec="1"></com.smarteist.autoimageslider.SliderView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

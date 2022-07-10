@@ -15,15 +15,13 @@
         android:orientation="vertical">
 
         <com.google.android.material.textview.MaterialTextView
-            style="@style/TextAppearance.MaterialComponents.Headline6"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_height="100dp"
             android:gravity="center"
-            android:padding="8dp"
             android:text="Setting"
             android:textColor="?attr/colorOnSecondary"
-            android:textSize="24sp" />
+            android:textStyle="bold" />
 
         <View
             android:layout_width="match_parent"

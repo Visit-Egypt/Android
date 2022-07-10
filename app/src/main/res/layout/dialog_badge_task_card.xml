@@ -13,10 +13,8 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_margin="8dp"
             android:orientation="horizontal">
-
 
             <com.jackandphantom.circularprogressbar.CircleProgressbar
                 android:id="@+id/dialogCardTaskCircleBar"

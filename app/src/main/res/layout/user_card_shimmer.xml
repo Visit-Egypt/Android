@@ -46,7 +46,7 @@
                 style="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_marginHorizontal="8dp"
                 android:background="?attr/colorSecondaryVariant"
                 android:backgroundTint="?attr/colorSecondaryVariant"
                 android:fontFamily="@font/montserrat_light"

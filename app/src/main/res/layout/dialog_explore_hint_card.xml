@@ -57,11 +57,11 @@
                     android:textSize="22sp" />
 
                 <ImageView
-                    android:layout_width="match_parent"
                     android:id="@+id/dialogExploreHintZoomableImage"
-                    android:scaleType="centerCrop"
+                    android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_gravity="center"
+                    android:scaleType="centerCrop"
                     android:visibility="gone" />
 
 
