@@ -8,7 +8,6 @@ import static com.visitegypt.utils.UploadUtils.setContext;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -25,7 +24,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
@@ -33,15 +31,15 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
-import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.presentation.home.parent.Home;
 import com.visitegypt.presentation.log.LogActivity;
-//import com.visitegypt.presentation.signin.SignInActivity;
 
 import java.io.File;
 
 import dagger.hilt.android.AndroidEntryPoint;
+
+//import com.visitegypt.presentation.signin.SignInActivity;
 
 @AndroidEntryPoint
 
@@ -75,49 +73,41 @@ public class SettingFragment extends Fragment {
         changeImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(checkAndRequestPermissions(getActivity())){
+                if (checkAndRequestPermissions(getActivity())) {
                     chooseImage(getContext());
                 }
             }
         });
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UserUpdateRequest userUpdateRequest = new UserUpdateRequest();
-                String userFirstName = firstName.getText().toString();
-                String userLastName = lastName.getText().toString();
-                String userPhoneNumber = phone.getText().toString();
-                String userEmail = email.getText().toString();
-                String userPassword = password.getText().toString();
+        saveButton.setOnClickListener(view -> {
+            UserUpdateRequest userUpdateRequest = new UserUpdateRequest();
+            String userFirstName = firstName.getText().toString();
+            String userLastName = lastName.getText().toString();
+            String userPhoneNumber = phone.getText().toString();
+            String userEmail = email.getText().toString();
+            String userPassword = password.getText().toString();
 
 
-                if (userFirstName != null && !userFirstName.isEmpty())
-                    userUpdateRequest.setFirstName(userFirstName);
-                if (userLastName != null && !userLastName.isEmpty())
-                    userUpdateRequest.setLastName(userLastName);
-                if (userPhoneNumber != null && !userPhoneNumber.isEmpty())
-                    userUpdateRequest.setPhoneNumber(userPhoneNumber);
-                if (userPassword != null && !userPassword.isEmpty())
-                    userUpdateRequest.setPassword(userPassword);
-                if (userEmail != null && !userEmail.isEmpty())
-                    userUpdateRequest.setEmail(userEmail);
-                if (userImage != null && !userImage.isEmpty())
-                    userUpdateRequest.setPhotoLink(userImage);
+            if (userFirstName != null && !userFirstName.isEmpty())
+                userUpdateRequest.setFirstName(userFirstName);
+            if (userLastName != null && !userLastName.isEmpty())
+                userUpdateRequest.setLastName(userLastName);
+            if (userPhoneNumber != null && !userPhoneNumber.isEmpty())
+                userUpdateRequest.setPhoneNumber(userPhoneNumber);
+            if (userPassword != null && !userPassword.isEmpty())
+                userUpdateRequest.setPassword(userPassword);
+            if (userEmail != null && !userEmail.isEmpty())
+                userUpdateRequest.setEmail(userEmail);
+            if (userImage != null && !userImage.isEmpty())
+                userUpdateRequest.setPhotoLink(userImage);
 
-                settingViewModel.updateUser(userUpdateRequest);
-            }
+            settingViewModel.updateUser(userUpdateRequest);
         });
-        settingViewModel.url.observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if (s != null)
-                {
-                    userImage = s;
-                    Picasso.get().load(s).into(userImageView);
-
-                }
-
+        settingViewModel.url.observe(getViewLifecycleOwner(), s -> {
+            if (s != null) {
+                userImage = s;
+                Picasso.get().load(s).into(userImageView);
             }
+
         });
         return settingFragment;
     }
@@ -138,21 +128,18 @@ public class SettingFragment extends Fragment {
 
     private void getUserData() {
         settingViewModel.getUserData();
-        settingViewModel.mutableLiveDataUser.observe(getViewLifecycleOwner(), new Observer<User>() {
-            @Override
-            public void onChanged(User user) {
-                firstName.setText(user.getFirstName());
-                lastName.setText(user.getLastName());
-                email.setText(user.getEmail());
-                phone.setText(user.getPhoneNumber());
-                if (user.getPhotoUrl() != null && !user.getPhotoUrl().isEmpty()) {
-                    Glide.with(requireContext())
-                            .load(user.getPhotoUrl())
-                            .fitCenter()
-                            .placeholder(R.drawable.ic_baseline_account_circle_24)
-                            .error(R.drawable.ic_baseline_account_circle_24)
-                            .into(userImageView);
-                }
+        settingViewModel.mutableLiveDataUser.observe(getViewLifecycleOwner(), user -> {
+            firstName.setText(user.getFirstName());
+            lastName.setText(user.getLastName());
+            email.setText(user.getEmail());
+            phone.setText(user.getPhoneNumber());
+            if (user.getPhotoUrl() != null && !user.getPhotoUrl().isEmpty()) {
+                Glide.with(requireContext())
+                        .load(user.getPhotoUrl())
+                        .fitCenter()
+                        .placeholder(R.drawable.ic_baseline_account_circle_24)
+                        .error(R.drawable.ic_baseline_account_circle_24)
+                        .into(userImageView);
             }
         });
 
@@ -162,11 +149,9 @@ public class SettingFragment extends Fragment {
 
     /********************************************************/
     private void redirect() {
-
         Intent intent = new Intent(getContext(), LogActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-
     }
 
     @Override
@@ -191,30 +176,25 @@ public class SettingFragment extends Fragment {
 
         // set the items in builder
 
-        builder.setItems(optionsMenu, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+        builder.setItems(optionsMenu, (dialogInterface, i) -> {
 
-                if(optionsMenu[i].equals("Take Photo")){
+            if (optionsMenu[i].equals("Take Photo")) {
 
-                    // Open the camera and get the photo
+                // Open the camera and get the photo
 
-                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(takePicture, 0);
-                }
-                else if(optionsMenu[i].equals("Choose from Gallery")){
+                Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(takePicture, 0);
+            } else if (optionsMenu[i].equals("Choose from Gallery")) {
 
-                    // choose from  external storage
+                // choose from  external storage
 
-                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(pickPhoto , 1);
+                Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(pickPhoto, 1);
 
-                }
-                else if (optionsMenu[i].equals("Exit")) {
-                    dialogInterface.dismiss();
-                }
-
+            } else if (optionsMenu[i].equals("Exit")) {
+                dialogInterface.dismiss();
             }
+
         });
         builder.show();
     }

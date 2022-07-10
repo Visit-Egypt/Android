@@ -1,8 +1,6 @@
 package com.visitegypt.presentation.account;
 
 
-import static com.visitegypt.utils.GeneralUtils.LiveDataUtil.observeOnce;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -270,7 +268,7 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
         });
 
         accountViewModel.getUserFullBadges();
-        observeOnce(accountViewModel.fullBadgesMutableLiveData, fullBadges -> {
+        accountViewModel.fullBadgesMutableLiveData.observe(getViewLifecycleOwner(), fullBadges -> {
             ArrayList<Badge> badges = new ArrayList<>();
             for (FullBadge fullBadge : fullBadges) {
                 badges.add(GamificationRules.fullBadgeToBadge(fullBadge));
@@ -304,7 +302,6 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
                 dialog.dismiss();
             });
             dialog.show();
-
         } else {
             dialog.show();
         }

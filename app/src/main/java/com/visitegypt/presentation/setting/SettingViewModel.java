@@ -11,12 +11,10 @@ import androidx.lifecycle.ViewModel;
 
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
-import com.visitegypt.domain.model.response.UploadedFilesResponse;
 import com.visitegypt.domain.usecase.GetUserUseCase;
 import com.visitegypt.domain.usecase.LogOutUseCase;
 import com.visitegypt.domain.usecase.UpdateUserUseCase;
 import com.visitegypt.domain.usecase.UploadUserPhotoUseCase;
-import com.visitegypt.presentation.chatbot.SingleLiveEvent;
 import com.visitegypt.utils.Constants;
 
 import org.json.JSONObject;
@@ -104,29 +102,22 @@ public class SettingViewModel extends ViewModel implements UploadUserPhotoUseCas
 
     public void updateUser(UserUpdateRequest userUpdateRequest) {
         updateUserUseCase.setUser(userUpdateRequest);
-        updateUserUseCase.execute(new Consumer<User>() {
-            @Override
-            public void accept(User user) throws Throwable {
-                saveNewData(user);
-
-                mutableLiveDataUser.setValue(user);
-            }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Throwable {
-                try {
-                    ResponseBody body = ((HttpException) throwable).response().errorBody();
-                    JSONObject jObjectError = new JSONObject(body.string());
-                    Log.d("TAG", "accept try : " + jObjectError.getJSONArray("errors").toString());
-                    if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
+        updateUserUseCase.execute(user -> {
+            saveNewUserUpdate(user);
+            mutableLiveDataUser.setValue(user);
+        }, throwable -> {
+            try {
+                ResponseBody body = ((HttpException) throwable).response().errorBody();
+                JSONObject jObjectError = new JSONObject(body.string());
+                Log.d("TAG", "accept try : " + jObjectError.getJSONArray("errors"));
+                if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
 
 
-                    } else {
+                } else {
 
-                    }
-                } catch (Exception e) {
-                    Log.d("TAG", "accept catch: " + e.toString());
                 }
+            } catch (Exception e) {
+                Log.e("TAG", "accept catch: " + e);
             }
         });
 
@@ -135,9 +126,22 @@ public class SettingViewModel extends ViewModel implements UploadUserPhotoUseCas
     public void saveNewData(User user) {
         sharedPreferences.edit()
                 .putString(SHARED_PREF_USER_ID, user.getUserId())
-                .putString(SHARED_PREF_USER_IMAGE,user.getPhotoUrl())
+                .putString(SHARED_PREF_USER_IMAGE, user.getPhotoUrl())
                 .putString(Constants.SHARED_PREF_FIRST_NAME, user.getFirstName() + " " + user.getLastName())
                 .apply();
+    }
+
+    public void saveNewUserUpdate(User user) {
+        if (user.getFirstName() != null && !user.getFirstName().isEmpty())
+            sharedPreferences.edit()
+                    .putString(Constants.SHARED_PREF_FIRST_NAME, user.getFirstName() + " " + user.getLastName())
+                    .apply();
+
+        if (user.getPhotoUrl() != null && !user.getPhotoUrl().isEmpty()) {
+            sharedPreferences.edit().
+                    putString(SHARED_PREF_USER_IMAGE, user.getPhotoUrl())
+                    .apply();
+        }
     }
 
     @Override

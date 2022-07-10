@@ -30,6 +30,7 @@ public class GamificationRules {
     public static final int ADVANCED_TRAVELLER_LEVEL = 9;
     public static final int PHAROS_LEVEL = 15;
     public static final int ANUBIS_LEVEL = MAX_LEVEL - 1;
+    public static final int THOTH = MAX_LEVEL + 5;
 
     public static final int[] ALL_LEVELS = {EXPLORER_LEVEL,
             ADVENTURER_LEVEL,
@@ -63,12 +64,12 @@ public class GamificationRules {
 
     public static int getLevelFromXp(int xp) {
 
-        for (int i = 1; i < GamificationRules.MAX_LEVEL; i++) {
+        for (int i = 1; i < GamificationRules.THOTH; i++) {
             if (getLevelXp(i + 1) > xp) {
                 return i;
             }
         }
-        return MAX_LEVEL;
+        return THOTH;
     }
 
     // 300 XP
@@ -82,15 +83,15 @@ public class GamificationRules {
     }
 
     public static String getTitleFromLevel(int level) {
-        if (level <= EXPLORER_LEVEL) {
+        if (level < ADVENTURER_LEVEL) {
             return ALL_TITLES[0];
-        } else if (level <= ADVENTURER_LEVEL) {
+        } else if (level < ADVANCED_TRAVELLER_LEVEL) {
             return ALL_TITLES[1];
-        } else if (level <= ADVANCED_TRAVELLER_LEVEL) {
+        } else if (level < PHAROS_LEVEL) {
             return ALL_TITLES[2];
-        } else if (level <= PHAROS_LEVEL) {
+        } else if (level < ANUBIS_LEVEL) {
             return ALL_TITLES[3];
-        } else if (level <= ANUBIS_LEVEL) {
+        } else if (level < THOTH) {
             return ALL_TITLES[4];
         } else {
             return ALL_TITLES[5];

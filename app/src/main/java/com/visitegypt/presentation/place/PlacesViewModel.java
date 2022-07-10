@@ -65,7 +65,7 @@ public class PlacesViewModel extends ViewModel {
         this.sharedPreferences = sharedPreferences;
     }
 
-    public void getPlacesInCity(String cityName) {
+    public void getPlacesInCity() {
         getPlacesOfCityUseCase.setCityName(cityName);
         getPlacesOfCityUseCase.execute(getPlacesOfCity -> {
             Log.d(TAG, "getPlacesInCity: done");

@@ -93,7 +93,7 @@ public class PlacesActivity extends AppCompatActivity {
 
         placesViewModel.setCityName(cityName);
         placesViewModel.getUserPlaceActivities();
-        placesViewModel.getPlacesInCity(cityName);
+        placesViewModel.getPlacesInCity();
         placesViewModel.getFullPlaceActivities();
 
         observeOnce(placesViewModel.placesMutableLiveData, (Observer<List<Place>>) places -> {
