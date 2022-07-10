@@ -55,8 +55,6 @@ public class LogViewModel extends ViewModel {
             , RegisterDeviceToNotificationUseCase registerDeviceToNotificationUseCase,
                         GetGoogleRegisterTokenUseCase getGoogleRegisterTokenUseCase, RegisterUseCase registerUseCase,
                         UpdateUserBadgeTaskProgUseCase updateUserBadgeTaskProgUseCase
-
-
     ) {
         this.loginUserUseCase = loginUserUseCase;
         this.sharedPreferences = sharedPreferences;
@@ -79,41 +77,27 @@ public class LogViewModel extends ViewModel {
         registerUseCase.saveUser(userValidation);
         mutableLiveDataResponse.setValue("Your account was created successfully");
         registerUseCase.execute(u -> {
+            registerUseCase.saveUserData(u);
             mutableLiveDataResponse.setValue("Your account was created successfully");
 
         }, throwable -> {
             mutableLiveDataResponse.setValue("errorrr");
 
+            try {
+                Log.d(TAG, "getUser: " + throwable.getMessage());
+                ResponseBody body = ((HttpException) throwable).response().errorBody();
+                JSONObject jObjectError = new JSONObject(body.string());
+                Log.d(TAG, "accept try : " + jObjectError.getJSONArray("errors"));
+                if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
+                    mutableLiveDataResponse.setValue(jObjectError.getJSONArray("errors").getJSONObject(0).getString("msg"));
+                } else {
+                    mutableLiveDataResponse.setValue(jObjectError.getJSONArray("errors").toString());
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "accept catch: " + e.getMessage());
+            }
+
         });
-        //                registerUseCase.execute(user -> {
-//            user.setFirstName(myUser.getFirstName());
-//            user.setLastName(myUser.getLastName());
-//            user.setEmail(myUser.getEmail());
-//            user.setPhoneNumber(myUser.getPhoneNumber());
-//
-////            Log.d(TAG, "getUser: " + user.getFirstName());
-////            Log.d(TAG, "getUser: " + user.getUserId());
-////            Log.d(TAG, "getUser: " + user.getLastName());
-////            Log.d(TAG, "getUser: " + user.getAccessToken());
-////            Log.d(TAG, "getUser: " + user.getRefreshToken());
-////            registerUseCase.saveUserData(user);
-//
-//            mutableLiveDataResponse.setValue("Your account was created successfully");
-//        }, throwable -> {
-//            try {
-//                Log.e(TAG, "getUser: " + throwable.getMessage());
-//                ResponseBody body = ((HttpException) throwable).response().errorBody();
-//                JSONObject jObjectError = new JSONObject(body.string());
-//                Log.e(TAG, "accept try : " + jObjectError.getJSONArray("errors"));
-//                if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
-//                    mutableLiveDataResponse.setValue(jObjectError.getJSONArray("errors").getJSONObject(0).getString("msg"));
-//                } else {
-//                    mutableLiveDataResponse.setValue(jObjectError.getJSONArray("errors").toString());
-//                }
-//            } catch (Exception e) {
-//                Log.e(TAG, "accept catch: " + e.getMessage());
-//            }
-//        });
     }
 
     public Boolean checkUserValidation() {
@@ -136,7 +120,7 @@ public class LogViewModel extends ViewModel {
 
         }, throwable -> {
             mutableLiveDataResponse.setValue("There is an error may You already have an account ");
-            Log.d(TAG, "signUpWithGoogle: " + throwable.getMessage());
+            Log.e(TAG, "signUpWithGoogle: " + throwable.getMessage());
         });
 
     }
@@ -154,6 +138,8 @@ public class LogViewModel extends ViewModel {
         String email = user.getEmail();
         loginUserUseCase.saveUser(user);
         loginUserUseCase.execute(user1 -> {
+            Log.d("TAG", "accept: Token " + user1.getAccessToken());
+            Log.d("TAG", "accept: Token " + user1.getRefreshToken());
             loginUserUseCase.saveUserData(user1);
             saveUserData(user1.getUserId(), email);
             userMutable.setValue(user1);
@@ -174,15 +160,14 @@ public class LogViewModel extends ViewModel {
             try {
                 ResponseBody body = ((HttpException) throwable).response().errorBody();
                 JSONObject jObjectError = new JSONObject(body.string());
-                Log.d("TAG", "accept try : " + jObjectError.getJSONArray("errors").toString());
+                Log.d(TAG, "accept try : " + jObjectError.getJSONArray("errors").toString());
                 if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
-
                     msgMutableLiveData.setValue(jObjectError.getJSONArray("errors").getJSONObject(0).getString("msg"));
                 } else {
                     msgMutableLiveData.setValue(jObjectError.getJSONArray("errors").toString());
                 }
             } catch (Exception e) {
-                Log.e("TAG", "accept catch: " + e.toString());
+                Log.e(TAG, "accept catch: " + e.toString());
             }
         });
     }
@@ -192,15 +177,13 @@ public class LogViewModel extends ViewModel {
         getGoogleLoginTokenUseCase.execute(new Consumer<User>() {
             @Override
             public void accept(User user) throws Throwable {
-                Log.d("TAG", "donee" + user);
+                Log.d(TAG, "donee" + user);
                 loginUserUseCase.saveUserData(user);
                 userMutable.setValue(user);
                 msgMutableLiveData.setValue("Your google login done");
                 saveUserData(user.getUserId(), email);
             }
-
         }, throwable -> Log.e(TAG, "signInWithGoogle: " + throwable.getMessage()));
-
     }
 
     public void registerDeviceToNotification(String st) {
@@ -220,9 +203,7 @@ public class LogViewModel extends ViewModel {
             forgotPasswordResponse.setValue("reset done");
         }, throwable -> {
             forgotPasswordResponse.setValue("Not found");
-            Log.e("TAG", "forgetpassword: " + throwable.getMessage());
-
+            Log.e(TAG, "forgetpassword: " + throwable.getMessage());
         });
-
     }
 }

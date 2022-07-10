@@ -27,24 +27,23 @@ import retrofit2.Response;
 
 
 public class UploadUserPhotoUseCase {
+    private static final String TAG = "upload user photo use case";
+    uploadPhotoApiCallBack uploadPhotoApiCallBack;
+    UploadToS3Repository uploadToS3Repository;
     private SharedPreferences sharedPreferences;
     private UserRepository userRepository;
     private String contentType;
     private File userFile;
-    uploadPhotoApiCallBack uploadPhotoApiCallBack;
-
-
-    public void setUploadPhotoApiCallBack(UploadUserPhotoUseCase.uploadPhotoApiCallBack uploadPhotoApiCallBack) {
-        this.uploadPhotoApiCallBack = uploadPhotoApiCallBack;
-    }
-
-    UploadToS3Repository uploadToS3Repository;
 
     @Inject
     public UploadUserPhotoUseCase(SharedPreferences sharedPreferences, @Named("Normal") UserRepository userRepository, UploadToS3Repository uploadToS3Repository) {
         this.sharedPreferences = sharedPreferences;
         this.userRepository = userRepository;
         this.uploadToS3Repository = uploadToS3Repository;
+    }
+
+    public void setUploadPhotoApiCallBack(UploadUserPhotoUseCase.uploadPhotoApiCallBack uploadPhotoApiCallBack) {
+        this.uploadPhotoApiCallBack = uploadPhotoApiCallBack;
     }
 
     public void setContentType(String contentType) {
@@ -57,17 +56,29 @@ public class UploadUserPhotoUseCase {
 
     public void upload() {
         final String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
-        Log.d("TAG", "upload: " + userId);
+        Log.d(TAG, "upload: " + userId);
         try {
             final UploadResponse uploadResponse = userRepository.getPreSignedUrl(userId, contentType).blockingGet();
             UploadFields uploadFields = uploadResponse.getFields();
             realUpload(uploadFields, userId);
         } catch (Exception e) {
-            Log.d("TAG", "upload: " + e.toString());
+            Log.d(TAG, "upload: " + e.toString());
         }
 
 
     }
+
+//    public void uploadARPhoto() {
+//        final String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
+//        Log.d(TAG, "upload: " + userId);
+//        try {
+//            final UploadResponse uploadResponse = userRepository.getUserPhotoAR(userId, contentType).blockingGet();
+//            UploadFields uploadFields = uploadResponse.getFields();
+//            realUpload(uploadFields, userId);
+//        } catch (Exception e) {
+//            Log.e(TAG, "upload: " + e.toString());
+//        }
+//    }
 
     private void realUpload(UploadFields uploadFields, String userId) {
         if (userFile != null && userFile.exists()) {
@@ -91,7 +102,7 @@ public class UploadUserPhotoUseCase {
                     confirmCall.enqueue(new Callback<ConfirmUploadResponse>() {
                         @Override
                         public void onResponse(Call<ConfirmUploadResponse> call, Response<ConfirmUploadResponse> response) {
-                            Log.d("TAG", "onResponse: status code  " + response.code());
+                            Log.d(TAG, "onResponse: status code  " + response.code());
                             uploadPhotoApiCallBack.confirmUpload(response.code(), imagesKes);
                         }
 
@@ -106,7 +117,7 @@ public class UploadUserPhotoUseCase {
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Log.d("TAG", "onFailure: ");
+                    Log.d(TAG, "onFailure: ");
                 }
             });
 

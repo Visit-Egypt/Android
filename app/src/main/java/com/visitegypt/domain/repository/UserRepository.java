@@ -60,6 +60,8 @@ public interface UserRepository {
 
     Single<UploadResponse> getPreSignedUrl(String userId, String contentType);
 
+//    Single<UploadResponse> getUserPhotoAR(String userId, String contentType);
+
     Call<ConfirmUploadResponse> confirmUpload(ConfirmUploadModel confirmUploadModel);
 
     Observable<List<BadgeTask>> updateUserBadgeTaskProgress(BadgeTask badgeTask);

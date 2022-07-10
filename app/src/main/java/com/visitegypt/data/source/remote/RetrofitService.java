@@ -85,6 +85,9 @@ public interface RetrofitService {
     @POST("api/upload/confirm-upload")
     public Call<ConfirmUploadResponse> confirmUpload(@Body ConfirmUploadModel confirmUploadModel);
 
+    @GET("api/user/{id}/upload-ar")
+    public Single<UploadResponse> getUserPhotoAR(@Path("id") String id, @Query("content_type") String contentType);
+
     //    public Call<ConfirmUploadModel> confirmUpload(@Body ConfirmUploadModel confirmUploadModel);
     //with tasks
     @GET("api/user/badges/{user_id}")

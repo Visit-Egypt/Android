@@ -56,9 +56,9 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
     public GoogleSignInClient mGoogleSignInClient;
     public GoogleApiClient googleApiClient;
     public ConstraintLayout signInConstraintLayout, signUpConstraintLayout;
+    boolean checkSignUp;
     private GoogleSignInButton googleSignInButton, googleSignUpButton;
     private Dialog forgetPasswordDialog;
-    boolean checkSignUp;
     private TextInputLayout emailTextField, passwordSignInTextField, firstNameSignUpTextField,
             lastNameSignUpTextField, emailSignUpTextField, phoneNumber, password;
     private MaterialButton signInMaterialButton, signUpMaterialButton,
@@ -86,6 +86,10 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
+        }
+        logViewModel = new ViewModelProvider(this).get(LogViewModel.class);
+        if (logViewModel.checkUser()) {
+            redirectHome();
         }
 
 
