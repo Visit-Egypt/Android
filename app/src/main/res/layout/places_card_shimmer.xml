@@ -21,7 +21,6 @@
             app:cardCornerRadius="20dp">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imgPlaceCardNew"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
@@ -37,7 +36,6 @@
             android:orientation="vertical">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txtPlaceCardNewTitle"
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,7 +57,6 @@
                     android:background="@drawable/ic_pin" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/txtPlaceCardNewCity"
                     style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -75,7 +72,6 @@
                     android:background="@drawable/ic_comment" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/txtPlaceCardComment"
                     style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -91,7 +87,6 @@
                     android:background="@drawable/ic_star" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/txtPlaceCardReviewsNumber"
                     style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

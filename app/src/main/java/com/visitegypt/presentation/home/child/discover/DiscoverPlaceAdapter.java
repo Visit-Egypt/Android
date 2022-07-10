@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.Review;
 import com.visitegypt.presentation.detail.DetailActivity;
 
 import java.util.List;
@@ -52,6 +53,18 @@ public class DiscoverPlaceAdapter extends RecyclerView.Adapter<DiscoverPlaceAdap
         } else {
             Log.d("TAG", "no images found for: " + placesList.get(position).getTitle());
         }
+        if (placesList.get(position).getReviews() != null) {
+            holder.txtReviewsNumber.setText(placesList.get(position).getReviews().size() + "");
+        }
+
+        float rating = 0;
+        for (Review review : placesList.get(position).getReviews()) {
+            rating += review.getRating();
+        }
+        if (rating != 0) {
+            String ratingText = String.format("%.1f", rating / placesList.get(position).getReviews().size());
+            holder.txtRating.setText(ratingText);
+        }
     }
 
     @Override
@@ -74,8 +87,7 @@ public class DiscoverPlaceAdapter extends RecyclerView.Adapter<DiscoverPlaceAdap
 
     public class PlaceViewHolder extends RecyclerView.ViewHolder {
         private final ImageView imgPlace;
-        private final TextView txtCityName;
-        private TextView txtPlaceName;
+        private final TextView txtPlaceName, txtCityName, txtReviewsNumber, txtRating;
 
 
         public PlaceViewHolder(@NonNull View itemView) {
@@ -83,6 +95,8 @@ public class DiscoverPlaceAdapter extends RecyclerView.Adapter<DiscoverPlaceAdap
             txtPlaceName = itemView.findViewById(R.id.txtPlaceCardNewTitle);
             imgPlace = itemView.findViewById(R.id.imgPlaceCardNew);
             txtCityName = itemView.findViewById(R.id.txtPlaceCardNewCity);
+            txtReviewsNumber = itemView.findViewById(R.id.txtPlaceCardComment);
+            txtRating = itemView.findViewById(R.id.txtPlaceCardReviewsNumber);
             itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(context, DetailActivity.class);
                 intent.putExtra(CHOSEN_PLACE_ID, placesList.get(getAdapterPosition()).getId());
