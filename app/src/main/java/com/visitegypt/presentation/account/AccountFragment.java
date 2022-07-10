@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -192,17 +193,17 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
         fade.setInterpolator(new DecelerateInterpolator());
 
         if (title.equals(GamificationRules.ALL_TITLES[0])) {
-            profileFrameImageView.setBackground(getResources().getDrawable(R.drawable.rank1));
+            profileFrameImageView.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rank1, null));
         } else if (title.equals(GamificationRules.ALL_TITLES[1])) {
-            profileFrameImageView.setBackground(getResources().getDrawable(R.drawable.rank2));
+            profileFrameImageView.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rank2, null));
         } else if (title.equals(GamificationRules.ALL_TITLES[2])) {
-            profileFrameImageView.setBackground(getResources().getDrawable(R.drawable.rank3));
+            profileFrameImageView.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rank3, null));
         } else if (title.equals(GamificationRules.ALL_TITLES[3])) {
-            profileFrameImageView.setBackground(getResources().getDrawable(R.drawable.rank4));
+            profileFrameImageView.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rank4, null));
         } else if (title.equals(GamificationRules.ALL_TITLES[4])) {
-            profileFrameImageView.setBackground(getResources().getDrawable(R.drawable.rank5));
+            profileFrameImageView.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rank5, null));
         } else if (title.equals(GamificationRules.ALL_TITLES[5])) {
-            profileFrameImageView.setBackground(getResources().getDrawable(R.drawable.rank6));
+            profileFrameImageView.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rank6, null));
         }
         profileFrameImageView.startAnimation(fade);
 
