@@ -16,7 +16,7 @@
             android:id="@+id/shimmerScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="ABOUT " />
+                    android:text="ABOUT" />
 
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/descriptionShimmerFrameLayout"
@@ -108,7 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -141,7 +141,7 @@
                             android:layout_height="40dp"
                             android:layout_margin="10dp"
                             android:src="@drawable/ic_baseline_arrow_back_24"
-                            android:visibility="gone" />
+                            android:visibility="visible" />
 
                     </com.smarteist.autoimageslider.SliderView>
 
@@ -169,7 +169,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="@string/remaining_activities"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -229,25 +229,32 @@
                     android:layout_margin="8dp"
                     android:background="?attr/colorSecondaryVariant" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    style="@style/TextAppearance.MaterialComponents.Headline6"
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/artifactsLinearLayoutDetailActivity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:text="@string/artifacts" />
+                    android:orientation="vertical">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/itemsRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layoutDirection="rtl" />
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/TextAppearance.MaterialComponents.Headline6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:text="@string/artifacts" />
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_margin="8dp"
-                    android:background="?attr/colorSecondaryVariant" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/itemsRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layoutDirection="rtl" />
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_margin="8dp"
+                        android:background="?attr/colorSecondaryVariant" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <com.google.android.material.textview.MaterialTextView
                     style="@style/TextAppearance.MaterialComponents.Headline6"
@@ -273,12 +280,11 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:orientation="horizontal">
 
                     <com.google.android.material.textview.MaterialTextView
                         style="@style/TextAppearance.MaterialComponents.Headline6"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="8dp"
                         android:layout_weight="1"
@@ -288,13 +294,11 @@
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/seeAllButton"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="300dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
                         android:onClick="showReviews"
-                        android:text="@string/see_all" />
+                        android:text="@string/see_all_arrow" />
                 </LinearLayout>
 
                 <com.google.android.material.textview.MaterialTextView
@@ -312,77 +316,85 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <LinearLayout
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_margin="8dp"
+                        android:elevation="8dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="8dp"
                             android:orientation="vertical">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:gravity="center_horizontal"
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:id="@+id/visitorImageFirstReviewImageView"
-                                    android:layout_width="100dp"
-                                    android:layout_height="90dp"
-                                    android:src="@drawable/ic_baseline_person_24" />
+                                android:layout_margin="8dp"
+                                android:orientation="vertical">
 
                                 <LinearLayout
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical">
+                                    android:gravity="center_horizontal"
+                                    android:orientation="horizontal">
 
-                                    <com.google.android.material.textview.MaterialTextView
-                                        android:id="@+id/visitorNameFirstReviewTextView"
-                                        style="@style/TextAppearance.MaterialComponents.Headline6"
+                                    <ImageView
+                                        android:id="@+id/visitorImageFirstReviewImageView"
+                                        android:layout_width="100dp"
+                                        android:layout_height="90dp"
+                                        android:src="@drawable/ic_baseline_person_24" />
+
+                                    <LinearLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_margin="8dp"
-                                        android:text="John"
-                                        android:textColor="?attr/colorOnSecondary" />
+                                        android:layout_gravity="center_vertical"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
 
-                                    <RatingBar
-                                        android:id="@+id/firstReviewRatingBar"
-                                        style="@style/Widget.AppCompat.RatingBar.Small"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_margin="8dp"
-                                        android:isIndicator="true"
-                                        android:numStars="5" />
+                                        <com.google.android.material.textview.MaterialTextView
+                                            android:id="@+id/visitorNameFirstReviewTextView"
+                                            style="@style/TextAppearance.MaterialComponents.Headline6"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="8dp"
+                                            android:text="John"
+                                            android:textColor="?attr/colorOnSecondary" />
+
+                                        <RatingBar
+                                            android:id="@+id/firstReviewRatingBar"
+                                            style="@style/Widget.AppCompat.RatingBar.Small"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="8dp"
+                                            android:isIndicator="true"
+                                            android:numStars="5" />
+
+                                        <TableRow
+                                            android:layout_width="match_parent"
+                                            android:layout_height="1dp"
+                                            android:layout_margin="8dp"
+                                            android:background="?attr/colorSecondaryVariant" />
+
+                                        <com.google.android.material.textview.MaterialTextView
+                                            android:id="@+id/reviewContentTextView"
+                                            style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="8dp"
+                                            android:fontFamily="@font/montserrat_light"
+                                            android:text="Nice Place" />
+                                    </LinearLayout>
+
+
                                 </LinearLayout>
 
 
                             </LinearLayout>
 
-                            <TableRow
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_marginLeft="100dp"
-                                android:background="?attr/colorSecondaryVariant" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/reviewContentTextView"
-                                style="@style/TextAppearance.MaterialComponents.Subtitle1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="100dp"
-                                android:layout_marginTop="10dp"
-                                android:fontFamily="@font/montserrat_light"
-                                android:text="Nice Place" />
-
                         </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
 
-                    </LinearLayout>
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -395,7 +407,8 @@
                     style="@style/TextAppearance.MaterialComponents.Subtitle2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginTop="8dp"
                     android:text="@string/know_this_place" />
 
                 <com.google.android.material.button.MaterialButton
@@ -403,7 +416,8 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="8dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginBottom="8dp"
                     android:onClick="addReview"
                     android:text="@string/review"
                     app:iconGravity="textStart" />

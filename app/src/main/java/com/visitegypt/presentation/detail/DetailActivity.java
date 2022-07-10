@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -103,7 +104,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     private DetailViewModel detailViewModel;
     private ReviewViewModel reviewViewModel;
     private ItemsRecyclerViewAdapter itemsRecyclerViewAdapter;
-    private RecyclerView itemsRecyclerView, reviewsRecyclerView;
+    private RecyclerView itemsRecyclerView;
     private SliderView sliderView;
     private SliderAdapter sliderAdapter;
     private ArrayList<Slider> sliderArrayList;
@@ -120,6 +121,8 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     private Place place;
     private MaterialTextView noReviewsMaterialTextView, visitorNameFirstReviewTextView, reviewContentTextView;
     private RatingBar firstReviewRatingBar;
+
+    private LinearLayoutCompat artifactsLinearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,6 +221,9 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         reviewContentTextView = findViewById(R.id.reviewContentTextView);
         firstReviewLinearLayout = findViewById(R.id.firstReviewLinearLayout);
         seeAllButton = findViewById(R.id.seeAllButton);
+
+        // TODO TO HENDY: HIDE THIS LAYOUT WHENEVER THE PAGINATION MAGIC OF THE ITEMS IS EMPTY
+        artifactsLinearLayout = findViewById(R.id.artifactsLinearLayoutDetailActivity);
     }
 
     private void initViewModel(String placeId, Bundle savedInstances) {

@@ -34,7 +34,7 @@
                         android:src="@drawable/ic_baseline_person_24" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
@@ -57,9 +57,25 @@
                             android:layout_margin="8dp"
                             android:isIndicator="true"
                             android:numStars="5" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="8dp"
+                            android:background="?attr/colorSecondaryVariant" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/reviewCardTextView"
+                            style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:fontFamily="@font/montserrat_light"
+                            android:text="Nice Place" />
                     </LinearLayout>
 
                     <TextView
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -67,21 +83,6 @@
 
                 </LinearLayout>
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="100dp"
-                    android:background="?attr/colorSecondaryVariant" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/reviewCardTextView"
-                    style="@style/TextAppearance.MaterialComponents.Subtitle1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="100dp"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/montserrat_light"
-                    android:text="Nice Place" />
 
             </LinearLayout>
 
