@@ -41,7 +41,7 @@ import com.visitegypt.domain.model.SearchPlace;
 import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
 import com.visitegypt.presentation.log.LogActivity;
-import com.visitegypt.presentation.setting.SettingFragment;
+import com.visitegypt.presentation.setting.SettingActivity;
 import com.visitegypt.utils.GamificationRules;
 
 import java.lang.reflect.Type;
@@ -89,8 +89,12 @@ public class Home extends AppCompatActivity {
 
         checkFirstLogIn();
 
-        editButton.setOnClickListener(v -> changeFragment(new SettingFragment()));
-
+        editButton.setOnClickListener(view -> {
+            Intent intent = new Intent(Home.this, SettingActivity.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        });
     }
 
     private void checkFirstLogIn() {
@@ -386,9 +390,6 @@ public class Home extends AppCompatActivity {
             return false;
         });
     }
-
-
-
 
 
 }

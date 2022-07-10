@@ -35,10 +35,7 @@
                     android:gravity="center"
                     android:text="Place Name"
                     android:textColor="?attr/colorOnSecondary"
-                    android:textSize="24sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textSize="24sp" />
 
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
@@ -48,10 +45,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:orientation="vertical"
-        android:padding="8dp">
-
+        android:layout_margin="8dp"
+        android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/cityBadgesPlacesActivityRecyclerView"
@@ -127,18 +122,17 @@
 
     <com.google.android.material.textview.MaterialTextView
         style="@style/TextAppearance.MaterialComponents.Headline5"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Discover new adventures"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Discover new adventures"
         android:textAlignment="center"
         android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_margin="8dp"
         android:id="@+id/placesPlacesActivityRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:nestedScrollingEnabled="false" />
 </LinearLayout>

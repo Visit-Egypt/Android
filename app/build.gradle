@@ -113,9 +113,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:20.1.0'
     implementation 'com.shobhitpuri.custombuttons:google-signin:1.1.0'
 
-    //facebook log-in
-//    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
-
     implementation 'com.github.razir.progressbutton:progressbutton:2.1.0'
 
 //    //paging library

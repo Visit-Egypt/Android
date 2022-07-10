@@ -1,7 +1,5 @@
 package com.visitegypt.presentation.setting;
 
-import static android.app.Activity.RESULT_CANCELED;
-import static android.app.Activity.RESULT_OK;
 import static com.visitegypt.utils.UploadUtils.checkAndRequestPermissions;
 import static com.visitegypt.utils.UploadUtils.getRealPathFromUri;
 import static com.visitegypt.utils.UploadUtils.setContext;
@@ -13,17 +11,14 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
@@ -32,49 +27,42 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.UserUpdateRequest;
-import com.visitegypt.presentation.home.parent.Home;
 import com.visitegypt.presentation.log.LogActivity;
 
 import java.io.File;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
-//import com.visitegypt.presentation.signin.SignInActivity;
-
 @AndroidEntryPoint
-
-public class SettingFragment extends Fragment {
-    TextInputEditText firstName,
-            lastName,
-            email,
-            phone,
-            password;
+public class SettingActivity extends AppCompatActivity {
+    public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
+    private static final String TAG = "Setting Activity";
+    private static final int PHOTO_SELECTED = 1;
+    private static final int PICK_FROM_GALLERY = 0;
+    TextInputEditText firstName, lastName, email, phone, password;
     AppCompatButton saveButton, logOutButton;
     CircularImageView changeImageView;
     CircularImageView userImageView;
     View settingFragment;
     SettingViewModel settingViewModel;
-    private String userImage;
     File file = null;
-    private static final int PHOTO_SELECTED = 1;
-    public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
-    private static final int PICK_FROM_GALLERY = 0;
+    private String userImage;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        settingFragment = inflater.inflate(R.layout.fragment_setting, container, false);
-        setContext(getContext());
-        settingViewModel =
-                new ViewModelProvider(this).get(SettingViewModel.class);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_setting);
+        setContext(this);
+        settingViewModel = new ViewModelProvider(this).get(SettingViewModel.class);
         init();
         settingViewModel.initCallBack();
         getUserData();
         changeImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (checkAndRequestPermissions(getActivity())) {
-                    chooseImage(getContext());
+                if (checkAndRequestPermissions(SettingActivity.this)) {
+                    chooseImage(SettingActivity.this);
                 }
             }
         });
@@ -102,39 +90,37 @@ public class SettingFragment extends Fragment {
 
             settingViewModel.updateUser(userUpdateRequest);
         });
-        settingViewModel.url.observe(getViewLifecycleOwner(), s -> {
+        settingViewModel.url.observe(this, s -> {
             if (s != null) {
                 userImage = s;
                 Picasso.get().load(s).into(userImageView);
             }
 
         });
-        return settingFragment;
     }
 
 
-
     private void init() {
-        firstName = settingFragment.findViewById(R.id.firstNameTextInputEditText);
-        lastName = settingFragment.findViewById(R.id.lastNameTextInputEditText);
-        email = settingFragment.findViewById(R.id.emailTextInputEditText);
-        phone = settingFragment.findViewById(R.id.phoneTextInputEditText);
-        password = settingFragment.findViewById(R.id.passwordTextInputEditText);
-        saveButton = settingFragment.findViewById(R.id.saveButton);
-//        logOutButton = settingFragment.findViewById(R.id.logOutButton);
-        changeImageView = settingFragment.findViewById(R.id.changeImageView);
-        userImageView = settingFragment.findViewById(R.id.userImageView);
+        firstName = findViewById(R.id.firstNameTextInputEditText);
+        lastName = findViewById(R.id.lastNameTextInputEditText);
+        email = findViewById(R.id.emailTextInputEditText);
+        phone = findViewById(R.id.phoneTextInputEditText);
+        password = findViewById(R.id.passwordTextInputEditText);
+        saveButton = findViewById(R.id.saveButton);
+//        logOutButton = findViewById(R.id.logOutButton);
+        changeImageView = findViewById(R.id.changeImageView);
+        userImageView = findViewById(R.id.userImageView);
     }
 
     private void getUserData() {
         settingViewModel.getUserData();
-        settingViewModel.mutableLiveDataUser.observe(getViewLifecycleOwner(), user -> {
+        settingViewModel.mutableLiveDataUser.observe(this, user -> {
             firstName.setText(user.getFirstName());
             lastName.setText(user.getLastName());
             email.setText(user.getEmail());
             phone.setText(user.getPhoneNumber());
             if (user.getPhotoUrl() != null && !user.getPhotoUrl().isEmpty()) {
-                Glide.with(requireContext())
+                Glide.with(this)
                         .load(user.getPhotoUrl())
                         .fitCenter()
                         .placeholder(R.drawable.ic_baseline_account_circle_24)
@@ -144,12 +130,11 @@ public class SettingFragment extends Fragment {
         });
 
     }
-/***************************************************************************************************/
 
+    /***************************************************************************************************/
 
-    /********************************************************/
     private void redirect() {
-        Intent intent = new Intent(getContext(), LogActivity.class);
+        Intent intent = new Intent(this, LogActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
@@ -157,37 +142,25 @@ public class SettingFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((Home) getActivity()).setActionBarTitle("Setting");
-        ((Home) getActivity()).hideChatBot();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        ((Home) getActivity()).showChatBot();
     }
-    private void chooseImage(Context context){
 
-        final CharSequence[] optionsMenu = {"Take Photo", "Choose from Gallery", "Exit" }; // create a menuOption Array
+    private void chooseImage(Context context) {
 
-        // create a dialog for showing the optionsMenu
+        final CharSequence[] optionsMenu = {"Take Photo", "Choose from Gallery", "Exit"}; // create a menuOption Array
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-        // set the items in builder
 
         builder.setItems(optionsMenu, (dialogInterface, i) -> {
 
             if (optionsMenu[i].equals("Take Photo")) {
-
-                // Open the camera and get the photo
-
                 Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(takePicture, 0);
             } else if (optionsMenu[i].equals("Choose from Gallery")) {
-
-                // choose from  external storage
-
                 Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(pickPhoto, 1);
 
@@ -198,29 +171,31 @@ public class SettingFragment extends Fragment {
         });
         builder.show();
     }
+
     @Override
-    public void onRequestPermissionsResult(int requestCode,String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case REQUEST_ID_MULTIPLE_PERMISSIONS:
-                if (ContextCompat.checkSelfPermission(getContext(),
+                if (ContextCompat.checkSelfPermission(this,
                         Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getContext(),
+                    Toast.makeText(this,
                             "FlagUp Requires Access to Camara.", Toast.LENGTH_SHORT)
                             .show();
 
-                } else if (ContextCompat.checkSelfPermission(getContext(),
+                } else if (ContextCompat.checkSelfPermission(this,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getContext(),
+                    Toast.makeText(this,
                             "FlagUp Requires Access to Your Storage.",
                             Toast.LENGTH_SHORT).show();
 
                 } else {
-                    chooseImage(getContext());
+                    chooseImage(this);
                 }
                 break;
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -228,20 +203,19 @@ public class SettingFragment extends Fragment {
             switch (requestCode) {
                 case 0:
                     if (resultCode == RESULT_OK && data != null) {
-
                     }
                     break;
                 case 1:
                     if (resultCode == RESULT_OK && data != null) {
                         Uri selectedImage = data.getData();
                         if (selectedImage != null) {
-                            Log.d("TAG", selectedImage.toString());
+                            Log.d(TAG, selectedImage.toString());
                             String filePath = getRealPathFromUri(selectedImage);
-                            String mimeType = requireActivity().getContentResolver().getType(selectedImage);
+                            String mimeType = this.getContentResolver().getType(selectedImage);
                             if (filePath != null && !filePath.isEmpty())
                                 file = new File(filePath);
-                                if (file.exists() && file != null)
-                                settingViewModel.uploadUserProfilePhoto(file,mimeType);
+                            if (file.exists() && file != null)
+                                settingViewModel.uploadUserProfilePhoto(file, mimeType);
                         }
 
                     }
