@@ -18,33 +18,45 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <FrameLayout
+
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_gravity="center">
 
-                <com.mikhaellopez.circularimageview.CircularImageView
-                    android:id="@+id/circularAccountImageView"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_baseline_account_circle_24" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/rank1" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/levelTextViewAccountFragment"
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@id/circularAccountImageView"
-                    android:layout_alignTop="@id/circularAccountImageView"
-                    android:layout_alignRight="@id/circularAccountImageView"
-                    android:layout_alignBottom="@id/circularAccountImageView"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="80dp"
-                    android:background="@color/camel"
-                    android:gravity="center"
-                    android:text="LVL 1"
-                    android:textColor="?attr/colorOnSecondary" />
-            </RelativeLayout>
+                    android:layout_gravity="center">
+
+                    <com.mikhaellopez.circularimageview.CircularImageView
+                        android:id="@+id/circularAccountImageView"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_baseline_account_circle_24" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/levelTextViewAccountFragment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@id/circularAccountImageView"
+                        android:layout_alignTop="@id/circularAccountImageView"
+                        android:layout_alignRight="@id/circularAccountImageView"
+                        android:layout_alignBottom="@id/circularAccountImageView"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="80dp"
+                        android:background="@color/camel"
+                        android:gravity="center"
+                        android:text="Loading"
+                        android:textColor="?attr/colorOnSecondary" />
+                </RelativeLayout>
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/nameTextView"
@@ -52,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="xxx"
+                android:text="Loading user info"
                 android:textAlignment="center"
                 android:textColor="?attr/colorOnSecondary" />
 

@@ -12,32 +12,47 @@
         android:layout_marginVertical="10dp"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <FrameLayout
+            android:layout_width="150dp"
+            android:layout_height="100dp"
             android:layout_gravity="center">
 
-            <com.mikhaellopez.circularimageview.CircularImageView
-                android:id="@+id/circularAccountImageView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_baseline_account_circle_24" />
+            <ImageView
+                android:id="@+id/profileFrameImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/levelTextViewAccountFragment"
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/circularAccountImageView"
-                android:layout_alignTop="@id/circularAccountImageView"
-                android:layout_alignRight="@id/circularAccountImageView"
-                android:layout_alignBottom="@id/circularAccountImageView"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="80dp"
-                android:background="?attr/colorPrimary"
-                android:gravity="center"
-                android:text="LVL" />
-        </RelativeLayout>
+                android:layout_gravity="center">
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:id="@+id/circularAccountImageView"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_baseline_account_circle_24"
+                    app:civ_border_color="@color/camel"
+                    app:civ_border_width="2dp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/levelTextViewAccountFragment"
+                    style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/circularAccountImageView"
+                    android:layout_alignTop="@id/circularAccountImageView"
+                    android:layout_alignRight="@id/circularAccountImageView"
+                    android:layout_alignBottom="@id/circularAccountImageView"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="80dp"
+                    android:background="?attr/colorPrimary"
+                    android:gravity="center"
+                    android:text="Loading" />
+            </RelativeLayout>
+        </FrameLayout>
 
         <TextView
             android:id="@+id/nameTextView"
@@ -45,8 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="8dp"
-            android:text="xxx"
+            android:text="Loading user info"
             android:textAlignment="center"
             android:textColor="?attr/colorOnSecondary" />
 
@@ -54,7 +68,7 @@
             android:id="@+id/titleChipViewAccountFragment"
             android:layout_width="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Explorer"
+            android:text="Loading title"
             android:textAlignment="center"
             android:layout_height="wrap_content"
             android:textSize="17sp"

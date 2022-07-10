@@ -37,6 +37,15 @@ public class GamificationRules {
             PHAROS_LEVEL,
             ANUBIS_LEVEL};
 
+    public static final String[] ALL_TITLES = {
+            "Explorer",
+            "Adventurer",
+            "Traveler",
+            "Globetrotter",
+            "Anubis",
+            "Thoth"
+    };
+
 
     public static final int BRONZE_BADGE_XP = 30;
     public static final int SILVER_BADGE_XP = 70;
@@ -74,17 +83,17 @@ public class GamificationRules {
 
     public static String getTitleFromLevel(int level) {
         if (level <= EXPLORER_LEVEL) {
-            return "Explorer";
+            return ALL_TITLES[0];
         } else if (level <= ADVENTURER_LEVEL) {
-            return "Adventurer";
+            return ALL_TITLES[1];
         } else if (level <= ADVANCED_TRAVELLER_LEVEL) {
-            return "Advanced Traveler";
+            return ALL_TITLES[2];
         } else if (level <= PHAROS_LEVEL) {
-            return "Pharos";
+            return ALL_TITLES[3];
         } else if (level <= ANUBIS_LEVEL) {
-            return "Anusbis";
+            return ALL_TITLES[4];
         } else {
-            return "Off the Grid";
+            return ALL_TITLES[5];
         }
     }
 

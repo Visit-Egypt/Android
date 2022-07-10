@@ -13,14 +13,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,7 +38,6 @@ import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.FullBadge;
 import com.visitegypt.domain.model.Tag;
-import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.badges.BadgeActivity;
 import com.visitegypt.presentation.callBacks.OnFilterUpdate;
 import com.visitegypt.presentation.gamification.BadgesSliderViewAdapter;
@@ -83,6 +85,8 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
     private PostsRecyclerViewAdapter postsRecyclerViewAdapter;
     private RecyclerView postsRecyclerView;
     private MaterialTextView noPostsMaterialTextView;
+
+    private ImageView profileFrameImageView;
 
 
     @Nullable
@@ -149,6 +153,8 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
         userTitleChipView.setOnClickListener(view -> {
             showTitleDialog(getContext());
         });
+
+        profileFrameImageView = accountView.findViewById(R.id.profileFrameImageView);
     }
 
     private void showTitleDialog(Context context) {
@@ -172,26 +178,45 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
         currentLevelTextView.setText(Integer.toString(level));
         nextLevelTextView.setText(Integer.toString(level + 1));
 
+        String title = GamificationRules.getTitleFromLevel(level);
+
         xpRemainingTextView.setText(GamificationRules.getRemainingXPToNextLevel(xp) + "XP remaining to next level");
         xpProgressTextView.setText(xp - GamificationRules.getLevelXp(level) + "/" +
                 ((GamificationRules.getLevelXp(level + 1)) - GamificationRules.getLevelXp(level)));
-        userTitleChipView.setText(GamificationRules.getTitleFromLevel(level));
+        userTitleChipView.setText(title);
         xpLinearProgressIndicator.setMax(((GamificationRules.getLevelXp(level + 1)) - GamificationRules.getLevelXp(level)));
         xpLinearProgressIndicator.setProgress(xp - GamificationRules.getLevelXp(level), true);
+
+        Animation fade = new AlphaAnimation(0, 1);
+        fade.setDuration(500);
+        fade.setInterpolator(new DecelerateInterpolator());
+
+        if (title.equals(GamificationRules.ALL_TITLES[0])) {
+            profileFrameImageView.setBackground(getResources().getDrawable(R.drawable.rank1));
+        } else if (title.equals(GamificationRules.ALL_TITLES[1])) {
+            profileFrameImageView.setBackground(getResources().getDrawable(R.drawable.rank2));
+        } else if (title.equals(GamificationRules.ALL_TITLES[2])) {
+            profileFrameImageView.setBackground(getResources().getDrawable(R.drawable.rank3));
+        } else if (title.equals(GamificationRules.ALL_TITLES[3])) {
+            profileFrameImageView.setBackground(getResources().getDrawable(R.drawable.rank4));
+        } else if (title.equals(GamificationRules.ALL_TITLES[4])) {
+            profileFrameImageView.setBackground(getResources().getDrawable(R.drawable.rank5));
+        } else if (title.equals(GamificationRules.ALL_TITLES[5])) {
+            profileFrameImageView.setBackground(getResources().getDrawable(R.drawable.rank6));
+        }
+        profileFrameImageView.startAnimation(fade);
+
     }
 
     private void initViewModel() {
         accountViewModel = new ViewModelProvider(this).get(AccountViewModel.class);
-        accountViewModel.userMutableLiveData.observe(this, new Observer<User>() {
-            @Override
-            public void onChanged(User user) {
-                nameTextView.setText(user.getFirstName() + " " + user.getLastName());
-                if (user.getPhotoUrl() != null) {
-                    Log.d(TAG, "onChanged: " + user.getPhotoUrl());
-                    accountViewModel.saveUserImage(user.getPhotoUrl());
-                    Picasso.get().load(user.getPhotoUrl()).into(circularAccountImageView);
+        accountViewModel.userMutableLiveData.observe(getViewLifecycleOwner(), user -> {
+            nameTextView.setText(user.getFirstName() + " " + user.getLastName());
+            if (user.getPhotoUrl() != null) {
+                Log.d(TAG, "onChanged: " + user.getPhotoUrl());
+                accountViewModel.saveUserImage(user.getPhotoUrl());
+                Picasso.get().load(user.getPhotoUrl()).into(circularAccountImageView);
 
-                }
             }
         });
 
@@ -203,7 +228,7 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
         //get user posts
         accountViewModel.getPostsByUserId();
 
-        accountViewModel.userPostsMutableLiveData.observe(this, posts -> {
+        accountViewModel.userPostsMutableLiveData.observe(getViewLifecycleOwner(), posts -> {
             if (posts.size() != 0) {
                 noPostsMaterialTextView.setVisibility(View.GONE);
                 Log.d(TAG, "setting posts to recycler view...");

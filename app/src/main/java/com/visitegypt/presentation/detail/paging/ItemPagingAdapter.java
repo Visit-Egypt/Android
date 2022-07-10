@@ -56,13 +56,12 @@ public class ItemPagingAdapter extends PagingDataAdapter<Item, ItemPagingAdapter
         holder.itemImage.setOnClickListener(view -> showDetail(currentItem));
         if (currentItem.getImageUrls() != null) {
             if (!currentItem.getImageUrls().isEmpty()) {
-                Log.d(TAG, "found image for item: " + currentItem.getImageUrls().get(0).toString());
+                Log.d(TAG, "found image for item: " + currentItem.getImageUrls().get(0));
                 Glide.with(holder.itemView)
                         .load(currentItem.getImageUrls().get(0))
                         .fitCenter()
                         .into(holder.itemImage);
 
-            } else {
             }
         } else {
             holder.itemImage.setVisibility(View.GONE);

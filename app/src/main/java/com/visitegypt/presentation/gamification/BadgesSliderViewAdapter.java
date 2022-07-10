@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.google.android.material.textview.MaterialTextView;
 import com.google.gson.Gson;
@@ -65,8 +66,13 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
     @Override
     public void onBindViewHolder(SliderAdapterViewHolder viewHolder, final int position) {
         viewHolder.linearLayout.setOnClickListener(view -> showBadgeDialog(badges.get(position)));
-        
+
         viewHolder.textView.setText(badges.get(position).getTitle());
+
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(context);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
 
         if (badges.get(position).isOwned()) {
             Log.d(TAG, "onBindViewHolder: owned badge");
@@ -85,15 +91,15 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
 
                 @Override
                 public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-
+                    Log.e(TAG, "onBitmapFailed: ", e);
                 }
 
                 @Override
                 public void onPrepareLoad(Drawable placeHolderDrawable) {
-
+                    viewHolder.circleProgressbar.setBackground(placeHolderDrawable);
                 }
             };
-            Picasso.get().load(badges.get(position).getImageUrl()).into(target);
+            Picasso.get().load(badges.get(position).getImageUrl()).placeholder(circularProgressDrawable).into(target);
         } else {
             Log.d(TAG, "onBindViewHolder: unowned badge");
             Log.d(TAG, "onBindViewHolder: badge max progress: " + badges.get(position).getMaxProgress());
@@ -105,6 +111,7 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
             ColorMatrix colorMatrix = new ColorMatrix();
             colorMatrix.setSaturation(0);
             ColorMatrixColorFilter filter = new ColorMatrixColorFilter(colorMatrix);
+
             Target target = new Target() {
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -115,17 +122,17 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
 
                 @Override
                 public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-
+                    Log.e(TAG, "onBitmapFailed: gray", e);
                 }
 
                 @Override
                 public void onPrepareLoad(Drawable placeHolderDrawable) {
-
+                    viewHolder.circleProgressbar.setBackground(placeHolderDrawable);
                 }
             };
             if (badges.get(position).getImageUrl() != null)
                 if (!badges.get(position).getImageUrl().isEmpty())
-                    Picasso.get().load(badges.get(position).getImageUrl()).into(target);
+                    Picasso.get().load(badges.get(position).getImageUrl()).placeholder(circularProgressDrawable).into(target);
 
         }
     }
@@ -147,6 +154,12 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
         ColorMatrix colorMatrix = new ColorMatrix();
         colorMatrix.setSaturation(0);
         ColorMatrixColorFilter filter = new ColorMatrixColorFilter(colorMatrix);
+
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(context);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
+
 
         CircleProgressbar circleProgressbar = v.findViewById(R.id.badgeDialogCircleProgressBar);
         if (badge.isOwned()) {
@@ -170,16 +183,17 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
 
             @Override
             public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-
+                Log.e(TAG, "onBitmapFailed dialog: ", e);
             }
 
             @Override
             public void onPrepareLoad(Drawable placeHolderDrawable) {
+                circleProgressbar.setBackground(placeHolderDrawable);
             }
         };
         if (badge.getImageUrl() != null) {
             if (!badge.getImageUrl().isEmpty()) {
-                Picasso.get().load(badge.getImageUrl()).into(target);
+                Picasso.get().load(badge.getImageUrl()).placeholder(circularProgressDrawable).into(target);
             }
         }
         dialog.setContentView(v);
