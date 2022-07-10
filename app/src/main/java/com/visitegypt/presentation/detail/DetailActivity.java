@@ -300,7 +300,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
             } else if (place.getDefaultImage() != null) {
                 sliderArrayList.add(new Slider(place.getDefaultImage()));
             } else {
-                Log.e(TAG, "no images found");
+                Log.d(TAG, "no images found");
             }
             if (place.getTicketPrices() != null) {
                 try {
@@ -437,14 +437,12 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
                 if (reviewText.isEmpty()) {
                     textInputEditText.setError("Review can't be empty");
                 } else {
-
                     String firstName = sharedPreferences.getString(Constants.SHARED_PREF_FIRST_NAME, "");
                     String lastName = sharedPreferences.getString(Constants.SHARED_PREF_LAST_NAME, "");
                     String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
                     Review review = new Review(numStars, reviewText, firstName + " " + lastName, userId);
                     reviewViewModel.submitReview(placeId, review);
-
-
+                    addReviewDialog.dismiss();
                 }
             }
 
