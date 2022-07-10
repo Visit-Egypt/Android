@@ -381,6 +381,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
             Log.e(TAG, "initActivityLogic: loading image failed: " + e.getMessage());
         }
         initActivities();
+        initViewModelObservers();
     }
 
     private void checkActivityComplete(FullPlaceActivity fullPlaceActivity) {
@@ -411,12 +412,8 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         }
     }
 
-    private void initActivities() {
-        gamificationViewModel.getFullPlaceActivities();
-        gamificationViewModel.getFullBadges();
-        gamificationViewModel.getFullPlaceBadges();
-        Log.d(TAG, "initActivities");
-        observeOnce(gamificationViewModel.fullPlaceActivitiesMutableLiveData, fullPlaceActivities -> {
+    private void initViewModelObservers() {
+        gamificationViewModel.fullPlaceActivitiesMutableLiveData.observe(this, fullPlaceActivities -> {
             Log.d(TAG, "initActivities: " + new Gson().toJson(fullPlaceActivities));
             int progress = 0, maxProgress = 0, xp = 0, maxXp = 0;
             if (fullPlaceActivities != null)
@@ -445,9 +442,9 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
             placeProgressIndicator.setProgress(progress, true);
         });
 
-        observeOnce(gamificationViewModel.placeBadgesMutableLiveData, badges -> {
-            Log.d(TAG, "initActivities place badges: " + new Gson().toJson(badges));
-            observeOnce(gamificationViewModel.fullBadgesMutableLiveData, fullBadges -> {
+        gamificationViewModel.fullBadgesMutableLiveData.observe(this, fullBadges -> {
+            Log.d(TAG, "initActivities place badges: " + new Gson().toJson(fullBadges));
+            observeOnce(gamificationViewModel.placeBadgesMutableLiveData, badges -> {
                 if (fullBadges != null && badges != null) {
                     for (FullBadge fullBadge : fullBadges) {
                         for (Badge placeBadge : badges) {
@@ -473,8 +470,12 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                 badgesSliderViewAdapter.setBadges((ArrayList<Badge>) badges);
             });
         });
+    }
 
-
+    private void initActivities() {
+        gamificationViewModel.getFullPlaceActivities();
+        gamificationViewModel.getFullBadges();
+        gamificationViewModel.getFullPlaceBadges();
     }
 
     private void initClickListeners() {
@@ -495,6 +496,11 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         });
     }
 
+    private void getBadgesAndActivities() {
+        gamificationViewModel.getFullPlaceActivities();
+        gamificationViewModel.getFullBadges();
+    }
+
     private void confirmLocation() {
         showButtonLoadingRight(confirmLocationButton);
         observeOnce(userInsideCircuitMutableLiveData, userInside -> {
@@ -507,13 +513,15 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                         setVisitLocationActivityDone();
                         observeOnce(gamificationViewModel.userMutableLiveData, this::updateUserXP);
                     }
-                    initActivities();
+                    getBadgesAndActivities();
+                    //initActivities();
                 });
 
             } else {
                 showButtonFailed(confirmLocationButton, "You're not inside yet",
                         "confirm location");
-                initActivities();
+                //initActivities();
+                getBadgesAndActivities();
                 Log.e(TAG, "confirmLocation: " + "failed to confirm location");
             }
         });
@@ -568,7 +576,8 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                             observeOnce(gamificationViewModel.userMutableLiveData, this::updateUserXP);
                         }
                         addReviewDialog.dismiss();
-                        initActivities();
+                        // initActivities();
+                        getBadgesAndActivities();
                     });
                 } catch (Exception e) {
                     Log.e(TAG, "showReviewDialog: " + e.getMessage());
@@ -746,8 +755,11 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
             mapView.onResume();
         }
         try {
-            if (gamificationViewModel != null && place != null)
-                initActivities();
+            if (gamificationViewModel != null && place != null) {
+                // initActivities();
+                getBadgesAndActivities();
+                getExplores();
+            }
         } catch (Exception ignored) {
 
         }
