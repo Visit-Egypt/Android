@@ -1,7 +1,7 @@
 package com.visitegypt.presentation.home.child.discover;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +20,7 @@ import com.google.android.material.button.MaterialButton;
 import com.smarteist.autoimageslider.SliderView;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
-import com.visitegypt.presentation.home.child.discover.allPlaces.DiscoverChildAllPlaces;
+import com.visitegypt.presentation.home.child.discover.allPlaces.DiscoverChildAllPlacesActivity;
 import com.visitegypt.presentation.home.parent.Home;
 
 import java.util.ArrayList;
@@ -59,8 +59,8 @@ public class DiscoverChild extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+//        container.removeAllViews();
         discoverLayOut = inflater.inflate(R.layout.discover_child_fragment, container, false);
-
         initViews();
         createDummyPlaces();
 
@@ -216,10 +216,13 @@ public class DiscoverChild extends Fragment {
 
     private void onClickListeners() {
         btnAllPlaces.setOnClickListener(view -> {
-            Log.d(TAG, "onClickListeners:  ");
-            ((Home) getActivity()).changeFragment(DiscoverChildAllPlaces.newInstance());
+//            ((Home) getActivity()).changeFragment(new DiscoverChildAllPlaces());
+            Intent intent = new Intent(getContext(), DiscoverChildAllPlacesActivity.class);
+            startActivity(intent);
         });
     }
+
+
 
 
 }

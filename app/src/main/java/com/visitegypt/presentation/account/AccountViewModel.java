@@ -48,9 +48,7 @@ import retrofit2.HttpException;
 public class AccountViewModel extends ViewModel {
 
     private static final String TAG = "account view model";
-
     MutableLiveData<ArrayList<Place>> placesWithNeededPlaceActivities = new MutableLiveData<>();
-
     MutableLiveData<ArrayList<Badge>> userBadgesMutableLiveData = new MutableLiveData<>();
 
     MutableLiveData<List<Post>> mutableLiveDataMyPosts = new MutableLiveData<>();

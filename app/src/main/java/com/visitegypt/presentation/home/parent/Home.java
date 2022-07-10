@@ -210,17 +210,13 @@ public class Home extends AppCompatActivity {
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_discover,
                 R.id.account,
-//                R.id.nav_near_me,
                 R.id.nav_activities,
                 R.id.nav_map,
-//                R.id.nav_booking,
-//                R.id.nav_subscription,
                 R.id.setting,
                 R.id.gaming,
                 R.id.tripMate,
                 R.id.userProfile,
                 R.id.tripMateRequest
-//                R.id.discoverChildAllPlaces
         )
                 .setOpenableLayout(drawer)
                 .build();
@@ -387,9 +383,12 @@ public class Home extends AppCompatActivity {
 
         navigationView.getMenu().findItem(R.id.logout).setOnMenuItemClickListener(menuItem -> {
             homeViewModel.logOut();
-
             return false;
         });
     }
+
+
+
+
 
 }
