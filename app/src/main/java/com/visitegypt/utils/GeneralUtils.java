@@ -177,6 +177,12 @@ public class GeneralUtils {
         snackbar.show();
     }
 
+    public static void showSnackInfo(Context context, View callingView, @Nonnull String info) {
+        Snackbar snackbar = Snackbar.make(callingView, info, BaseTransientBottomBar.LENGTH_LONG);
+        //snackbar.setTextColor(Color.RED);
+        snackbar.show();
+    }
+
     public void showPlaceActivity(Context context) {
 
     }

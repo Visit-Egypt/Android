@@ -569,7 +569,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                     observeOnce(reviewViewModel.activityUpdatedMutableLiveData, loaded -> {
                         if (loaded) {
                             Log.d(TAG, "showReviewDialog: update review successful");
-                            // TODO update UI
                             setReviewActivityComplete();
                             Log.d(TAG, "updateUserXP: old XP " + user.getXp());
                             gamificationViewModel.getUser();

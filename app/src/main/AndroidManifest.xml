@@ -95,7 +95,8 @@
 
         <activity
             android:name=".presentation.log.LogActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".presentation.gamification.CitiesActivity"
             android:exported="true" />

@@ -146,7 +146,7 @@ public class LogViewModel extends ViewModel {
         registerDeviceToNotificationUseCase.execute(map -> {
             Log.d(TAG, "test: " + map.get("message"));
         }, throwable -> {
-            Log.d(TAG, "test: " + throwable.getMessage());
+            Log.e(TAG, "test: " + throwable.getMessage());
         });
     }
 
@@ -206,9 +206,9 @@ public class LogViewModel extends ViewModel {
     public void registerDeviceToNotification(String st) {
         registerDeviceToNotificationUseCase.setMsg(st);
         registerDeviceToNotificationUseCase.execute(map -> {
-            Log.d(TAG, "test: " + map.get("message"));
+            Log.d(TAG, "registerDeviceToNotification: " + map.get("message"));
         }, throwable -> {
-            Log.d(TAG, "test: " + throwable.getMessage());
+            Log.e(TAG, "registerDeviceToNotification: " + throwable.getMessage());
         });
     }
 

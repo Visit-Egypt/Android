@@ -20,7 +20,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -41,6 +40,9 @@ import com.visitegypt.R;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.usecase.UserValidation;
 import com.visitegypt.presentation.home.parent.Home;
+import com.visitegypt.utils.GeneralUtils;
+
+import java.util.Locale;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -376,18 +378,14 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
         forgetPasswordDialog.show();
         TextInputEditText textInputEditText = forgetPasswordDialog.findViewById(R.id.forgetPasswordTextInputEditText);
 
-        forgetPasswordDialog.findViewById(R.id.forgetPasswordMaterialButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String emaill = textInputEditText.getText().toString().trim();
-                Log.d(TAG, "onClick:  " + emaill);
-                if (emaill.isEmpty()) {
-                    textInputEditText.setError("Enter your E-mail.");
-                } else {
-                    logViewModel.forgotPassword(emaill);
-                }
+        forgetPasswordDialog.findViewById(R.id.forgetPasswordMaterialButton).setOnClickListener(view -> {
+            String emaill = textInputEditText.getText().toString().trim().toLowerCase(Locale.ROOT);
+            Log.d(TAG, "onClick:  " + emaill);
+            if (emaill.isEmpty()) {
+                textInputEditText.setError("Enter your E-mail.");
+            } else {
+                logViewModel.forgotPassword(emaill);
             }
-
         });
     }
 
@@ -412,35 +410,35 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
     }
 
     private void observeViewModelLiveData() {
-        logViewModel.mutableLiveDataErrors.observe(this, new Observer<String[]>() {
-            @Override
-            public void onChanged(String[] strings) {
-                if (!strings[0].isEmpty()) {
-                    firstNameSignUpTextField.setError(strings[0]);
-                }
-                if (!strings[1].isEmpty()) {
-                    lastNameSignUpTextField.setError(strings[1]);
-                }
-                if (!strings[2].isEmpty()) {
-                    emailSignUpTextField.setError(strings[2]);
-                }
-                if (!strings[3].isEmpty()) {
-                    password.setError(strings[3]);
-                }
+        logViewModel.mutableLiveDataErrors.observe(this, strings -> {
+            if (!strings[0].isEmpty()) {
+                firstNameSignUpTextField.setError(strings[0]);
+            }
+            if (!strings[1].isEmpty()) {
+                lastNameSignUpTextField.setError(strings[1]);
+            }
+            if (!strings[2].isEmpty()) {
+                emailSignUpTextField.setError(strings[2]);
+            }
+            if (!strings[3].isEmpty()) {
+                password.setError(strings[3]);
             }
         });
         logViewModel.mutableLiveDataResponse.observe(this, s -> {
             Log.d(TAG, "account change observed");
             if (s.equals("Your account was created successfully")) {
-                Toast.makeText(LogActivity.this, "Verfication email is sent, please verify your email", Toast.LENGTH_LONG).show();
-                Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
+                GeneralUtils.showSnackInfo(this, signUpConstraintLayout, "Verification email sent, please verify your email");
+                //Toast.makeText(LogActivity.this, "Verfication email is sent, please verify your email", Toast.LENGTH_LONG).show();
+                // Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
                 redirectSignIn();
             } else if (s.equals("Your google account was created successfully")) {
-                Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
+                GeneralUtils.showSnackInfo(this, signUpConstraintLayout, s);
+                // Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
                 logOut();
                 redirectHome();
             } else {
-                Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
+                GeneralUtils.showSnackError(this, signUpConstraintLayout, s);
+                //Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
             }
             hideLoading();
         });
@@ -461,21 +459,21 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
                 Toast.makeText(LogActivity.this, "Not found", Toast.LENGTH_LONG).show();
             }
         });
-        logViewModel.msgMutableLiveData.observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if (s.equals("Your login done")) {
-                    redirectHome();
-                    Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
+        logViewModel.msgMutableLiveData.observe(this, s -> {
+            if (s.equals("Your login done")) {
+                redirectHome();
+                GeneralUtils.showSnackInfo(this, signInConstraintLayout, "Login complete");
+                //Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
 
-                } else if (s.equals("Your google login done")) {
-                    redirectHome();
-                    logOut();
-                    Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
-                } else {
-                    hideLoading();
-                    Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
-                }
+            } else if (s.equals("Your google login done")) {
+                redirectHome();
+                logOut();
+                GeneralUtils.showSnackInfo(this, signInConstraintLayout, "Google Login complete");
+                Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
+            } else {
+                hideLoading();
+                GeneralUtils.showSnackError(this, signInConstraintLayout, s);
+                // Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -548,7 +546,7 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
                 v -> forgetPassword()
         );
         signInMaterialButton.setOnClickListener(view -> {
-            emaill = emailTextField.getEditText().getText().toString();
+            emaill = emailTextField.getEditText().getText().toString().toLowerCase();
             passwordd = passwordSignInTextField.getEditText().getText().toString();
             if (emaill.isEmpty() || passwordd.isEmpty()) {
                 if (emaill.isEmpty()) {
