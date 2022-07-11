@@ -116,6 +116,6 @@
     <string name="see_all">see all</string>
     <string name="see_all_arrow"><![CDATA[see all >]]></string>
     <string name="one_remaining_activity">1 remaining activity</string>
-    <string name="remaining_activities_number">\" remaining activities\"</string>
+    <string name="remaining_activities_number"> remaining activities</string>
 
 </resources>
