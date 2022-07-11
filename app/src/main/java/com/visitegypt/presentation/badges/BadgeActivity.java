@@ -4,6 +4,8 @@ import static com.visitegypt.utils.GeneralUtils.LiveDataUtil.observeOnce;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -28,6 +30,7 @@ public class BadgeActivity extends AppCompatActivity {
 
     private BadgesSliderViewAdapter badgesSliderViewAdapter;
     private RecyclerView badgesRecyclerView;
+    private ProgressBar progressBar;
 
     private ArrayList<Badge> badgesArrayList;
 
@@ -73,6 +76,7 @@ public class BadgeActivity extends AppCompatActivity {
                 Log.d(TAG, "initViewModel: finished: " + new Gson().toJson(badges));
                 badgesArrayList.addAll(badges);
                 badgesSliderViewAdapter.setBadges((ArrayList<Badge>) badges);
+                progressBar.setVisibility(View.GONE);
             });
         });
 
@@ -85,5 +89,6 @@ public class BadgeActivity extends AppCompatActivity {
         badgesRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
         badgesSliderViewAdapter = new BadgesSliderViewAdapter(badgesArrayList, this);
         badgesRecyclerView.setAdapter(badgesSliderViewAdapter);
+        progressBar = findViewById(R.id.badgeActivityProgressBar);
     }
 }

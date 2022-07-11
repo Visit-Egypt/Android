@@ -72,6 +72,7 @@ public class BadgesSliderViewAdapter extends RecyclerView.Adapter<BadgesSliderVi
         CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(context);
         circularProgressDrawable.setStrokeWidth(5f);
         circularProgressDrawable.setCenterRadius(30f);
+        //circularProgressDrawable.setColorFilter(context.getResources().getColor(R.color.camel));
         circularProgressDrawable.start();
 
         if (badges.get(position).isOwned()) {

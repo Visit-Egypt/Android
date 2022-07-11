@@ -41,7 +41,8 @@ public class PlaceRepositoryImp implements PlaceRepository {
 
     @Override
     public Single<PlacePageResponse> getPlacesOfCity(String cityName) {
-        return retrofitService.getPlacesOfCity(cityName);
+        String cityQuery = "{\"translations.en.city\":\"" + cityName + "\"}";
+        return retrofitService.getPlacesOfCity(cityQuery);
     }
 
     @Override

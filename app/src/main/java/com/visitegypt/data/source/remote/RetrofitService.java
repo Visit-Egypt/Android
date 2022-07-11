@@ -142,8 +142,8 @@ public interface RetrofitService {
     @POST("api/place/review/{place_id}")
     public Single<List<Review>> submitReview(@Path("place_id") String placeId, @Body Review review);
 
-    @GET("api/place/city/{city_name}")
-    public Single<PlacePageResponse> getPlacesOfCity(@Path("city_name") String cityName);
+    @GET("api/place")
+    public Single<PlacePageResponse> getPlacesOfCity(@Query("filters") String cityName);
 
     @GET("api/place/cities/all")
     public Single<List<String>> getAllCities();

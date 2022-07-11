@@ -25,12 +25,12 @@
                 android:src="@drawable/luxor2" />
 
             <LinearLayout
+                android:background="#15000000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@id/placeInCityImageView"
                 android:layout_alignRight="@id/placeInCityImageView"
                 android:layout_alignBottom="@id/placeInCityImageView"
-                android:layout_margin="8dp"
                 android:orientation="vertical">
 
                 <TextView
