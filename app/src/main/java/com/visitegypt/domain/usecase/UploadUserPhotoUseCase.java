@@ -68,17 +68,17 @@ public class UploadUserPhotoUseCase {
 
     }
 
-//    public void uploadARPhoto() {
-//        final String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
-//        Log.d(TAG, "upload: " + userId);
-//        try {
-//            final UploadResponse uploadResponse = userRepository.getUserPhotoAR(userId, contentType).blockingGet();
-//            UploadFields uploadFields = uploadResponse.getFields();
-//            realUpload(uploadFields, userId);
-//        } catch (Exception e) {
-//            Log.e(TAG, "upload: " + e.toString());
-//        }
-//    }
+    public void uploadARPhoto() {
+        final String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
+        Log.d(TAG, "upload: " + userId);
+        try {
+            final UploadResponse uploadResponse = userRepository.getUserPhotoAR(userId, contentType).blockingGet();
+            UploadFields uploadFields = uploadResponse.getFields();
+            realUpload(uploadFields, userId);
+        } catch (Exception e) {
+            Log.e(TAG, "upload: " + e.toString());
+        }
+    }
 
     private void realUpload(UploadFields uploadFields, String userId) {
         if (userFile != null && userFile.exists()) {

@@ -21,23 +21,17 @@
             app:popupTheme="@style/Theme.VisitEgypt.AppBarOverlay"
             app:titleTextColor="?attr/colorOnSecondary">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/cityTitlePlacesActivityTextView"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/montserrat_alternates_medium"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:text="Place Name"
+                android:textColor="?attr/colorOnSecondary"
+                android:textSize="24sp" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/cityTitlePlacesActivityTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_alternates_medium"
-                    android:gravity="center"
-                    android:text="Place Name"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textSize="24sp" />
-
-            </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
