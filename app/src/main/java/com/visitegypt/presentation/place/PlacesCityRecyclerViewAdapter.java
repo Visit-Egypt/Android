@@ -65,14 +65,14 @@ public class PlacesCityRecyclerViewAdapter extends RecyclerView.Adapter<com.visi
             holder.placeInCityRemainingProgressProgressIndicator.setVisibility(View.VISIBLE);
 
             if (remaining == 0) {
-                holder.placesInCityRemainingTextView.setText("Complete");
+                holder.placesInCityRemainingTextView.setText(context.getString(R.string.complete));
                 holder.placeInCityRemainingProgressProgressIndicator.setProgress(holder.placeInCityRemainingProgressProgressIndicator.getMax(), true);
             } else if (remaining == 1) {
                 holder.placesInCityRemainingTextView.setText(R.string.one_remaining_activity);
                 holder.placeInCityRemainingProgressProgressIndicator.setMax(maxProgress);
                 holder.placeInCityRemainingProgressProgressIndicator.setProgress(progress, true);
             } else {
-                holder.placesInCityRemainingTextView.setText(remaining + "" + context.getString(R.string.remaining_activities_number));
+                holder.placesInCityRemainingTextView.setText(remaining + " " + context.getString(R.string.remaining_activities_number));
                 holder.placeInCityRemainingProgressProgressIndicator.setMax(maxProgress);
                 holder.placeInCityRemainingProgressProgressIndicator.setProgress(progress, true);
             }

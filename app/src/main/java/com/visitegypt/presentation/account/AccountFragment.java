@@ -47,7 +47,6 @@ import com.visitegypt.presentation.gamification.BadgesSliderViewAdapter;
 import com.visitegypt.presentation.gamification.CitiesActivity;
 import com.visitegypt.presentation.gamification.UserTitlesRecyclerViewAdapter;
 import com.visitegypt.presentation.home.parent.Home;
-import com.visitegypt.presentation.permission.PermissionActivity;
 import com.visitegypt.presentation.tripmateRequest.TripMateRequest;
 import com.visitegypt.utils.Chips;
 import com.visitegypt.utils.GamificationRules;
@@ -155,8 +154,7 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
         postsRecyclerView.setAdapter(postsRecyclerViewAdapter);
 
         userTitleChipView.setOnClickListener(view -> {
-            //
-            startActivity(new Intent(getActivity(), PermissionActivity.class));
+            showTitleDialog(getContext());
         });
 
         profileFrameImageView = accountView.findViewById(R.id.profileFrameImageView);

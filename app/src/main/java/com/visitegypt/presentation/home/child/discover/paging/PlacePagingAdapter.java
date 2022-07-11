@@ -52,10 +52,12 @@ public class PlacePagingAdapter extends PagingDataAdapter<Place, PlacePagingAdap
             }
 
             float averageReview = 0;
-            for (Review review : place.getReviews()) {
-                averageReview += review.getRating() / reviewsSize;
-            }
-            holder.txtRating.setText(String.format("%0.2f", averageReview));
+            if (place.getReviews() != null)
+                for (Review review : place.getReviews()) {
+                    averageReview += review.getRating();
+                }
+            averageReview /= reviewsSize;
+            holder.txtRating.setText(String.format("%.1f", averageReview));
         } catch (Exception ignored) {
 
         }
