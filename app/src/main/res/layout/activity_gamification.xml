@@ -13,21 +13,17 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <com.google.android.material.appbar.AppBarLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
+                android:layout_height="wrap_content"
+                android:gravity="center"
                     app:elevation="0dp">
 
                     <androidx.appcompat.widget.Toolbar
@@ -103,7 +99,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="left"
                         android:layout_marginLeft="0dp"
                         android:layout_marginRight="0dp"
                         android:orientation="horizontal">
@@ -112,7 +108,6 @@
 
                         <include layout="@layout/gamification_badge_shimmer" />
 
-                        <include layout="@layout/gamification_badge_shimmer" />
                     </LinearLayout>
                 </com.facebook.shimmer.ShimmerFrameLayout>
 
@@ -140,8 +135,6 @@
                         <include layout="@layout/gamificationn_achievement_shimmer" />
 
                         <include layout="@layout/gamificationn_achievement_shimmer" />
-
-                        <include layout="@layout/gamificationn_achievement_shimmer" />
                     </LinearLayout>
                 </com.facebook.shimmer.ShimmerFrameLayout>
 
@@ -164,109 +157,7 @@
                     <include layout="@layout/gamificationn_map_shimmer" />
 
                 </com.facebook.shimmer.ShimmerFrameLayout>
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/confirmLocation"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <include layout="@layout/detail_box_shimmer_placeholder_layout" />
-
-                </com.facebook.shimmer.ShimmerFrameLayout>
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_alternates_medium"
-                    android:gravity="center"
-                    android:text="Adventure Time"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textSize="24sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/adventautreShimmer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <GridLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="0dp"
-                        android:layout_marginRight="0dp"
-                        android:columnCount="3">
-
-
-                        <include layout="@layout/gamificationn_achievement_shimmer" />
-
-                        <include layout="@layout/gamificationn_achievement_shimmer" />
-
-                        <include layout="@layout/gamificationn_achievement_shimmer" />
-
-                        <include layout="@layout/gamificationn_achievement_shimmer" />
-
-                        <include layout="@layout/gamificationn_achievement_shimmer" />
-
-                        <include layout="@layout/gamificationn_achievement_shimmer" />
-
-                    </GridLayout>
-                </com.facebook.shimmer.ShimmerFrameLayout>
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/barShimmer"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <include layout="@layout/detail_box_shimmer_placeholder_layout" />
-
-                </com.facebook.shimmer.ShimmerFrameLayout>
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/startExploarShimmer"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <include layout="@layout/detail_box_shimmer_placeholder_layout" />
-                </com.facebook.shimmer.ShimmerFrameLayout>
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="8dp"
-                    android:text="Ask Anubis"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/askAnubisShimmer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="0dp"
-                        android:layout_marginRight="0dp"
-                        android:orientation="horizontal">
-
-                        <include layout="@layout/gamificationn_achievement_shimmer" />
-
-                        <include layout="@layout/gamificationn_achievement_shimmer" />
-                    </LinearLayout>
-                </com.facebook.shimmer.ShimmerFrameLayout>
             </LinearLayout>
-
-        </ScrollView>
-
-
     </LinearLayout>
 
     <!--  ***************************************************  -->
@@ -278,7 +169,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ScrollView
             android:layout_width="match_parent"

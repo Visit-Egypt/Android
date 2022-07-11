@@ -32,6 +32,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -84,6 +85,8 @@ import java.util.Locale;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import kotlin.Unit;
+import se.warting.permissionsui.backgroundlocation.PermissionsUiContracts;
 
 @AndroidEntryPoint
 public class GamificationActivity extends AppCompatActivity implements LocationListener, OnMapReadyCallback {
@@ -117,9 +120,16 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private Place place;
 
     private ShimmerFrameLayout sliderShimmerFrameLayout, claimPlaceShimmer, badgesShimmer;
-    private ShimmerFrameLayout socialActivitiesShimmer, mapShimmer, confirmLocation;
-    private ShimmerFrameLayout adventureShimmer, barShimmer, startExploringShimmer, askAnubisShimmer;
-
+    @SuppressLint("SetTextI18n")
+    ActivityResultLauncher<Unit> mGetContent = registerForActivityResult(
+            new PermissionsUiContracts.RequestBackgroundLocation(),
+            success -> {
+                if (success) {
+                    Log.d(TAG, "set permission granted");
+                } else {
+                    GeneralUtils.showSnackError(this, mapView, "Permission set error");
+                }
+            });
     private ImageView placeImageView;
     private TextView placeTitleTextView, placeRemainingActivitiesTextView, placeXpTextView;
     private ImageButton reviewImageButton, postPostImageButton, postStoryImageButton;
@@ -138,14 +148,15 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
 
     private MaterialCardView reviewBorder, postBorder, storyBorder, artifactsBorder, insightsBorder;
     private int timeout = 0;
+    private ShimmerFrameLayout socialActivitiesShimmer, mapShimmer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gamification);
 
-        initPlaceId(savedInstanceState);
         initPermissions();
+        initPlaceId(savedInstanceState);
         initViews();
         initViewModels(savedInstanceState);
         initClickListeners();
@@ -287,11 +298,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         badgesShimmer = findViewById(R.id.badgesShimmer);
         socialActivitiesShimmer = findViewById(R.id.socialActivitiesShimmer);
         mapShimmer = findViewById(R.id.mapShimmer);
-        confirmLocation = findViewById(R.id.confirmLocation);
-        adventureShimmer = findViewById(R.id.adventautreShimmer);
-        barShimmer = findViewById(R.id.barShimmer);
-        startExploringShimmer = findViewById(R.id.startExploarShimmer);
-        askAnubisShimmer = findViewById(R.id.askAnubisShimmer);
         shimmerLayout = findViewById(R.id.shimmerLayout);
         gamificationLayout = findViewById(R.id.gamificationLayout);
         startShimmerAnimation();
@@ -532,8 +538,9 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(GamificationActivity.this,
                         Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(GamificationActivity.this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            mGetContent.launch(null);
+//            ActivityCompat.requestPermissions(GamificationActivity.this,
+//                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         } else {
             Log.d(TAG, "initPermissions: already granted");
         }
@@ -745,10 +752,18 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
-            ActivityCompat.requestPermissions(this, permissions, 148914);
+            mGetContent.launch(null);
+
+//            String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+//            ActivityCompat.requestPermissions(this, permissions, 148914);
         }
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+        try {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+            Log.d(TAG, "onResume: set location listener success");
+
+        } catch (Exception ignored) {
+            Log.e(TAG, "onResume: set location listener failed");
+        }
         if (mapView != null && place != null) {
             Log.d(TAG, "onResume: map resumed");
             mapView.onResume();
@@ -792,11 +807,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         badgesShimmer.startShimmerAnimation();
         socialActivitiesShimmer.startShimmerAnimation();
         mapShimmer.startShimmerAnimation();
-        confirmLocation.startShimmerAnimation();
-        adventureShimmer.startShimmerAnimation();
-        barShimmer.startShimmerAnimation();
-        startExploringShimmer.startShimmerAnimation();
-        askAnubisShimmer.startShimmerAnimation();
     }
 
     private void stopShimmerAnimation() {
@@ -805,11 +815,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         badgesShimmer.stopShimmerAnimation();
         socialActivitiesShimmer.stopShimmerAnimation();
         mapShimmer.stopShimmerAnimation();
-        confirmLocation.stopShimmerAnimation();
-        adventureShimmer.stopShimmerAnimation();
-        barShimmer.stopShimmerAnimation();
-        startExploringShimmer.stopShimmerAnimation();
-        askAnubisShimmer.stopShimmerAnimation();
     }
 
     private void setLayoutVisible() {

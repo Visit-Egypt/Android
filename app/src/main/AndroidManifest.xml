@@ -31,6 +31,9 @@
         android:theme="@style/Theme.VisitEgypt"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".presentation.gamification.RewardActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.badges.BadgeActivity"
             android:exported="false" />
 
@@ -50,6 +53,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDyX88ZuZ6_KrI2SqFLnWFe5e0-3L4IKNM" />
+
         <activity
             android:name=".presentation.setting.SettingActivity"
             android:exported="true" />
@@ -77,7 +81,6 @@
         <activity
             android:name=".presentation.gamification.GamificationActivity"
             android:exported="true" />
-
         <activity
             android:name=".presentation.log.LogActivity"
             android:exported="true"
@@ -106,7 +109,7 @@
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
             android:name=".presentation.home.child.discover.allPlaces.DiscoverChildAllPlacesActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>
