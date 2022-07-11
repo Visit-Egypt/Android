@@ -1,6 +1,7 @@
 package com.visitegypt.domain.usecase;
 
 import com.visitegypt.domain.repository.UserRepository;
+import com.visitegypt.domain.usecase.base.CompletableUseCase;
 
 import java.util.HashSet;
 
@@ -9,7 +10,7 @@ import javax.inject.Named;
 
 import io.reactivex.rxjava3.core.Completable;
 
-public class UpdateUserInterestUseCase {
+public class UpdateUserInterestUseCase  extends CompletableUseCase<Void> {
     private UserRepository userRepository;
     private HashSet<String> newInterest, removedInterest;
 
@@ -26,9 +27,9 @@ public class UpdateUserInterestUseCase {
         this.removedInterest = removedInterest;
     }
 
-    public Completable updateInterest() {
+
+    @Override
+    protected Completable buildCompletableUseCase() {
         return userRepository.updateUserInterests(newInterest, removedInterest);
-
     }
-
 }

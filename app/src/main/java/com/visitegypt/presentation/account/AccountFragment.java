@@ -1,8 +1,12 @@
 package com.visitegypt.presentation.account;
 
 
+import static com.visitegypt.utils.GeneralUtils.showButtonLoaded;
+import static com.visitegypt.utils.GeneralUtils.showButtonSaveLoading;
+
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -27,6 +31,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
@@ -86,7 +91,7 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
     private MaterialTextView noPostsMaterialTextView;
 
     private ImageView profileFrameImageView;
-
+    private MaterialButton saveUserInterestButton;
 
     @Nullable
     @Override
@@ -254,6 +259,7 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
                 for (Tag tag : tags) {
                     userTags.add(tag.getId());
                     chipGroup.addView(Chips.createChipsLabel(tag.getName()));
+
                 }
             }
         });
@@ -263,7 +269,11 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
         });
         accountViewModel.mutableLiveUpdateIsDone.observe(getViewLifecycleOwner(), aBoolean -> {
             if (aBoolean) {
-                accountViewModel.mutableLiveDataAllTags.observe(getViewLifecycleOwner(), this::showDialog);
+//                accountViewModel.mutableLiveDataAllTags.observe(getViewLifecycleOwner(), this::showDialog);
+                accountViewModel.getUser();
+                showButtonLoaded(saveUserInterestButton, "Save");
+                chipGroup.removeAllViews();
+                dialog.dismiss();
             }
         });
 
@@ -291,17 +301,19 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         dialogLayout = LayoutInflater.from(getContext()).inflate(R.layout.dialog_user_interests, null);
         editChipGroup = dialogLayout.findViewById(R.id.chipGroup);
+        Chips.createSelectChips(allTags, userTags, editChipGroup);
         if (dialog == null) {
-            Chips.createSelectChips(allTags, userTags, editChipGroup);
             builder.setView(dialogLayout);
             dialog = builder.create();
             dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialogLayout.findViewById(R.id.saveButton).setOnClickListener(view -> {
+            saveUserInterestButton = dialogLayout.findViewById(R.id.saveButton);
+
+            saveUserInterestButton.setOnClickListener(view -> {
+                showButtonSaveLoading(saveUserInterestButton);
                 accountViewModel.updateYourInterest(addNewTags, removedTags);
-                dialog.dismiss();
             });
-            dialog.show();
+
         } else {
             dialog.show();
         }
@@ -345,10 +357,6 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
                     itr.remove();
                 }
             }
-
-
-            Log.d(TAG, "onFilterUpdate: new follow  " + addNewTags);
-            Log.d(TAG, "onFilterUpdate: unfollow  " + removedTags);
         }
     }
 }

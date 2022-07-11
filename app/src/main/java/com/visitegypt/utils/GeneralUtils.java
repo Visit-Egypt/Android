@@ -227,6 +227,15 @@ public class GeneralUtils {
         DrawableButtonExtensionsKt.hideProgress(button, newButtonText);
         GeneralUtils.showSnackError(button.getContext(), button, error == null ? "An error has occurred" : error);
     }
+    public static void showButtonSaveLoading(final Button button) {
+        DrawableButtonExtensionsKt.showProgress(button, progressParams -> {
+            progressParams.setButtonTextRes(R.string.loading);
+            progressParams.setProgressColor(Color.WHITE);
+            progressParams.setGravity(DrawableButton.GRAVITY_TEXT_START);
+            return Unit.INSTANCE;
+        });
+        button.setEnabled(true);
+    }
 
 
 

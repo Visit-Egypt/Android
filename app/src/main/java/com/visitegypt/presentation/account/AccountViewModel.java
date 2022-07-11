@@ -248,13 +248,10 @@ public class AccountViewModel extends ViewModel {
     public void updateYourInterest(HashSet<String> newInterests, HashSet<String> removedInterests) {
         userInterestUseCase.setNewInterest(newInterests);
         userInterestUseCase.setRemovedInterest(removedInterests);
-        userInterestUseCase
-                .updateInterest()
-                .subscribe(() -> {
-                    mutableLiveUpdateIsDone.setValue(true);
-                    Log.d(TAG, "updateYourInterest: woooooooooow ");
-                }, throwable -> {
-                    Log.e(TAG, "updateYourInterest: ", throwable);
-                });
+        userInterestUseCase.execute(() -> {
+            mutableLiveUpdateIsDone.setValue(true);
+        },throwable -> {
+            Log.e(TAG, "updateYourInterest: ", throwable);
+        });
     }
 }
