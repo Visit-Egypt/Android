@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User implements Cloneable {
-    @SerializedName("user_id")
+    @SerializedName("id")
     private String userId;
     @SerializedName("first_name")
     private String firstName;

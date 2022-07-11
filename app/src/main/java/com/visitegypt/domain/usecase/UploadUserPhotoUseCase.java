@@ -65,7 +65,6 @@ public class UploadUserPhotoUseCase {
             Log.d(TAG, "upload: " + e.toString());
         }
 
-
     }
 
     public void uploadARPhoto() {

@@ -53,7 +53,6 @@ public class TripMateRequest extends Fragment implements OnItemClickCallBack {
         tripMateRequestView = inflater.inflate(R.layout.trip_mate_request_fragment, container, false);
         container.removeAllViews();
         initViews();
-
         return tripMateRequestView;
     }
 
