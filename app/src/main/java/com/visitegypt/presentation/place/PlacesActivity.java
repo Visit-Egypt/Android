@@ -117,7 +117,7 @@ public class PlacesActivity extends AppCompatActivity {
         placesViewModel.getFullPlaceActivities();
 
         observeOnce(placesViewModel.placesMutableLiveData, (Observer<List<Place>>) places -> {
-            Log.d(TAG, " getting places to recycler view");
+            Log.d(TAG, " setting places to recycler view");
             int totalPlaces = 0;
 
             Log.d(TAG, "initViewModel: " + places.size());
@@ -157,6 +157,8 @@ public class PlacesActivity extends AppCompatActivity {
 //                                totalPlaces++;
 //                            }
                 }
+                Log.d(TAG, "initViewModel: owned places: " + ownedPlaces);
+                Log.d(TAG, "initViewModel: total places: " + finalTotalPlaces);
                 remainingActivitiesTextView.setText(ownedPlaces + "/" + finalTotalPlaces + " places complete");
                 cityRemainingProgressPlacesActivityProgressIndicator.setMax(finalTotalPlaces);
                 cityRemainingProgressPlacesActivityProgressIndicator.setProgress(ownedPlaces);

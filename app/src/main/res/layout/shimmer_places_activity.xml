@@ -26,7 +26,6 @@
             android:orientation="vertical">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/remainingActivitiesPlacesActivityTextView"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -44,7 +43,7 @@
                 android:backgroundTint="?attr/colorSecondaryVariant">
 
                 <com.google.android.material.progressindicator.LinearProgressIndicator
-                    android:id="@+id/cityRemainingProgressPlacesActivityProgressIndicator"
+                    android:id="@+id/cityRemainingProgressPlacesActivityProgressIndicatorShimmer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:trackCornerRadius="3dp"
@@ -53,10 +52,10 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@id/cityRemainingProgressPlacesActivityProgressIndicator"
-                    android:layout_alignTop="@id/cityRemainingProgressPlacesActivityProgressIndicator"
-                    android:layout_alignRight="@id/cityRemainingProgressPlacesActivityProgressIndicator"
-                    android:layout_alignBottom="@id/cityRemainingProgressPlacesActivityProgressIndicator">
+                    android:layout_alignLeft="@id/cityRemainingProgressPlacesActivityProgressIndicatorShimmer"
+                    android:layout_alignTop="@id/cityRemainingProgressPlacesActivityProgressIndicatorShimmer"
+                    android:layout_alignRight="@id/cityRemainingProgressPlacesActivityProgressIndicatorShimmer"
+                    android:layout_alignBottom="@id/cityRemainingProgressPlacesActivityProgressIndicatorShimmer">
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
