@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.visitegypt.domain.model.Post;
 import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.model.XPUpdate;
 import com.visitegypt.domain.usecase.AddNewPostUseCase;
 import com.visitegypt.domain.usecase.GetUserUseCase;
 import com.visitegypt.domain.usecase.UpdatePostAPostActivityUseCase;
@@ -32,12 +33,13 @@ public class PostsViewModel extends ViewModel implements UploadUserPhotoUseCase.
     private static final String TAG = "Posts ViewModel";
 
     private AddNewPostUseCase addNewPostUseCase;
-    private UploadUserPhotoUseCase uploadUserPhotoUseCase;
-    MutableLiveData<Boolean> postActivityState = new MutableLiveData<>();
-    MutableLiveData<User> userMutableLiveData = new MutableLiveData<>();
 
+    MutableLiveData<User> userMutableLiveData = new MutableLiveData<>();
     MutableLiveData<Boolean> isImageUploaded = new MutableLiveData<>();
     MutableLiveData<Boolean> isPostUploaded = new MutableLiveData<>();
+    MutableLiveData<XPUpdate> postUpdatedXP = new MutableLiveData<>();
+
+    private UploadUserPhotoUseCase uploadUserPhotoUseCase;
     private UpdatePostAPostActivityUseCase updatePostAPostActivityUseCase;
     private GetUserUseCase getUserUseCase;
 
@@ -84,12 +86,12 @@ public class PostsViewModel extends ViewModel implements UploadUserPhotoUseCase.
 
     private void updateUserPostActivity() {
         updatePostAPostActivityUseCase.setPlaceId(post.getPlaceId());
-        updatePostAPostActivityUseCase.execute(unused -> {
-            postActivityState.setValue(true);
+        updatePostAPostActivityUseCase.execute(xpUpdate -> {
+            postUpdatedXP.setValue(xpUpdate);
             Log.d(TAG, "updateUserPostActivity: updated post activity");
         }, throwable -> {
+            postUpdatedXP.setValue(null);
             Log.e(TAG, "updateUserPostActivity: " + throwable.getMessage());
-            postActivityState.setValue(false);
         });
     }
 

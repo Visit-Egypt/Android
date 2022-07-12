@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.visitegypt.domain.model.Message;
 import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.model.XPUpdate;
 import com.visitegypt.domain.usecase.ChatbotUseCase;
 import com.visitegypt.domain.usecase.GetUserUseCase;
 import com.visitegypt.domain.usecase.UpdateChatBotPlacePlaceActivity;
@@ -23,8 +24,8 @@ public class ChatbotViewModel extends ViewModel {
 
     SingleLiveEvent botResponseMutableLiveData = new SingleLiveEvent<String>();
 
-    MutableLiveData<Boolean> chatBotPlaceMutableLiveData = new MutableLiveData<>();
-    MutableLiveData<Boolean> chatBotArtifactsMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<XPUpdate> chatBotPlaceMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<XPUpdate> chatBotArtifactsMutableLiveData = new MutableLiveData<>();
     MutableLiveData<User> userMutableLiveData = new MutableLiveData<>();
 
     private static final String TAG = "Chatbot View Model";
@@ -67,15 +68,12 @@ public class ChatbotViewModel extends ViewModel {
         if (placeId == null)
             Log.e(TAG, "updateChatBotArtifact: you must call setPlaceId()");
         updateUserChatbotArtifactUseCase.setPlaceId(placeId);
-        updateUserChatbotArtifactUseCase.execute(unused -> {
-            chatBotArtifactsMutableLiveData.setValue(true);
+        updateUserChatbotArtifactUseCase.execute(xpUpdate -> {
+            chatBotArtifactsMutableLiveData.setValue(xpUpdate);
         }, throwable -> {
             Log.e(TAG, "updateChatBotArtifact: " + throwable.getMessage());
-            if (throwable.getMessage() == null) {
-                chatBotArtifactsMutableLiveData.setValue(true);
-            } else {
-                chatBotArtifactsMutableLiveData.setValue(false);
-            }
+            chatBotArtifactsMutableLiveData.setValue(null);
+
         });
     }
 
@@ -83,15 +81,11 @@ public class ChatbotViewModel extends ViewModel {
         if (placeId == null)
             Log.e(TAG, "updateChatBotPlace: you must call setPlaceId()");
         updateChatBotPlacePlaceActivity.setPlaceId(placeId);
-        updateChatBotPlacePlaceActivity.execute(unused -> {
-            chatBotPlaceMutableLiveData.setValue(true);
+        updateChatBotPlacePlaceActivity.execute(xpUpdate -> {
+            chatBotPlaceMutableLiveData.setValue(xpUpdate);
         }, throwable -> {
             Log.e(TAG, "updateChatBotPlace: " + throwable.getMessage());
-            if (throwable.getMessage() == null)
-                chatBotPlaceMutableLiveData.setValue(true);
-            else {
-                chatBotPlaceMutableLiveData.setValue(false);
-            }
+            chatBotPlaceMutableLiveData.setValue(null);
         });
     }
 

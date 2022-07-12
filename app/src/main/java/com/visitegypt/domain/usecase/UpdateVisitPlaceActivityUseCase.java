@@ -3,6 +3,7 @@ package com.visitegypt.domain.usecase;
 
 import android.util.Log;
 
+import com.visitegypt.domain.model.XPUpdate;
 import com.visitegypt.domain.repository.UserRepository;
 import com.visitegypt.domain.usecase.base.SingleUseCase;
 
@@ -12,7 +13,7 @@ import javax.inject.Named;
 import io.reactivex.rxjava3.core.Single;
 
 
-public class UpdateVisitPlaceActivityUseCase extends SingleUseCase<Void> {
+public class UpdateVisitPlaceActivityUseCase extends SingleUseCase<XPUpdate> {
     private static final String TAG = "updateVisitPlaceUseCase";
 
     private UserRepository userRepository;
@@ -24,7 +25,7 @@ public class UpdateVisitPlaceActivityUseCase extends SingleUseCase<Void> {
     }
 
     @Override
-    protected Single<Void> buildSingleUseCase() {
+    protected Single<XPUpdate> buildSingleUseCase() {
         if (placeId == null) {
             Log.e(TAG, "buildSingleUseCase: must call setPlaceId");
         }

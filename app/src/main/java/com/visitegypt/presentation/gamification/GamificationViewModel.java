@@ -13,6 +13,7 @@ import com.visitegypt.domain.model.FullPlaceActivity;
 import com.visitegypt.domain.model.Item;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.model.XPUpdate;
 import com.visitegypt.domain.usecase.GetBadgesOfPlaceUseCase;
 import com.visitegypt.domain.usecase.GetFullBadgeUseCase;
 import com.visitegypt.domain.usecase.GetFullPlaceActivitiesUseCase;
@@ -45,11 +46,11 @@ public class GamificationViewModel extends ViewModel {
     MutableLiveData<List<FullBadge>> fullBadgesMutableLiveData = new MutableLiveData<>();
     MutableLiveData<List<FullExplore>> fullExploreMutableLiveData = new MutableLiveData<>();
 
-    MutableLiveData<Boolean> updatedVisitLocationMutableLiveData = new MutableLiveData<>();
-    MutableLiveData<Boolean> updateChatBotPlaceMutableLiveData = new MutableLiveData<>();
-    MutableLiveData<Boolean> updateChatBotArtifactMutableLiveData = new MutableLiveData<>();
-    MutableLiveData<Boolean> updatedExploreMutableLiveData = new MutableLiveData<>();
-    MutableLiveData<Boolean> updatedReviewMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<XPUpdate> updatedVisitLocationMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<XPUpdate> updateChatBotPlaceMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<XPUpdate> updateChatBotArtifactMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<XPUpdate> updatedExploreMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<XPUpdate> updatedReviewMutableLiveData = new MutableLiveData<>();
     MutableLiveData<List<Badge>> placeBadgesMutableLiveData = new MutableLiveData<>();
     MutableLiveData<User> userMutableLiveData = new MutableLiveData<>();
 
@@ -117,8 +118,7 @@ public class GamificationViewModel extends ViewModel {
         getItemsUseCase.setPlaceId(placeId);
         getItemsUseCase.execute(itemPageResponse -> {
                     itemMutableLiveData.setValue(itemPageResponse.getItems());
-                }
-                ,
+                },
                 throwable -> {
                     Log.e(TAG, "error retrieving items: " + throwable.getMessage());
                 });
@@ -126,15 +126,11 @@ public class GamificationViewModel extends ViewModel {
 
     public void finishVisitLocation() {
         updateVisitPlaceActivityUseCase.setPlaceId(placeId);
-        updateVisitPlaceActivityUseCase.execute(unused -> {
-            updatedVisitLocationMutableLiveData.setValue(true);
+        updateVisitPlaceActivityUseCase.execute(xpUpdate -> {
+            updatedVisitLocationMutableLiveData.setValue(xpUpdate);
         }, throwable -> {
             Log.e(TAG, "finishVisitLocation: " + throwable.getMessage());
-            if (throwable.getMessage() == null) {
-                updatedVisitLocationMutableLiveData.setValue(true);
-            } else {
-                updatedVisitLocationMutableLiveData.setValue(false);
-            }
+            updatedVisitLocationMutableLiveData.setValue(null);
         });
     }
 
@@ -158,11 +154,11 @@ public class GamificationViewModel extends ViewModel {
 
     public void finishReview() {
         updateReviewActivityUseCase.setPlaceId(placeId);
-        updateReviewActivityUseCase.execute(unused -> {
-            updatedReviewMutableLiveData.setValue(true);
+        updateReviewActivityUseCase.execute(xpUpdate -> {
+            updatedReviewMutableLiveData.setValue(xpUpdate);
         }, throwable -> {
             Log.e(TAG, "finishReview: ", throwable);
-            updatedReviewMutableLiveData.setValue(false);
+            updatedReviewMutableLiveData.setValue(null);
         });
     }
 

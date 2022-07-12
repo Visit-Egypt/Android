@@ -13,6 +13,7 @@ import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
+import com.visitegypt.domain.model.XPUpdate;
 import com.visitegypt.domain.model.response.UploadResponse;
 import com.visitegypt.domain.repository.UserRepository;
 
@@ -168,32 +169,32 @@ public class UserRepositoryImp implements UserRepository {
     }
 
     @Override
-    public Single<Void> updateExploreUserActivity(String placeId, String exploreId) {
+    public Single<XPUpdate> updateExploreUserActivity(String placeId, String exploreId) {
         return retrofitService.updateExploreUserActivity(placeId, exploreId);
     }
 
     @Override
-    public Single<Void> updateChatBotArtifactUserActivity(String placeId) {
+    public Single<XPUpdate> updateChatBotArtifactUserActivity(String placeId) {
         return retrofitService.updateChatBotArtifactUserActivity(placeId);
     }
 
     @Override
-    public Single<Void> updateChatBotPlaceUserActivity(String placeId) {
+    public Single<XPUpdate> updateChatBotPlaceUserActivity(String placeId) {
         return retrofitService.updateChatBotPlaceUserActivity(placeId);
     }
 
     @Override
-    public Single<Void> updateVisitPlaceUserActivity(String placeId) {
+    public Single<XPUpdate> updateVisitPlaceUserActivity(String placeId) {
         return retrofitService.updateVisitPlaceUserActivity(placeId);
     }
 
     @Override
-    public Single<Void> updateUserReviewPlaceActivity(String placeId) {
+    public Single<XPUpdate> updateUserReviewPlaceActivity(String placeId) {
         return retrofitService.updateUserReviewPlaceActivity(placeId);
     }
 
     @Override
-    public Single<Void> updatePostUserActivity(String placeId) {
+    public Single<XPUpdate> updatePostUserActivity(String placeId) {
         return retrofitService.updatePostUserActivity(placeId);
     }
 

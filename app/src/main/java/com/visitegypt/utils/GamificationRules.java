@@ -1,8 +1,13 @@
 package com.visitegypt.utils;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 
+import androidx.core.content.res.ResourcesCompat;
+
 import com.google.gson.Gson;
+import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.FullBadge;
@@ -153,5 +158,22 @@ public class GamificationRules {
             }
         }
         return userTitles;
+    }
+
+    public static Drawable getProfileFrameDrawable(Context context, String title) {
+        if (title.equals(GamificationRules.ALL_TITLES[0])) {
+            return ResourcesCompat.getDrawable(context.getResources(), R.drawable.rank1, null);
+        } else if (title.equals(GamificationRules.ALL_TITLES[1])) {
+            return ResourcesCompat.getDrawable(context.getResources(), R.drawable.rank2, null);
+        } else if (title.equals(GamificationRules.ALL_TITLES[2])) {
+            return ResourcesCompat.getDrawable(context.getResources(), R.drawable.rank3, null);
+        } else if (title.equals(GamificationRules.ALL_TITLES[3])) {
+            return ResourcesCompat.getDrawable(context.getResources(), R.drawable.rank4, null);
+        } else if (title.equals(GamificationRules.ALL_TITLES[4])) {
+            return ResourcesCompat.getDrawable(context.getResources(), R.drawable.rank5, null);
+        } else if (title.equals(GamificationRules.ALL_TITLES[5])) {
+            return ResourcesCompat.getDrawable(context.getResources(), R.drawable.rank6, null);
+        }
+        return null;
     }
 }

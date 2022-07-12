@@ -4,6 +4,7 @@ import static com.visitegypt.presentation.gamification.GamificationActivity.ARTI
 import static com.visitegypt.presentation.gamification.GamificationActivity.INSIGHTS;
 import static com.visitegypt.utils.GeneralUtils.LiveDataUtil.observeOnce;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
@@ -18,10 +19,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Chatbot;
 import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.model.XPUpdate;
 import com.visitegypt.presentation.gamification.GamificationActivity;
+import com.visitegypt.utils.Constants;
 import com.visitegypt.utils.GeneralUtils;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -38,6 +43,9 @@ public class ChatbotActivity extends AppCompatActivity {
     private ChatbotViewModel chatbotViewModel;
     private String type;
     private String placeTitle;
+    @Inject
+    public SharedPreferences sharedPreferences;
+    private String placeId;
 
     User user;
 //    public String s;
@@ -52,13 +60,16 @@ public class ChatbotActivity extends AppCompatActivity {
             if (extras == null) {
                 placeTitle = null;
                 type = null;
+                placeId = null;
             } else {
                 placeTitle = extras.getString(GamificationActivity.PLACE_TITLE);
                 type = extras.getString(GamificationActivity.MSG_TYPE);
+                placeId = extras.getString(GamificationActivity.PLACE_ID);
             }
         } else {
             placeTitle = (String) savedInstanceState.getSerializable(GamificationActivity.PLACE_TITLE);
             type = (String) savedInstanceState.getSerializable(GamificationActivity.MSG_TYPE);
+            placeId = (String) savedInstanceState.getSerializable(GamificationActivity.PLACE_ID);
         }
 
         Log.d(TAG, "onCreate: type " + type);
@@ -90,28 +101,20 @@ public class ChatbotActivity extends AppCompatActivity {
                     Log.d(TAG, "Bot response delivered: " + o);
                     chatbotArrayList.add(new Chatbot(o.toString(), BOT_KEY));
                     ChatRecyclerViewAdapter.notifyItemInserted(chatbotArrayList.size() - 1);
+                    chatbotViewModel.setPlaceId(placeId);
                     chatbotViewModel.updateChatBotArtifact();
-                    observeOnce(chatbotViewModel.chatBotArtifactsMutableLiveData, aBoolean -> {
-                        if (aBoolean) {
-                            observeOnce(chatbotViewModel.userMutableLiveData, this::updateUserXP);
-                        }
-                    });
-
                 });
+                chatbotViewModel.chatBotArtifactsMutableLiveData.observe(this, this::updateUserXP);
             } else if (type.equals(INSIGHTS)) {
                 getResponse("Tell me about the insights of " + placeTitle);
                 chatbotViewModel.botResponseMutableLiveData.observe(ChatbotActivity.this, o -> {
                     Log.d(TAG, "Bot response delivered: " + o);
                     chatbotArrayList.add(new Chatbot(o.toString(), BOT_KEY));
                     ChatRecyclerViewAdapter.notifyItemInserted(chatbotArrayList.size() - 1);
+                    chatbotViewModel.setPlaceId(placeId);
                     chatbotViewModel.updateChatBotPlace();
-                    observeOnce(chatbotViewModel.chatBotPlaceMutableLiveData, aBoolean -> {
-                        if (aBoolean) {
-                            observeOnce(chatbotViewModel.userMutableLiveData, this::updateUserXP);
-                        }
-                    });
-
                 });
+                chatbotViewModel.chatBotPlaceMutableLiveData.observe(this, this::updateUserXP);
             }
         }
         fBtnSendMessage.setOnClickListener(v -> {
@@ -136,16 +139,14 @@ public class ChatbotActivity extends AppCompatActivity {
         chatbotViewModel.setMessage(message);
     }
 
-    private void updateUserXP(User newUser) {
-        User prevUser = user;
-        user = newUser;
-
+    private void updateUserXP(XPUpdate xpUpdate) {
+        String imageUrl = sharedPreferences.getString(Constants.SHARED_PREF_USER_IMAGE, "");
         GeneralUtils.showUserProgress(this,
                 fBtnSendMessage,
                 null,
                 null,
-                prevUser.getXp(),
-                newUser.getXp()
+                xpUpdate,
+                imageUrl
         );
     }
 }

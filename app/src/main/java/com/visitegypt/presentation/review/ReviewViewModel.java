@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.Review;
+import com.visitegypt.domain.model.XPUpdate;
 import com.visitegypt.domain.usecase.GetPlaceDetailUseCase;
 import com.visitegypt.domain.usecase.SubmitReviewUseCase;
 import com.visitegypt.domain.usecase.UpdateReviewActivityUseCase;
@@ -26,7 +27,7 @@ public class ReviewViewModel extends ViewModel {
     public MutableLiveData<List<Review>> reviewMutableLiveData = new MutableLiveData<>();
 
     public MutableLiveData<Integer> mutableLiveDataResponseCode = new MutableLiveData<>();
-    public MutableLiveData<Boolean> activityUpdatedMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<XPUpdate> activityUpdatedMutableLiveData = new MutableLiveData<>();
     public MutableLiveData<Place> placesMutableLiveData = new MutableLiveData<>();
 
     private SubmitReviewUseCase submitReviewUseCase;
@@ -65,15 +66,11 @@ public class ReviewViewModel extends ViewModel {
             reviewMutableLiveData.setValue(reviews);
             mutableLiveDataResponseCode.setValue(200);
             updateReviewActivityUseCase.setPlaceId(placeId);
-            updateReviewActivityUseCase.execute(unused -> {
-                activityUpdatedMutableLiveData.setValue(true);
+            updateReviewActivityUseCase.execute(xpUpdate -> {
+                activityUpdatedMutableLiveData.setValue(xpUpdate);
             }, throwable -> {
                 Log.e(TAG, "submitReview: " + throwable.getMessage());
-                if (throwable.getMessage() == null) {
-                    activityUpdatedMutableLiveData.setValue(true);
-                } else {
-                    activityUpdatedMutableLiveData.setValue(false);
-                }
+                activityUpdatedMutableLiveData.setValue(null);
             });
         }, throwable -> {
             try {

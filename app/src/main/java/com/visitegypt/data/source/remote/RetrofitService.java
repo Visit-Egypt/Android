@@ -18,6 +18,7 @@ import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
+import com.visitegypt.domain.model.XPUpdate;
 import com.visitegypt.domain.model.response.BadgeResponse;
 import com.visitegypt.domain.model.response.ItemPageResponse;
 import com.visitegypt.domain.model.response.PlacePageResponse;
@@ -221,22 +222,22 @@ public interface RetrofitService {
     /******* new gamification *********/
 
     @PUT("api/user/scanobject/{place_Id}/{explore_id}")
-    public Single<Void> updateExploreUserActivity(@Path("place_id") String placeId, @Path("explore_id") String exploreId);
+    public Single<XPUpdate> updateExploreUserActivity(@Path("place_id") String placeId, @Path("explore_id") String exploreId);
 
     @PUT("api/user/chatbotartifact/{place_id}")
-    public Single<Void> updateChatBotArtifactUserActivity(@Path("place_id") String placeId);
+    public Single<XPUpdate> updateChatBotArtifactUserActivity(@Path("place_id") String placeId);
 
     @PUT("api/user/chatbotplace/{place_id}")
-    public Single<Void> updateChatBotPlaceUserActivity(@Path("place_id") String placeId);
+    public Single<XPUpdate> updateChatBotPlaceUserActivity(@Path("place_id") String placeId);
 
     @PUT("api/user/visitplace/{place_id}")
-    public Single<Void> updateVisitPlaceUserActivity(@Path("place_id") String placeId);
+    public Single<XPUpdate> updateVisitPlaceUserActivity(@Path("place_id") String placeId);
 
     @PUT("api/user/reviewplace/{place_id}")
-    public Single<Void> updateUserReviewPlaceActivity(@Path("place_id") String placeId);
+    public Single<XPUpdate> updateUserReviewPlaceActivity(@Path("place_id") String placeId);
 
     @PUT("api/user/addpost/{place_id}")
-    public Single<Void> updatePostUserActivity(@Path("place_id") String placeId);
+    public Single<XPUpdate> updatePostUserActivity(@Path("place_id") String placeId);
 
     @GET("/api/user/allactvitydetail/{user_id}")
     public Single<List<FullPlaceActivity>> getUserFullPlaceActivitiesDetail(@Path("user_id") String userId,

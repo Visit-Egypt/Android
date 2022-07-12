@@ -6,7 +6,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.LinearLayoutCompat;
@@ -18,10 +22,13 @@ import com.github.razir.progressbutton.DrawableButtonExtensionsKt;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 import com.hanks.htextview.fade.FadeTextView;
+import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.PlaceActivity;
+import com.visitegypt.domain.model.XPUpdate;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -35,13 +42,12 @@ import kotlin.Unit;
 public class GeneralUtils {
 
     private static final String TAG = "general utils";
-    public static int userXP;
 
     public static void showUserProgress(Context context, View callingView,
                                         @Nullable ArrayList<PlaceActivity> placeActivityArrayList,
                                         @Nullable ArrayList<BadgeTask> badgeTaskArrayList,
-                                        @Nullable int userXp,
-                                        @Nullable int newXp) {
+                                        @Nullable XPUpdate xpUpdate,
+                                        @Nullable String imageUrl) {
         Snackbar snackbar = Snackbar.make(callingView, "", BaseTransientBottomBar.LENGTH_LONG);
         Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
 
@@ -50,76 +56,92 @@ public class GeneralUtils {
         linearLayoutCompat.setLayoutParams(new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
+        if (xpUpdate != null)
+            if (xpUpdate.getOldXP() != xpUpdate.getNewXp()) {
+                Log.d(TAG, "showUserProgress: " + new Gson().toJson(xpUpdate));
 
-        if (userXp != -1) {
-            Log.d(TAG, "showUserProgress: old XP: " + userXp);
-            Log.d(TAG, "showUserProgress: new XP: " + newXp);
-            View levelView = LayoutInflater.from(context).inflate(R.layout.snack_level, null, false);
+                View levelView = LayoutInflater.from(context).inflate(R.layout.snack_level, null, false);
 
-            int userLevel = GamificationRules.getLevelFromXp(userXp);
+                int userLevel = GamificationRules.getLevelFromXp(xpUpdate.getOldXP());
 
-            FadeTextView userTitleFadeTextView = levelView.findViewById(R.id.userTitleFadeTextView);
-            userTitleFadeTextView.animateText(GamificationRules.getTitleFromLevel(userLevel));
+                ImageView profileFrameImageView = levelView.findViewById(R.id.profileFrameImageViewSnackBar);
+                Animation fade = new AlphaAnimation(0, 1);
+                fade.setDuration(500);
+                fade.setInterpolator(new DecelerateInterpolator());
+                profileFrameImageView.setBackground(GamificationRules.getProfileFrameDrawable(context,
+                        GamificationRules.getTitleFromLevel(userLevel)));
+                profileFrameImageView.startAnimation(fade);
 
-            FadeTextView userLevelTextView = levelView.findViewById(R.id.snackUserLevelFadeTextView);
-            userLevelTextView.setText(userLevel + "");
+                if (imageUrl != null) {
+                    ImageView accountImageView = levelView.findViewById(R.id.circularAccountImageViewSnackBar);
+                    Picasso.get().load(imageUrl).into(accountImageView);
+                }
 
-            FadeTextView userNextLevelTextView = levelView.findViewById(R.id.snackUserNextLevelFadeTextView);
-            userNextLevelTextView.setText(userLevel + 1 + "");
+                FadeTextView userTitleFadeTextView = levelView.findViewById(R.id.userTitleFadeTextView);
+                userTitleFadeTextView.animateText(GamificationRules.getTitleFromLevel(userLevel));
 
-            FadeTextView userXPFadeTextView = levelView.findViewById(R.id.snackUserXPFadeTextView);
-            userXPFadeTextView.setText(GamificationRules.getRemainingXPToNextLevel(userXp) + "XP");
+                FadeTextView userLevelTextView = levelView.findViewById(R.id.snackUserLevelFadeTextView);
+                userLevelTextView.setText(userLevel + "");
+                userLevelTextView.animateText(userLevel + "");
 
-            LinearProgressIndicator linearProgressIndicator = levelView.findViewById(R.id.snackUserXPProgressIndicator);
-            linearProgressIndicator.setMax(GamificationRules.getLevelXp(userLevel + 1));
-            linearProgressIndicator.setProgress(GamificationRules.getRemainingXPToNextLevel(userXp), true);
+                FadeTextView userNextLevelTextView = levelView.findViewById(R.id.snackUserNextLevelFadeTextView);
+                userNextLevelTextView.setText(userLevel + 1 + "");
+                userNextLevelTextView.animateText(userLevel + 1 + "");
 
+                FadeTextView userXPFadeTextView = levelView.findViewById(R.id.snackUserXPFadeTextView);
+                userXPFadeTextView.setText(GamificationRules.getRemainingXPToNextLevel(xpUpdate.getOldXP()) + "XP remaining");
+                userXPFadeTextView.animateText(GamificationRules.getRemainingXPToNextLevel(xpUpdate.getOldXP()) + "XP remaining");
 
-            if (newXp != 0) {
+                LinearProgressIndicator linearProgressIndicator = levelView.findViewById(R.id.snackUserXPProgressIndicator);
+                linearProgressIndicator.setMax(GamificationRules.getLevelXp(userLevel + 1) - GamificationRules.getLevelXp(userLevel));
+                linearProgressIndicator.setProgress(linearProgressIndicator.getMax() -
+                        GamificationRules.getRemainingXPToNextLevel(xpUpdate.getOldXP()), true);
 
-                int newUserLevel = GamificationRules.getLevelFromXp(newXp);
+                int newUserLevel = GamificationRules.getLevelFromXp(xpUpdate.getNewXp());
                 new java.util.Timer().schedule(
                         new java.util.TimerTask() {
                             @Override
                             public void run() {
                                 if (newUserLevel > userLevel) {
                                     // User leveled up
-                                    Log.d(TAG, "run: new userLevel bigger: " + GamificationRules.getLevelFromXp(userXp));
-                                    linearProgressIndicator.setMax(GamificationRules.getLevelXp(newUserLevel + 1));
+                                    Log.d(TAG, "run: new userLevel bigger: " + GamificationRules.getLevelFromXp(xpUpdate.getOldXP()));
+                                    linearProgressIndicator.setMax(GamificationRules.getLevelXp(newUserLevel + 1) - GamificationRules.getLevelXp(newUserLevel));
                                     linearProgressIndicator.setProgress(linearProgressIndicator.getMax() -
-                                            GamificationRules.getRemainingXPToNextLevel(newXp), true);
+                                            GamificationRules.getRemainingXPToNextLevel(xpUpdate.getNewXp()), true);
 
                                     userLevelTextView.post(() -> userLevelTextView.animateText(newUserLevel + ""));
                                     userNextLevelTextView.post(() -> userNextLevelTextView.animateText(newUserLevel + 1 + ""));
                                     userXPFadeTextView.post(() -> userXPFadeTextView.animateText("level up!"));
-                                    userTitleFadeTextView.post(() -> userTitleFadeTextView.animateText(GamificationRules.getTitleFromLevel(newUserLevel)));
-                                    new Timer().schedule(new TimerTask() {
-                                        @Override
-                                        public void run() {
-                                            userXPFadeTextView.post(() -> userXPFadeTextView.animateText(GamificationRules.getRemainingXPToNextLevel(newXp) + "XP"));
-                                        }
-                                    }, 2000);
-
+                                    if (!GamificationRules.getTitleFromLevel(newUserLevel).equals(GamificationRules.getTitleFromLevel(userLevel))) {
+                                        profileFrameImageView.post(() -> {
+                                            profileFrameImageView.setBackground(GamificationRules.getProfileFrameDrawable(context,
+                                                    GamificationRules.getTitleFromLevel(newUserLevel)));
+                                            profileFrameImageView.startAnimation(fade);
+                                        });
+                                        userTitleFadeTextView.post(() -> userTitleFadeTextView.animateText(GamificationRules.getTitleFromLevel(newUserLevel)));
+                                        new Timer().schedule(new TimerTask() {
+                                            @Override
+                                            public void run() {
+                                                userXPFadeTextView.post(() ->
+                                                        userXPFadeTextView.animateText(GamificationRules.
+                                                                getRemainingXPToNextLevel(xpUpdate.getNewXp()) + "XP remaining"));
+                                            }
+                                        }, 2000);
+                                    }
 
                                 } else {
-                                    Log.d(TAG, "run: " + GamificationRules.getLevelFromXp(userXp));
-                                    Log.d(TAG, "run: " + GamificationRules.getLevelFromXp(newXp));
-                                    Log.d(TAG, "run: " + GamificationRules.getRemainingXPToNextLevel(userXp));
-                                    Log.d(TAG, "run: " + GamificationRules.getRemainingXPToNextLevel(newXp));
                                     linearProgressIndicator.setProgress(linearProgressIndicator.getMax() -
-                                            GamificationRules.getRemainingXPToNextLevel(newXp), true);
-                                    userXPFadeTextView.post(() -> userXPFadeTextView.animateText(GamificationRules.getRemainingXPToNextLevel(newXp) + "XP"));
+                                            GamificationRules.getRemainingXPToNextLevel(xpUpdate.getNewXp()), true);
+                                    userXPFadeTextView.post(() -> userXPFadeTextView.animateText(GamificationRules.getRemainingXPToNextLevel(xpUpdate.getNewXp()) + "XP remaining"));
                                 }
                             }
                         },
                         1500
                 );
 
+                linearLayoutCompat.addView(levelView);
+
             }
-
-            linearLayoutCompat.addView(levelView);
-
-        }
 
         if (placeActivityArrayList != null) {
             for (PlaceActivity placeActivity : placeActivityArrayList) {
@@ -136,7 +158,7 @@ public class GeneralUtils {
                 linearProgressIndicator.setProgress(0);
                 linearProgressIndicator.setMax(placeActivity.getXp());
                 linearProgressIndicator.setProgress(linearProgressIndicator.getMax(), true);
-                xpTextView.setText(linearProgressIndicator.getProgress() + "XP");
+                xpTextView.setText(linearProgressIndicator.getProgress() + "XP left");
 
                 linearLayoutCompat.addView(placeActivityLayout);
 
@@ -158,7 +180,7 @@ public class GeneralUtils {
                 linearProgressIndicator.setProgress(0);
                 linearProgressIndicator.setMax(badgeTask.getMaxProgress());
                 linearProgressIndicator.setProgress(linearProgressIndicator.getMax(), true);
-                xpTextView.setText(linearProgressIndicator.getProgress() + "XP");
+                xpTextView.setText(linearProgressIndicator.getProgress() + "XP left");
 
                 linearLayoutCompat.addView(badgeTaskLayout);
             }
@@ -168,18 +190,21 @@ public class GeneralUtils {
         snackbarLayout.setPadding(0, 0, 0, 0);
         snackbarLayout.addView(linearLayoutCompat, 0);
         snackbar.setDuration(6000);
+        snackbar.setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE);
         snackbar.show();
     }
 
     public static void showSnackError(Context context, View callingView, @Nonnull String error) {
         Snackbar snackbar = Snackbar.make(callingView, error, BaseTransientBottomBar.LENGTH_LONG);
         snackbar.setTextColor(Color.RED);
+        snackbar.setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE);
         snackbar.show();
     }
 
     public static void showSnackInfo(Context context, View callingView, @Nonnull String info) {
         Snackbar snackbar = Snackbar.make(callingView, info, BaseTransientBottomBar.LENGTH_LONG);
         //snackbar.setTextColor(Color.RED);
+        snackbar.setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE);
         snackbar.show();
     }
 

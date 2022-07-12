@@ -1,6 +1,5 @@
 package com.visitegypt.presentation.gamification;
 
-import static com.visitegypt.utils.Constants.PLACE_ID;
 import static com.visitegypt.utils.GeneralUtils.LiveDataUtil.observeOnce;
 import static com.visitegypt.utils.GeneralUtils.showButtonFailed;
 import static com.visitegypt.utils.GeneralUtils.showButtonLoaded;
@@ -71,6 +70,7 @@ import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.model.XPUpdate;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
 import com.visitegypt.presentation.home.HomeRecyclerViewAdapter;
 import com.visitegypt.presentation.post.PostActivity;
@@ -95,6 +95,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     public static final String ARTIFACTS = "artifacts";
     public static final String INSIGHTS = "insights";
     public static final String PLACE_TITLE = "placeTitle";
+    public static final String PLACE_ID = "placeId";
     private static final String TAG = "Gamification Activity";
 
     @Inject
@@ -160,7 +161,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         initViews();
         initViewModels(savedInstanceState);
         initClickListeners();
-        //dummyTests();
+        dummyTests();
     }
 
     private void dummyTests() {
@@ -168,7 +169,8 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                 confirmLocationButton,
                 null,
                 null,
-                200, 400);
+                new XPUpdate(35, 55),
+                sharedPreferences.getString(Constants.SHARED_PREF_USER_IMAGE, ""));
     }
 
     private void initPlaceId(Bundle savedInstanceState) {
@@ -365,6 +367,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         Intent intent = new Intent(this, ChatbotActivity.class);
         intent.putExtra(PLACE_TITLE, place.getTitle());
         intent.putExtra(MSG_TYPE, ARTIFACTS);
+        intent.putExtra(PLACE_ID, place.getId());
         startActivity(intent);
     }
 
@@ -372,6 +375,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         Intent intent = new Intent(this, ChatbotActivity.class);
         intent.putExtra(PLACE_TITLE, place.getTitle());
         intent.putExtra(MSG_TYPE, INSIGHTS);
+        intent.putExtra(PLACE_ID, place.getId());
         startActivity(intent);
     }
 
@@ -512,15 +516,17 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         observeOnce(userInsideCircuitMutableLiveData, userInside -> {
             if (userInside) {
                 gamificationViewModel.finishVisitLocation();
-                observeOnce(gamificationViewModel.updatedVisitLocationMutableLiveData, aBoolean -> {
-                    if (aBoolean) {
+                observeOnce(gamificationViewModel.updatedVisitLocationMutableLiveData, xpUpdate -> {
+                    if (xpUpdate != null) {
                         showButtonLoaded(confirmLocationButton, "Complete");
                         confirmLocationButton.setStrokeColor(ColorStateList.valueOf(getResources().getColor(R.color.camel)));
                         setVisitLocationActivityDone();
-                        observeOnce(gamificationViewModel.userMutableLiveData, this::updateUserXP);
+                        updateUserXP(xpUpdate);
+                        // observeOnce(gamificationViewModel.userMutableLiveData, this::updateUserXP);
+                    } else {
+                        showButtonFailed(confirmLocationButton, "failed to update location", "confirm location");
                     }
                     getBadgesAndActivities();
-                    //initActivities();
                 });
 
             } else {
@@ -573,17 +579,19 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
 
                 try {
                     reviewViewModel.submitReview(placeId, review);
-                    observeOnce(reviewViewModel.activityUpdatedMutableLiveData, loaded -> {
-                        if (loaded) {
+                    observeOnce(reviewViewModel.activityUpdatedMutableLiveData, xpUpdate -> {
+                        if (xpUpdate != null) {
                             Log.d(TAG, "showReviewDialog: update review successful");
                             setReviewActivityComplete();
                             Log.d(TAG, "updateUserXP: old XP " + user.getXp());
                             gamificationViewModel.getUser();
-                            observeOnce(gamificationViewModel.userMutableLiveData, this::updateUserXP);
+                            updateUserXP(xpUpdate);
+                            addReviewDialog.dismiss();
+                            getBadgesAndActivities();
+                        } else {
+                            showButtonFailed(submitReviewButton, null, "submit");
                         }
-                        addReviewDialog.dismiss();
                         // initActivities();
-                        getBadgesAndActivities();
                     });
                 } catch (Exception e) {
                     Log.e(TAG, "showReviewDialog: " + e.getMessage());
@@ -596,33 +604,14 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         });
     }
 
-    private void updateUserXP(User newUser) {
-        timeout++;
-        Log.d(TAG, "updateUserXP: " + user.getXp());
-        User prevUser = null;
-        try {
-            prevUser = (User) user.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        user = newUser;
-        Log.d(TAG, "updateUserXP: " + user.getXp());
-
-        if (prevUser.getXp() == newUser.getXp() && timeout < 3) {
-            gamificationViewModel.getUser();
-            observeOnce(gamificationViewModel.userMutableLiveData, user -> {
-                updateUserXP(newUser);
-            });
-        } else {
-            timeout = 0;
-            GeneralUtils.showUserProgress(this,
-                    confirmLocationButton,
-                    null,
-                    null,
-                    prevUser.getXp(),
-                    newUser.getXp()
-            );
-        }
+    private void updateUserXP(XPUpdate xpUpdate) {
+        String imageUrl = sharedPreferences.getString(Constants.SHARED_PREF_USER_IMAGE, "");
+        GeneralUtils.showUserProgress(this,
+                confirmLocationButton,
+                null,
+                null,
+                xpUpdate,
+                imageUrl);
     }
 
     @Override

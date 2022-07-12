@@ -1,6 +1,10 @@
 package com.visitegypt.presentation.post;
 
 import static com.visitegypt.utils.Constants.REQUEST_ID_MULTIPLE_PERMISSIONS;
+import static com.visitegypt.utils.GeneralUtils.showButtonFailed;
+import static com.visitegypt.utils.GeneralUtils.showButtonLoaded;
+import static com.visitegypt.utils.GeneralUtils.showButtonLoading;
+import static com.visitegypt.utils.GeneralUtils.showSnackInfo;
 import static com.visitegypt.utils.UploadUtils.checkAndRequestPermissions;
 import static com.visitegypt.utils.UploadUtils.getRealPathFromUri;
 import static com.visitegypt.utils.UploadUtils.setContext;
@@ -8,6 +12,7 @@ import static com.visitegypt.utils.UploadUtils.setContext;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,7 +20,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -28,10 +32,13 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.model.XPUpdate;
 import com.visitegypt.utils.Constants;
 import com.visitegypt.utils.GeneralUtils;
 
 import java.io.File;
+
+import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -47,10 +54,11 @@ public class PostActivity extends AppCompatActivity {
     private CircularImageView userImageView;
     private EditText postTxt;
     private Button postButton;
-    private ShapeableImageView  postImageView;
+    @Inject
+    public SharedPreferences sharedPreferences;
     private User user;
     private Uri selectedImage;
-
+    private ShapeableImageView postImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +79,7 @@ public class PostActivity extends AppCompatActivity {
 
         initViews();
         setUserImageImageView();
-        liveDataObsereve();
+        liveDataObserve();
     }
 
     private void initViews() {
@@ -85,8 +93,9 @@ public class PostActivity extends AppCompatActivity {
         postButton.setOnClickListener(view -> {
             postTxt.getText().toString();
             if (postTxt.getText().toString().isEmpty()) {
-                Toast.makeText(PostActivity.this, "You can't make empty post", Toast.LENGTH_LONG).show();
+                GeneralUtils.showSnackError(PostActivity.this, postTxt, "You can't make an empty post");
             } else {
+                showButtonLoading(postButton);
                 postsViewModel.setPostData(postTxt.getText().toString(), placeId);
                 postsViewModel.addPost();
             }
@@ -107,11 +116,10 @@ public class PostActivity extends AppCompatActivity {
     public void selectPhotoOnClick(View view) {
         if (checkAndRequestPermissions(PostActivity.this)) {
             chooseImage(this);
-
         }
     }
 
-    private void liveDataObsereve() {
+    private void liveDataObserve() {
         postsViewModel.getUser();
         GeneralUtils.LiveDataUtil.observeOnce(postsViewModel.userMutableLiveData, user1 -> {
             postButton.setEnabled(true);
@@ -120,40 +128,39 @@ public class PostActivity extends AppCompatActivity {
         postsViewModel.isImageUploaded.observe(this, aBoolean -> {
             if (!aBoolean)
                 Toast.makeText(PostActivity.this, "Upload Failed", Toast.LENGTH_LONG).show();
-            else
-            {
-               postImageView.setImageURI(selectedImage);
-               postImageView.setVisibility(View.VISIBLE);
+            else {
+                postImageView.setImageURI(selectedImage);
+                postImageView.setVisibility(View.VISIBLE);
             }
 
         });
         postsViewModel.isPostUploaded.observe(this, aBoolean -> {
             if (aBoolean) {
                 postTxt.getText().clear();
-                Toast.makeText(PostActivity.this, "Your Post is Created ", Toast.LENGTH_LONG).show();
-                GeneralUtils.LiveDataUtil.observeOnce(postsViewModel.userMutableLiveData, newUser -> {
-                    updateUserXP(newUser);
-                });
+                showButtonLoaded(postButton, "Post");
+                showSnackInfo(this, postTxt, "Post successfully created");
+//                Toast.makeText(PostActivity.this, "Your Post is Created ", Toast.LENGTH_LONG).show();
+//                GeneralUtils.LiveDataUtil.observeOnce(postsViewModel.postUpdatedXP, this::updateUserXP);
             } else {
-                Toast.makeText(PostActivity.this, "Please,try again ", Toast.LENGTH_LONG).show();
+                showButtonFailed(postButton, "failed to add post", "post");
+//                Toast.makeText(PostActivity.this, "Please,try again ", Toast.LENGTH_LONG).show();
             }
         });
-
-
+        postsViewModel.postUpdatedXP.observe(this, xpUpdate -> {
+            updateUserXP(xpUpdate);
+        });
     }
 
-    private void updateUserXP(User newUser) {
-        User prevUser = user;
-        user = newUser;
-
+    private void updateUserXP(XPUpdate xpUpdate) {
+        String imageUrl = sharedPreferences.getString(Constants.SHARED_PREF_USER_IMAGE, "");
         GeneralUtils.showUserProgress(this,
                 postTxt,
                 null,
                 null,
-                prevUser.getXp(),
-                newUser.getXp()
+                xpUpdate,
+                imageUrl
         );
-        onBackPressed();
+        //onBackPressed();
     }
 
     @Override

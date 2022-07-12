@@ -6,14 +6,41 @@
     android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/camel">
+        android:layout_width="match_parent"
+        android:elevation="8dp">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/profileFrameImageViewSnackBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <com.mikhaellopez.circularimageview.CircularImageView
+                        android:id="@+id/circularAccountImageViewSnackBar"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_baseline_account_circle_24"
+                        app:civ_border_color="@color/camel"
+                        app:civ_border_width="2dp" />
+                </RelativeLayout>
+            </FrameLayout>
 
             <com.hanks.htextview.fade.FadeTextView
                 android:id="@+id/userTitleFadeTextView"
@@ -27,24 +54,25 @@
                 android:textColor="?attr/colorPrimaryVariant" />
 
             <RelativeLayout
+                android:id="@+id/relativelayoutSnackLevel"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <com.google.android.material.progressindicator.LinearProgressIndicator
                     android:id="@+id/snackUserXPProgressIndicator"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
-                    app:trackColor="@color/black"
-                    app:trackCornerRadius="3dp"
+                    android:layout_marginBottom="8dp"
+                    app:trackCornerRadius="20dp"
                     app:trackThickness="30dp" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@id/snackUserXPProgressIndicator"
+                    android:layout_alignStart="@id/snackUserXPProgressIndicator"
                     android:layout_alignTop="@id/snackUserXPProgressIndicator"
-                    android:layout_alignRight="@id/snackUserXPProgressIndicator"
+                    android:layout_alignEnd="@id/snackUserXPProgressIndicator"
                     android:layout_alignBottom="@id/snackUserXPProgressIndicator">
 
 
@@ -56,8 +84,7 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="8dp"
                         android:background="#00000000"
-                        android:gravity="center"
-                        android:text="4" />
+                        android:gravity="center" />
 
                     <com.hanks.htextview.fade.FadeTextView
                         android:id="@+id/snackUserXPFadeTextView"
@@ -68,7 +95,6 @@
                         android:layout_weight="1"
                         android:background="#00000000"
                         android:gravity="center"
-                        android:text="32XP"
                         android:textSize="18sp" />
 
                     <com.hanks.htextview.fade.FadeTextView
@@ -79,8 +105,7 @@
                         android:layout_gravity="center"
                         android:layout_marginEnd="8dp"
                         android:background="#00000000"
-                        android:gravity="center"
-                        android:text="5" />
+                        android:gravity="center" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
             </RelativeLayout>

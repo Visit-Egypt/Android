@@ -12,6 +12,7 @@ import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
+import com.visitegypt.domain.model.XPUpdate;
 import com.visitegypt.domain.model.response.UploadResponse;
 
 import java.util.HashMap;
@@ -75,17 +76,17 @@ public interface UserRepository {
     Single<List<PlaceActivity>> updateUserPlaceActivity(String activityId, PlaceActivity placeActivity);
 
     /*********** gamification new requests ************/
-    Single<Void> updateExploreUserActivity(String placeId, String exploreId);
+    Single<XPUpdate> updateExploreUserActivity(String placeId, String exploreId);
 
-    Single<Void> updateChatBotArtifactUserActivity(String placeId);
+    Single<XPUpdate> updateChatBotArtifactUserActivity(String placeId);
 
-    Single<Void> updateChatBotPlaceUserActivity(String placeId);
+    Single<XPUpdate> updateChatBotPlaceUserActivity(String placeId);
 
-    Single<Void> updateVisitPlaceUserActivity(String placeId);
+    Single<XPUpdate> updateVisitPlaceUserActivity(String placeId);
 
-    Single<Void> updateUserReviewPlaceActivity(String placeId);
+    Single<XPUpdate> updateUserReviewPlaceActivity(String placeId);
 
-    Single<Void> updatePostUserActivity(String placeId);
+    Single<XPUpdate> updatePostUserActivity(String placeId);
 
     Single<List<FullPlaceActivity>> getUserFullPlaceActivitiesDetail(String userId, String placeId);
 
