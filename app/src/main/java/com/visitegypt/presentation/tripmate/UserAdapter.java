@@ -80,7 +80,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewAdapte
             imgSendRequest = itemView.findViewById(R.id.imgSendRequest);
             itemView.setOnClickListener(v -> {
                 Bundle bundle = new Bundle();
-                bundle.putString(CHOSEN_USER_ID,users.get(getAdapterPosition()).getUserId());
+                bundle.putString(CHOSEN_USER_ID,users.get(getAdapterPosition()).getId());
                 ((Home) fragment.getActivity()).changeFragmentWithBundle(new UserProfile(),bundle);
 
             });

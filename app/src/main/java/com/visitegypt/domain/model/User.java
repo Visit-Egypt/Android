@@ -8,8 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User implements Cloneable {
-    @SerializedName("id")
+    @SerializedName("user_id")
     private String userId;
+    private String id;
     @SerializedName("first_name")
     private String firstName;
     @SerializedName("last_name")
@@ -220,6 +221,18 @@ public class User implements Cloneable {
 
     public List<TripMateRequest> getTripMateRequests() {
         return tripMateRequests;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setTripMateRequests(List<TripMateRequest> tripMateRequests) {
+        this.tripMateRequests = tripMateRequests;
     }
 
     @NonNull
