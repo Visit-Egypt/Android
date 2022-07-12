@@ -9,15 +9,20 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.visitegypt.data.source.local.dao.TagDao;
+import com.visitegypt.domain.model.FullBadge;
+import com.visitegypt.domain.model.Post;
 import com.visitegypt.domain.model.Tag;
 import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.repository.TagRepository;
 import com.visitegypt.domain.usecase.FollowUserUseCase;
+import com.visitegypt.domain.usecase.GetFullBadgeUseCase;
 import com.visitegypt.domain.usecase.GetTagUseCase;
+import com.visitegypt.domain.usecase.GetUserPostsUseCase;
 import com.visitegypt.domain.usecase.GetUserUseCase;
 import com.visitegypt.domain.usecase.RequestTripMateUseCase;
 import com.visitegypt.domain.usecase.UnFollowUseCase;
+import com.visitegypt.utils.Constants;
 
 import java.util.List;
 
@@ -39,13 +44,18 @@ public class UserProfileViewModel extends ViewModel {
     private TripMateRequest tripMateRequest;
     private UnFollowUseCase unFollowUseCase;
     private TagDao tagDao;
+    private GetFullBadgeUseCase getFullBadgeUseCase;
+    private GetUserPostsUseCase getUserPostsUseCase;
     private static final String TAG = "User Profile View Model";
     MutableLiveData<User> mutableLiveDataUser = new MutableLiveData<>();
     MutableLiveData<String> mutableLiveDataFollow = new MutableLiveData<>();
     MutableLiveData<Boolean> mutableLiveDataIsFollowing = new MutableLiveData<>();
     MutableLiveData<Boolean> mutableLiveDataIsRequested = new MutableLiveData<>();
     MutableLiveData<String> mutableLiveDataUnFollow = new MutableLiveData<>();
-    MutableLiveData<List<Tag>>  mutableLiveDataTagNames = new MutableLiveData<>();
+    MutableLiveData<List<Tag>> mutableLiveDataTagNames = new MutableLiveData<>();
+    MutableLiveData<List<FullBadge>> fullBadgesMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<List<Post>> userPostsMutableLiveData = new MutableLiveData<>();
+
 
     @Inject
     public UserProfileViewModel(GetUserUseCase getUserUseCase,
@@ -54,8 +64,10 @@ public class UserProfileViewModel extends ViewModel {
                                 RequestTripMateUseCase requestTripMateUseCase,
                                 GetTagUseCase getTagUseCase,
                                 UnFollowUseCase unFollowUseCase,
+                                GetFullBadgeUseCase getFullBadgeUseCase,
+                                GetUserPostsUseCase getUserPostsUseCase,
                                 TagDao tagDao
-                                ) {
+    ) {
         this.getUserUseCase = getUserUseCase;
         this.followUserUseCase = followUserUseCase;
         this.sharedPreferences = sharedPreferences;
@@ -63,6 +75,8 @@ public class UserProfileViewModel extends ViewModel {
         this.unFollowUseCase = unFollowUseCase;
         this.getTagUseCase = getTagUseCase;
         this.tagDao = tagDao;
+        this.getFullBadgeUseCase = getFullBadgeUseCase;
+        this.getUserPostsUseCase = getUserPostsUseCase;
     }
 
     public void setUserId(String userId) {
@@ -73,8 +87,7 @@ public class UserProfileViewModel extends ViewModel {
         getUserUseCase.setUser(userId, "");
         getUserUseCase.execute(user -> {
             mutableLiveDataUser.setValue(user);
-            if (user.getInterests() != null && user.getInterests().size() != 0)
-            {
+            if (user.getInterests() != null && user.getInterests().size() != 0) {
                 tagDao.getTagsNameByIds(user.getInterests())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -82,7 +95,7 @@ public class UserProfileViewModel extends ViewModel {
                             mutableLiveDataTagNames.setValue(tags);
                         });
             }
-            if (user.getFollowers().contains(sharedPreferences.getString(SHARED_PREF_USER_ID,"")))
+            if (user.getFollowers().contains(sharedPreferences.getString(SHARED_PREF_USER_ID, "")))
                 mutableLiveDataIsFollowing.setValue(true);
 
         }, throwable -> {
@@ -94,15 +107,16 @@ public class UserProfileViewModel extends ViewModel {
         followUserUseCase.setUserId(userId);
         followUserUseCase.execute(stringStringHashMap -> {
             mutableLiveDataFollow.setValue(stringStringHashMap.get("followers_num"));
-        },throwable -> {
+        }, throwable -> {
             mutableLiveDataFollow.setValue("Error");
         });
     }
+
     public void unFollow() {
         unFollowUseCase.setUserId(userId);
         unFollowUseCase.execute(stringStringHashMap -> {
             mutableLiveDataUnFollow.setValue(stringStringHashMap.get("followers_num"));
-        },throwable -> {
+        }, throwable -> {
             mutableLiveDataUnFollow.setValue("Error");
         });
     }
@@ -111,15 +125,32 @@ public class UserProfileViewModel extends ViewModel {
         this.tripMateRequest = tripMateRequest;
     }
 
-    public void requestTripMate(){
+    public void requestTripMate() {
         requestTripMateUseCase.setUserId(userId);
         requestTripMateUseCase.setRequestMateBody(tripMateRequest);
         requestTripMateUseCase.execute(user -> {
             mutableLiveDataIsRequested.setValue(true);
-        },throwable -> {
-            Log.d(TAG, "requestTripMate: "+throwable.getMessage());
+        }, throwable -> {
+            Log.d(TAG, "requestTripMate: " + throwable.getMessage());
 
         });
     }
 
+    public void getUserFullBadges() {
+        getFullBadgeUseCase.execute(fullBadges -> {
+            fullBadgesMutableLiveData.setValue(fullBadges);
+        }, throwable -> {
+            Log.e(TAG, "getUserFullBadges: ", throwable);
+        });
+    }
+
+    public void getPostsByUserId(String userId) {
+        getUserPostsUseCase.setUserId(userId);
+        getUserPostsUseCase.execute(postPageResponse -> {
+                    userPostsMutableLiveData.setValue(postPageResponse.getPosts());
+                },
+                throwable -> {
+                    Log.e(TAG, "error retrieving posts: " + throwable.getMessage());
+                });
+    }
 }

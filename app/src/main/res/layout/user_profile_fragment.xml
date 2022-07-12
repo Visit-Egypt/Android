@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="?attr/colorOnPrimary"
+
     android:orientation="vertical">
 
     <LinearLayout
@@ -18,15 +20,15 @@
             android:orientation="vertical">
 
             <FrameLayout
-
                 android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center">
 
                 <ImageView
+                    android:id="@+id/profileFrameImageView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/rank1" />
+                    android:scaleType="fitXY" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -38,10 +40,13 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_baseline_account_circle_24" />
+                        android:src="@drawable/ic_baseline_account_circle_24"
+                        app:civ_border_color="@color/camel"
+                        app:civ_border_width="2dp" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/levelTextViewAccountFragment"
+                        style="@style/TextAppearance.MaterialComponents.Subtitle2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@id/circularAccountImageView"
@@ -50,10 +55,9 @@
                         android:layout_alignBottom="@id/circularAccountImageView"
                         android:layout_marginHorizontal="20dp"
                         android:layout_marginTop="80dp"
-                        android:background="@color/camel"
+                        android:background="?attr/colorPrimary"
                         android:gravity="center"
-                        android:text="Loading"
-                        android:textColor="?attr/colorOnSecondary" />
+                        android:text="Loading" />
                 </RelativeLayout>
             </FrameLayout>
 
@@ -67,15 +71,15 @@
                 android:textAlignment="center"
                 android:textColor="?attr/colorOnSecondary" />
 
-            <TextView
-                android:id="@+id/titleTextViewAccountFragment"
-                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/titleChipViewAccountFragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Explorer"
+                android:text="Loading title"
                 android:textAlignment="center"
-                android:textColor="?attr/colorPrimaryVariant" />
+                android:textSize="17sp"
+                app:chipBackgroundColor="@color/camel" />
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -287,7 +291,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/my_interests" />
+                    android:text="Interests" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/myInterests"
@@ -325,15 +329,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/user_badges" />
+                    android:text="Badges" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/userBadgesRecyclerViewUserFragment"
+                    android:id="@+id/userBadgesRecyclerViewAccountFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
+                    android:nestedScrollingEnabled="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
             </LinearLayout>
+
+
 
             <TableRow
                 android:layout_width="match_parent"
@@ -345,14 +352,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:text="My Activities" />
+                android:text="Activities" />
 
             <com.google.android.material.textview.MaterialTextView
                 style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:id="@+id/noPostsMaterialTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:text="I don't have any activities yet" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/postsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginBottom="16dp"
+                android:nestedScrollingEnabled="false"
+                android:scrollbars="vertical" />
 
         </LinearLayout>
 
@@ -364,4 +380,4 @@
             android:visibility="gone" />
     </LinearLayout>
 
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

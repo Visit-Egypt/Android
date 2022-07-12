@@ -29,26 +29,26 @@ public class TagRepositoryImp implements TagRepository {
 
     @Override
     public @NonNull Observable<List<Tag>> getTags() {
-//        Single<List<Tag>> remoteTageSource = retrofitService
-//                .getTags()
-//                .subscribeOn(Schedulers.io());
-//        return  tagDao.getAllTags()
-//                .subscribeOn(Schedulers.computation())
-//                .flatMapObservable(tagsFromLocalSource ->  {
-//                   return remoteTageSource
-//                            .observeOn(Schedulers.computation())
-//                            .toObservable()
-//                            .filter(tagsFromRemoteSource -> tagsFromRemoteSource != tagsFromLocalSource )
-//                            .flatMapSingle(tagsFromRemoteSource -> tagDao
-//                                    .insert(tagsFromRemoteSource)
-//                                    .subscribeOn(Schedulers.computation())
-//                                    .andThen(Single.just(tagsFromRemoteSource)))
-//                            .startWith(Observable.just(tagsFromLocalSource));
-//                });
-        return tagDao.getAllTags()
-                .toObservable()
+        Single<List<Tag>> remoteTageSource = retrofitService
+                .getTags()
+                .subscribeOn(Schedulers.io());
+        return  tagDao.getAllTags()
                 .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread());
+                .flatMapObservable(tagsFromLocalSource ->  {
+                   return remoteTageSource
+                            .observeOn(Schedulers.computation())
+                            .toObservable()
+                            .filter(tagsFromRemoteSource -> tagsFromRemoteSource != tagsFromLocalSource )
+                            .flatMapSingle(tagsFromRemoteSource -> tagDao
+                                    .insert(tagsFromRemoteSource)
+                                    .subscribeOn(Schedulers.computation())
+                                    .andThen(Single.just(tagsFromRemoteSource)))
+                            .startWith(Observable.just(tagsFromLocalSource));
+                });
+//        return tagDao.getAllTags()
+//                .toObservable()
+//                .subscribeOn(Schedulers.computation())
+//                .observeOn(AndroidSchedulers.mainThread());
 
     }
 

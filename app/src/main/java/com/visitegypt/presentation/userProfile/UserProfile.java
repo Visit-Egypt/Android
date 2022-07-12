@@ -4,28 +4,46 @@ import static com.visitegypt.utils.Constants.CHOSEN_USER_ID;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
+import com.visitegypt.domain.model.Badge;
+import com.visitegypt.domain.model.FullBadge;
 import com.visitegypt.domain.model.Tag;
 import com.visitegypt.domain.model.TripMateRequest;
+import com.visitegypt.presentation.account.PostsRecyclerViewAdapter;
+import com.visitegypt.presentation.gamification.BadgesSliderViewAdapter;
 import com.visitegypt.utils.Chips;
+import com.visitegypt.utils.GamificationRules;
+
+import java.text.MessageFormat;
+import java.util.ArrayList;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -37,13 +55,25 @@ public class UserProfile extends Fragment {
     private View userProfileFragment;
     private CircularImageView userImage;
     private MaterialButton btnFollow, btnRequest;
+    private LinearProgressIndicator xpLinearProgressIndicator;
     private Dialog requestMateDialog;
+    private BadgesSliderViewAdapter badgesSliderViewAdapter;
     private TextView userName, followingNumberTextView, followersNumberTextView;
+    private RecyclerView badgesRecyclerView;
     private View loadingLayout;
     private ChipGroup chipGroup;
     private MaterialTextView myInterests;
     private LinearLayout userProfileLayout;
+    private ArrayList<Badge> userBadges, placeBadges;
     private String id;
+    private MaterialTextView noPostsMaterialTextView;
+    private ImageView profileFrameImageView;
+    private TextView levelTextView, currentLevelTextView, nextLevelTextView,
+            xpRemainingTextView, xpProgressTextView;
+    private Chip userTitleChipView;
+    private PostsRecyclerViewAdapter postsRecyclerViewAdapter;
+    private RecyclerView postsRecyclerView;
+    private int level;
 
     public static UserProfile newInstance() {
         return new UserProfile();
@@ -76,6 +106,8 @@ public class UserProfile extends Fragment {
         // TODO: Use the ViewModel
         userProfileViewModel.setUserId(id);
         userProfileViewModel.getUser();
+        userProfileViewModel.getPostsByUserId(id);
+        userProfileViewModel.getUserFullBadges();
         mutableLiveDataObserve();
     }
 
@@ -90,6 +122,24 @@ public class UserProfile extends Fragment {
         btnRequest = userProfileFragment.findViewById(R.id.requestMaterialButton);
         myInterests = userProfileFragment.findViewById(R.id.myInterests);
         chipGroup = userProfileFragment.findViewById(R.id.chipGroup);
+        profileFrameImageView = userProfileFragment.findViewById(R.id.profileFrameImageView);
+        levelTextView = userProfileFragment.findViewById(R.id.levelTextViewAccountFragment);
+        currentLevelTextView = userProfileFragment.findViewById(R.id.userLevelLinearProgressIndicationTextViewAccountFragment);
+        nextLevelTextView = userProfileFragment.findViewById(R.id.nextLevelProgressIndicatorTextViewAccountFragment);
+        xpProgressTextView = userProfileFragment.findViewById(R.id.xpProgressTextViewAccountFragment);
+        xpRemainingTextView = userProfileFragment.findViewById(R.id.remainingXpTextViewAccountFragment);
+        noPostsMaterialTextView = userProfileFragment.findViewById(R.id.noPostsMaterialTextView);
+        userTitleChipView = userProfileFragment.findViewById(R.id.titleChipViewAccountFragment);
+        xpLinearProgressIndicator = userProfileFragment.findViewById(R.id.userLevelLinearProgressIndicationAccountFragment);
+        placeBadges = new ArrayList<>();
+        badgesRecyclerView = userProfileFragment.findViewById(R.id.userBadgesRecyclerViewAccountFragment);
+        badgesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        badgesSliderViewAdapter = new BadgesSliderViewAdapter(placeBadges, userProfileFragment.getContext());
+        badgesRecyclerView.setAdapter(badgesSliderViewAdapter);
+        postsRecyclerView = userProfileFragment.findViewById(R.id.postsRecyclerView);
+        postsRecyclerViewAdapter = new PostsRecyclerViewAdapter(getContext());
+        postsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        postsRecyclerView.setAdapter(postsRecyclerViewAdapter);
     }
 
     private void setOnClickListeners() {
@@ -108,8 +158,10 @@ public class UserProfile extends Fragment {
     }
 
     private void mutableLiveDataObserve() {
+
         userProfileViewModel.mutableLiveDataUser.observe(getViewLifecycleOwner(), user -> {
             userName.setText(user.getFirstName() + " " + user.getLastName());
+            setUserXp(user.getXp());
             if ((user.getFollowers() != null) && (user.getFollowers().size() != 0))
                 followersNumberTextView.setText(String.valueOf(user.getFollowers().size()));
             if ((user.getFollowing() != null) && (user.getFollowing().size() != 0))
@@ -156,6 +208,24 @@ public class UserProfile extends Fragment {
                 }
             }
         });
+
+        userProfileViewModel.fullBadgesMutableLiveData.observe(getViewLifecycleOwner(), fullBadges -> {
+            ArrayList<Badge> badges = new ArrayList<>();
+            for (FullBadge fullBadge : fullBadges) {
+                badges.add(GamificationRules.fullBadgeToBadge(fullBadge));
+            }
+            badgesSliderViewAdapter.setBadges(badges);
+        });
+        userProfileViewModel.userPostsMutableLiveData.observe(getViewLifecycleOwner(), posts -> {
+            if (posts.size() != 0) {
+                noPostsMaterialTextView.setVisibility(View.GONE);
+                Log.d(TAG, "setting posts to recycler view...");
+                postsRecyclerViewAdapter.setPostsArrayList(posts);
+                Log.d(TAG, "posts available  " + posts.size());
+            } else {
+                Log.d(TAG, "no posts available ");
+            }
+        });
     }
 
     private void showDialog() {
@@ -196,6 +266,45 @@ public class UserProfile extends Fragment {
 
         userProfileLayout.setVisibility(View.VISIBLE);
         loadingLayout.setVisibility(View.GONE);
+    }
+
+    private void setUserXp(int xp) {
+        Log.d(TAG, "setUserXp: user with xp: " + xp);
+        level = GamificationRules.getLevelFromXp(xp);
+        Log.d(TAG, "setUserXp: level of user: " + level);
+
+        levelTextView.setText(MessageFormat.format("LVL {0}", level));
+        currentLevelTextView.setText(Integer.toString(level));
+        nextLevelTextView.setText(Integer.toString(level + 1));
+
+        String title = GamificationRules.getTitleFromLevel(level);
+
+        xpRemainingTextView.setText(GamificationRules.getRemainingXPToNextLevel(xp) + "XP remaining to next level");
+        xpProgressTextView.setText(xp - GamificationRules.getLevelXp(level) + "/" +
+                ((GamificationRules.getLevelXp(level + 1)) - GamificationRules.getLevelXp(level)));
+        userTitleChipView.setText(title);
+        xpLinearProgressIndicator.setMax(((GamificationRules.getLevelXp(level + 1)) - GamificationRules.getLevelXp(level)));
+        xpLinearProgressIndicator.setProgress(xp - GamificationRules.getLevelXp(level), true);
+
+        Animation fade = new AlphaAnimation(0, 1);
+        fade.setDuration(500);
+        fade.setInterpolator(new DecelerateInterpolator());
+
+        if (title.equals(GamificationRules.ALL_TITLES[0])) {
+            profileFrameImageView.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rank1, null));
+        } else if (title.equals(GamificationRules.ALL_TITLES[1])) {
+            profileFrameImageView.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rank2, null));
+        } else if (title.equals(GamificationRules.ALL_TITLES[2])) {
+            profileFrameImageView.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rank3, null));
+        } else if (title.equals(GamificationRules.ALL_TITLES[3])) {
+            profileFrameImageView.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rank4, null));
+        } else if (title.equals(GamificationRules.ALL_TITLES[4])) {
+            profileFrameImageView.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rank5, null));
+        } else if (title.equals(GamificationRules.ALL_TITLES[5])) {
+            profileFrameImageView.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rank6, null));
+        }
+        profileFrameImageView.startAnimation(fade);
+
     }
 
 
