@@ -132,7 +132,6 @@ public class Home extends AppCompatActivity {
                         }
                     }
                     showFirstBadgeDialog(badge);
-
                 } else {
                     Log.d(TAG, "checkFirstLogIn: old user... ignoring badge");
                 }
@@ -185,8 +184,7 @@ public class Home extends AppCompatActivity {
             Intent intent = new Intent(Home.this, ChatbotActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-            finish();
-
+            //finish();
         });
     }
 

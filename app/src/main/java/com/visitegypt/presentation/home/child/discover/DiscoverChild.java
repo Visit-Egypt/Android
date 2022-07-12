@@ -221,8 +221,4 @@ public class DiscoverChild extends Fragment {
             startActivity(intent);
         });
     }
-
-
-
-
 }
