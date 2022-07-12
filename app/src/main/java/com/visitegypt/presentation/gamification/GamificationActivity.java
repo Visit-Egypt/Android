@@ -161,7 +161,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         initViews();
         initViewModels(savedInstanceState);
         initClickListeners();
-        dummyTests();
+//        dummyTests();
     }
 
     private void dummyTests() {
