@@ -92,7 +92,7 @@ public class Home extends AppCompatActivity {
         editButton.setOnClickListener(view -> {
             Intent intent = new Intent(Home.this, SettingActivity.class);
             startActivity(intent);
-            finish();
+            //finish();
         });
     }
 
