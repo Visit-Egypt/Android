@@ -132,6 +132,10 @@ public class UserRepositoryImp implements UserRepository {
     public Single<UploadResponse> getPreSignedUrl(String userId, String contentType) {
         return retrofitService.getPreSigendUrl(userId, contentType);
     }
+    @Override
+    public Single<UploadResponse> getUserPhotoAR(String userId, String contentType) {
+        return retrofitService.getUserPhotoAR(userId, contentType);
+    }
 
     @Override
     public Call<ConfirmUploadResponse> confirmUpload(ConfirmUploadModel confirmUploadModel) {

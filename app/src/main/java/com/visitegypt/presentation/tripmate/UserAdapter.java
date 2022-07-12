@@ -51,9 +51,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewAdapte
         if ((users.get(position).getFirstName() != null) && (users.get(position).getLastName() != null))
         {
             holder.txtUserName.setText(users.get(position).getFirstName() + " " + users.get(position).getLastName() );
+            holder.txtUserName.setText(users.get(position).getFirstName() + " " + users.get(position).getLastName() );
 
         }
-        Log.d(TAG, "onBindViewHolder: " + users.get(position).getUserId());
     }
 
     @Override
@@ -78,7 +78,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewAdapte
             imgUser = itemView.findViewById(R.id.imgUser);
             txtUserName = itemView.findViewById(R.id.userNameRequestMaterialTextView);
             imgSendRequest = itemView.findViewById(R.id.imgSendRequest);
-
             itemView.setOnClickListener(v -> {
                 Bundle bundle = new Bundle();
                 bundle.putString(CHOSEN_USER_ID,users.get(getAdapterPosition()).getUserId());
