@@ -200,7 +200,7 @@ public interface RetrofitService {
 
     /************************************************************/
     @GET("api/badge")
-    public Single<BadgeResponse> getAllBadges();
+    public Single<BadgeResponse> getAllBadges(@Query("limit") int limit);
 
     @GET("api/badge")
     public Single<BadgeResponse> getBadgesByPlace(@Query("filters") String placeId);

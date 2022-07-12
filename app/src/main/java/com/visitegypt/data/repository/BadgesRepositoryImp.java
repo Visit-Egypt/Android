@@ -3,6 +3,7 @@ package com.visitegypt.data.repository;
 import com.visitegypt.data.source.remote.RetrofitService;
 import com.visitegypt.domain.model.response.BadgeResponse;
 import com.visitegypt.domain.repository.BadgesRepository;
+import com.visitegypt.utils.Constants;
 
 import javax.inject.Inject;
 
@@ -18,7 +19,7 @@ public class BadgesRepositoryImp implements BadgesRepository {
 
     @Override
     public Single<BadgeResponse> getAllBadges() {
-        return retrofitService.getAllBadges();
+        return retrofitService.getAllBadges(Constants.MAX_BADGES_LIMIT_PER_REQUEST);
     }
 
     @Override

@@ -1,7 +1,5 @@
 package com.visitegypt.utils;
 
-import java.util.SplittableRandom;
-
 public class Constants {
     public static final String BASE_URL = "http://129.146.61.141/";
     public static final String S3_URL = "https://visitegypt-media-bucket.s3.amazonaws.com/";
@@ -22,6 +20,7 @@ public class Constants {
     public static final String PLACE_ID = "placeId";
     private static final int PICK_FROM_GALLERY = 0;
     public static final int MAXIMNumberOfCities = 5;
+    public static final int MAX_BADGES_LIMIT_PER_REQUEST = 50;
 
     public enum CustomerType {
         FOREIGNER_STUDENT("Foreigner Student"),
