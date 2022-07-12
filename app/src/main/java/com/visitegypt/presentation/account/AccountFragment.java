@@ -106,7 +106,7 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
         userName = accountView.findViewById(R.id.nameTextView);
         country = accountView.findViewById(R.id.titleChipViewAccountFragment);
         nameTextView = accountView.findViewById(R.id.nameTextView);
-        titleTextViewAccountFragment = accountView.findViewById(R.id.titleTextViewAccountFragment);
+//        titleTextViewAccountFragment = accountView.findViewById(R.id.titleTextViewAccountFragment);
         likesNumberTextView = accountView.findViewById(R.id.likesNumberTextView);
         followingNumberTextView = accountView.findViewById(R.id.followingNumberTextView);
         followersNumberTextView = accountView.findViewById(R.id.followersNumberTextView);

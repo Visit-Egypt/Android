@@ -14,7 +14,6 @@ import com.visitegypt.domain.model.Post;
 import com.visitegypt.domain.model.Tag;
 import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.User;
-import com.visitegypt.domain.repository.TagRepository;
 import com.visitegypt.domain.usecase.FollowUserUseCase;
 import com.visitegypt.domain.usecase.GetFullBadgeUseCase;
 import com.visitegypt.domain.usecase.GetTagUseCase;
@@ -22,7 +21,6 @@ import com.visitegypt.domain.usecase.GetUserPostsUseCase;
 import com.visitegypt.domain.usecase.GetUserUseCase;
 import com.visitegypt.domain.usecase.RequestTripMateUseCase;
 import com.visitegypt.domain.usecase.UnFollowUseCase;
-import com.visitegypt.utils.Constants;
 
 import java.util.List;
 
@@ -137,6 +135,7 @@ public class UserProfileViewModel extends ViewModel {
     }
 
     public void getUserFullBadges() {
+        getFullBadgeUseCase.setUserId(userId);
         getFullBadgeUseCase.execute(fullBadges -> {
             fullBadgesMutableLiveData.setValue(fullBadges);
         }, throwable -> {

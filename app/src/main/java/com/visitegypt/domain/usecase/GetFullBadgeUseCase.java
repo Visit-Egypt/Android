@@ -18,6 +18,7 @@ public class GetFullBadgeUseCase extends SingleUseCase<List<FullBadge>> {
 
     private UserRepository userRepository;
     private SharedPreferences sharedPreferences;
+    private String userId;
 
     @Inject
     public GetFullBadgeUseCase(@Named("Normal") UserRepository userRepository, SharedPreferences sharedPreferences) {
@@ -27,7 +28,13 @@ public class GetFullBadgeUseCase extends SingleUseCase<List<FullBadge>> {
 
     @Override
     protected Single<List<FullBadge>> buildSingleUseCase() {
-        String userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
+        if (userId == null)
+            userId = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
         return userRepository.getUserFullBadgesDetail(userId);
+    }
+
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }
