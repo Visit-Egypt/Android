@@ -153,25 +153,23 @@ public class PlacesActivity extends AppCompatActivity {
         cityBadges.clear();
         placesViewModel.getCityFullBadges();
         placesViewModel.setCityName(cityName);
+        placesViewModel.getAllCityBadges();
 
-        observeOnce(placesViewModel.fullBadgesMutableLiveData, fullBadges -> {
-                    if (fullBadges != null) {
-                        for (FullBadge fullBadge : fullBadges) {
-                            cityBadges.add(GamificationRules.fullBadgeToBadge(fullBadge));
-                        }
-                    } else {
-                        placesViewModel.getAllBadges();
-                        observeOnce(placesViewModel.badgesMutableLiveData, badges -> {
-                            for (Badge badge : badges) {
-                                if (badge.getCity().equals(cityName)) {
-                                    cityBadges.add(badge);
-                                }
-                            }
-                        });
+        placesViewModel.badgesMutableLiveData.observe(this, allBadges -> {
+            Log.d(TAG, "initBadges: " + new Gson().toJson(allBadges));
+            observeOnce(placesViewModel.fullBadgesMutableLiveData, fullBadges -> {
+                Log.d(TAG, "initBadges: full badges: " + new Gson().toJson(fullBadges));
+                ArrayList<Badge> badgeList = new ArrayList<>();
+                if (fullBadges != null)
+                    for (FullBadge fullBadge : fullBadges) {
+                        Log.d(TAG, "initBadges: converting fullBadge to badge: " + fullBadge.getBadge().getTitle());
+                        badgeList.add(GamificationRules.fullBadgeToBadge(fullBadge));
                     }
-                    cityBadgesRecyclerViewAdapter.setBadges(cityBadges);
-                }
-        );
+
+                GamificationRules.mergeTwoBadges(allBadges, badgeList);
+                cityBadgesRecyclerViewAdapter.setBadges((ArrayList<Badge>) allBadges);
+            });
+        });
     }
 
 //    private void initActivities() {

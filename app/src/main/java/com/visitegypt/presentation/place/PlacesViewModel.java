@@ -85,9 +85,11 @@ public class PlacesViewModel extends ViewModel {
         });
     }
 
-    public void getAllBadges() {
+    public void getAllCityBadges() {
         getAllBadgesUseCase.execute(badgeResponse -> {
-            badgesMutableLiveData.setValue(badgeResponse.getBadges());
+            List<Badge> badges = badgeResponse.getBadges();
+            badges.removeIf(badge -> !badge.getCity().equals(cityName));
+            badgesMutableLiveData.setValue(badges);
         }, throwable -> Log.e(TAG, "error retrieving badges: " + throwable.getMessage()));
     }
 
@@ -97,7 +99,7 @@ public class PlacesViewModel extends ViewModel {
             fullBadgesMutableLiveData.setValue(fullBadges);
         }, throwable -> {
             fullBadgesMutableLiveData.setValue(null);
-            Log.e(TAG, "getFullBadges: ", throwable);
+            Log.e(TAG, "getCityFullBadges: ", throwable);
         });
     }
 
