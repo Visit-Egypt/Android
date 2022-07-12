@@ -73,7 +73,8 @@
                 android:id="@+id/postTextView"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="10"
                 android:layout_margin="8dp"
                 android:background="#00000000"
                 android:fontFamily="@font/montserrat_alternates_medium"
@@ -91,6 +92,19 @@
 
 
     </LinearLayout>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/postImageView"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+       >
+
+    </com.google.android.material.imageview.ShapeableImageView>
 
     <LinearLayout
         android:id="@+id/linearLayOutId"

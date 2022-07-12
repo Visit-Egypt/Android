@@ -106,7 +106,9 @@
         <activity
             android:name=".presentation.post.PostActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
+
+            />
+
         <activity
             android:name=".presentation.home.child.discover.allPlaces.DiscoverChildAllPlacesActivity"
             android:exported="true" />

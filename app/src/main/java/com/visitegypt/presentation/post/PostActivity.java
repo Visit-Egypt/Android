@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -22,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.imageview.ShapeableImageView;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
@@ -45,8 +47,9 @@ public class PostActivity extends AppCompatActivity {
     private CircularImageView userImageView;
     private EditText postTxt;
     private Button postButton;
-
+    private ShapeableImageView  postImageView;
     private User user;
+    private Uri selectedImage;
 
 
     @Override
@@ -77,6 +80,7 @@ public class PostActivity extends AppCompatActivity {
         postsViewModel.initCallBack();
         userImageView = findViewById(R.id.userImageView);
         postButton = findViewById(R.id.postButtonPostActivity);
+        postImageView = findViewById(R.id.postImageView);
 
         postButton.setOnClickListener(view -> {
             postTxt.getText().toString();
@@ -100,8 +104,6 @@ public class PostActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
-
-
     public void selectPhotoOnClick(View view) {
         if (checkAndRequestPermissions(PostActivity.this)) {
             chooseImage(this);
@@ -118,11 +120,17 @@ public class PostActivity extends AppCompatActivity {
         postsViewModel.isImageUploaded.observe(this, aBoolean -> {
             if (!aBoolean)
                 Toast.makeText(PostActivity.this, "Upload Failed", Toast.LENGTH_LONG).show();
+            else
+            {
+               postImageView.setImageURI(selectedImage);
+               postImageView.setVisibility(View.VISIBLE);
+            }
 
         });
         postsViewModel.isPostUploaded.observe(this, aBoolean -> {
             if (aBoolean) {
                 Toast.makeText(PostActivity.this, "Your Post is Created ", Toast.LENGTH_LONG).show();
+                onBackPressed();
                 postTxt.getText().clear();
                 GeneralUtils.LiveDataUtil.observeOnce(postsViewModel.userMutableLiveData, newUser -> {
                     updateUserXP(newUser);
@@ -160,7 +168,7 @@ public class PostActivity extends AppCompatActivity {
                     break;
                 case 1:
                     if (resultCode == RESULT_OK && data != null) {
-                        Uri selectedImage = data.getData();
+                         selectedImage = data.getData();
                         if (selectedImage != null) {
                             Log.d("TAG", selectedImage.toString());
                             String filePath = getRealPathFromUri(selectedImage);
@@ -240,4 +248,5 @@ public class PostActivity extends AppCompatActivity {
             if (!url.isEmpty())
                 Picasso.get().load(url).into(userImageView);
     }
+
 }
