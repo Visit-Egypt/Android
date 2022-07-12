@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/postLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context=".presentation.post.PostActivity">
 
     <LinearLayout
+        android:id="@+id/postButtonLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_margin="8dp"
         android:orientation="horizontal"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:visibility="visible">
 
         <TextView
             android:layout_width="wrap_content"
@@ -41,11 +44,13 @@
     <LinearLayout
         android:id="@+id/post_Text"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/postButtonLayout"
         android:layout_margin="8dp"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:visibility="visible">
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/userImageView"
@@ -57,7 +62,7 @@
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:hint="What's happening"
@@ -74,12 +79,12 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="10"
                 android:layout_margin="8dp"
                 android:background="#00000000"
                 android:fontFamily="@font/montserrat_alternates_medium"
                 android:gravity="top|left"
                 android:inputType="textLongMessage|textMultiLine"
+                android:maxLines="10"
                 android:padding="8dp"
                 android:textColor="?attr/colorOnSecondary"
                 android:textSize="18sp"
@@ -95,14 +100,19 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/postImageView"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayOutId"
+        android:layout_below="@+id/post_Text"
         android:layout_gravity="center"
-        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-       >
+
+        android:visibility="gone">
 
     </com.google.android.material.imageview.ShapeableImageView>
 
@@ -110,12 +120,14 @@
         android:id="@+id/linearLayOutId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="bottom"
         android:layout_margin="8dp"
         android:background="@drawable/post_photo_shape"
         android:gravity="bottom"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="visible">
 
         <ImageButton
             android:id="@+id/imageButtonArrow"
@@ -128,4 +140,4 @@
     </LinearLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

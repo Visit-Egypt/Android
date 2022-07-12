@@ -129,9 +129,8 @@ public class PostActivity extends AppCompatActivity {
         });
         postsViewModel.isPostUploaded.observe(this, aBoolean -> {
             if (aBoolean) {
-                Toast.makeText(PostActivity.this, "Your Post is Created ", Toast.LENGTH_LONG).show();
-                onBackPressed();
                 postTxt.getText().clear();
+                Toast.makeText(PostActivity.this, "Your Post is Created ", Toast.LENGTH_LONG).show();
                 GeneralUtils.LiveDataUtil.observeOnce(postsViewModel.userMutableLiveData, newUser -> {
                     updateUserXP(newUser);
                 });
@@ -154,6 +153,7 @@ public class PostActivity extends AppCompatActivity {
                 prevUser.getXp(),
                 newUser.getXp()
         );
+        onBackPressed();
     }
 
     @Override
