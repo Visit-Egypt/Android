@@ -36,97 +36,114 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/activityPlacesShimmerFrameLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/cityBadgesPlacesActivityRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_margin="8dp" />
+        <include layout="@layout/shimmer_places_activity" />
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/activityPlacesLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:orientation="vertical">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/remainingActivitiesPlacesActivityTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginHorizontal="8dp"
-                android:layout_weight="1"
-                android:text="Loading places..."
-                android:textSize="20sp" />
-
-            <RelativeLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cityBadgesPlacesActivityRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <com.google.android.material.progressindicator.LinearProgressIndicator
-                    android:id="@+id/cityRemainingProgressPlacesActivityProgressIndicator"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
-                    app:trackCornerRadius="3dp"
-                    app:trackThickness="20dp" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@id/cityRemainingProgressPlacesActivityProgressIndicator"
-                    android:layout_alignTop="@id/cityRemainingProgressPlacesActivityProgressIndicator"
-                    android:layout_alignRight="@id/cityRemainingProgressPlacesActivityProgressIndicator"
-                    android:layout_alignBottom="@id/cityRemainingProgressPlacesActivityProgressIndicator">
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-            </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_margin="8dp" />
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:orientation="horizontal">
+                android:layout_margin="8dp"
+                android:orientation="vertical">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/cityRemainingXPlacesActivityTextView"
+                    android:id="@+id/remainingActivitiesPlacesActivityTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:layout_weight="1" />
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_weight="1"
+                    android:text="Loading places..."
+                    android:textSize="20sp" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/nextLevelRemainingXPTextViewPlacesActivity"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/cityRemainingProgressPlacesActivityProgressIndicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        app:trackCornerRadius="3dp"
+                        app:trackThickness="20dp" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@id/cityRemainingProgressPlacesActivityProgressIndicator"
+                        android:layout_alignTop="@id/cityRemainingProgressPlacesActivityProgressIndicator"
+                        android:layout_alignRight="@id/cityRemainingProgressPlacesActivityProgressIndicator"
+                        android:layout_alignBottom="@id/cityRemainingProgressPlacesActivityProgressIndicator">
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </RelativeLayout>
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end" />
+                    android:layout_marginHorizontal="8dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/cityRemainingXPlacesActivityTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_weight="1" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/nextLevelRemainingXPTextViewPlacesActivity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
-        </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </LinearLayout>
+        </LinearLayout>
 
-    <com.google.android.material.textview.MaterialTextView
-        style="@style/TextAppearance.MaterialComponents.Headline5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="Discover new adventures"
-        android:textAlignment="center"
-        android:textStyle="bold" />
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/TextAppearance.MaterialComponents.Headline5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Discover new adventures"
+            android:textAlignment="center"
+            android:textStyle="bold" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/placesPlacesActivityRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:nestedScrollingEnabled="false" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/placesPlacesActivityRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:nestedScrollingEnabled="false" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
 </LinearLayout>

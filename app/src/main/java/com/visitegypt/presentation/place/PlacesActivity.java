@@ -5,14 +5,17 @@ import static com.visitegypt.utils.GeneralUtils.LiveDataUtil.observeOnce;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.gson.Gson;
@@ -46,6 +49,8 @@ public class PlacesActivity extends AppCompatActivity {
     private LinearProgressIndicator cityRemainingProgressPlacesActivityProgressIndicator;
     private ArrayList<Badge> badges, cityBadges;
     private BadgesSliderViewAdapter cityBadgesRecyclerViewAdapter;
+    private ShimmerFrameLayout shimmerFrameLayout;
+    private LinearLayoutCompat fullLayout;
 
 
     @Override
@@ -55,6 +60,7 @@ public class PlacesActivity extends AppCompatActivity {
         cityName = getIntent().getStringExtra("city_name");
 
         initViews();
+        startShimmer();
 //        initViewModel(cityName);
     }
 
@@ -86,6 +92,20 @@ public class PlacesActivity extends AppCompatActivity {
         cityBadgesRecyclerViewAdapter = new BadgesSliderViewAdapter(cityBadges, this);
         cityBadgesPlacesActivityRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         cityBadgesPlacesActivityRecyclerView.setAdapter(cityBadgesRecyclerViewAdapter);
+
+        fullLayout = findViewById(R.id.activityPlacesLinearLayout);
+        shimmerFrameLayout = findViewById(R.id.activityPlacesShimmerFrameLayout);
+    }
+
+    private void removeShimmer() {
+        shimmerFrameLayout.stopShimmerAnimation();
+        shimmerFrameLayout.setVisibility(View.GONE);
+        fullLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void startShimmer() {
+        shimmerFrameLayout.startShimmerAnimation();
+        fullLayout.setVisibility(View.GONE);
     }
 
     private void initViewModel(String cityName) {
@@ -142,6 +162,7 @@ public class PlacesActivity extends AppCompatActivity {
                 cityRemainingProgressPlacesActivityProgressIndicator.setProgress(ownedPlaces);
                 Log.d(TAG, "initViewModel: sharqia" + new Gson().toJson(places));
                 placesCityRecyclerViewAdapter.setplaceList(places);
+                removeShimmer();
             });
         });
         initBadges();
