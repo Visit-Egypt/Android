@@ -215,6 +215,10 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
         accountViewModel = new ViewModelProvider(this).get(AccountViewModel.class);
         accountViewModel.userMutableLiveData.observe(getViewLifecycleOwner(), user -> {
             nameTextView.setText(user.getFirstName() + " " + user.getLastName());
+            if ((user.getFollowers() != null) && (user.getFollowers().size() != 0))
+                followersNumberTextView.setText(String.valueOf(user.getFollowers().size()));
+            if ((user.getFollowing() != null) && (user.getFollowing().size() != 0))
+                followingNumberTextView.setText(String.valueOf(user.getFollowing().size()));
             if (user.getPhotoUrl() != null) {
                 Log.d(TAG, "onChanged: " + user.getPhotoUrl());
                 accountViewModel.saveUserImage(user.getPhotoUrl());
