@@ -31,7 +31,7 @@
         android:theme="@style/Theme.VisitEgypt"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".presentation.gamification.RewardActivity"
+            android:name=".presentation.Reward.RewardActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.badges.BadgeActivity"
