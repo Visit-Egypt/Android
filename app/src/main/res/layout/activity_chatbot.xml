@@ -66,16 +66,23 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true">
 
-            <EditText
-                android:id="@+id/messageEditText"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_toLeftOf="@+id/sendMessageFAButton"
-                android:hint="Enter Message"
-                android:singleLine="true"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:layout_width="match_parent"
+                android:layout_toStartOf="@+id/sendMessageFAButton">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/messageEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Enter Message"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/sendMessageFAButton"
