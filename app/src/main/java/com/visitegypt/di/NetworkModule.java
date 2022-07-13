@@ -4,6 +4,7 @@ import static com.visitegypt.utils.Constants.BASE_URL;
 import static com.visitegypt.utils.Constants.S3_URL;
 import static com.visitegypt.utils.Constants.SHARED_PREF_USER_ACCESS_TOKEN;
 import static com.visitegypt.utils.Constants.SHARED_PREF_USER_REFRESH_TOKEN;
+import static com.visitegypt.utils.Constants.WEATHER_API;
 
 import android.app.Application;
 import android.content.Context;
@@ -25,6 +26,7 @@ import com.visitegypt.data.repository.PostRepositoryImp;
 import com.visitegypt.data.repository.TagRepositoryImp;
 import com.visitegypt.data.repository.UploadToS3Imp;
 import com.visitegypt.data.repository.UserRepositoryImp;
+import com.visitegypt.data.repository.WeatherUtilRepositoryImp;
 import com.visitegypt.data.source.local.dao.PlaceDao;
 import com.visitegypt.data.source.local.dao.PlacePageResponseDao;
 import com.visitegypt.data.source.local.dao.TagDao;
@@ -41,6 +43,7 @@ import com.visitegypt.domain.repository.PostsRepository;
 import com.visitegypt.domain.repository.TagRepository;
 import com.visitegypt.domain.repository.UploadToS3Repository;
 import com.visitegypt.domain.repository.UserRepository;
+import com.visitegypt.domain.repository.WeatherUtilRepository;
 import com.visitegypt.domain.usecase.GetRefreshTokenUseCase;
 import com.visitegypt.utils.JWT;
 import com.visitegypt.utils.error.NoConnectivityException;
@@ -166,6 +169,12 @@ public class NetworkModule implements CallBack {
     public RetrofitService getRetrofitServiceٌRefreshToken(@Named("RefreshToken") Retrofit retrofit) {
         return retrofit.create(RetrofitService.class);
     }
+    @Provides
+    @Singleton
+    @Named("Weather")
+    public RetrofitService getRetrofitServiceٌWeater(@Named("Weather") Retrofit retrofit) {
+        return retrofit.create(RetrofitService.class);
+    }
 
     @Provides
     @Singleton
@@ -216,6 +225,20 @@ public class NetworkModule implements CallBack {
         Log.d("TAG", " Retrofit provideRetrofitRefreshToken: " + retrofit);
         return retrofit;
     }
+    @Provides
+    @Singleton
+    @Named("Weather")
+    public Retrofit provideRetrofitWeather(GsonConverterFactory gsonConverterFactory, RxJava3CallAdapterFactory rxJava3CallAdapterFactory, OkHttpClient client) {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(WEATHER_API)
+                .addConverterFactory(gsonConverterFactory)
+                .addCallAdapterFactory(rxJava3CallAdapterFactory)
+                .client(client)
+                .build();
+        Log.d("TAG", " Retrofit provideRetrofitRefreshToken: " + retrofit);
+        return retrofit;
+    }
 
     @Provides
     @Singleton
@@ -231,8 +254,13 @@ public class NetworkModule implements CallBack {
 
     @Provides
     @Singleton
-    public PlaceRepository providePlaceRepository(@Named("Normal") RetrofitService retrofitService, PlacePageResponseDao placeDao) {
-        return new PlaceRepositoryImp(retrofitService, placeDao);
+    public PlaceRepository providePlaceRepository(@Named("Normal") RetrofitService retrofitService, PlacePageResponseDao placeDao,SharedPreferences sharedPreferences) {
+        return new PlaceRepositoryImp(retrofitService, sharedPreferences, placeDao);
+    }
+    @Provides
+    @Singleton
+    public WeatherUtilRepository provideWeatherUtilRepository(@Named("Weather") RetrofitService retrofitService) {
+        return new WeatherUtilRepositoryImp(retrofitService);
     }
 
     @Provides

@@ -11,6 +11,7 @@ import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.XPUpdate;
 import com.visitegypt.domain.usecase.ChatbotUseCase;
 import com.visitegypt.domain.usecase.GetUserUseCase;
+import com.visitegypt.domain.usecase.GetWeatherByCity;
 import com.visitegypt.domain.usecase.UpdateChatBotPlacePlaceActivity;
 import com.visitegypt.domain.usecase.UpdateUserChatbotArtifactUseCase;
 import com.visitegypt.utils.Constants;
@@ -33,6 +34,7 @@ public class ChatbotViewModel extends ViewModel {
     private UpdateUserChatbotArtifactUseCase updateUserChatbotArtifactUseCase;
     private UpdateChatBotPlacePlaceActivity updateChatBotPlacePlaceActivity;
     private GetUserUseCase getUserUseCase;
+    private GetWeatherByCity getWeatherByCity;
 
     private ChatbotUseCase chatbotUseCase;
     private Message message = new Message();
@@ -46,12 +48,14 @@ public class ChatbotViewModel extends ViewModel {
                             UpdateChatBotPlacePlaceActivity updateChatBotPlacePlaceActivity,
                             UpdateUserChatbotArtifactUseCase updateUserChatbotArtifactUseCase,
                             GetUserUseCase getUserUseCase,
+                            GetWeatherByCity getWeatherByCity,
                             SharedPreferences sharedPreferences) {
         this.chatbotUseCase = chatbotUseCase;
         this.updateChatBotPlacePlaceActivity = updateChatBotPlacePlaceActivity;
         this.updateUserChatbotArtifactUseCase = updateUserChatbotArtifactUseCase;
         this.getUserUseCase = getUserUseCase;
         this.sharedPreferences = sharedPreferences;
+        this.getWeatherByCity = getWeatherByCity;
     }
 
     public void setMessage(String msg) {
@@ -59,7 +63,27 @@ public class ChatbotViewModel extends ViewModel {
         chatbotUseCase.setMessage(message);
         chatbotUseCase.execute(
                 chatbotResponse -> {
-                    botResponseMutableLiveData.setValue(chatbotResponse.getResponse());
+                    if (chatbotResponse.getResponse().matches("Weather\\s[a-zA-Z]+")) {
+                        String[] split = chatbotResponse.getResponse().split("\\s");
+                        String city = split[1];
+                        getWeatherByCity.setCity(city);
+                        getWeatherByCity.execute(
+                                weatherModel -> {
+                                    String weather = weatherModel.getWeather().get(0).getMain();
+                                    botResponseMutableLiveData.setValue(chatbotResponse.getResponse() + " " + weather);
+                                }
+                        , throwable -> {
+                            Log.e(TAG, "getWeatherByCity: ", throwable);
+                        });
+//                        getWeather(city);
+                    }else if (chatbotResponse.getResponse().equals("Weather ")) {
+                        Log.d(TAG, "setMessage:weather");
+                    }
+                    else{
+                        botResponseMutableLiveData.setValue(chatbotResponse.getResponse());
+                    }
+
+
                 }, throwable -> Log.e(TAG, "chatbot error: " + throwable.getMessage())
         );
     }
