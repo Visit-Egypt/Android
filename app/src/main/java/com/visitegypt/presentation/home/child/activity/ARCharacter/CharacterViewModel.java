@@ -90,12 +90,12 @@ public class CharacterViewModel extends ViewModel implements UploadUserPhotoUseC
     public void getARResponse() {
         Log.d(TAG, "getARResponse: getting user ar files...");
         getARPhotoOfUserUseCase.execute(s -> {
-            Log.d(TAG, "getARResponse: successfully retrieved user files");
-            Log.d(TAG, "getARResponse: " + s.getArMtl());
+//            Log.d(TAG, "getARResponse: successfully retrieved user files");
+//            Log.d(TAG, "getARResponse: " + s.getArMtl());
             arMTLFilesMutableLiveData.setValue(s.getArMtl());
-            Log.d(TAG, "getARResponse: " + s.getArObj());
+//            Log.d(TAG, "getARResponse: " + s.getArObj());
             arOBJFilesMutableLiveData.setValue(s.getArObj());
-            Log.d(TAG, "getARResponse: " + s.getArPng());
+//            Log.d(TAG, "getARResponse: " + s.getArPng());
             arPNGFilesMutableLiveData.setValue(s.getArPng());
 
         }, throwable -> {

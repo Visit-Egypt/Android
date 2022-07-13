@@ -48,7 +48,7 @@ public class CharacterActivity extends AppCompatActivity {
     private static final String TAG = "Character Activity";
     @Inject
     public SharedPreferences sharedPreferences;
-    Boolean genderFlag;
+    String genderFlag;
     DownloadManager downloadManager;
     private MaterialButton createCharacterMaterialButton, cancelMaterialButton, test;
     private CharacterViewModel characterViewModel;
@@ -76,10 +76,10 @@ public class CharacterActivity extends AppCompatActivity {
         createCharacterMaterialButton.setOnClickListener(v -> {
 
             if (femaleRadioButton.isChecked())
-                genderFlag = true;
+                genderFlag = "female";
             else
-                genderFlag = false;
-            Log.d(TAG, "onCreate: dddd");
+                genderFlag = "male";
+//            Log.d(TAG, "onCreate: dddd");
             Toast.makeText(this, "donnneee", Toast.LENGTH_LONG).show();
             startActivity(new Intent(this, Home.class));
 
@@ -145,26 +145,26 @@ public class CharacterActivity extends AppCompatActivity {
 
         });
         characterViewModel.arMTLFilesMutableLiveData.observe(this, v -> {
-            Log.d(TAG, "liveDataObserve:arMTLFilesMutableLiveData " + v);
+//            Log.d(TAG, "liveDataObserve:arMTLFilesMutableLiveData " + v);
             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(v));
             File arFile = new File("/storage/emulated/0/Android/data/com.visitegypt/files", sharedPreferences.getString(SHARED_PREF_USER_ID, "") + ".mtl");
             if (arFile.exists()) {
-                Log.d(TAG, "arMTLFilesMutableLiveData: file exist");
+//                Log.d(TAG, "arMTLFilesMutableLiveData: file exist");
             } else {
-                Log.d(TAG, "arMTLFilesMutableLiveData: file isn't exist");
+//                Log.d(TAG, "arMTLFilesMutableLiveData: file isn't exist");
                 try {
                     request.setDestinationInExternalFilesDir(this, File.separator, sharedPreferences.getString(SHARED_PREF_USER_ID, "") + ".mtl");
                     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                     Long reference = downloadManager.enqueue(request);
-                    Log.d(TAG, "arMTLFilesMutableLiveData: done");
+//                    Log.d(TAG, "arMTLFilesMutableLiveData: done");
 
                 } catch (Exception e) {
-                    Log.e(TAG, "arMTLFilesMutableLiveData: " + e.getMessage());
+//                    Log.e(TAG, "arMTLFilesMutableLiveData: " + e.getMessage());
                 }
             }
         });
         characterViewModel.arPNGFilesMutableLiveData.observe(this, v -> {
-            Log.d(TAG, "liveDataObserve:arPNGFilesMutableLiveData " + v);
+//            Log.d(TAG, "liveDataObserve:arPNGFilesMutableLiveData " + v);
             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(v));
             File arFile = new File("/storage/emulated/0/Android/data/com.visitegypt/files", sharedPreferences.getString(SHARED_PREF_USER_ID, "") + ".texture.png");
             if (arFile.exists()) {
@@ -175,7 +175,7 @@ public class CharacterActivity extends AppCompatActivity {
                     request.setDestinationInExternalFilesDir(this, File.separator, sharedPreferences.getString(SHARED_PREF_USER_ID, "") + ".texture.png");
                     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                     Long reference = downloadManager.enqueue(request);
-                    Log.d(TAG, "arPNGFilesMutableLiveData: done");
+//                    Log.d(TAG, "arPNGFilesMutableLiveData: done");
 
                 } catch (Exception e) {
                     Log.e(TAG, "arPNGFilesMutableLiveData: " + e.getMessage());
