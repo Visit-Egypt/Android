@@ -67,7 +67,7 @@ public class Home extends AppCompatActivity {
     private TextView txtNotFound;
     private SearchViewModel searchViewModel;
     private MaterialButton editButton;
-    private ImageView userImageView;
+    private ImageView userImageView, userProfileFrameImageView;
     private LogActivity logActivity;
     private List<TripMateRequest> tripMateRequests = new ArrayList<>();
 
@@ -92,7 +92,7 @@ public class Home extends AppCompatActivity {
         editButton.setOnClickListener(view -> {
             Intent intent = new Intent(Home.this, SettingActivity.class);
             startActivity(intent);
-            finish();
+            //finish();
         });
     }
 
@@ -132,7 +132,6 @@ public class Home extends AppCompatActivity {
                         }
                     }
                     showFirstBadgeDialog(badge);
-
                 } else {
                     Log.d(TAG, "checkFirstLogIn: old user... ignoring badge");
                 }
@@ -185,8 +184,7 @@ public class Home extends AppCompatActivity {
             Intent intent = new Intent(Home.this, ChatbotActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-            finish();
-
+            //finish();
         });
     }
 
@@ -230,7 +228,7 @@ public class Home extends AppCompatActivity {
         txtEmail = header.findViewById(R.id.emailTextField);
         userImageView = header.findViewById(R.id.userImageImageView);
         editButton = header.findViewById(R.id.editButton);
-
+        userProfileFrameImageView = header.findViewById(R.id.profileFrameImageViewHeader);
 
         /**********************************************/
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
@@ -373,6 +371,8 @@ public class Home extends AppCompatActivity {
             nameNavHeaderTextView.setText(user.getFirstName() + " " + user.getLastName());
             txtEmail.setText(user.getEmail());
             if (user.getPhotoUrl() != null) {
+                userProfileFrameImageView.setBackground(GamificationRules.getProfileFrameDrawable(this,
+                        GamificationRules.getTitleFromLevel(GamificationRules.getLevelFromXp(user.getXp()))));
                 Log.d(TAG, "onChanged: " + user.getPhotoUrl());
                 homeViewModel.saveUserImage(user.getPhotoUrl());
                 Picasso.get().load(user.getPhotoUrl()).into(userImageView);
