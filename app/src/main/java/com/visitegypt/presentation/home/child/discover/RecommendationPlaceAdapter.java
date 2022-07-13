@@ -1,6 +1,9 @@
 package com.visitegypt.presentation.home.child.discover;
 
+import static com.visitegypt.presentation.home.child.discover.DiscoverPlaceAdapter.CHOSEN_PLACE_ID;
+
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.Review;
+import com.visitegypt.presentation.detail.DetailActivity;
 
 import java.util.Calendar;
 import java.util.List;
@@ -22,10 +27,13 @@ public class RecommendationPlaceAdapter extends RecyclerView.Adapter<Recommendat
 
     private List<Place> placeList;
     private final Context context;
+    private final int maxSize = 2;
+    private int flag;
 
-    public RecommendationPlaceAdapter(List<Place> placeList, Context context) {
+    public RecommendationPlaceAdapter(List<Place> placeList, Context context, int flag) {
         this.placeList = placeList;
         this.context = context;
+        this.flag = flag;
     }
 
     @NonNull
@@ -33,10 +41,12 @@ public class RecommendationPlaceAdapter extends RecyclerView.Adapter<Recommendat
     public RecommendPlaceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new RecommendPlaceViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.recommendation_card, parent, false));
     }
+
     public void updatePlacesList(List<Place> placesList) {
         this.placeList = placesList;
         notifyDataSetChanged();
     }
+
     @Override
     public void onBindViewHolder(@NonNull RecommendPlaceViewHolder holder, int position) {
         holder.txtPlaceTitle.setText(placeList.get(position).getTitle());
@@ -49,7 +59,7 @@ public class RecommendationPlaceAdapter extends RecyclerView.Adapter<Recommendat
         } else if (timeOfDay >= 21 && timeOfDay < 24) {
             holder.txtState.setText("closed");
         }
-        if (placeList.get(position).getDefaultImage() != null) {
+        if (placeList.get(position).getDefaultImage() != null && !placeList.get(position).getDefaultImage().isEmpty()) {
             Log.d("TAG", "default image found for: " + placeList.get(position).getTitle());
             Picasso.get().load(placeList.get(position).getDefaultImage()).into(holder.imgPlace);
         } else if (placeList.get(position).getImageUrls() != null) {
@@ -58,16 +68,32 @@ public class RecommendationPlaceAdapter extends RecyclerView.Adapter<Recommendat
         } else {
             Log.d("TAG", "no images found for: " + placeList.get(position).getTitle());
         }
+        float rating = 0;
+        for (Review review : placeList.get(position).getReviews()) {
+            rating += review.getRating();
+        }
+        if (rating != 0) {
+            String ratingText = String.format("%.1f", rating / placeList.get(position).getReviews().size());
+            holder.txtTotalRate.setText(ratingText);
+        }
 
     }
 
     @Override
     public int getItemCount() {
-        if (placeList == null)
-            return 0;
-        if (placeList.isEmpty())
-            return 0;
-        return placeList.size();
+        if (flag == 1) {
+            if (placeList == null || placeList.isEmpty()) {
+                return 0;
+            } else {
+                return placeList.size();
+            }
+        } else {
+            if (placeList.size() < maxSize) {
+                return placeList.size();
+
+            } else
+                return maxSize;
+        }
     }
 
     public class RecommendPlaceViewHolder extends RecyclerView.ViewHolder {
@@ -84,6 +110,11 @@ public class RecommendationPlaceAdapter extends RecyclerView.Adapter<Recommendat
             txtPlaceTitle = itemView.findViewById(R.id.placeCardNameTextView);
             txtState = itemView.findViewById(R.id.stateTextView);
             txtTotalRate = itemView.findViewById(R.id.txtPlaceCardRating);
+            itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra(CHOSEN_PLACE_ID, placeList.get(getAdapterPosition()).getId());
+                context.startActivity(intent);
+            });
         }
     }
 }

@@ -6,11 +6,13 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.RecommendationPlaces;
 import com.visitegypt.domain.model.response.PlacePageResponse;
 import com.visitegypt.domain.usecase.CachePlacesUseCase;
 import com.visitegypt.domain.usecase.GetCachedPlacesCount;
 import com.visitegypt.domain.usecase.GetCachedPlacesUseCase;
 import com.visitegypt.domain.usecase.GetPlacesUseCase;
+import com.visitegypt.domain.usecase.GetRecommendedPlacesUseCase;
 import com.visitegypt.utils.error.Error;
 
 import java.util.List;
@@ -24,10 +26,12 @@ public class DiscoverChildViewModel extends ViewModel {
     // TODO: Implement the ViewModel
     private static final String TAG = "Home View Model";
     MutableLiveData<List<Place>> placesMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<RecommendationPlaces> recommendationPlacesMutableLiveData = new MutableLiveData<>();
     private GetPlacesUseCase getPlacesUseCase;
     private CachePlacesUseCase cachePlacesUseCase;
     private GetCachedPlacesUseCase getCachedPlacesUseCase;
     private GetCachedPlacesCount getCachedPlacesCount;
+    private GetRecommendedPlacesUseCase getRecommendedPlacesUseCase;
 
     /***********************************************************/
 
@@ -35,11 +39,13 @@ public class DiscoverChildViewModel extends ViewModel {
     public DiscoverChildViewModel(GetPlacesUseCase getPlacesUseCase,
                                   CachePlacesUseCase cachePlacesUseCase,
                                   GetCachedPlacesCount getCachedPlacesCount,
+                                  GetRecommendedPlacesUseCase getRecommendedPlacesUseCase,
                                   GetCachedPlacesUseCase getCachedPlacesUseCase) {
         this.getPlacesUseCase = getPlacesUseCase;
         this.cachePlacesUseCase = cachePlacesUseCase;
         this.getCachedPlacesUseCase = getCachedPlacesUseCase;
         this.getCachedPlacesCount = getCachedPlacesCount;
+        this.getRecommendedPlacesUseCase = getRecommendedPlacesUseCase;
     }
 
     public void getAllPlaces() {
@@ -81,6 +87,18 @@ public class DiscoverChildViewModel extends ViewModel {
                 getAllPlaces();
             }
 
+
+        }, throwable -> {
+            Log.e(TAG, "places retrieve error: " + throwable.getMessage());
+            Error error = new Error();
+            String errorMsg = error.errorType(throwable);
+            Log.d(TAG, "error is:" + errorMsg);
+        });
+    }
+
+    public void getRecommendedPlaces() {
+        getRecommendedPlacesUseCase.execute(recommendationPlaces -> {
+            recommendationPlacesMutableLiveData.setValue(recommendationPlaces);
 
         }, throwable -> {
             Log.e(TAG, "places retrieve error: " + throwable.getMessage());

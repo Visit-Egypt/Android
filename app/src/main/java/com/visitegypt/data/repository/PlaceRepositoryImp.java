@@ -1,8 +1,13 @@
 package com.visitegypt.data.repository;
 
+import static com.visitegypt.utils.Constants.SHARED_PREF_USER_ID;
+
+import android.content.SharedPreferences;
+
 import com.visitegypt.data.source.local.dao.PlacePageResponseDao;
 import com.visitegypt.data.source.remote.RetrofitService;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.RecommendationPlaces;
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.response.PlacePageResponse;
 import com.visitegypt.domain.repository.PlaceRepository;
@@ -17,10 +22,14 @@ public class PlaceRepositoryImp implements PlaceRepository {
     private static final String TAG = "Place Repository Impl";
     private RetrofitService retrofitService;
     private PlacePageResponseDao placePageResponseDao;
+    private SharedPreferences sharedPreferences;
 
-    public PlaceRepositoryImp(RetrofitService retrofitService, PlacePageResponseDao placeDao) {
+    public PlaceRepositoryImp(RetrofitService retrofitService,
+                              SharedPreferences sharedPreferences,
+                              PlacePageResponseDao placeDao) {
         this.retrofitService = retrofitService;
         this.placePageResponseDao = placeDao;
+        this.sharedPreferences = sharedPreferences;
     }
 
 
@@ -78,6 +87,11 @@ public class PlaceRepositoryImp implements PlaceRepository {
     @Override
     public Single<Integer> getCountOfPlaces() {
         return placePageResponseDao.getCountOfPlaces();
+    }
+
+    @Override
+    public Single<RecommendationPlaces> getRecommendationPlaces() {
+        return retrofitService.getRecommendationPlaces(sharedPreferences.getString(SHARED_PREF_USER_ID, ""));
     }
 
 }

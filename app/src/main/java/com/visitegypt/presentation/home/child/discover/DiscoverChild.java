@@ -21,6 +21,8 @@ import com.smarteist.autoimageslider.SliderView;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.presentation.home.child.discover.allPlaces.DiscoverChildAllPlacesActivity;
+import com.visitegypt.presentation.home.child.discover.peopleMayLike.PeopleMayLike;
+import com.visitegypt.presentation.home.child.discover.youMayLike.YouMayLike;
 import com.visitegypt.presentation.home.parent.Home;
 
 import java.util.ArrayList;
@@ -39,17 +41,17 @@ public class DiscoverChild extends Fragment {
     private LinearLayout shimmerLayout;
     private RecyclerView discoverPlacesRecyclerView;
     private int[] images;
-    private RecyclerView recommendationPlaceRecyclerView;
+    private RecyclerView youMayLikeRecyclerView, peopleMayLikeRecyclerView;
     private DiscoverPlaceAdapter discoverPlaceAdapter;
     private LinearLayout discoverVerticalLayOut;
-    private RecommendationPlaceAdapter recommendationPlaceAdapter;
-    private List<Place> ourFavouritesArrayList, discoverPlacesArrayList;
+    private RecommendationPlaceAdapter placesYouMayLikeAdapter,placesPeopleMayLikeAdapter;
+    private List<Place> placesYouMayLike,placesPeopleMayLike, discoverPlacesArrayList;
     private DiscoverChildViewModel discoverChildViewModel;
     private ShimmerFrameLayout allPlacesShimmer,
             firstRecommendedPlaceShimmer,
             secRecommendedPlaceShimmer,
             sliderShimmerFrameLayout;
-    private MaterialButton btnAllPlaces;
+    private MaterialButton btnAllPlaces,btnYouMayLike,btnOtherPeopleMayLike;
 
 
     public static DiscoverChild newInstance() {
@@ -59,11 +61,9 @@ public class DiscoverChild extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-//        container.removeAllViews();
         discoverLayOut = inflater.inflate(R.layout.discover_child_fragment, container, false);
         initViews();
-        createDummyPlaces();
-
+//        createDummyPlaces();
         onClickListeners();
         return discoverLayOut;
     }
@@ -75,6 +75,7 @@ public class DiscoverChild extends Fragment {
         // TODO: Use the ViewModel
         initViewModels();
         getAllPlaces();
+        getRecommendedPlaces();
     }
 
     private void initViews() {
@@ -102,7 +103,7 @@ public class DiscoverChild extends Fragment {
         sliderView.startAutoCycle();
         /**********************************************/
         //init Places Recycler view
-
+        btnYouMayLike = discoverLayOut.findViewById(R.id.btnYouMayLike);
         discoverPlacesRecyclerView = discoverLayOut.findViewById(R.id.placeRecyclerView);
         discoverPlacesArrayList = new ArrayList<>();
         discoverPlacesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
@@ -112,11 +113,19 @@ public class DiscoverChild extends Fragment {
 
         /************************************************/
         // init Recommendation Places Recycler View
-        ourFavouritesArrayList = new ArrayList<>();
-        recommendationPlaceAdapter = new RecommendationPlaceAdapter(ourFavouritesArrayList, getContext());
-        recommendationPlaceRecyclerView = discoverLayOut.findViewById(R.id.recommendationRecyclerView);
-        recommendationPlaceRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        recommendationPlaceRecyclerView.setAdapter(recommendationPlaceAdapter);
+        btnOtherPeopleMayLike = discoverLayOut.findViewById(R.id.btnOtherPeopleMayLike);
+        placesYouMayLike = new ArrayList<>();
+        placesYouMayLikeAdapter = new RecommendationPlaceAdapter(placesYouMayLike, getContext(),0);
+        youMayLikeRecyclerView = discoverLayOut.findViewById(R.id.youMayLikeRecyclerView);
+        youMayLikeRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        youMayLikeRecyclerView.setAdapter(placesYouMayLikeAdapter);
+        /************************************************/
+        // init Recommendation Places Recycler View
+        placesPeopleMayLike = new ArrayList<>();
+        placesPeopleMayLikeAdapter = new RecommendationPlaceAdapter(placesPeopleMayLike, getContext(),0);
+        peopleMayLikeRecyclerView = discoverLayOut.findViewById(R.id.peopleMayLikeRecyclerView);
+        peopleMayLikeRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        peopleMayLikeRecyclerView.setAdapter(placesPeopleMayLikeAdapter);
         /**************************************************/
         //init shimmer
         shimmerLayout = discoverLayOut.findViewById(R.id.shimmerLayout);
@@ -136,7 +145,7 @@ public class DiscoverChild extends Fragment {
     }
 
     private void setRecyclerViewsVisible() {
-        recommendationPlaceRecyclerView.setVisibility(View.VISIBLE);
+        youMayLikeRecyclerView.setVisibility(View.VISIBLE);
         discoverPlacesRecyclerView.setVisibility(View.VISIBLE);
     }
 
@@ -209,9 +218,9 @@ public class DiscoverChild extends Fragment {
         place3.setTitle("Abu Simbel Temples");
         place3.setLongDescription("Abu Simbel is two massive rock-cut temples in the village of Abu Simbel, Aswan Governorate, Upper Egypt, near the border with Sudan");
 
-        ourFavouritesArrayList.add(place);
-        ourFavouritesArrayList.add(place2);
-        recommendationPlaceAdapter.updatePlacesList(ourFavouritesArrayList);
+        placesYouMayLike.add(place);
+        placesYouMayLike.add(place2);
+        placesYouMayLikeAdapter.updatePlacesList(placesYouMayLike);
     }
 
     private void onClickListeners() {
@@ -220,7 +229,30 @@ public class DiscoverChild extends Fragment {
             Intent intent = new Intent(getContext(), DiscoverChildAllPlacesActivity.class);
             startActivity(intent);
         });
+        btnYouMayLike.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), YouMayLike.class);
+            startActivity(intent);
+        });
+        btnOtherPeopleMayLike.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), PeopleMayLike.class);
+            startActivity(intent);
+        });
     }
+    private void getRecommendedPlaces()
+    {
+        discoverChildViewModel.getRecommendedPlaces();
+        discoverChildViewModel.recommendationPlacesMutableLiveData.observe(getViewLifecycleOwner(), place -> {
+            if (place != null) {
+                placesYouMayLike.addAll(place.getUserLikePlaces());
+                placesYouMayLikeAdapter.updatePlacesList(placesYouMayLike);
+                btnYouMayLike.setEnabled(true);
+                placesPeopleMayLike.addAll(place.getPeopleLikePlaces());
+                placesPeopleMayLikeAdapter.updatePlacesList(placesPeopleMayLike);
+                btnOtherPeopleMayLike.setEnabled(true);
+            }
+        });
+    }
+
 
 
 

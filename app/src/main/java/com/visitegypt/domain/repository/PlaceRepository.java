@@ -1,6 +1,7 @@
 package com.visitegypt.domain.repository;
 
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.RecommendationPlaces;
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.response.PlacePageResponse;
 
@@ -24,10 +25,14 @@ public interface PlaceRepository {
 
     Single<List<Place>> getPlacesByPlaceActivityIds(List<String> placeActivitiesId);
 
-    public Single<PlacePageResponse> getPlacesPaging(int pageNumber);
+    Single<PlacePageResponse> getPlacesPaging(int pageNumber);
 
     Completable cachingPlaces(PlacePageResponse placePageResponse);
+
     Single<PlacePageResponse> getALLCachedPlaces();
+
     Single<Integer> getCountOfPlaces();
+
+    Single<RecommendationPlaces> getRecommendationPlaces();
 
 }
