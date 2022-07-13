@@ -1,13 +1,8 @@
-package com.visitegypt.presentation.post;
+package com.visitegypt.presentation.home.child.activity.ARCharacter;
 
 import static com.visitegypt.utils.Constants.REQUEST_ID_MULTIPLE_PERMISSIONS;
-import static com.visitegypt.utils.GeneralUtils.showButtonFailed;
-import static com.visitegypt.utils.GeneralUtils.showButtonLoaded;
-import static com.visitegypt.utils.GeneralUtils.showButtonLoading;
-import static com.visitegypt.utils.GeneralUtils.showSnackInfo;
 import static com.visitegypt.utils.UploadUtils.checkAndRequestPermissions;
 import static com.visitegypt.utils.UploadUtils.getRealPathFromUri;
-import static com.visitegypt.utils.UploadUtils.setContext;
 
 import android.Manifest;
 import android.content.Context;
@@ -18,22 +13,24 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.mikhaellopez.circularimageview.CircularImageView;
-import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.User;
-import com.visitegypt.domain.model.XPUpdate;
-import com.visitegypt.utils.Constants;
+import com.visitegypt.presentation.home.parent.Home;
 import com.visitegypt.utils.GeneralUtils;
 
 import java.io.File;
@@ -42,123 +39,91 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+
 @AndroidEntryPoint
-public class PostActivity extends AppCompatActivity {
-    private static final String TAG = "Posts Activity";
+public class CharacterActivity extends AppCompatActivity {
+    private static final String TAG = "Character Activity";
     @Inject
     public SharedPreferences sharedPreferences;
-    private PostsViewModel postsViewModel;
+    Boolean genderFlag;
+    private MaterialButton createCharacterMaterialButton, cancelMaterialButton;
+    private CharacterViewModel characterViewModel;
     private File file;
     private String placeId;
     private CircularImageView userImageView;
-    private EditText postTxt;
-    private Button postButton;
     private User user;
     private Uri selectedImage;
-    private ShapeableImageView postImageView;
+    private ImageButton uploadImageButton;
+    private ShapeableImageView uploadShapeableImageView;
+    private TextView nameOfUploadedTextView;
+    private RadioGroup genderRadioGroup;
+    private RadioButton maleRadioButton, femaleRadioButton;
 
+    @Nullable
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if (extras == null) {
-                placeId = null;
-            } else {
-                placeId = extras.getString(Constants.PLACE_ID);
-            }
-        } else {
-            placeId = (String) savedInstanceState.getSerializable(Constants.PLACE_ID);
-        }
-
-        setContentView(R.layout.activity_post);
-        setContext(this);
-
+        setContentView(R.layout.activity_select_character);
         initViews();
-        setUserImageImageView();
         liveDataObserve();
-    }
 
-    private void initViews() {
-        postTxt = findViewById(R.id.postTextView);
-        postsViewModel = new ViewModelProvider(this).get(PostsViewModel.class);
-        postsViewModel.initCallBack();
-        userImageView = findViewById(R.id.userImageView);
-        postButton = findViewById(R.id.postButtonPostActivity);
-        postImageView = findViewById(R.id.postImageView);
+        createCharacterMaterialButton.setOnClickListener(v -> {
 
-        postButton.setOnClickListener(view -> {
-            postTxt.getText().toString();
-            if (postTxt.getText().toString().isEmpty()) {
-                GeneralUtils.showSnackError(PostActivity.this, postTxt, "You can't make an empty post");
-            } else {
-                showButtonLoading(postButton);
-                postsViewModel.setPostData(postTxt.getText().toString(), placeId);
-                postsViewModel.addPost();
-            }
+            if (femaleRadioButton.isChecked())
+                genderFlag = true;
+            else
+                genderFlag = false;
+            Log.d(TAG, "onCreate: dddd");
+            Toast.makeText(this, "donnneee", Toast.LENGTH_LONG).show();
+//            startActivity(new Intent(this, Home.class));
+
+            //response to third endpoint
+characterViewModel.getARResponse();
+
         });
+        cancelMaterialButton.setOnClickListener(v -> {
+            startActivity(new Intent(CharacterActivity.this, Home.class));
+        });
+
     }
 
+    public void initViews() {
+        characterViewModel = new ViewModelProvider(this).get(CharacterViewModel.class);
+        characterViewModel.initCallBack();
+        createCharacterMaterialButton = findViewById(R.id.createCharacterMaterialButton);
+        cancelMaterialButton = findViewById(R.id.cancelMaterialButton);
+        uploadImageButton = findViewById(R.id.uploadImageButton);
+        nameOfUploadedTextView = findViewById(R.id.nameOfUploadedTextView);
+        genderRadioGroup = findViewById(R.id.genderRadioGroup);
+        femaleRadioButton = findViewById(R.id.femaleRadioButton);
+        maleRadioButton = findViewById(R.id.maleRadioButton);
 
-    public void cancelOnClick(View view) {
-        onBackPressed();
+
     }
 
-
-    /*******************************************/
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    public void selectPhotoOnClick(View view) {
-        if (checkAndRequestPermissions(PostActivity.this)) {
+    public void uploadPhotoOnClick(View view) {
+        if (checkAndRequestPermissions(CharacterActivity.this)) {
             chooseImage(this);
         }
     }
 
     private void liveDataObserve() {
-        postsViewModel.getUser();
-        GeneralUtils.LiveDataUtil.observeOnce(postsViewModel.userMutableLiveData, user1 -> {
-            postButton.setEnabled(true);
+        characterViewModel.getUser();
+        GeneralUtils.LiveDataUtil.observeOnce(characterViewModel.userMutableLiveData, user1 -> {
             user = user1;
         });
-        postsViewModel.isImageUploaded.observe(this, aBoolean -> {
-            if (!aBoolean)
-                Toast.makeText(PostActivity.this, "Upload Failed", Toast.LENGTH_LONG).show();
-            else {
-                postImageView.setImageURI(selectedImage);
-                postImageView.setVisibility(View.VISIBLE);
-            }
-
-        });
-        postsViewModel.isPostUploaded.observe(this, aBoolean -> {
-            if (aBoolean) {
-                postTxt.getText().clear();
-                showButtonLoaded(postButton, "Post");
-                showSnackInfo(this, postTxt, "Post successfully created");
-//                Toast.makeText(PostActivity.this, "Your Post is Created ", Toast.LENGTH_LONG).show();
-//                GeneralUtils.LiveDataUtil.observeOnce(postsViewModel.postUpdatedXP, this::updateUserXP);
+        characterViewModel.isImageUploaded.observe(this, aBoolean -> {
+            if (!aBoolean) {
+                Toast.makeText(this, "Upload Failed", Toast.LENGTH_LONG).show();
+                Log.d(TAG, "liveDataObserve: aaa");
             } else {
-                showButtonFailed(postButton, "failed to add post", "post");
-//                Toast.makeText(PostActivity.this, "Please,try again ", Toast.LENGTH_LONG).show();
+                Log.d(TAG, "liveDataObserve: qqqqq");
+                nameOfUploadedTextView.setText("Untitled Image");
+                uploadImageButton.setImageURI(selectedImage);
+                createCharacterMaterialButton.setEnabled(true);
             }
-        });
-        postsViewModel.postUpdatedXP.observe(this, xpUpdate -> {
-            updateUserXP(xpUpdate);
-        });
-    }
 
-    private void updateUserXP(XPUpdate xpUpdate) {
-        String imageUrl = sharedPreferences.getString(Constants.SHARED_PREF_USER_IMAGE, "");
-        GeneralUtils.showUserProgress(this,
-                postTxt,
-                null,
-                null,
-                xpUpdate,
-                imageUrl
-        );
-        //onBackPressed();
+        });
     }
 
     @Override
@@ -175,13 +140,13 @@ public class PostActivity extends AppCompatActivity {
                     if (resultCode == RESULT_OK && data != null) {
                         selectedImage = data.getData();
                         if (selectedImage != null) {
-                            Log.d("TAG", selectedImage.toString());
+                            Log.d(TAG, "  vvvvvvvvvvv  " + selectedImage.toString());
                             String filePath = getRealPathFromUri(selectedImage);
                             String mimeType = getContentResolver().getType(selectedImage);
                             if (filePath != null && !filePath.isEmpty())
                                 file = new File(filePath);
                             if (file.exists() && file != null)
-                                postsViewModel.uploadUserProfilePhoto(file, mimeType);
+                                characterViewModel.uploadUserProfilePhoto(file, mimeType);
                         }
 
                     }
@@ -247,11 +212,8 @@ public class PostActivity extends AppCompatActivity {
         builder.show();
     }
 
-    private void setUserImageImageView() {
-        String url = postsViewModel.getUserImage();
-        if (url != null)
-            if (!url.isEmpty())
-                Picasso.get().load(url).into(userImageView);
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
-
 }

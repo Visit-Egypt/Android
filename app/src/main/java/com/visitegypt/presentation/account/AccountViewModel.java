@@ -201,7 +201,7 @@ public class AccountViewModel extends ViewModel {
 
     private void getUserPosts() {
         //when backend finishes there work start to implement
-        Log.d(TAG, "accept List of posts:  welcome");
+        Log.d(TAG, "accept List of posts: ");
         getPostsByUser.execute(postPage -> mutableLiveDataMyPosts.setValue(postPage.getPosts()), throwable -> {
             try {
                 ResponseBody body = ((HttpException) throwable).response().errorBody();

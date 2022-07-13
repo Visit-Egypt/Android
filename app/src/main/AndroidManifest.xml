@@ -61,6 +61,9 @@
             android:name=".presentation.setting.SettingActivity"
             android:exported="true" />
         <activity
+            android:name=".presentation.home.child.activity.ARCharacter.CharacterActivity"
+            android:exported="true" />
+        <activity
             android:name=".presentation.review.ReviewActivity"
             android:exported="true" />
         <activity

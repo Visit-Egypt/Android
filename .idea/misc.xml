@@ -3,7 +3,27 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/drawable/female.xml" value="0.2703125" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activitiy_child_fragment.xml" value="0.32122905027932963" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_cities.xml" value="0.21296296296296297" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_gamification.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_log.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_places.xml" value="0.21296296296296297" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_post.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_review.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_select_character.xml" value="0.264" />
         <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_setting.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/dialog_add_review.xml" value="0.165625" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/dialog_choose_character.xml" value="0.165625" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/discover_child_fragment.xml" value="0.1" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/places_card.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/places_card_shimmer.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/places_place_card.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/post_card.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/user_card_shimmer.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/user_message.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/user_profile_fragment.xml" value="0.21296296296296297" />
+        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/users_card.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

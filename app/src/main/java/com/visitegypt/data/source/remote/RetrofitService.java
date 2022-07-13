@@ -1,5 +1,6 @@
 package com.visitegypt.data.source.remote;
 
+import com.visitegypt.domain.model.ARResponsePage;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.ConfirmUploadModel;
@@ -91,6 +92,9 @@ public interface RetrofitService {
     @GET("api/user/{id}/upload-ar")
     public Single<UploadResponse> getUserPhotoAR(@Path("id") String id, @Query("content_type") String contentType);
 
+    @GET("api/user/ar/{user_id}")
+    public Single<ARResponsePage> getARResponse(@Path("user_id") String userId);
+
     //    public Call<ConfirmUploadModel> confirmUpload(@Body ConfirmUploadModel confirmUploadModel);
     //with tasks
     @GET("api/user/badges/{user_id}")
@@ -130,6 +134,7 @@ public interface RetrofitService {
 
     @GET("api/user/recommendation/{user_id}")
     public Single<RecommendationPlaces> getRecommendationPlaces(@Path("user_id") String userId);
+
     /*******************************************************************/
     @GET("api/place/{id}")
     public Single<Place> getPlaceById(@Path("id") String id);
@@ -257,9 +262,11 @@ public interface RetrofitService {
 
     @GET("/api/user/badgesdetail/{user_id}")
     public Single<List<FullBadge>> getUserFullBadgesDetail(@Path("user_id") String userId);
+
     /********************************************************************************/
     @GET("data/2.5/weather")
     public Single<WeatherModel> getWeatherByCity(@Query("q") String cityName, @Query("appid") String appId);
+
     @GET("data/2.5/weather")
-    public Single<WeatherModel> getWeatherByLocation(@Query("lat") double lat,@Query("lon") double lon, @Query("appid") String appId);
+    public Single<WeatherModel> getWeatherByLocation(@Query("lat") double lat, @Query("lon") double lon, @Query("appid") String appId);
 }

@@ -44,14 +44,14 @@ public class DiscoverChild extends Fragment {
     private RecyclerView youMayLikeRecyclerView, peopleMayLikeRecyclerView;
     private DiscoverPlaceAdapter discoverPlaceAdapter;
     private LinearLayout discoverVerticalLayOut;
-    private RecommendationPlaceAdapter placesYouMayLikeAdapter,placesPeopleMayLikeAdapter;
-    private List<Place> placesYouMayLike,placesPeopleMayLike, discoverPlacesArrayList;
+    private RecommendationPlaceAdapter placesYouMayLikeAdapter, placesPeopleMayLikeAdapter;
+    private List<Place> placesYouMayLike, placesPeopleMayLike, discoverPlacesArrayList;
     private DiscoverChildViewModel discoverChildViewModel;
     private ShimmerFrameLayout allPlacesShimmer,
             firstRecommendedPlaceShimmer,
             secRecommendedPlaceShimmer,
             sliderShimmerFrameLayout;
-    private MaterialButton btnAllPlaces,btnYouMayLike,btnOtherPeopleMayLike;
+    private MaterialButton btnAllPlaces, btnYouMayLike, btnOtherPeopleMayLike;
 
 
     public static DiscoverChild newInstance() {
@@ -115,14 +115,14 @@ public class DiscoverChild extends Fragment {
         // init Recommendation Places Recycler View
         btnOtherPeopleMayLike = discoverLayOut.findViewById(R.id.btnOtherPeopleMayLike);
         placesYouMayLike = new ArrayList<>();
-        placesYouMayLikeAdapter = new RecommendationPlaceAdapter(placesYouMayLike, getContext(),0);
+        placesYouMayLikeAdapter = new RecommendationPlaceAdapter(placesYouMayLike, getContext(), 0);
         youMayLikeRecyclerView = discoverLayOut.findViewById(R.id.youMayLikeRecyclerView);
         youMayLikeRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         youMayLikeRecyclerView.setAdapter(placesYouMayLikeAdapter);
         /************************************************/
         // init Recommendation Places Recycler View
         placesPeopleMayLike = new ArrayList<>();
-        placesPeopleMayLikeAdapter = new RecommendationPlaceAdapter(placesPeopleMayLike, getContext(),0);
+        placesPeopleMayLikeAdapter = new RecommendationPlaceAdapter(placesPeopleMayLike, getContext(), 0);
         peopleMayLikeRecyclerView = discoverLayOut.findViewById(R.id.peopleMayLikeRecyclerView);
         peopleMayLikeRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         peopleMayLikeRecyclerView.setAdapter(placesPeopleMayLikeAdapter);
@@ -238,8 +238,8 @@ public class DiscoverChild extends Fragment {
             startActivity(intent);
         });
     }
-    private void getRecommendedPlaces()
-    {
+
+    private void getRecommendedPlaces() {
         discoverChildViewModel.getRecommendedPlaces();
         discoverChildViewModel.recommendationPlacesMutableLiveData.observe(getViewLifecycleOwner(), place -> {
             if (place != null) {
@@ -252,9 +252,6 @@ public class DiscoverChild extends Fragment {
             }
         });
     }
-
-
-
 
 
 }
