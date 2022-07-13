@@ -31,6 +31,9 @@
         android:theme="@style/Theme.VisitEgypt"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".presentation.home.child.discover.peopleMayLike.PeopleMayLike"
+            android:exported="true" />
+        <activity
             android:name=".presentation.Reward.RewardActivity"
             android:exported="false" />
         <activity
@@ -56,6 +59,9 @@
 
         <activity
             android:name=".presentation.setting.SettingActivity"
+            android:exported="true" />
+        <activity
+            android:name=".presentation.home.child.activity.ARCharacter.CharacterActivity"
             android:exported="true" />
         <activity
             android:name=".presentation.review.ReviewActivity"
@@ -106,11 +112,12 @@
         <activity
             android:name=".presentation.post.PostActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
-            />
-
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
             android:name=".presentation.home.child.discover.allPlaces.DiscoverChildAllPlacesActivity"
+            android:exported="true" />
+        <activity
+            android:name=".presentation.home.child.discover.youMayLike.YouMayLike"
             android:exported="true" />
     </application>
 

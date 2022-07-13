@@ -20,6 +20,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -27,7 +29,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.imageview.ShapeableImageView;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
@@ -45,20 +46,18 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class PostActivity extends AppCompatActivity {
     private static final String TAG = "Posts Activity";
-
+    @Inject
+    public SharedPreferences sharedPreferences;
+    public ImageButton imageButtonArrow;
     private PostsViewModel postsViewModel;
-
     private File file;
     private String placeId;
-
     private CircularImageView userImageView;
     private EditText postTxt;
     private Button postButton;
-    @Inject
-    public SharedPreferences sharedPreferences;
     private User user;
     private Uri selectedImage;
-    private ShapeableImageView postImageView;
+    private TextView uploadedTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +87,8 @@ public class PostActivity extends AppCompatActivity {
         postsViewModel.initCallBack();
         userImageView = findViewById(R.id.userImageView);
         postButton = findViewById(R.id.postButtonPostActivity);
-        postImageView = findViewById(R.id.postImageView);
+        imageButtonArrow = findViewById(R.id.imageButtonArrow);
+        uploadedTextView = findViewById(R.id.uploadedTextView);
 
         postButton.setOnClickListener(view -> {
             postTxt.getText().toString();
@@ -113,6 +113,7 @@ public class PostActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
+
     public void selectPhotoOnClick(View view) {
         if (checkAndRequestPermissions(PostActivity.this)) {
             chooseImage(this);
@@ -129,8 +130,9 @@ public class PostActivity extends AppCompatActivity {
             if (!aBoolean)
                 Toast.makeText(PostActivity.this, "Upload Failed", Toast.LENGTH_LONG).show();
             else {
-                postImageView.setImageURI(selectedImage);
-                postImageView.setVisibility(View.VISIBLE);
+                uploadedTextView.setText("Untitled");
+                imageButtonArrow.setImageURI(selectedImage);
+                imageButtonArrow.setVisibility(View.VISIBLE);
             }
 
         });
@@ -175,7 +177,7 @@ public class PostActivity extends AppCompatActivity {
                     break;
                 case 1:
                     if (resultCode == RESULT_OK && data != null) {
-                         selectedImage = data.getData();
+                        selectedImage = data.getData();
                         if (selectedImage != null) {
                             Log.d("TAG", selectedImage.toString());
                             String filePath = getRealPathFromUri(selectedImage);

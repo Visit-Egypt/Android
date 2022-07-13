@@ -1,5 +1,6 @@
 package com.visitegypt.data.source.remote;
 
+import com.visitegypt.domain.model.ARResponsePage;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.BadgeTask;
 import com.visitegypt.domain.model.ConfirmUploadModel;
@@ -12,12 +13,14 @@ import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.model.Post;
 import com.visitegypt.domain.model.PostPage;
+import com.visitegypt.domain.model.RecommendationPlaces;
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.Tag;
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.model.UserUpdateRequest;
+import com.visitegypt.domain.model.WeatherModel;
 import com.visitegypt.domain.model.XPUpdate;
 import com.visitegypt.domain.model.response.BadgeResponse;
 import com.visitegypt.domain.model.response.ItemPageResponse;
@@ -89,6 +92,9 @@ public interface RetrofitService {
     @GET("api/user/{id}/upload-ar")
     public Single<UploadResponse> getUserPhotoAR(@Path("id") String id, @Query("content_type") String contentType);
 
+    @GET("api/user/ar/{user_id}")
+    public Single<ARResponsePage> getARResponse(@Path("user_id") String userId);
+
     //    public Call<ConfirmUploadModel> confirmUpload(@Body ConfirmUploadModel confirmUploadModel);
     //with tasks
     @GET("api/user/badges/{user_id}")
@@ -126,6 +132,8 @@ public interface RetrofitService {
     @POST("api/user/interests/delete")
     public Completable deleteInterests(@Body HashMap<String, List<String>> interests);
 
+    @GET("api/user/recommendation/{user_id}")
+    public Single<RecommendationPlaces> getRecommendationPlaces(@Path("user_id") String userId);
 
     /*******************************************************************/
     @GET("api/place/{id}")
@@ -254,4 +262,11 @@ public interface RetrofitService {
 
     @GET("/api/user/badgesdetail/{user_id}")
     public Single<List<FullBadge>> getUserFullBadgesDetail(@Path("user_id") String userId);
+
+    /********************************************************************************/
+    @GET("data/2.5/weather")
+    public Single<WeatherModel> getWeatherByCity(@Query("q") String cityName, @Query("appid") String appId);
+
+    @GET("data/2.5/weather")
+    public Single<WeatherModel> getWeatherByLocation(@Query("lat") double lat, @Query("lon") double lon, @Query("appid") String appId);
 }

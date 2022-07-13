@@ -24,140 +24,140 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                    app:elevation="0dp">
+                app:elevation="0dp">
 
-                    <androidx.appcompat.widget.Toolbar
-                        android:id="@+id/toolbarShimmer"
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbarShimmer"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorOnPrimary"
+                    android:gravity="center"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    app:popupTheme="@style/Theme.VisitEgypt.AppBarOverlay"
+                    app:titleTextColor="?attr/colorOnSecondary">
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="?attr/actionBarSize"
-                        android:background="?attr/colorOnPrimary"
+                        android:layout_height="wrap_content"
                         android:gravity="center"
-                        app:layout_scrollFlags="scroll|enterAlways"
-                        app:popupTheme="@style/Theme.VisitEgypt.AppBarOverlay"
-                        app:titleTextColor="?attr/colorOnSecondary">
+                        android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/labelshimmer"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_alternates_medium"
                             android:gravity="center"
-                            android:orientation="horizontal">
+                            android:text="Adventure Time"
+                            android:textColor="?attr/colorOnSecondary"
+                            android:textSize="24sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                            <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/labelshimmer"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_alternates_medium"
-                                android:gravity="center"
-                                android:text="Adventure Time"
-                                android:textColor="?attr/colorOnSecondary"
-                                android:textSize="24sp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintLeft_toLeftOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                    </LinearLayout>
+                </androidx.appcompat.widget.Toolbar>
 
-                        </LinearLayout>
-                    </androidx.appcompat.widget.Toolbar>
-
-                </com.google.android.material.appbar.AppBarLayout>
+            </com.google.android.material.appbar.AppBarLayout>
 
 
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/sliderShimmerFrameLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/sliderShimmerFrameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
 
-                    <include layout="@layout/gamificationn_card_shimmer" />
+                <include layout="@layout/gamificationn_card_shimmer" />
 
-                </com.facebook.shimmer.ShimmerFrameLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/claimPlaceShimmer"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/claimPlaceShimmer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <include layout="@layout/detail_box_shimmer_placeholder_layout" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:text="Achievements"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/badgesShimmer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
                     android:orientation="horizontal">
 
-                    <include layout="@layout/detail_box_shimmer_placeholder_layout" />
+                    <include layout="@layout/gamification_badge_shimmer" />
 
-                </com.facebook.shimmer.ShimmerFrameLayout>
+                    <include layout="@layout/gamification_badge_shimmer" />
 
-                <com.google.android.material.textview.MaterialTextView
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:layout_weight="1"
+                android:text="Social Activities"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/socialActivitiesShimmer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="8dp"
-                    android:text="Achievements"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
+                    android:orientation="horizontal">
 
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/badgesShimmer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    <include layout="@layout/gamificationn_achievement_shimmer" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:layout_marginLeft="0dp"
-                        android:layout_marginRight="0dp"
-                        android:orientation="horizontal">
+                    <include layout="@layout/gamificationn_achievement_shimmer" />
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
-                        <include layout="@layout/gamification_badge_shimmer" />
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:layout_weight="1"
+                android:text="Visit Place"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-                        <include layout="@layout/gamification_badge_shimmer" />
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/mapShimmer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
 
-                    </LinearLayout>
-                </com.facebook.shimmer.ShimmerFrameLayout>
+                <include layout="@layout/gamificationn_map_shimmer" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="8dp"
-                    android:layout_weight="1"
-                    android:text="Social Activities"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/socialActivitiesShimmer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="0dp"
-                        android:layout_marginRight="0dp"
-                        android:orientation="horizontal">
-
-                        <include layout="@layout/gamificationn_achievement_shimmer" />
-
-                        <include layout="@layout/gamificationn_achievement_shimmer" />
-                    </LinearLayout>
-                </com.facebook.shimmer.ShimmerFrameLayout>
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="8dp"
-                    android:layout_weight="1"
-                    android:text="Visit Place"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/mapShimmer"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <include layout="@layout/gamificationn_map_shimmer" />
-
-                </com.facebook.shimmer.ShimmerFrameLayout>
-            </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <!--  ***************************************************  -->

@@ -2,6 +2,8 @@ package com.visitegypt.utils;
 
 public class Constants {
     public static final String BASE_URL = "http://129.146.61.141/";
+    public static final String WEATHER_API = "https://api.openweathermap.org/";
+    public static final String WEATHER_API_KEY = "dd392c0528c983c35c982ae6171a8a46";
     public static final String S3_URL = "https://visitegypt-media-bucket.s3.amazonaws.com/";
     public static final String WEB_SOCKET_URL = "ws://129.146.61.141/api/place/ws";
     public static String CHOSEN_USER_ID = "userId";
@@ -14,7 +16,7 @@ public class Constants {
     public static final String SHARED_PREF_FIRST_NAME = "firstName";
     public static final String SHARED_PREF_LAST_NAME = "lastName";
     public static final String SHARED_PREF_PHONE_NUMBER = "phoneNumber";
-    public static  final String SHARED_PREF_NAME = "secret_shared_prefs";
+    public static final String SHARED_PREF_NAME = "secret_shared_prefs";
     private static final int PHOTO_SELECTED = 1;
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
     public static final String PLACE_ID = "placeId";

@@ -6,121 +6,106 @@
     android:background="?attr/colorOnPrimary"
     android:orientation="vertical">
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
+        android:layout_height="200dp"
+        android:layout_margin="8dp"
         android:background="?android:selectableItemBackground"
         android:clickable="true"
+        android:elevation="3dp"
         android:focusable="true"
-        app:cardCornerRadius="8dp">
+        app:cardCornerRadius="8dp"
+        app:cardElevation="3dp">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/getCharacterConstraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="150dp">
+            android:layout_height="200dp"
+            android:background="@drawable/character2"
+            android:foreground="?android:selectableItemBackground">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imgPlaceCardNew"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:foreground="?android:selectableItemBackground"
-                android:scaleType="centerInside"
-                android:src="@drawable/clip" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/placeCardNameTextView"
+            <TextView
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="100dp"
-                android:gravity="left"
-                android:text="Nature’s Light"
-                android:textStyle="bold" />
+                android:layout_alignParentStart="true"
+                android:gravity="start"
+                android:padding="8dp"
+                android:text="Get your character"
+                android:textColor="?attr/colorOnPrimary"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent" />
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
+        android:layout_height="200dp"
+        android:layout_margin="8dp"
         android:background="?android:selectableItemBackground"
         android:clickable="true"
+        android:elevation="3dp"
         android:focusable="true"
-        app:cardCornerRadius="8dp">
+        app:cardCornerRadius="8dp"
+        app:cardElevation="3dp">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/moneyARConstraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="150dp">
+            android:layout_height="200dp"
+            android:background="@drawable/money_ar"
+            android:foreground="?android:selectableItemBackground">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imgPlaceCardNew3"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/egypt_history" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txtPlaceCardName2"
+            <TextView
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="100dp"
-                android:gravity="left"
-                android:text="Learn History"
-                android:textStyle="bold" />
+                android:layout_alignParentStart="true"
+                android:gravity="start"
+                android:padding="8dp"
+                android:text="Uncover secrets on money"
+                android:textColor="?attr/colorOnPrimary"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent" />
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
+        android:layout_height="200dp"
+        android:layout_margin="8dp"
         android:background="?android:selectableItemBackground"
         android:clickable="true"
+        android:elevation="3dp"
         android:focusable="true"
-        app:cardCornerRadius="8dp">
+        app:cardCornerRadius="8dp"
+        app:cardElevation="3dp">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/learnHistoryConstraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="150dp">
+            android:layout_height="200dp"
+            android:background="@drawable/location"
+            android:foreground="?android:selectableItemBackground">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imgPlaceCardNew1"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/egypt" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txtPlaceCardName1"
+            <TextView
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="100dp"
-                android:gravity="left"
-                android:text="Learn About Egypt "
-                android:textStyle="bold" />
+                android:layout_alignParentStart="true"
+                android:gravity="start"
+                android:padding="8dp"
+                android:text="Learn history"
+                android:textColor="?attr/colorOnPrimary"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent" />
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
-    </com.google.android.material.card.MaterialCardView>
 </LinearLayout>
