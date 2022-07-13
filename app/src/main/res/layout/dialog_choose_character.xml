@@ -18,9 +18,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:layout_margin="8dp"
             android:orientation="vertical">
 
             <com.mikhaellopez.circularimageview.CircularImageView
@@ -50,7 +50,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_margin="16dp"
-                android:src="@drawable/ic_baseline_account_circle_24" />
+                android:src="@drawable/personall" />
 
             <TextView
                 style="@style/TextAppearance.MaterialComponents.Headline6"
@@ -66,8 +66,8 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:text="Cancel"
         android:layout_margin="8dp"
+        android:text="Cancel"
         tools:ignore="DuplicateSpeakableTextCheck" />
 
 </LinearLayout>

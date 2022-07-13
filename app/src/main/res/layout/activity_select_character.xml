@@ -52,7 +52,7 @@
                     <RadioButton
                         android:id="@+id/maleRadioButton"
                         android:layout_width="10dp"
-                        android:layout_height="200dp"
+                        android:layout_height="250dp"
                         android:layout_margin="8dp"
                         android:layout_weight="1"
                         android:background="@drawable/male"
@@ -62,7 +62,7 @@
                     <RadioButton
                         android:id="@+id/femaleRadioButton"
                         android:layout_width="10dp"
-                        android:layout_height="200dp"
+                        android:layout_height="250dp"
                         android:layout_margin="8dp"
                         android:layout_weight="1"
                         android:background="@drawable/female"
@@ -116,7 +116,7 @@
                 android:id="@+id/createCharacterMaterialButton"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:enabled="false"
@@ -127,13 +127,22 @@
                 android:id="@+id/cancelMaterialButton"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:text="Cancel"
                 tools:ignore="DuplicateSpeakableTextCheck" />
 
+
         </LinearLayout>
 
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/test"-->
+<!--            style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="8dp"-->
+<!--            android:text="test"-->
+<!--            tools:ignore="DuplicateSpeakableTextCheck" />-->
     </LinearLayout>
 </LinearLayout>

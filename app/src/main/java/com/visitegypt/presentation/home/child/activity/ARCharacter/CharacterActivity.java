@@ -1,10 +1,12 @@
 package com.visitegypt.presentation.home.child.activity.ARCharacter;
 
 import static com.visitegypt.utils.Constants.REQUEST_ID_MULTIPLE_PERMISSIONS;
+import static com.visitegypt.utils.Constants.SHARED_PREF_USER_ID;
 import static com.visitegypt.utils.UploadUtils.checkAndRequestPermissions;
 import static com.visitegypt.utils.UploadUtils.getRealPathFromUri;
 
 import android.Manifest;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -47,7 +49,8 @@ public class CharacterActivity extends AppCompatActivity {
     @Inject
     public SharedPreferences sharedPreferences;
     Boolean genderFlag;
-    private MaterialButton createCharacterMaterialButton, cancelMaterialButton;
+    DownloadManager downloadManager;
+    private MaterialButton createCharacterMaterialButton, cancelMaterialButton, test;
     private CharacterViewModel characterViewModel;
     private File file;
     private String placeId;
@@ -60,13 +63,14 @@ public class CharacterActivity extends AppCompatActivity {
     private RadioGroup genderRadioGroup;
     private RadioButton maleRadioButton, femaleRadioButton;
 
-
     @Nullable
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_character);
         initViews();
+        downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+
         liveDataObserve();
 
         createCharacterMaterialButton.setOnClickListener(v -> {
@@ -77,12 +81,24 @@ public class CharacterActivity extends AppCompatActivity {
                 genderFlag = false;
             Log.d(TAG, "onCreate: dddd");
             Toast.makeText(this, "donnneee", Toast.LENGTH_LONG).show();
-//            startActivity(new Intent(this, Home.class));
+            startActivity(new Intent(this, Home.class));
 
-            //response to third endpoint
             characterViewModel.getARResponse();
 
         });
+//        test.setOnClickListener(v -> {
+//
+//            if (femaleRadioButton.isChecked())
+//                genderFlag = true;
+//            else
+//                genderFlag = false;
+//            Log.d(TAG, "onCreate: dddd");
+//            Toast.makeText(this, "donnneee", Toast.LENGTH_LONG).show();
+////            startActivity(new Intent(this, Home.class));
+//
+//            characterViewModel.getARResponse();
+//
+//        });
         cancelMaterialButton.setOnClickListener(v -> {
             startActivity(new Intent(CharacterActivity.this, Home.class));
         });
@@ -95,6 +111,7 @@ public class CharacterActivity extends AppCompatActivity {
         UploadUtils.setContext(this);
         createCharacterMaterialButton = findViewById(R.id.createCharacterMaterialButton);
         cancelMaterialButton = findViewById(R.id.cancelMaterialButton);
+//        test = findViewById(R.id.test);
         uploadImageButton = findViewById(R.id.uploadImageButton);
         nameOfUploadedTextView = findViewById(R.id.nameOfUploadedTextView);
         genderRadioGroup = findViewById(R.id.genderRadioGroup);
@@ -126,6 +143,62 @@ public class CharacterActivity extends AppCompatActivity {
                 createCharacterMaterialButton.setEnabled(true);
             }
 
+        });
+        characterViewModel.arMTLFilesMutableLiveData.observe(this, v -> {
+            Log.d(TAG, "liveDataObserve:arMTLFilesMutableLiveData " + v);
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(v));
+            File arFile = new File("/storage/emulated/0/Android/data/com.visitegypt/files", sharedPreferences.getString(SHARED_PREF_USER_ID, "") + ".mtl");
+            if (arFile.exists()) {
+                Log.d(TAG, "arMTLFilesMutableLiveData: file exist");
+            } else {
+                Log.d(TAG, "arMTLFilesMutableLiveData: file isn't exist");
+                try {
+                    request.setDestinationInExternalFilesDir(this, File.separator, sharedPreferences.getString(SHARED_PREF_USER_ID, "") + ".mtl");
+                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                    Long reference = downloadManager.enqueue(request);
+                    Log.d(TAG, "arMTLFilesMutableLiveData: done");
+
+                } catch (Exception e) {
+                    Log.e(TAG, "arMTLFilesMutableLiveData: " + e.getMessage());
+                }
+            }
+        });
+        characterViewModel.arPNGFilesMutableLiveData.observe(this, v -> {
+            Log.d(TAG, "liveDataObserve:arPNGFilesMutableLiveData " + v);
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(v));
+            File arFile = new File("/storage/emulated/0/Android/data/com.visitegypt/files", sharedPreferences.getString(SHARED_PREF_USER_ID, "") + ".texture.png");
+            if (arFile.exists()) {
+                Log.d(TAG, "arPNGFilesMutableLiveData: file exist");
+            } else {
+                Log.d(TAG, "arPNGFilesMutableLiveData: file isn't exist");
+                try {
+                    request.setDestinationInExternalFilesDir(this, File.separator, sharedPreferences.getString(SHARED_PREF_USER_ID, "") + ".texture.png");
+                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                    Long reference = downloadManager.enqueue(request);
+                    Log.d(TAG, "arPNGFilesMutableLiveData: done");
+
+                } catch (Exception e) {
+                    Log.e(TAG, "arPNGFilesMutableLiveData: " + e.getMessage());
+                }
+            }
+        });
+        characterViewModel.arOBJFilesMutableLiveData.observe(this, v -> {
+            Log.d(TAG, "liveDataObserve:arOBJFilesMutableLiveData " + v);
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(v));
+            File arFile = new File("/storage/emulated/0/Android/data/com.visitegypt/files", sharedPreferences.getString(SHARED_PREF_USER_ID, "") + "-" + genderFlag + ".obj");
+            if (arFile.exists()) {
+                Log.d(TAG, "arOBJFilesMutableLiveData: file exist");
+            } else {
+                Log.d(TAG, "arOBJFilesMutableLiveData: file isn't exist");
+                try {
+                    request.setDestinationInExternalFilesDir(this, File.separator, sharedPreferences.getString(SHARED_PREF_USER_ID, "") + "-" + genderFlag + ".obj");
+                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                    Long reference = downloadManager.enqueue(request);
+                    Log.d(TAG, "arOBJFilesMutableLiveData: done");
+                } catch (Exception e) {
+                    Log.e(TAG, "arOBJFilesMutableLiveData: " + e.getMessage());
+                }
+            }
         });
     }
 
@@ -185,25 +258,13 @@ public class CharacterActivity extends AppCompatActivity {
     private void chooseImage(Context context) {
 
         final CharSequence[] optionsMenu = {"Take Photo", "Choose from Gallery", "Exit"}; // create a menuOption Array
-
-        // create a dialog for showing the optionsMenu
-
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-        // set the items in builder
-
         builder.setItems(optionsMenu, (dialogInterface, i) -> {
 
             if (optionsMenu[i].equals("Take Photo")) {
-
-                // Open the camera and get the photo
-
                 Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(takePicture, 0);
             } else if (optionsMenu[i].equals("Choose from Gallery")) {
-
-                // choose from  external storage
-
                 Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(pickPhoto, 1);
 

@@ -89,7 +89,7 @@
             android:id="@+id/learnHistoryConstraintLayout"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@drawable/location"
+            android:background="@drawable/learnhistory"
             android:foreground="?android:selectableItemBackground">
 
             <TextView
@@ -97,6 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
+                android:layout_marginBottom="16dp"
                 android:gravity="start"
                 android:padding="8dp"
                 android:text="Learn history"
