@@ -72,7 +72,7 @@ public class GeneralUtils {
                         GamificationRules.getTitleFromLevel(userLevel)));
                 profileFrameImageView.startAnimation(fade);
 
-                if (imageUrl != null) {
+                if (imageUrl != null && !imageUrl.isEmpty()) {
                     ImageView accountImageView = levelView.findViewById(R.id.circularAccountImageViewSnackBar);
                     Picasso.get().load(imageUrl).into(accountImageView);
                 }

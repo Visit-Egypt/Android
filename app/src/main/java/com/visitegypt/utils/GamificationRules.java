@@ -52,6 +52,15 @@ public class GamificationRules {
             "Thoth"
     };
 
+    private static final String[] BADGE_TASKS_TITLES = {
+            "review the place",
+            "post a post",
+            "ask Anubis about the artifacts",
+            "ask Anubis about the place",
+            "visit the place",
+            "explore the artifacts"
+    };
+
 
     public static final int BRONZE_BADGE_XP = 30;
     public static final int SILVER_BADGE_XP = 70;
@@ -173,6 +182,29 @@ public class GamificationRules {
             return ResourcesCompat.getDrawable(context.getResources(), R.drawable.rank5, null);
         } else if (title.equals(GamificationRules.ALL_TITLES[5])) {
             return ResourcesCompat.getDrawable(context.getResources(), R.drawable.rank6, null);
+        }
+        return null;
+    }
+
+    public static Drawable getBadgeTaskDrawable(Context context, String badgeTaskTitle) {
+        if (badgeTaskTitle.equals(BADGE_TASKS_TITLES[0])) {
+            // REVIEW
+            return ResourcesCompat.getDrawable(context.getResources(), R.drawable.badge_task_review, null);
+        } else if (badgeTaskTitle.equals(BADGE_TASKS_TITLES[1])) {
+            // POST
+            return ResourcesCompat.getDrawable(context.getResources(), R.drawable.badge_task_post, null);
+        } else if (badgeTaskTitle.equals(BADGE_TASKS_TITLES[2])) {
+            // CHATBOT PLACES
+            return ResourcesCompat.getDrawable(context.getResources(), R.drawable.badge_ask_insights, null);
+        } else if (badgeTaskTitle.equals(BADGE_TASKS_TITLES[3])) {
+            // CHATBOT ARTIFACTS
+            return ResourcesCompat.getDrawable(context.getResources(), R.drawable.badge_task_artifacts, null);
+        } else if (badgeTaskTitle.equals(BADGE_TASKS_TITLES[4])) {
+            // VISIT
+            return ResourcesCompat.getDrawable(context.getResources(), R.drawable.badge_task_visit, null);
+        } else if (badgeTaskTitle.equals(BADGE_TASKS_TITLES[5])) {
+            // EXPLORE
+            return ResourcesCompat.getDrawable(context.getResources(), R.drawable.badge_task_explore, null);
         }
         return null;
     }

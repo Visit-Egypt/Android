@@ -87,7 +87,7 @@ public class Badge {
     }
 
     public boolean isOwned() {
-        return getProgress() == getMaxProgress();
+        return getProgress() >= getMaxProgress();
     }
 
     public void setOwned(boolean owned) {

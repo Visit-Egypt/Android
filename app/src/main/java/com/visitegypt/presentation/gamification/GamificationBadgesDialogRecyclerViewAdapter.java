@@ -1,8 +1,5 @@
 package com.visitegypt.presentation.gamification;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textview.MaterialTextView;
 import com.jackandphantom.circularprogressbar.CircleProgressbar;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.BadgeTask;
+import com.visitegypt.utils.GamificationRules;
 
 import java.util.ArrayList;
 
@@ -48,25 +44,29 @@ public class GamificationBadgesDialogRecyclerViewAdapter extends RecyclerView.Ad
         holder.circleProgressbar.setProgress(0);
         holder.circleProgressbar.setMaxProgress(badgeTask.getMaxProgress());
         holder.circleProgressbar.setProgressWithAnimation(badgeTask.getProgress());
+//
+//        if (badgeTask.getImageUrl() != null && !badgeTask.getImageUrl().isEmpty()) {
+//            Target target = new Target() {
+//                @Override
+//                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+//                    holder.circleProgressbar.setBackground(new BitmapDrawable(holder.circleProgressbar.getResources(), bitmap));
+//                }
+//
+//                @Override
+//                public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+//
+//                }
+//
+//                @Override
+//                public void onPrepareLoad(Drawable placeHolderDrawable) {
+//                }
+//            };
+//
+//            Picasso.get().load(badgeTask.getImageUrl()).into(target);
+//        } else {
+//    }
+        holder.circleProgressbar.setBackground(GamificationRules.getBadgeTaskDrawable(holder.circleProgressbar.getContext(), badgeTask.getTaskTitle()));
 
-        Target target = new Target() {
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                holder.circleProgressbar.setBackground(new BitmapDrawable(holder.circleProgressbar.getResources(), bitmap));
-            }
-
-            @Override
-            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-            }
-        };
-        if (badgeTask.getImageUrl() != null)
-            if (!badgeTask.getImageUrl().isEmpty())
-                Picasso.get().load(badgeTask.getImageUrl()).into(target);
     }
 
     @Override

@@ -84,7 +84,6 @@ public class BadgeActivity extends AppCompatActivity {
 
     private void initViews() {
         badgesArrayList = new ArrayList<>();
-
         badgesRecyclerView = findViewById(R.id.allBadgesActivityRecyclerView);
         badgesRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
         badgesSliderViewAdapter = new BadgesSliderViewAdapter(badgesArrayList, this);
