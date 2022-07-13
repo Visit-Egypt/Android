@@ -32,6 +32,7 @@ import com.visitegypt.R;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.presentation.home.parent.Home;
 import com.visitegypt.utils.GeneralUtils;
+import com.visitegypt.utils.UploadUtils;
 
 import java.io.File;
 
@@ -59,6 +60,7 @@ public class CharacterActivity extends AppCompatActivity {
     private RadioGroup genderRadioGroup;
     private RadioButton maleRadioButton, femaleRadioButton;
 
+
     @Nullable
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +80,7 @@ public class CharacterActivity extends AppCompatActivity {
 //            startActivity(new Intent(this, Home.class));
 
             //response to third endpoint
-characterViewModel.getARResponse();
+            characterViewModel.getARResponse();
 
         });
         cancelMaterialButton.setOnClickListener(v -> {
@@ -90,6 +92,7 @@ characterViewModel.getARResponse();
     public void initViews() {
         characterViewModel = new ViewModelProvider(this).get(CharacterViewModel.class);
         characterViewModel.initCallBack();
+        UploadUtils.setContext(this);
         createCharacterMaterialButton = findViewById(R.id.createCharacterMaterialButton);
         cancelMaterialButton = findViewById(R.id.cancelMaterialButton);
         uploadImageButton = findViewById(R.id.uploadImageButton);

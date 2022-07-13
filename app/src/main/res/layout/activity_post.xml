@@ -98,24 +98,6 @@
 
     </LinearLayout>
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/postImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayOutId"
-        android:layout_below="@+id/post_Text"
-        android:layout_gravity="center"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-
-        android:visibility="gone">
-
-    </com.google.android.material.imageview.ShapeableImageView>
-
     <LinearLayout
         android:id="@+id/linearLayOutId"
         android:layout_width="match_parent"
@@ -126,6 +108,7 @@
         android:layout_margin="8dp"
         android:background="@drawable/post_photo_shape"
         android:gravity="bottom"
+        android:onClick="selectPhotoOnClick"
         android:orientation="horizontal"
         android:visibility="visible">
 
@@ -135,7 +118,16 @@
             android:layout_height="40dp"
             android:layout_margin="8dp"
             android:background="@drawable/ic_baseline_image_24"
-            android:onClick="selectPhotoOnClick" />
+            android:onClick="selectPhotoOnClick"
+            android:scaleType="centerInside" />
+
+        <TextView
+            android:id="@+id/uploadedTextView"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:gravity="center_vertical" />
 
     </LinearLayout>
 

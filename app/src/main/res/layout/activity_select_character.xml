@@ -16,21 +16,6 @@
         android:textColor="?attr/colorOnSecondary"
         android:textSize="24sp" />
 
-    <!--    <com.google.android.material.imageview.ShapeableImageView-->
-    <!--        android:id="@+id/uploadShapeableImageView"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_gravity="center"-->
-    <!--        android:layout_marginStart="16dp"-->
-    <!--        android:layout_marginTop="16dp"-->
-    <!--        android:layout_marginEnd="16dp"-->
-    <!--        android:layout_marginBottom="16dp"-->
-    <!--        android:adjustViewBounds="true"-->
-    <!--        android:scaleType="fitCenter"-->
-    <!--        android:visibility="gone">-->
-
-    <!--    </com.google.android.material.imageview.ShapeableImageView>-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -67,20 +52,21 @@
                     <RadioButton
                         android:id="@+id/maleRadioButton"
                         android:layout_width="10dp"
-                        android:layout_height="100dp"
+                        android:layout_height="200dp"
                         android:layout_margin="8dp"
                         android:layout_weight="1"
                         android:background="@drawable/male"
-                        android:checked="true" />
+                        android:checked="true"
+                        android:gravity="start" />
 
                     <RadioButton
                         android:id="@+id/femaleRadioButton"
                         android:layout_width="10dp"
-                        android:layout_height="100dp"
+                        android:layout_height="200dp"
                         android:layout_margin="8dp"
                         android:layout_weight="1"
                         android:background="@drawable/female"
-                   />
+                        android:gravity="start" />
 
                 </RadioGroup>
             </LinearLayout>
@@ -104,7 +90,8 @@
                     android:layout_margin="8dp"
                     android:background="@drawable/ic_baseline_image_24"
                     android:foreground="?android:selectableItemBackground"
-                    android:onClick="uploadPhotoOnClick" />
+                    android:onClick="uploadPhotoOnClick"
+                    android:scaleType="centerInside" />
 
                 <TextView
                     android:id="@+id/nameOfUploadedTextView"

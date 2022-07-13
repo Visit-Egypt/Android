@@ -8,7 +8,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         android:layout_margin="8dp"
         android:background="?android:selectableItemBackground"
         android:clickable="true"
@@ -20,8 +20,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/getCharacterConstraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@drawable/money_ar"
+            android:layout_height="200dp"
+            android:background="@drawable/character2"
             android:foreground="?android:selectableItemBackground">
 
             <TextView
@@ -42,7 +42,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         android:layout_margin="8dp"
         android:background="?android:selectableItemBackground"
         android:clickable="true"
@@ -54,7 +54,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/moneyARConstraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="200dp"
             android:background="@drawable/money_ar"
             android:foreground="?android:selectableItemBackground">
 
@@ -76,7 +76,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         android:layout_margin="8dp"
         android:background="?android:selectableItemBackground"
         android:clickable="true"
@@ -88,7 +88,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/learnHistoryConstraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="200dp"
             android:background="@drawable/location"
             android:foreground="?android:selectableItemBackground">
 

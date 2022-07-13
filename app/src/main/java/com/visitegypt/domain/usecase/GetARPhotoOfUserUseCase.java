@@ -17,7 +17,7 @@ public class GetARPhotoOfUserUseCase extends SingleUseCase<ARResponsePage> {
     SharedPreferences sharedPreferences;
 
     @Inject
-    public GetARPhotoOfUserUseCase( ARRepository arRepository, SharedPreferences sharedPreferences) {
+    public GetARPhotoOfUserUseCase(ARRepository arRepository, SharedPreferences sharedPreferences) {
         this.arRepository = arRepository;
         this.sharedPreferences = sharedPreferences;
     }

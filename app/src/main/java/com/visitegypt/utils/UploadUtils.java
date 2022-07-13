@@ -42,7 +42,7 @@ public class UploadUtils {
 
     public static String getRealPathFromUri(final Uri uri) {
         // DocumentProvider
-        if (!(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT || !DocumentsContract.isDocumentUri(context, uri))) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(context, uri)) {
             // ExternalStorageProvider
             if (isExternalStorageDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
