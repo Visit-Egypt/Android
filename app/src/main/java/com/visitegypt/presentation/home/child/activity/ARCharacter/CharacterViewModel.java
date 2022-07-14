@@ -55,6 +55,7 @@ public class CharacterViewModel extends ViewModel implements UploadUserPhotoUseC
 
     public void initCallBack() {
         uploadUserPhotoUseCase.setUploadPhotoApiCallBack(this::confirmUpload);
+        Log.d(TAG, "initCallBack: getARResponse confirm upload");
     }
 
     @Override

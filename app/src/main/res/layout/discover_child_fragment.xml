@@ -39,7 +39,7 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/TextAppearance.MaterialComponents.Headline5"
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -47,8 +47,7 @@
                     android:gravity="center"
                     android:shadowColor="?attr/colorSecondaryVariant"
                     android:text="@string/you_may_like"
-                    android:textColor="?attr/colorPrimaryVariant"
-                    android:textSize="28sp" />
+                    android:textColor="?attr/colorPrimaryVariant" />
 
                 <View
                     android:layout_width="0dp"
@@ -105,15 +104,14 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/TextAppearance.MaterialComponents.Headline5"
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
                     android:shadowColor="?attr/colorSecondaryVariant"
                     android:text="@string/places_to_visit"
-                    android:textColor="?attr/colorPrimaryVariant"
-                    android:textSize="28sp" />
+                    android:textColor="?attr/colorPrimaryVariant" />
 
                 <View
                     android:layout_width="0dp"
@@ -198,7 +196,7 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textview.MaterialTextView
-                        style="@style/TextAppearance.MaterialComponents.Headline5"
+                        style="@style/TextAppearance.MaterialComponents.Headline6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -207,7 +205,6 @@
                         android:shadowColor="?attr/colorSecondaryVariant"
                         android:text="@string/you_may_like"
                         android:textColor="?attr/colorPrimaryVariant"
-                        android:textSize="28sp"
                         android:textStyle="normal" />
 
                     <View
@@ -216,13 +213,13 @@
                         android:layout_weight="1" />
 
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnYouMayLike"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_marginRight="8dp"
-                        android:gravity="center"
-                        android:id="@+id/btnYouMayLike"
                         android:enabled="false"
+                        android:gravity="center"
                         android:text="See all >"
                         android:textAllCaps="false" />
                 </LinearLayout>
@@ -232,6 +229,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -240,7 +238,7 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textview.MaterialTextView
-                        style="@style/TextAppearance.MaterialComponents.Headline5"
+                        style="@style/TextAppearance.MaterialComponents.Headline6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -249,7 +247,7 @@
                         android:shadowColor="?attr/colorSecondaryVariant"
                         android:text="@string/other_people_may_like"
                         android:textColor="?attr/colorPrimaryVariant"
-                        android:textStyle="normal"/>
+                        android:textStyle="normal" />
 
                     <View
                         android:layout_width="0dp"
@@ -257,12 +255,12 @@
                         android:layout_weight="1" />
 
                     <com.google.android.material.button.MaterialButton
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:id="@+id/btnOtherPeopleMayLike"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:enabled="false"
                         android:layout_marginRight="8dp"
+                        android:enabled="false"
                         android:gravity="center"
                         android:text="See all >"
                         android:textAllCaps="false" />
@@ -282,7 +280,7 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textview.MaterialTextView
-                        style="@style/TextAppearance.MaterialComponents.Headline5"
+                        style="@style/TextAppearance.MaterialComponents.Headline6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
