@@ -342,31 +342,30 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
             descriptionTextView.setText(place.getLongDescription());
 
             detailViewModel.getUserPlaceActivity();
-            if (place.getPlaceActivities() != null)
-                observeOnce(detailViewModel.userPlaceActivitiesMutableLiveData,
-                        placeActivities -> {
-                            if (placeActivities != null) {
-                                GamificationRules.mergeTwoPlaceActivities(place.getPlaceActivities(),
-                                        placeActivities);
-                            }
-                            int progress = place.getProgress();
-                            Log.d(TAG, "initViewModel: progress: " + progress);
-                            int maxProgress = place.getMaxProgress();
-                            Log.d(TAG, "initViewModel: maxProgress: " + maxProgress);
+            detailViewModel.userPlaceActivitiesMutableLiveData.observe(this, placeActivities -> {
 
-                            int remaining = maxProgress - progress;
+                if (placeActivities != null) {
+                    GamificationRules.mergeTwoPlaceActivities(place.getPlaceActivities(),
+                            placeActivities);
+                }
+                int progress = place.getProgress();
+                Log.d(TAG, "initViewModel: progress: " + progress);
+                int maxProgress = place.getMaxProgress();
+                Log.d(TAG, "initViewModel: maxProgress: " + maxProgress);
 
-                            remainingActivitiesProgressIndicator.setMax(maxProgress);
-                            remainingActivitiesProgressIndicator.setProgress(progress, true);
+                int remaining = maxProgress - progress;
 
-                            if (remaining == 0) {
-                                remainingActivitiesTextView.setText("Complete");
-                            } else if (remaining == 1) {
-                                remainingActivitiesTextView.setText("1 remaining activity");
-                            } else {
-                                remainingActivitiesTextView.setText(place.getMaxProgress() - place.getProgress() + " remaining activities");
-                            }
-                        });
+                remainingActivitiesProgressIndicator.setMax(maxProgress);
+                remainingActivitiesProgressIndicator.setProgress(progress, true);
+
+                if (remaining == 0) {
+                    remainingActivitiesTextView.setText("Complete");
+                } else if (remaining == 1) {
+                    remainingActivitiesTextView.setText("1 remaining activity");
+                } else {
+                    remainingActivitiesTextView.setText(place.getMaxProgress() - place.getProgress() + " remaining activities");
+                }
+            });
 
         });
     }
@@ -401,6 +400,13 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         startShimmerAnimation();
         if (mapView != null && place != null) {
             mapView.onResume();
+        }
+        if (detailViewModel != null) {
+            try {
+                detailViewModel.getUserPlaceActivity();
+            } catch (Exception e) {
+
+            }
         }
     }
 
