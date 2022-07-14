@@ -136,13 +136,14 @@
 
         </LinearLayout>
 
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/test"-->
-<!--            style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_margin="8dp"-->
-<!--            android:text="test"-->
-<!--            tools:ignore="DuplicateSpeakableTextCheck" />-->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/test"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:visibility="gone"
+            android:text="test"
+            tools:ignore="DuplicateSpeakableTextCheck" />
     </LinearLayout>
 </LinearLayout>

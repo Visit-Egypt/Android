@@ -14,41 +14,39 @@
 
     <fragment
         android:id="@+id/nav_activities"
-        android:name="com.visitegypt.ui.activities.ActivitiesFragment"
+        android:name="com.visitegypt.presentation.home.child.activity.ActivitiyChild"
         android:label="@string/menu_activities"
-        tools:layout="@layout/fragment_activities" />
-    <fragment
-        android:id="@+id/nav_map"
-        android:name="com.visitegypt.ui.map.MapFragment"
-        android:label="@string/menu_map"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/activitiy_child_fragment" />
 
     <activity
         android:id="@+id/setting"
         android:name="com.visitegypt.presentation.setting.SettingActivity"
         android:label="@string/setting"
         tools:layout="@layout/activity_setting" />
+
     <fragment
-        android:id="@+id/account"
+        android:id="@+id/userProfile"
         android:name="com.visitegypt.presentation.account.AccountFragment"
         android:label="@string/title_account"
         tools:layout="@layout/fragment_account" />
-    <fragment
-        android:id="@+id/tripMate"
-        android:name="com.visitegypt.presentation.tripmate.TripMate"
-        android:label="@string/trip_mate"
-        tools:layout="@layout/trip_mate_fragment" />
-    <fragment
-        android:id="@+id/tripMateRequest"
-        android:name="com.visitegypt.presentation.tripmateRequest.TripMateRequest"
-        android:label="@string/trip_mate_request"
-        tools:layout="@layout/trip_mate_request_fragment" />
 
     <fragment
         android:id="@+id/gaming"
         android:name="com.visitegypt.presentation.gamification.GamificationFragment"
         android:label="@string/gamification"
         tools:layout="@layout/gamification_fragment" />
+
+    <fragment
+        android:id="@+id/tripMate"
+        android:name="com.visitegypt.presentation.tripmate.TripMate"
+        android:label="@string/trip_mate"
+        tools:layout="@layout/trip_mate_fragment" />
+
+    <fragment
+        android:id="@+id/tripMateRequest"
+        android:name="com.visitegypt.presentation.tripmateRequest.TripMateRequest"
+        android:label="@string/trip_mate_request"
+        tools:layout="@layout/trip_mate_request_fragment" />
 
 
 </navigation>

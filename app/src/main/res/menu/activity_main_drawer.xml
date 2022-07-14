@@ -11,13 +11,22 @@
             android:icon="@drawable/ic_discover"
             android:title="@string/menu_discover" />
         <item
+            android:id="@+id/userProfile"
+            android:icon="@drawable/ic_baseline_account_circle_24"
+            android:title="@string/title_account" />
+        <item
             android:id="@+id/nav_activities"
-            android:icon="@drawable/ic_activities"
+            android:icon="@drawable/ar_icon"
             android:title="@string/menu_activities" />
         <item
-            android:id="@+id/nav_map"
-            android:icon="@drawable/ic_map"
-            android:title="@string/menu_map" />
+            android:id="@+id/tripMate"
+            android:icon="@drawable/ic_follow"
+            android:title="@string/trip_mate" />
+        <item
+            android:id="@+id/gaming"
+            android:icon="@drawable/ic_gamepad"
+            android:title="@string/gamification" />
+
 
     </group>
     <group

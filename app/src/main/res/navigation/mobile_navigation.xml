@@ -33,4 +33,5 @@
         android:label="@string/trip_mate"
         tools:layout="@layout/trip_mate_fragment" />
 
+
 </navigation>

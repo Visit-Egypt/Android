@@ -212,7 +212,6 @@ public class Home extends AppCompatActivity {
                 R.id.nav_discover,
                 R.id.account,
                 R.id.nav_activities,
-                R.id.nav_map,
                 R.id.setting,
                 R.id.gaming,
                 R.id.tripMate,

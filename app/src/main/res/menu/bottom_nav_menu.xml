@@ -11,7 +11,7 @@
         android:title="@string/gamification" />
 
     <item
-        android:id="@+id/account"
+        android:id="@+id/userProfile"
         android:icon="@drawable/ic_baseline_person_outline_24"
         android:title="@string/title_account" />
     <item

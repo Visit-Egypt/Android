@@ -79,7 +79,6 @@ public class CharacterActivity extends AppCompatActivity {
                 genderFlag = "female";
             else
                 genderFlag = "male";
-//            Log.d(TAG, "onCreate: dddd");
             Toast.makeText(this, "donnneee", Toast.LENGTH_LONG).show();
             startActivity(new Intent(this, Home.class));
 
@@ -89,18 +88,15 @@ public class CharacterActivity extends AppCompatActivity {
 //        test.setOnClickListener(v -> {
 //
 //            if (femaleRadioButton.isChecked())
-//                genderFlag = true;
+//                genderFlag = "female";
 //            else
-//                genderFlag = false;
-//            Log.d(TAG, "onCreate: dddd");
-//            Toast.makeText(this, "donnneee", Toast.LENGTH_LONG).show();
-////            startActivity(new Intent(this, Home.class));
+//                genderFlag = "male";
 //
 //            characterViewModel.getARResponse();
-//
 //        });
+
         cancelMaterialButton.setOnClickListener(v -> {
-            startActivity(new Intent(CharacterActivity.this, Home.class));
+            startActivity(new Intent(this, Home.class));
         });
 
     }
@@ -111,13 +107,12 @@ public class CharacterActivity extends AppCompatActivity {
         UploadUtils.setContext(this);
         createCharacterMaterialButton = findViewById(R.id.createCharacterMaterialButton);
         cancelMaterialButton = findViewById(R.id.cancelMaterialButton);
-//        test = findViewById(R.id.test);
+        test = findViewById(R.id.test);
         uploadImageButton = findViewById(R.id.uploadImageButton);
         nameOfUploadedTextView = findViewById(R.id.nameOfUploadedTextView);
         genderRadioGroup = findViewById(R.id.genderRadioGroup);
         femaleRadioButton = findViewById(R.id.femaleRadioButton);
         maleRadioButton = findViewById(R.id.maleRadioButton);
-
 
     }
 
@@ -135,9 +130,9 @@ public class CharacterActivity extends AppCompatActivity {
         characterViewModel.isImageUploaded.observe(this, aBoolean -> {
             if (!aBoolean) {
                 Toast.makeText(this, "Upload Failed", Toast.LENGTH_LONG).show();
-                Log.d(TAG, "liveDataObserve: aaa");
+//                Log.d(TAG, "liveDataObserve: aaa");
             } else {
-                Log.d(TAG, "liveDataObserve: qqqqq");
+//                Log.d(TAG, "liveDataObserve: qqqqq");
                 nameOfUploadedTextView.setText("Untitled Image");
                 uploadImageButton.setImageURI(selectedImage);
                 createCharacterMaterialButton.setEnabled(true);
@@ -145,13 +140,14 @@ public class CharacterActivity extends AppCompatActivity {
 
         });
         characterViewModel.arMTLFilesMutableLiveData.observe(this, v -> {
-//            Log.d(TAG, "liveDataObserve:arMTLFilesMutableLiveData " + v);
-            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(v));
-            File arFile = new File("/storage/emulated/0/Android/data/com.visitegypt/files", sharedPreferences.getString(SHARED_PREF_USER_ID, "") + ".mtl");
-            if (arFile.exists()) {
-//                Log.d(TAG, "arMTLFilesMutableLiveData: file exist");
-            } else {
-//                Log.d(TAG, "arMTLFilesMutableLiveData: file isn't exist");
+            Log.d(TAG, "liveDataObserve:arMTLFilesMutableLiveData " + v);
+            if (v != null) {
+                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(v));
+                File arFile = new File("/storage/emulated/0/Android/data/com.visitegypt/files", sharedPreferences.getString(SHARED_PREF_USER_ID, "") + ".mtl");
+                if (arFile.exists()) {
+                    Log.d(TAG, "arMTLFilesMutableLiveData: file exist");
+                    boolean deleted = arFile.delete();
+                }
                 try {
                     request.setDestinationInExternalFilesDir(this, File.separator, sharedPreferences.getString(SHARED_PREF_USER_ID, "") + ".mtl");
                     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
@@ -159,37 +155,44 @@ public class CharacterActivity extends AppCompatActivity {
 //                    Log.d(TAG, "arMTLFilesMutableLiveData: done");
 
                 } catch (Exception e) {
-//                    Log.e(TAG, "arMTLFilesMutableLiveData: " + e.getMessage());
+                    Log.e(TAG, "arMTLFilesMutableLiveData: " + e.getMessage());
                 }
+
             }
+
         });
         characterViewModel.arPNGFilesMutableLiveData.observe(this, v -> {
-//            Log.d(TAG, "liveDataObserve:arPNGFilesMutableLiveData " + v);
-            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(v));
-            File arFile = new File("/storage/emulated/0/Android/data/com.visitegypt/files", sharedPreferences.getString(SHARED_PREF_USER_ID, "") + ".texture.png");
-            if (arFile.exists()) {
-                Log.d(TAG, "arPNGFilesMutableLiveData: file exist");
-            } else {
+            Log.d(TAG, "liveDataObserve:arPNGFilesMutableLiveData " + v);
+            if (!v.equals("null")) {
+                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(v));
+                File arFile = new File("/storage/emulated/0/Android/data/com.visitegypt/files", sharedPreferences.getString(SHARED_PREF_USER_ID, "") + ".texture.png");
+                if (arFile.exists()) {
+                    Log.d(TAG, "arPNGFilesMutableLiveData: file exist");
+                    boolean deleted = arFile.delete();
+                }
                 Log.d(TAG, "arPNGFilesMutableLiveData: file isn't exist");
                 try {
                     request.setDestinationInExternalFilesDir(this, File.separator, sharedPreferences.getString(SHARED_PREF_USER_ID, "") + ".texture.png");
                     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                     Long reference = downloadManager.enqueue(request);
-//                    Log.d(TAG, "arPNGFilesMutableLiveData: done");
+                    Log.d(TAG, "arPNGFilesMutableLiveData: done");
 
                 } catch (Exception e) {
                     Log.e(TAG, "arPNGFilesMutableLiveData: " + e.getMessage());
                 }
             }
+
         });
         characterViewModel.arOBJFilesMutableLiveData.observe(this, v -> {
             Log.d(TAG, "liveDataObserve:arOBJFilesMutableLiveData " + v);
-            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(v));
-            File arFile = new File("/storage/emulated/0/Android/data/com.visitegypt/files", sharedPreferences.getString(SHARED_PREF_USER_ID, "") + "-" + genderFlag + ".obj");
-            if (arFile.exists()) {
-                Log.d(TAG, "arOBJFilesMutableLiveData: file exist");
-            } else {
-                Log.d(TAG, "arOBJFilesMutableLiveData: file isn't exist");
+            if (!v.toString().equals("null")) {
+                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(v));
+                File arFile = new File("/storage/emulated/0/Android/data/com.visitegypt/files", sharedPreferences.getString(SHARED_PREF_USER_ID, "") + "-" + genderFlag + ".obj");
+                if (arFile.exists()) {
+                    Log.d(TAG, "arOBJFilesMutableLiveData: file exist");
+                    boolean deleted = arFile.delete();
+                }
+
                 try {
                     request.setDestinationInExternalFilesDir(this, File.separator, sharedPreferences.getString(SHARED_PREF_USER_ID, "") + "-" + genderFlag + ".obj");
                     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
@@ -238,15 +241,11 @@ public class CharacterActivity extends AppCompatActivity {
             case REQUEST_ID_MULTIPLE_PERMISSIONS:
                 if (ContextCompat.checkSelfPermission(this,
                         Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this,
-                            "FlagUp Requires Access to Camara.", Toast.LENGTH_SHORT)
-                            .show();
+                    Toast.makeText(this, "FlagUp Requires Access to Camara.", Toast.LENGTH_SHORT).show();
 
                 } else if (ContextCompat.checkSelfPermission(this,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this,
-                            "FlagUp Requires Access to Your Storage.",
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "FlagUp Requires Access to Your Storage.", Toast.LENGTH_SHORT).show();
 
                 } else {
                     chooseImage(this);

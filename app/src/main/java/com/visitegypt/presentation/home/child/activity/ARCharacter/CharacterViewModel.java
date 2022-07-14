@@ -48,19 +48,13 @@ public class CharacterViewModel extends ViewModel implements UploadUserPhotoUseC
     }
 
     public void uploadUserProfilePhoto(File userPhoto, String contentType) {
-        Log.d(TAG, "uploadUserProfilePhoto: wwwwwwww");
         uploadUserPhotoUseCase.setContentType(contentType);
-        Log.d(TAG, "uploadUserProfilePhoto: aaaaaaaa");
         uploadUserPhotoUseCase.setUserFile(userPhoto);
-        Log.d(TAG, "uploadUserProfilePhoto: aaaaaaaa" + contentType + " " + userPhoto);
         uploadUserPhotoUseCase.uploadARPhoto();
-        Log.d(TAG, "uploadUserProfilePhoto: aaaaaa");
     }
 
     public void initCallBack() {
-        Log.d(TAG, "initCallBack: a");
         uploadUserPhotoUseCase.setUploadPhotoApiCallBack(this::confirmUpload);
-        Log.d(TAG, "initCallBack: zz");
     }
 
     @Override
@@ -100,8 +94,8 @@ public class CharacterViewModel extends ViewModel implements UploadUserPhotoUseC
 
         }, throwable -> {
             Log.e(TAG, "getARResponse: " + throwable.getMessage());
-            arPNGFilesMutableLiveData.setValue(null);
-            arOBJFilesMutableLiveData.setValue(null);
+            arPNGFilesMutableLiveData.setValue("null");
+            arOBJFilesMutableLiveData.setValue("null");
             arMTLFilesMutableLiveData.setValue(null);
 
         });
