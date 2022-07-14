@@ -63,6 +63,8 @@ public class CharacterViewModel extends ViewModel implements UploadUserPhotoUseC
         if (code == 200) {
             isImageUploaded.setValue(true);
             imageList = url;
+        } else {
+            isImageUploaded.setValue(false);
         }
     }
 
@@ -82,7 +84,7 @@ public class CharacterViewModel extends ViewModel implements UploadUserPhotoUseC
 
 
     public void getARResponse() {
-        Log.d(TAG, "getARResponse: getting user ar files...");
+        Log.d(TAG, "getARResponse: getting u ser ar files...");
         getARPhotoOfUserUseCase.execute(s -> {
 //            Log.d(TAG, "getARResponse: successfully retrieved user files");
 //            Log.d(TAG, "getARResponse: " + s.getArMtl());
@@ -93,11 +95,11 @@ public class CharacterViewModel extends ViewModel implements UploadUserPhotoUseC
             arPNGFilesMutableLiveData.setValue(s.getArPng());
 
         }, throwable -> {
-            Log.e(TAG, "getARResponse: " + throwable.getMessage());
+            isImageUploaded.setValue(false);
             arPNGFilesMutableLiveData.setValue("null");
             arOBJFilesMutableLiveData.setValue("null");
             arMTLFilesMutableLiveData.setValue(null);
-
+            Log.e(TAG, "getARResponse: " + throwable.getMessage());
         });
     }
 }

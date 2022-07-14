@@ -8,12 +8,33 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/TextAppearance.MaterialComponents.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:drawableStart="@drawable/ic_baseline_info_24"
+        android:drawablePadding="4dp"
+        android:gravity="center_vertical"
+        android:text="Selected character will be your default tour guide" />
+
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/TextAppearance.MaterialComponents.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:drawableStart="@drawable/ic_baseline_info_24"
+        android:drawablePadding="4dp"
+        android:gravity="center_vertical"
+        android:text="You can change your character anytime" />
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
         android:weightSum="2">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,7 +77,7 @@
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Personal" />
+                android:text="Customized" />
 
         </LinearLayout>
     </LinearLayout>

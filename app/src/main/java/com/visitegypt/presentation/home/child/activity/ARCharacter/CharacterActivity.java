@@ -48,8 +48,8 @@ public class CharacterActivity extends AppCompatActivity {
     private static final String TAG = "Character Activity";
     @Inject
     public SharedPreferences sharedPreferences;
-    String genderFlag;
-    DownloadManager downloadManager;
+    private String genderFlag;
+    private DownloadManager downloadManager;
     private MaterialButton createCharacterMaterialButton, cancelMaterialButton, test;
     private CharacterViewModel characterViewModel;
     private File file;
@@ -79,8 +79,9 @@ public class CharacterActivity extends AppCompatActivity {
                 genderFlag = "female";
             else
                 genderFlag = "male";
-            Toast.makeText(this, "donnneee", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(this, Home.class));
+//            Log.d(TAG, "onCreate: dddd");
+            // Toast.makeText(this, "donnneee", Toast.LENGTH_LONG).show();
+            //startActivity(new Intent(this, Home.class));
 
             characterViewModel.getARResponse();
 
@@ -131,11 +132,14 @@ public class CharacterActivity extends AppCompatActivity {
             if (!aBoolean) {
                 Toast.makeText(this, "Upload Failed", Toast.LENGTH_LONG).show();
 //                Log.d(TAG, "liveDataObserve: aaa");
+//                Toast.makeText(this, "Upload Failed", Toast.LENGTH_LONG).show();
+                GeneralUtils.showSnackError(this, cancelMaterialButton, "Failed to upload image");
             } else {
 //                Log.d(TAG, "liveDataObserve: qqqqq");
-                nameOfUploadedTextView.setText("Untitled Image");
+                nameOfUploadedTextView.setText("Custom Image");
                 uploadImageButton.setImageURI(selectedImage);
                 createCharacterMaterialButton.setEnabled(true);
+                GeneralUtils.showSnackInfo(this, cancelMaterialButton, "Image successfully uploaded");
             }
 
         });
@@ -211,15 +215,12 @@ public class CharacterActivity extends AppCompatActivity {
         if (resultCode != RESULT_CANCELED) {
             switch (requestCode) {
                 case 0:
-                    if (resultCode == RESULT_OK && data != null) {
-
-                    }
-                    break;
                 case 1:
+                    Log.d(TAG, "onActivityResult: image on activity result called");
                     if (resultCode == RESULT_OK && data != null) {
                         selectedImage = data.getData();
                         if (selectedImage != null) {
-                            Log.d(TAG, "  vvvvvvvvvvv  " + selectedImage.toString());
+                            Log.d(TAG, "  vvvvvvvvvvv  " + selectedImage);
                             String filePath = getRealPathFromUri(selectedImage);
                             String mimeType = getContentResolver().getType(selectedImage);
                             if (filePath != null && !filePath.isEmpty())
@@ -227,7 +228,6 @@ public class CharacterActivity extends AppCompatActivity {
                             if (file.exists() && file != null)
                                 characterViewModel.uploadUserProfilePhoto(file, mimeType);
                         }
-
                     }
                     break;
             }

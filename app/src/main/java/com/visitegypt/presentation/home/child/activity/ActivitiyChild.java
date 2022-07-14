@@ -27,8 +27,8 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class ActivitiyChild extends Fragment {
 
-    ConstraintLayout getCharacterConstraintLayout;
-    Dialog chooseCharacter;
+    private ConstraintLayout getCharacterConstraintLayout;
+    private Dialog chooseCharacterDialog;
     private ActivitiyChildViewModel mViewModel;
     private ShapeableImageView learnHistory, learnAboutEgypt;
 
@@ -65,38 +65,33 @@ public class ActivitiyChild extends Fragment {
     }
 
     private void initClickListeners() {
-
         getCharacterConstraintLayout.setOnClickListener(v -> {
             showDialog();
-
         });
-
     }
 
     private void showDialog() {
         View dialogLayout = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_choose_character, null);
-        chooseCharacter = new Dialog(getContext());
-        chooseCharacter.setContentView(dialogLayout);
-        chooseCharacter.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        chooseCharacter.show();
+        chooseCharacterDialog = new Dialog(getContext());
+        chooseCharacterDialog.setContentView(dialogLayout);
+        chooseCharacterDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        chooseCharacterDialog.show();
 
-        MaterialButton cancelChoosingCharacterMaterialButton = chooseCharacter.findViewById(R.id.cancelChoosingCharacterMaterialButton);
+        MaterialButton cancelChoosingCharacterMaterialButton = chooseCharacterDialog.findViewById(R.id.cancelChoosingCharacterMaterialButton);
         cancelChoosingCharacterMaterialButton.setOnClickListener(v -> {
-            chooseCharacter.dismiss();
+            chooseCharacterDialog.dismiss();
         });
 
-        CircularImageView anubisCharacterCircularImageView = chooseCharacter.findViewById(R.id.anubisCharacterCircularImageView);
+        CircularImageView anubisCharacterCircularImageView = chooseCharacterDialog.findViewById(R.id.anubisCharacterCircularImageView);
         anubisCharacterCircularImageView.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "done", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(getContext(), Home.class));
-
+            Toast.makeText(getContext(), "Anubis successfully set as your tour guide", Toast.LENGTH_SHORT).show();
+//            GeneralUtils.showSnackInfo(getActivity(), getCharacterConstraintLayout, "Anubis successfully set as your tour guide");
+            chooseCharacterDialog.dismiss();
         });
-        CircularImageView personalCharacterCircularImageView = chooseCharacter.findViewById(R.id.personalCharacterCircularImageView);
+        CircularImageView personalCharacterCircularImageView = chooseCharacterDialog.findViewById(R.id.personalCharacterCircularImageView);
         personalCharacterCircularImageView.setOnClickListener(v -> {
             startActivity(new Intent(getContext(), CharacterActivity.class));
         });
-
-
     }
 
 

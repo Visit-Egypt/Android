@@ -20,6 +20,7 @@
     <color name="icon_color">#AAAAAA</color>
     <color name="icon_title">#222222</color>
     <color name="red">#D11B0E</color>
+    <color name="background_edit_text">#FFFFFF</color>
 
 
 </resources>

@@ -233,7 +233,7 @@ public class UserProfile extends Fragment {
         requestMateDialog.setContentView(dialogLayout);
         requestMateDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         requestMateDialog.show();
-        MaterialButton requrstTripMate = requestMateDialog.findViewById(R.id.requrstTripMate);
+        MaterialButton requrstTripMate = requestMateDialog.findViewById(R.id.requestTripMate);
 
         requrstTripMate.setOnClickListener(view -> {
             TextInputEditText titleTextInput = requestMateDialog.findViewById(R.id.titleEditText);

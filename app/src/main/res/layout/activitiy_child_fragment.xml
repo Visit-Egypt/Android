@@ -6,9 +6,10 @@
     android:background="?attr/colorOnPrimary"
     android:orientation="vertical">
 
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="170dp"
         android:layout_margin="8dp"
         android:background="?android:selectableItemBackground"
         android:clickable="true"
@@ -20,29 +21,47 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/getCharacterConstraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="match_parent"
             android:background="@drawable/character2"
             android:foreground="?android:selectableItemBackground">
 
-            <TextView
-                style="@style/TextAppearance.MaterialComponents.Headline6"
+            <LinearLayout
+                android:background="#15000000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:gravity="start"
-                android:padding="8dp"
-                android:text="Get your character"
-                android:textColor="?attr/colorOnPrimary"
-                android:textStyle="bold"
+                android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                app:layout_constraintLeft_toLeftOf="parent">
+
+                <TextView
+                    style="@style/TextAppearance.MaterialComponents.Headline5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_margin="8dp"
+                    android:gravity="start"
+                    android:text="Customize your tour guide"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    style="@style/TextAppearance.MaterialComponents.Body2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="start"
+                    android:text="You can select Anubis or make your own"
+                    android:textColor="@color/white" />
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="170dp"
         android:layout_margin="8dp"
         android:background="?android:selectableItemBackground"
         android:clickable="true"
@@ -54,29 +73,46 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/moneyARConstraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="match_parent"
             android:background="@drawable/money_ar"
             android:foreground="?android:selectableItemBackground">
 
-            <TextView
-                style="@style/TextAppearance.MaterialComponents.Headline6"
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_alignParentStart="true"
-                android:gravity="start"
-                android:padding="8dp"
-                android:text="Uncover secrets on money"
-                android:textColor="?attr/colorOnPrimary"
-                android:textStyle="bold"
+                android:background="#15000000"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                android:orientation="vertical"
+                app:layout_constraintLeft_toLeftOf="parent">
+
+                <TextView
+                    style="@style/TextAppearance.MaterialComponents.Headline5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:gravity="start"
+                    android:text="Uncover secrets on currencies"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    style="@style/TextAppearance.MaterialComponents.Body2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="start"
+                    android:text="Every currency has a whole story on it"
+                    android:textColor="@color/white" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="170dp"
         android:layout_margin="8dp"
         android:background="?android:selectableItemBackground"
         android:clickable="true"
@@ -88,21 +124,20 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/learnHistoryConstraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="match_parent"
             android:background="@drawable/learnhistory"
             android:foreground="?android:selectableItemBackground">
 
             <TextView
-                style="@style/TextAppearance.MaterialComponents.Headline6"
+                style="@style/TextAppearance.MaterialComponents.Headline5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_marginBottom="16dp"
                 android:gravity="start"
-                android:padding="8dp"
-                android:text="Learn history"
-                android:textColor="?attr/colorOnPrimary"
-                android:textStyle="bold"
+                android:layout_marginHorizontal="8dp"
+                android:text="Explore the Egyptian history"
+                android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent" />
 

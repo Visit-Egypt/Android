@@ -59,6 +59,7 @@ import com.smarteist.autoimageslider.SliderView;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Explore;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.model.Review;
 import com.visitegypt.domain.model.Slider;
 import com.visitegypt.presentation.chatbot.ChatbotActivity;
@@ -281,6 +282,11 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
             setLayoutVisible();
             setShimmersGone();
 
+            if (place.getPlaceActivities() == null) {
+                ArrayList<PlaceActivity> placeActivities = new ArrayList<>();
+                place.setPlaceActivities(placeActivities);
+            }
+
             if (place.getExplores() != null) {
                 for (Explore explore : place.getExplores()) {
                     place.getPlaceActivities().add(explore);
@@ -403,7 +409,10 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         super.onPause();
         stopShimmerAnimation();
         if (mapView != null) {
-            mapView.onPause();
+            try {
+                mapView.onPause();
+            } catch (Exception ignored) {
+            }
         }
     }
 

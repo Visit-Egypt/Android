@@ -22,6 +22,15 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:drawableLeft="@drawable/ic_baseline_info_24"
+            android:drawablePadding="4dp"
+            android:text="Upload a high quality image for your face and choose the character" />
+
         <LinearLayout
             android:id="@+id/personalCharacterLinearLayout"
             android:layout_width="match_parent"
@@ -35,12 +44,7 @@
                 android:layout_marginVertical="16dp"
                 android:orientation="horizontal">
 
-                <TextView
-                    style="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Gender:" />
+
 
                 <RadioGroup
                     android:id="@+id/genderRadioGroup"
@@ -50,19 +54,26 @@
                     android:weightSum="2">
 
                     <RadioButton
+                        android:layout_height="300dp"
                         android:id="@+id/maleRadioButton"
                         android:layout_width="10dp"
-                        android:layout_height="250dp"
+                        android:buttonTint="@color/camel"
                         android:layout_margin="8dp"
                         android:layout_weight="1"
                         android:background="@drawable/male"
                         android:checked="true"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:selectableItemBackground"
                         android:gravity="start" />
 
                     <RadioButton
+                        android:layout_height="300dp"
                         android:id="@+id/femaleRadioButton"
+                        android:buttonTint="@color/camel"
+                        android:focusable="true"
                         android:layout_width="10dp"
-                        android:layout_height="250dp"
+                        android:foreground="?android:selectableItemBackground"
                         android:layout_margin="8dp"
                         android:layout_weight="1"
                         android:background="@drawable/female"
