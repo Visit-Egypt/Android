@@ -73,12 +73,56 @@ public class UploadUserPhotoUseCase {
         try {
             final UploadResponse uploadResponse = userRepository.getUserPhotoAR(userId, contentType).blockingGet();
             UploadFields uploadFields = uploadResponse.getFields();
-            realUpload(uploadFields, userId);
+            realUploadAR(uploadFields, userId);
         } catch (Exception e) {
             Log.e(TAG, "upload: " + e.toString());
         }
     }
 
+    private void realUploadAR(UploadFields uploadFields, String userId) {
+        if (userFile != null && userFile.exists()) {
+            ArrayList<String> imagesKes = new ArrayList<>();
+
+            ArrayList<String> errorKes = new ArrayList<>();
+            Call<ResponseBody> call = uploadToS3Repository.uploadToS3(userFile, uploadFields);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.code() == 204) {
+                        imagesKes.clear();
+                        errorKes.clear();
+//                        imagesKes.add(S3_URL + uploadFields.getKey());
+                        imagesKes.add( uploadFields.getKey());
+
+                    } else {
+
+                    }
+                    ConfirmUploadModel confirmUploadModel = new ConfirmUploadModel(imagesKes, userId);
+                    Call<ConfirmUploadResponse> confirmCall = userRepository.confirmUpload(confirmUploadModel);
+                    confirmCall.enqueue(new Callback<ConfirmUploadResponse>() {
+                        @Override
+                        public void onResponse(Call<ConfirmUploadResponse> call, Response<ConfirmUploadResponse> response) {
+                            Log.d(TAG, "onResponse: status code  " + response.code());
+                            uploadPhotoApiCallBack.confirmUpload(response.code(), imagesKes);
+                        }
+
+                        @Override
+                        public void onFailure(Call<ConfirmUploadResponse> call, Throwable t) {
+
+                        }
+                    });
+
+
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.d(TAG, "onFailure: ");
+                }
+            });
+
+        }
+    }
     private void realUpload(UploadFields uploadFields, String userId) {
         if (userFile != null && userFile.exists()) {
             ArrayList<String> imagesKes = new ArrayList<>();
@@ -92,6 +136,7 @@ public class UploadUserPhotoUseCase {
                         imagesKes.clear();
                         errorKes.clear();
                         imagesKes.add(S3_URL + uploadFields.getKey());
+//                        imagesKes.add( uploadFields.getKey());
 
                     } else {
 

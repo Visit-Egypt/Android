@@ -48,9 +48,9 @@ public class CharacterActivity extends AppCompatActivity {
     private static final String TAG = "Character Activity";
     @Inject
     public SharedPreferences sharedPreferences;
-    private String genderFlag;
+    private String genderFlag = "male";
     private DownloadManager downloadManager;
-    private MaterialButton createCharacterMaterialButton, cancelMaterialButton, test;
+    private MaterialButton createCharacterMaterialButton, cancelMaterialButton, test, testt;
     private CharacterViewModel characterViewModel;
     private File file;
     private String placeId;
@@ -72,30 +72,13 @@ public class CharacterActivity extends AppCompatActivity {
         downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
 
         liveDataObserve();
-
+        maleRadioButton.setOnClickListener(v -> genderFlag = "male");
+        femaleRadioButton.setOnClickListener(v -> genderFlag = "female");
         createCharacterMaterialButton.setOnClickListener(v -> {
-
-            if (femaleRadioButton.isChecked())
-                genderFlag = "female";
-            else
-                genderFlag = "male";
-//            Log.d(TAG, "onCreate: dddd");
-            // Toast.makeText(this, "donnneee", Toast.LENGTH_LONG).show();
-            //startActivity(new Intent(this, Home.class));
-
             characterViewModel.getARResponse();
+            startActivity(new Intent(this, Home.class));
 
         });
-//        test.setOnClickListener(v -> {
-//
-//            if (femaleRadioButton.isChecked())
-//                genderFlag = "female";
-//            else
-//                genderFlag = "male";
-//
-//            characterViewModel.getARResponse();
-//        });
-
         cancelMaterialButton.setOnClickListener(v -> {
             startActivity(new Intent(this, Home.class));
         });
@@ -109,6 +92,7 @@ public class CharacterActivity extends AppCompatActivity {
         createCharacterMaterialButton = findViewById(R.id.createCharacterMaterialButton);
         cancelMaterialButton = findViewById(R.id.cancelMaterialButton);
         test = findViewById(R.id.test);
+        testt = findViewById(R.id.testt);
         uploadImageButton = findViewById(R.id.uploadImageButton);
         nameOfUploadedTextView = findViewById(R.id.nameOfUploadedTextView);
         genderRadioGroup = findViewById(R.id.genderRadioGroup);
@@ -131,11 +115,8 @@ public class CharacterActivity extends AppCompatActivity {
         characterViewModel.isImageUploaded.observe(this, aBoolean -> {
             if (!aBoolean) {
                 Toast.makeText(this, "Upload Failed", Toast.LENGTH_LONG).show();
-//                Log.d(TAG, "liveDataObserve: aaa");
-//                Toast.makeText(this, "Upload Failed", Toast.LENGTH_LONG).show();
                 GeneralUtils.showSnackError(this, cancelMaterialButton, "Failed to upload image");
             } else {
-//                Log.d(TAG, "liveDataObserve: qqqqq");
                 nameOfUploadedTextView.setText("Custom Image");
                 uploadImageButton.setImageURI(selectedImage);
                 createCharacterMaterialButton.setEnabled(true);
@@ -144,7 +125,7 @@ public class CharacterActivity extends AppCompatActivity {
 
         });
         characterViewModel.arMTLFilesMutableLiveData.observe(this, v -> {
-            Log.d(TAG, "liveDataObserve:arMTLFilesMutableLiveData " + v);
+//            Log.d(TAG, "liveDataObserve:arMTLFilesMutableLiveData " + v);
             if (v != null) {
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(v));
                 File arFile = new File("/storage/emulated/0/Android/data/com.visitegypt/files", sharedPreferences.getString(SHARED_PREF_USER_ID, "") + ".mtl");
@@ -156,8 +137,6 @@ public class CharacterActivity extends AppCompatActivity {
                     request.setDestinationInExternalFilesDir(this, File.separator, sharedPreferences.getString(SHARED_PREF_USER_ID, "") + ".mtl");
                     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                     Long reference = downloadManager.enqueue(request);
-//                    Log.d(TAG, "arMTLFilesMutableLiveData: done");
-
                 } catch (Exception e) {
                     Log.e(TAG, "arMTLFilesMutableLiveData: " + e.getMessage());
                 }
@@ -166,7 +145,6 @@ public class CharacterActivity extends AppCompatActivity {
 
         });
         characterViewModel.arPNGFilesMutableLiveData.observe(this, v -> {
-            Log.d(TAG, "liveDataObserve:arPNGFilesMutableLiveData " + v);
             if (!v.equals("null")) {
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(v));
                 File arFile = new File("/storage/emulated/0/Android/data/com.visitegypt/files", sharedPreferences.getString(SHARED_PREF_USER_ID, "") + ".texture.png");
@@ -179,8 +157,6 @@ public class CharacterActivity extends AppCompatActivity {
                     request.setDestinationInExternalFilesDir(this, File.separator, sharedPreferences.getString(SHARED_PREF_USER_ID, "") + ".texture.png");
                     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                     Long reference = downloadManager.enqueue(request);
-                    Log.d(TAG, "arPNGFilesMutableLiveData: done");
-
                 } catch (Exception e) {
                     Log.e(TAG, "arPNGFilesMutableLiveData: " + e.getMessage());
                 }
@@ -188,7 +164,7 @@ public class CharacterActivity extends AppCompatActivity {
 
         });
         characterViewModel.arOBJFilesMutableLiveData.observe(this, v -> {
-            Log.d(TAG, "liveDataObserve:arOBJFilesMutableLiveData " + v);
+//            Log.d(TAG, "liveDataObserve:arOBJFilesMutableLiveData " + v);
             if (!v.toString().equals("null")) {
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(v));
                 File arFile = new File("/storage/emulated/0/Android/data/com.visitegypt/files", sharedPreferences.getString(SHARED_PREF_USER_ID, "") + "-" + genderFlag + ".obj");
@@ -196,12 +172,10 @@ public class CharacterActivity extends AppCompatActivity {
                     Log.d(TAG, "arOBJFilesMutableLiveData: file exist");
                     boolean deleted = arFile.delete();
                 }
-
                 try {
                     request.setDestinationInExternalFilesDir(this, File.separator, sharedPreferences.getString(SHARED_PREF_USER_ID, "") + "-" + genderFlag + ".obj");
                     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                     Long reference = downloadManager.enqueue(request);
-                    Log.d(TAG, "arOBJFilesMutableLiveData: done");
                 } catch (Exception e) {
                     Log.e(TAG, "arOBJFilesMutableLiveData: " + e.getMessage());
                 }
@@ -220,7 +194,6 @@ public class CharacterActivity extends AppCompatActivity {
                     if (resultCode == RESULT_OK && data != null) {
                         selectedImage = data.getData();
                         if (selectedImage != null) {
-                            Log.d(TAG, "  vvvvvvvvvvv  " + selectedImage);
                             String filePath = getRealPathFromUri(selectedImage);
                             String mimeType = getContentResolver().getType(selectedImage);
                             if (filePath != null && !filePath.isEmpty())

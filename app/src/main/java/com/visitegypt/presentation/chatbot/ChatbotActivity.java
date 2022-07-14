@@ -35,6 +35,9 @@ public class ChatbotActivity extends AppCompatActivity {
     private static final String TAG = "Chatbot Activity";
     private final String USER_KEY = "user";
     private final String BOT_KEY = "bot";
+    @Inject
+    public SharedPreferences sharedPreferences;
+    User user;
     private RecyclerView chatbotRecyclerView;
     private FloatingActionButton fBtnSendMessage;
     private EditText edtTxtMessage;
@@ -43,11 +46,7 @@ public class ChatbotActivity extends AppCompatActivity {
     private ChatbotViewModel chatbotViewModel;
     private String type;
     private String placeTitle;
-    @Inject
-    public SharedPreferences sharedPreferences;
     private String placeId;
-
-    User user;
 //    public String s;
 //    public String x;
 

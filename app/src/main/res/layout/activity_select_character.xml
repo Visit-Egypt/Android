@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".presentation.home.child.activity.ARCharacter.CharacterActivity">
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
@@ -45,7 +46,6 @@
                 android:orientation="horizontal">
 
 
-
                 <RadioGroup
                     android:id="@+id/genderRadioGroup"
                     android:layout_width="match_parent"
@@ -54,13 +54,13 @@
                     android:weightSum="2">
 
                     <RadioButton
-                        android:layout_height="300dp"
                         android:id="@+id/maleRadioButton"
                         android:layout_width="10dp"
-                        android:buttonTint="@color/camel"
+                        android:layout_height="300dp"
                         android:layout_margin="8dp"
                         android:layout_weight="1"
                         android:background="@drawable/male"
+                        android:buttonTint="@color/camel"
                         android:checked="true"
                         android:clickable="true"
                         android:focusable="true"
@@ -68,15 +68,15 @@
                         android:gravity="start" />
 
                     <RadioButton
-                        android:layout_height="300dp"
                         android:id="@+id/femaleRadioButton"
-                        android:buttonTint="@color/camel"
-                        android:focusable="true"
                         android:layout_width="10dp"
-                        android:foreground="?android:selectableItemBackground"
+                        android:layout_height="300dp"
                         android:layout_margin="8dp"
                         android:layout_weight="1"
                         android:background="@drawable/female"
+                        android:buttonTint="@color/camel"
+                        android:focusable="true"
+                        android:foreground="?android:selectableItemBackground"
                         android:gravity="start" />
 
                 </RadioGroup>
@@ -153,8 +153,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:visibility="gone"
             android:text="test"
+            android:visibility="gone"
+            tools:ignore="DuplicateSpeakableTextCheck" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/testt"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="test"
+            android:visibility="gone"
             tools:ignore="DuplicateSpeakableTextCheck" />
     </LinearLayout>
 </LinearLayout>
