@@ -26,6 +26,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
                     android:scaleType="centerInside"
@@ -96,7 +97,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_margin="8dp"
-                    android:background="?attr/colorOnPrimary"
+                    android:background="@drawable/like"
                     android:scaleType="centerInside"
                     android:src="@drawable/like" />
 

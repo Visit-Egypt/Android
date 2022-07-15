@@ -56,6 +56,8 @@ public class PostsRecyclerViewAdapter extends RecyclerView.Adapter<PostsRecycler
         } else {
             holder.imagePostImageView.setVisibility(View.GONE);
         }
+        holder.likePostImageView.setImageResource(currentPost.getLikes().isEmpty() ? R.drawable.like : R.drawable.liked);
+
         holder.likePostImageView.setOnClickListener(view -> {
 //            if (postsArrayList.get(position).getLikes().contains(user.getUserId())) {
 //                flag = 0;
@@ -65,12 +67,10 @@ public class PostsRecyclerViewAdapter extends RecyclerView.Adapter<PostsRecycler
             if (currentPost.getLikes().isEmpty()) {
 //                currentPost.getLikes().add(user.getUserId());
                 currentPost.getLikes().add("test");
-                holder.likePostImageView.setImageResource(R.drawable.liked);
                 notifyItemChanged(position);
 
             } else if (!currentPost.getLikes().isEmpty()) {
                 currentPost.getLikes().remove(0);
-                holder.likePostImageView.setImageResource(R.drawable.like);
                 notifyItemChanged(position);
             }
         });
