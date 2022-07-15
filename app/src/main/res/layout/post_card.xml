@@ -4,87 +4,107 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_margin="8dp"
+        android:elevation="8dp">
 
-        <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/imgUser"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_baseline_account_circle_24" />
-
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/userNameMaterialTextView"
-                style="@style/TextAppearance.MaterialComponents.Subtitle1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="8dp"
-                android:text="User name"
-                android:textColor="?attr/colorOnSecondary"
-                android:textStyle="bold" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        </LinearLayout>
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:id="@+id/imgUserPostProfileFragment"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_baseline_account_circle_24" />
 
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/imgUserPostProfileFragment"
+                    android:orientation="vertical">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/captionPostMaterialTextView"
-        style="@style/TextAppearance.MaterialComponents.Body1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="68dp"
-        android:text="User name"
-        android:textColor="?attr/colorOnSecondary" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/userNameMaterialTextView"
+                        style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:text="User name"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textStyle="bold" />
 
-    <ImageView
-        android:id="@+id/imagePostImageView"
-        style="@style/TextAppearance.MaterialComponents.Body1"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_gravity="center"
-        android:layout_margin="8dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/location" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_margin="8dp"
+                        android:background="?attr/colorSecondaryVariant" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/captionPostMaterialTextView"
+                        style="@style/TextAppearance.MaterialComponents.Body1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:text="The most amazing place out there"
+                        android:textColor="?attr/colorOnSecondary" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/numOfLikesPostMaterialTextView"
-            style="@style/TextAppearance.MaterialComponents.Body1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            android:gravity="center_vertical"
-            android:text="20"
-            android:textStyle="bold" />
+                    <ImageView
+                        android:id="@+id/imagePostImageView"
+                        style="@style/TextAppearance.MaterialComponents.Body1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_margin="8dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/alsharkia" />
+                </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/likePostImageView"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_margin="8dp"
-            android:background="?attr/colorOnPrimary"
-            android:scaleType="centerInside"
-            android:src="@drawable/like" />
+            </RelativeLayout>
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right">
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_margin="8dp"
-        android:background="?attr/colorSecondaryVariant" />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/numOfLikesPostMaterialTextView"
+                    style="@style/TextAppearance.MaterialComponents.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:gravity="center_vertical"
+                    android:text="20"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/likePostImageView"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="8dp"
+                    android:background="?attr/colorOnPrimary"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/like" />
+
+            </LinearLayout>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.card.MaterialCardView>
+
 </LinearLayout>

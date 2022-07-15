@@ -230,11 +230,11 @@ public class AccountFragment extends Fragment implements OnFilterUpdate {
         accountViewModel.getUser();
         accountViewModel.userMutableLiveData.observe(getViewLifecycleOwner(), user -> {
             Log.d(TAG, "initViewModel: filling user data... " + user.getUserId());
+            postsRecyclerViewAdapter.setUser(user);
             setUserXp(user.getXp());
         });
         //get user posts
         accountViewModel.getPostsByUserId();
-
         accountViewModel.userPostsMutableLiveData.observe(getViewLifecycleOwner(), posts -> {
             if (posts.size() != 0) {
                 noPostsMaterialTextView.setVisibility(View.GONE);

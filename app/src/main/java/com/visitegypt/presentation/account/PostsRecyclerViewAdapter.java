@@ -14,14 +14,16 @@ import com.google.android.material.textview.MaterialTextView;
 import com.squareup.picasso.Picasso;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Post;
+import com.visitegypt.domain.model.User;
 
 import java.util.List;
 
 public class PostsRecyclerViewAdapter extends RecyclerView.Adapter<PostsRecyclerViewAdapter.ViewHolder> {
     private static final String TAG = "Posts Adapter";
-    int flag = 0;
+    int flag = 1;
     private List<Post> postsArrayList;
     private Context context;
+    private User user;
 
     public PostsRecyclerViewAdapter(Context context) {
         this.context = context;
@@ -39,9 +41,9 @@ public class PostsRecyclerViewAdapter extends RecyclerView.Adapter<PostsRecycler
         Post currentPost = postsArrayList.get(position);
         holder.userNameMaterialTextView.setText(currentPost.getUserName());
         holder.captionPostMaterialTextView.setText(currentPost.getCaption());
-        if (currentPost.getLikes().size() != 0) {
+        if (!currentPost.getLikes().isEmpty()) {
             holder.numOfLikesPostMaterialTextView.setText(" " + currentPost.getLikes().size());
-        } else {
+        } else if (currentPost.getLikes().isEmpty()) {
             holder.numOfLikesPostMaterialTextView.setText("No Likes");
         }
         Log.d(TAG, "onBindViewHolder: " + currentPost.getListOfImages());
@@ -55,18 +57,32 @@ public class PostsRecyclerViewAdapter extends RecyclerView.Adapter<PostsRecycler
             holder.imagePostImageView.setVisibility(View.GONE);
         }
         holder.likePostImageView.setOnClickListener(view -> {
-            if (flag == 0 || currentPost.getLikes().size() == 0) {
-                currentPost.getLikes().add("d");
-                flag = 1;
+//            if (postsArrayList.get(position).getLikes().contains(user.getUserId())) {
+//                flag = 0;
+//            } else {
+//                flag = 1;
+//            }
+            if (currentPost.getLikes().isEmpty()) {
+//                currentPost.getLikes().add(user.getUserId());
+                currentPost.getLikes().add("test");
                 holder.likePostImageView.setImageResource(R.drawable.liked);
-            } else if (currentPost.getLikes().size() != 0) {
-                flag = 0;
+                notifyItemChanged(position);
+
+            } else if (!currentPost.getLikes().isEmpty()) {
                 currentPost.getLikes().remove(0);
                 holder.likePostImageView.setImageResource(R.drawable.like);
-
+                notifyItemChanged(position);
             }
-            notifyDataSetChanged();
         });
+
+        if (user != null) {
+            Log.d(TAG, "onBindViewHolder: user detected");
+            if (user.getPhotoUrl() != null && !user.getPhotoUrl().isEmpty()) {
+                Log.d(TAG, "onBindViewHolder: " + user.getPhotoUrl());
+                Picasso.get().load(user.getPhotoUrl()).into(holder.userImageView);
+            }
+        }
+
     }
 
     @Override
@@ -82,9 +98,13 @@ public class PostsRecyclerViewAdapter extends RecyclerView.Adapter<PostsRecycler
         notifyDataSetChanged();
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         private MaterialTextView captionPostMaterialTextView, numOfLikesPostMaterialTextView, userNameMaterialTextView;
-        private ImageView imagePostImageView, likePostImageView;
+        private ImageView imagePostImageView, likePostImageView, userImageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -93,6 +113,7 @@ public class PostsRecyclerViewAdapter extends RecyclerView.Adapter<PostsRecycler
             imagePostImageView = itemView.findViewById(R.id.imagePostImageView);
             likePostImageView = itemView.findViewById(R.id.likePostImageView);
             numOfLikesPostMaterialTextView = itemView.findViewById(R.id.numOfLikesPostMaterialTextView);
+            userImageView = itemView.findViewById(R.id.imgUserPostProfileFragment);
         }
     }
 }
