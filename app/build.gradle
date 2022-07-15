@@ -101,7 +101,7 @@ dependencies {
     implementation 'androidx.preference:preference:1.1.1'
     //circular img view
     implementation 'com.mikhaellopez:circularimageview:3.2.0'
-    
+
     implementation 'com.mikhaellopez:circularimageview:4.3.0'
 
     implementation 'com.jackandphantom.android:circularprogressbar:1.2.0'
@@ -143,4 +143,8 @@ dependencies {
     implementation 'com.hanks:htextview-fade:0.1.6'
 
     implementation("se.warting.permissionsui:permissionsui:0.1.15")
+
+    //integration
+    implementation project(':unityLibrary')
+    implementation fileTree(dir: project(':unityLibrary').getProjectDir().toString() + ('/libs'), include: ['*.jar'])
 }
