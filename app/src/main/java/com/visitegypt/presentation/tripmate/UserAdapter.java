@@ -52,7 +52,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewAdapte
         {
             holder.txtUserName.setText(users.get(position).getFirstName() + " " + users.get(position).getLastName() );
             holder.txtUserName.setText(users.get(position).getFirstName() + " " + users.get(position).getLastName() );
-
+        }
+        if (users.get(position).getFollowersNumber() > 1) {
+            holder.userFollowRequestMaterialTextView.setText(String.valueOf(users.get(position).getFollowersNumber()) + " Followers");
+        } else {
+            holder.userFollowRequestMaterialTextView.setText(String.valueOf(users.get(position).getFollowersNumber()) + " Follower");
         }
     }
 
@@ -72,12 +76,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewAdapte
         private final CircularImageView imgUser;
         private final ShapeableImageView imgSendRequest;
         private final  MaterialTextView txtUserName;
+        private final MaterialTextView userFollowRequestMaterialTextView;
 
         public UserViewAdapter(@NonNull View itemView) {
             super(itemView);
             imgUser = itemView.findViewById(R.id.imgUser);
             txtUserName = itemView.findViewById(R.id.userNameRequestMaterialTextView);
             imgSendRequest = itemView.findViewById(R.id.imgSendRequest);
+            userFollowRequestMaterialTextView = itemView.findViewById(R.id.userFollowRequestMaterialTextView);
             itemView.setOnClickListener(v -> {
                 Bundle bundle = new Bundle();
                 bundle.putString(CHOSEN_USER_ID,users.get(getAdapterPosition()).getId());

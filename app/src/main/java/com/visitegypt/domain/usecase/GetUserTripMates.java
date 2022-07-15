@@ -44,7 +44,8 @@ public class GetUserTripMates {
                                             tripMateRequest.getUserID(),
                                             tripMateRequest.isApproved(),
                                             user1.getFirstName() + " " + user1.getLastName(),
-                                            user1.getPhotoUrl()
+                                            user1.getPhotoUrl(),
+                                            user1.getFollowers().size()
                                     ));
                                 })
                                 ;
@@ -58,7 +59,8 @@ public class GetUserTripMates {
                         ((TripMateSentRequest) o).getUserID(),
                         ((TripMateSentRequest) o).isApproved(),
                         ((TripMateSentRequest) o).getUserName(),
-                        ((TripMateSentRequest) o).getPhotoUrl()
+                        ((TripMateSentRequest) o).getPhotoUrl(),
+                        ((TripMateSentRequest) o).getFollowersNumber()
                 ))
                 .toList()
                 ;

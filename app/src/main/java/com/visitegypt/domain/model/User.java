@@ -39,7 +39,8 @@ public class User implements Cloneable {
     private ProfileFrame frame;
     @SerializedName("trip_mate_requests")
     private List<TripMateRequest> tripMateRequests;
-
+    @SerializedName("followers_num")
+    private int followersNumber;
 
 
     /*******************************************************************************/
@@ -63,12 +64,14 @@ public class User implements Cloneable {
         this.phoneNumber = phoneNumber;
         this.photoUrl = photoUrl;
     }
-    public User(String firstName, String lastName, String photoUrl ,String userId) {
+
+    public User(String firstName, String lastName, String photoUrl, String userId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.photoUrl = photoUrl;
         this.userId = userId;
     }
+
     public User(String email, String password) {
         this.email = email;
         this.password = password;
@@ -233,6 +236,14 @@ public class User implements Cloneable {
 
     public void setTripMateRequests(List<TripMateRequest> tripMateRequests) {
         this.tripMateRequests = tripMateRequests;
+    }
+
+    public int getFollowersNumber() {
+        return followersNumber;
+    }
+
+    public void setFollowersNumber(int followersNumber) {
+        this.followersNumber = followersNumber;
     }
 
     @NonNull

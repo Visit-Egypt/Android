@@ -2,7 +2,6 @@ package com.visitegypt.presentation.tripmateRequest;
 
 
 import android.app.AlertDialog;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +41,10 @@ public class TripMateRequestAdapter extends RecyclerView.Adapter<TripMateRequest
         if (!tripMateSentRequests.isEmpty() && !tripMateSentRequests.get(position).isApproved()) {
             if (tripMateSentRequests.get(position).getUserName() != null)
                 holder.userName.setText(tripMateSentRequests.get(position).getUserName());
+            if (tripMateSentRequests.get(position).getFollowersNumber() > 1)
+                holder.userFollowRequestMaterialTextView.setText(String.valueOf(tripMateSentRequests.get(position).getFollowersNumber()) + " Followers");
+            else
+                holder.userFollowRequestMaterialTextView.setText(String.valueOf(tripMateSentRequests.get(position).getFollowersNumber()) + " Follower");
             if (tripMateSentRequests.get(position).getPhotoUrl() != null && !tripMateSentRequests.get(position).getPhotoUrl().isEmpty())
                 Picasso.get().load(tripMateSentRequests.get(position).getPhotoUrl()).into(holder.userImage);
 
@@ -103,7 +106,7 @@ public class TripMateRequestAdapter extends RecyclerView.Adapter<TripMateRequest
     }
 
     public class UserTripMateRequestViewHolder extends RecyclerView.ViewHolder {
-        private final MaterialTextView userName;
+        private final MaterialTextView userName, userFollowRequestMaterialTextView;
         private final CircularImageView userImage;
         private final MaterialButton acceptRequestButton;
 
@@ -112,6 +115,7 @@ public class TripMateRequestAdapter extends RecyclerView.Adapter<TripMateRequest
             acceptRequestButton = itemView.findViewById(R.id.acceptRequestButton);
             userName = itemView.findViewById(R.id.userNameRequestMaterialTextView);
             userImage = itemView.findViewById(R.id.imgUser);
+            userFollowRequestMaterialTextView = itemView.findViewById(R.id.userFollowRequestMaterialTextView);
             acceptRequestButton.setOnClickListener(v -> {
                 currentPosition = getAdapterPosition();
                 onItemClickCallBack.onItemCallBack(tripMateSentRequests.get(getAdapterPosition()).getId(), 0);

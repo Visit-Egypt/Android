@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <com.mikhaellopez.circularimageview.CircularImageView
@@ -24,33 +24,26 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/userNameRequestMaterialTextView"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/montserrat_alternates_semibold"
-                android:maxLines="2"
-                android:text="User name"
-                android:textColor="?attr/colorOnSecondary"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:layout_margin="8dp"
+                android:text="User name " />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/userFollowRequestMaterialTextView"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="8dp"
+                android:layout_margin="8dp"
                 android:fontFamily="@font/montserrat_light"
                 android:text="450 Follower"
-                android:textColor="?attr/colorOnSecondary"
-                android:textSize="14sp"
                 android:textStyle="normal" />
 
         </LinearLayout>
