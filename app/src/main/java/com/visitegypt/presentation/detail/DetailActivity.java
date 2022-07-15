@@ -105,7 +105,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 
     private DetailViewModel detailViewModel;
     private ReviewViewModel reviewViewModel;
-    private ItemsRecyclerViewAdapter itemsRecyclerViewAdapter;
+//    private ItemsRecyclerViewAdapter itemsRecyclerViewAdapter;
     private RecyclerView itemsRecyclerView;
     private SliderView sliderView;
     private SliderAdapter sliderAdapter;
@@ -190,6 +190,8 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         itemsRecyclerView = findViewById(R.id.itemsRecyclerView);
         itemPagingAdapter = new ItemPagingAdapter(new ItemComparator());
         itemPagingAdapter.setContext(this);
+//        itemsRecyclerViewAdapter = new ItemsRecyclerViewAdapter(this);
+//        itemsRecyclerView.setAdapter(itemsRecyclerViewAdapter);
         itemsRecyclerView.setLayoutManager(new LinearLayoutManager(DetailActivity.this,
                 LinearLayoutManager.HORIZONTAL, true));
         itemsRecyclerView.setAdapter(itemPagingAdapter);
@@ -249,10 +251,10 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         detailViewModel.getItemsByPlaceId(placeId);
         backArrowCircularImageButton.setOnClickListener(v -> backPlace());
 
-        detailViewModel.itemMutableLiveData.observe(this, items -> {
-            Log.d(TAG, "setting items to recycler view...");
-            itemsRecyclerViewAdapter.setItemsArrayList(items);
-        });
+//        detailViewModel.itemMutableLiveData.observe(this, items -> {
+//            Log.d(TAG, "setting items to recycler view...");
+//            itemsRecyclerViewAdapter.setItemsArrayList(items);
+//        });
         backArrowCircularImageButton.setOnClickListener(v -> backPlace());
 
         gamificationInDetailActivityImageView.setOnClickListener(view -> {
@@ -296,12 +298,12 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
             mapView.getMapAsync(DetailActivity.this);
             mapView.onCreate(savedInstances);
 
-            if (place.getImageUrls() != null) {
+            if (place.getImageUrls() != null && !place.getImageUrls().isEmpty()) {
                 for (String url : place.getImageUrls()) {
                     sliderArrayList.add(new Slider(url));
                 }
                 sliderAdapter.updateArrayList(sliderArrayList);
-            } else if (place.getDefaultImage() != null) {
+            } else if (place.getDefaultImage() != null && !place.getDefaultImage().isEmpty()) {
                 sliderArrayList.add(new Slider(place.getDefaultImage()));
             } else {
                 Log.d(TAG, "no images found");
@@ -522,5 +524,10 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
             this.itemPagingAdapter.submitData(getLifecycle(), placePagingData);
 
         });
+//        detailViewModel.itemMutableLiveData.observe(this, placePagingData -> {
+//            itemsRecyclerViewAdapter.setItemsArrayList(placePagingData);
+//        });
+
     }
+
 }
