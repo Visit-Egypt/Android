@@ -19,6 +19,7 @@ import com.visitegypt.domain.model.Tag;
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.model.UserLoginRequest;
 import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.WeatherModel;
 import com.visitegypt.domain.model.XPUpdate;
@@ -51,12 +52,12 @@ public interface RetrofitService {
      * login
      * register
      * refresh token
-     * @param user
+     * @param userLoginRequest
      * @return
      */
 
     @POST("api/user/login")
-    public Single<User> loginUser(@Body User user);
+    public Single<User> loginUser(@Body UserLoginRequest userLoginRequest);
 
     @GET("api/user/forgotpassword/{email}")
     public Single<String> forgotPassword(@Path("email") String email);
