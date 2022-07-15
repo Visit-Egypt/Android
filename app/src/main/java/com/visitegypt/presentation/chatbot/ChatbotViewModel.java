@@ -70,7 +70,7 @@ public class ChatbotViewModel extends ViewModel {
                         getWeatherByCity.execute(
                                 weatherModel -> {
                                     String weather = weatherModel.getWeather().get(0).getMain();
-                                    botResponseMutableLiveData.setValue(chatbotResponse.getResponse() + " " + weather);
+                                    botResponseMutableLiveData.setValue("The weather in " + city + " is" + weather+" and temperature is" );
                                 }
                         , throwable -> {
                             Log.e(TAG, "getWeatherByCity: ", throwable);
