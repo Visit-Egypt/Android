@@ -3,6 +3,7 @@ package com.visitegypt.domain.usecase;
 import android.content.SharedPreferences;
 
 import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.model.UserLoginRequest;
 import com.visitegypt.domain.repository.UserRepository;
 import com.visitegypt.domain.usecase.base.SingleUseCase;
 import com.visitegypt.utils.Constants;
@@ -13,14 +14,19 @@ import javax.inject.Named;
 import io.reactivex.rxjava3.core.Single;
 
 public class LoginUserUseCase extends SingleUseCase<User> {
-    UserRepository userRepository;
-    SharedPreferences sharedPreferences;
-    User user;
+    private UserRepository userRepository;
+    private SharedPreferences sharedPreferences;
+    private User user;
+    private UserLoginRequest userLoginRequest;
 
     @Inject
     public LoginUserUseCase(@Named("Normal") UserRepository userRepository, SharedPreferences sharedPreferences) {
         this.userRepository = userRepository;
         this.sharedPreferences = sharedPreferences;
+    }
+
+    public void saveUserLoginRequest(UserLoginRequest userLoginRequest) {
+        this.userLoginRequest = userLoginRequest;
     }
 
     public void saveUser(User user) {
@@ -55,6 +61,6 @@ public class LoginUserUseCase extends SingleUseCase<User> {
 
     @Override
     protected Single<User> buildSingleUseCase() {
-        return userRepository.loginUser(user);
+        return userRepository.loginUser(userLoginRequest);
     }
 }

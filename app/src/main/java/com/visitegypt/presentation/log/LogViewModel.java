@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 import com.google.gson.Gson;
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.model.UserLoginRequest;
 import com.visitegypt.domain.usecase.ForgotPasswordUseCase;
 import com.visitegypt.domain.usecase.GetGoogleLoginTokenUseCase;
 import com.visitegypt.domain.usecase.GetGoogleRegisterTokenUseCase;
@@ -132,8 +133,12 @@ public class LogViewModel extends ViewModel {
     }
 
     public void login(User user) {
+        Log.d(TAG, "login: logging you in");
         String email = user.getEmail();
-        loginUserUseCase.saveUser(user);
+        UserLoginRequest userLoginRequest = new UserLoginRequest();
+        userLoginRequest.setEmail(user.getEmail());
+        userLoginRequest.setPassword(user.getPassword());
+        loginUserUseCase.saveUserLoginRequest(userLoginRequest);
         loginUserUseCase.execute(user1 -> {
             Log.d(TAG, "accept: Token " + user1.getAccessToken());
             Log.d(TAG, "accept: Token " + user1.getRefreshToken());

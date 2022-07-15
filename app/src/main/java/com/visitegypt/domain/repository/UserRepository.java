@@ -11,6 +11,7 @@ import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.model.UserLoginRequest;
 import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.XPUpdate;
 import com.visitegypt.domain.model.response.UploadResponse;
@@ -29,7 +30,7 @@ public interface UserRepository {
 
     Single<String> forgotPassword(String email);
 
-    Single<User> loginUser(User user);
+    Single<User> loginUser(UserLoginRequest userLoginRequest);
 
     Single<User> refreshUserToken(Token token);
 

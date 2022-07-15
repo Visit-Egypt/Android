@@ -12,6 +12,7 @@ import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.TripMateRequest;
 import com.visitegypt.domain.model.User;
+import com.visitegypt.domain.model.UserLoginRequest;
 import com.visitegypt.domain.model.UserUpdateRequest;
 import com.visitegypt.domain.model.XPUpdate;
 import com.visitegypt.domain.model.response.UploadResponse;
@@ -46,8 +47,8 @@ public class UserRepositoryImp implements UserRepository {
     }
 
     @Override
-    public Single<User> loginUser(User user) {
-        return retrofitService.loginUser(user);
+    public Single<User> loginUser(UserLoginRequest userLoginRequest) {
+        return retrofitService.loginUser(userLoginRequest);
     }
 
     @Override
@@ -98,8 +99,7 @@ public class UserRepositoryImp implements UserRepository {
 
     @Override
     public Completable addInterests(HashSet<String> interests) {
-        List<String> userInterests = new ArrayList<>();
-        userInterests.addAll(interests);
+        List<String> userInterests = new ArrayList<>(interests);
         HashMap<String, List<String>> map = new HashMap<>();
         map.put("pref_list", userInterests);
         return retrofitService.addInterests(map);
@@ -107,8 +107,7 @@ public class UserRepositoryImp implements UserRepository {
 
     @Override
     public Completable deleteInterests(HashSet<String> interests) {
-        List<String> userInterests = new ArrayList<>();
-        userInterests.addAll(interests);
+        List<String> userInterests = new ArrayList<>(interests);
         HashMap<String, List<String>> map = new HashMap<>();
         map.put("pref_list", userInterests);
         return retrofitService.deleteInterests(map);
