@@ -309,12 +309,7 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
     private void redirectHome() {
         Intent intent = new Intent(LogActivity.this, Home.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//sign in
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(runnable -> {
-            String token = runnable.getResult();
-            Log.d(TAG, "redirectHome: " + token);
-            logViewModel.registerDeviceToNotification(token);
-        });
+/**************************************/
         startActivity(intent);
         finish();
     }
@@ -440,6 +435,7 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
                 // Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
                 logOut();
                 redirectHome();
+
             } else {
                 GeneralUtils.showSnackError(this, signUpConstraintLayout, s);
                 //Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
@@ -465,11 +461,20 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
         });
         logViewModel.msgMutableLiveData.observe(this, s -> {
             if (s.equals("Your login done")) {
+                if (logViewModel.isFirstTimeToLogin()) {
+                    initPushNotification();
+                    logViewModel.setFirstTimeToLogin(false);
+                }
                 redirectHome();
+
                 GeneralUtils.showSnackInfo(this, signInConstraintLayout, "Login complete");
                 //Toast.makeText(LogActivity.this, s, Toast.LENGTH_LONG).show();
 
             } else if (s.equals("Your google login done")) {
+                {
+                    initPushNotification();
+                    logViewModel.setFirstTimeToLogin(true);
+                }
                 redirectHome();
                 logOut();
                 GeneralUtils.showSnackInfo(this, signInConstraintLayout, "Google Login complete");
@@ -618,6 +623,14 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
 //            signUpTransferMaterialButton.setEnabled(false);
         });
 
+    }
+
+    private void initPushNotification() {
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(runnable -> {
+            String token = runnable.getResult();
+            Log.d(TAG, "redirectHome: " + token);
+            logViewModel.registerDeviceToNotification(token);
+        });
     }
 
 }
