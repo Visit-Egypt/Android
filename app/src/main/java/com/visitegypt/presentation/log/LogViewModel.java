@@ -112,7 +112,7 @@ public class LogViewModel extends ViewModel {
     public void signUpWithGoogle(String token, String email) {
         getGoogleRegisterTokenUseCase.setToken(new Token(token));
         getGoogleRegisterTokenUseCase.execute(user -> {
-            Log.d("TAG", "donee" + user);
+            Log.d(TAG, "donee" + user);
             registerUseCase.saveUserData(user);
             mutableLiveDataResponse.setValue("Your google account was created successfully");
         }, throwable -> {
@@ -135,13 +135,14 @@ public class LogViewModel extends ViewModel {
         String email = user.getEmail();
         loginUserUseCase.saveUser(user);
         loginUserUseCase.execute(user1 -> {
-            Log.d("TAG", "accept: Token " + user1.getAccessToken());
-            Log.d("TAG", "accept: Token " + user1.getRefreshToken());
+            Log.d(TAG, "accept: Token " + user1.getAccessToken());
+            Log.d(TAG, "accept: Token " + user1.getRefreshToken());
             loginUserUseCase.saveUserData(user1);
             saveUserData(user1.getUserId(), email);
             userMutable.setValue(user1);
             msgMutableLiveData.setValue("Your login done");
         }, throwable -> {
+            Log.e(TAG, "login: ", throwable);
             Error error = new Error();
             msgMutableLiveData.setValue(error.errorType(throwable));
         });
