@@ -97,30 +97,22 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     public static final String PLACE_TITLE = "placeTitle";
     public static final String PLACE_ID = "placeId";
     private static final String TAG = "Gamification Activity";
-
+    private final MutableLiveData<Boolean> userInsideCircuitMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> userLocationLoaded = new MutableLiveData<>();
     @Inject
     public SharedPreferences sharedPreferences;
-
     private String placeId;
     private ArrayList<PlaceActivity> placeActivities;
     private ArrayList<Badge> placeBadges;
     private ArrayList<Badge> userBadges;
     private Dialog addReviewDialog;
     private ReviewViewModel reviewViewModel;
-
     private BadgesSliderViewAdapter badgesSliderViewAdapter;
     private RecyclerView achievementsRecyclerView;
     private MaterialButton claimButton, confirmLocationButton;
     private ArtifactsRecyclerViewAdapter artifactsRecyclerViewAdapter;
     private RecyclerView artifactsRecyclerView;
     private MapView mapView;
-    private GoogleMap googleMap;
-    private LocationManager locationManager;
-    private double latitude, longitude;
-    private GamificationViewModel gamificationViewModel;
-    private Place place;
-
-    private ShimmerFrameLayout sliderShimmerFrameLayout, claimPlaceShimmer, badgesShimmer;
     @SuppressLint("SetTextI18n")
     ActivityResultLauncher<Unit> mGetContent = registerForActivityResult(
             new PermissionsUiContracts.RequestBackgroundLocation(),
@@ -131,6 +123,12 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                     GeneralUtils.showSnackError(this, mapView, "Permission set error");
                 }
             });
+    private GoogleMap googleMap;
+    private LocationManager locationManager;
+    private double latitude, longitude;
+    private GamificationViewModel gamificationViewModel;
+    private Place place;
+    private ShimmerFrameLayout sliderShimmerFrameLayout, claimPlaceShimmer, badgesShimmer;
     private ImageView placeImageView;
     private TextView placeTitleTextView, placeRemainingActivitiesTextView, placeXpTextView;
     private ImageButton reviewImageButton, postPostImageButton, postStoryImageButton;
@@ -142,9 +140,6 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
     private LinearProgressIndicator placeProgressIndicator, adventureLinearProgressIndicator;
     private LinearLayout shimmerLayout, gamificationLayout;
     private ConstraintLayout postCardConstraintLayout;
-    private final MutableLiveData<Boolean> userInsideCircuitMutableLiveData = new MutableLiveData<>();
-
-    private final MutableLiveData<Boolean> userLocationLoaded = new MutableLiveData<>();
     private User user;
 
     private MaterialCardView reviewBorder, postBorder, storyBorder, artifactsBorder, insightsBorder;

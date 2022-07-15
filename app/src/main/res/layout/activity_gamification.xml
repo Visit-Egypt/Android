@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".presentation.gamification.GamificationActivity">
 
-
     <LinearLayout
         android:id="@+id/shimmerLayout"
         android:layout_width="match_parent"
@@ -36,26 +35,19 @@
                     app:popupTheme="@style/Theme.VisitEgypt.AppBarOverlay"
                     app:titleTextColor="?attr/colorOnSecondary">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/labelshimmer"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/montserrat_alternates_medium"
+                        android:text="Adventure Time"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="24sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/labelshimmer"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/montserrat_alternates_medium"
-                            android:gravity="center"
-                            android:text="Adventure Time"
-                            android:textColor="?attr/colorOnSecondary"
-                            android:textSize="24sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </LinearLayout>
                 </androidx.appcompat.widget.Toolbar>
 
             </com.google.android.material.appbar.AppBarLayout>
@@ -315,14 +307,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
-                <!--            <androidx.recyclerview.widget.RecyclerView-->
-                <!--                android:id="@+id/achievementsGamificationActivityRecyclerView"-->
-                <!--                android:layout_width="match_parent"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:layout_margin="8dp"-->
-                <!--                android:orientation="horizontal"-->
-                <!--                android:padding="8dp"-->
-                <!--                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />-->
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -343,13 +327,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:weightSum="3">
+                        android:weightSum="2">
 
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cardStoryBorderGamificationActivity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="4dp"
+                            android:layout_marginVertical="8dp"
                             android:layout_weight="1"
                             android:visibility="gone"
                             app:strokeColor="@color/darkGray"
@@ -423,7 +407,8 @@
                             android:id="@+id/cardPostBorderGamificationActivity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="4dp"
+                            android:layout_marginVertical="4dp"
+                            android:layout_marginRight="16dp"
                             android:layout_weight="1"
                             app:strokeColor="@color/darkGray"
                             app:strokeWidth="1dp">
@@ -498,7 +483,8 @@
                             android:id="@+id/cardReviewBorderGamificationActivity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="4dp"
+                            android:layout_marginVertical="4dp"
+                            android:layout_marginLeft="16dp"
                             android:layout_weight="1"
                             app:strokeColor="@color/darkGray"
                             app:strokeWidth="1dp">

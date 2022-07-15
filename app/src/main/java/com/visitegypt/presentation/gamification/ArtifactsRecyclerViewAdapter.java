@@ -27,7 +27,6 @@ import java.util.List;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class ArtifactsRecyclerViewAdapter extends RecyclerView.Adapter<com.visitegypt.presentation.gamification.ArtifactsRecyclerViewAdapter.ViewHolder> {
-
     private static final String TAG = "Artifacts Adapter in Gamification ";
     private List<Explore> exploreArrayList;
 
@@ -51,11 +50,9 @@ public class ArtifactsRecyclerViewAdapter extends RecyclerView.Adapter<com.visit
         holder.itemTitleTextView.setText(currentExplore.getTitle());
 
         holder.itemTitleTextView.setOnClickListener(view -> {
-            Log.d(TAG, "onClick: kkkkkkkkk");
             showHints(view, currentExplore);
         });
         holder.itemImage.setOnClickListener(view -> {
-            Log.d(TAG, "onClick: ssssssssssssss");
             showHints(view, currentExplore);
         });
         if (currentExplore.getImageUrl() != null) {

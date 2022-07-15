@@ -8,13 +8,14 @@
     tools:context=".presentation.tripmateRequest.TripMateRequest">
 
     <com.google.android.material.textview.MaterialTextView
-        style="@style/TextAppearance.MaterialComponents.Headline5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:fontFamily="@font/prata_regular"
-        android:gravity="center_horizontal"
-        android:text="Trip Mate Requests " />
+        android:fontFamily="@font/montserrat_alternates_medium"
+        android:gravity="center"
+        android:text="Trip Mate Requests "
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="24sp" />
 
     <LinearLayout
         android:id="@+id/userProfileShimmer"

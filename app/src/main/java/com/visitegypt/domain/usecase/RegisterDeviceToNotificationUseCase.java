@@ -9,9 +9,10 @@ import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Single;
 
-public class RegisterDeviceToNotificationUseCase extends SingleUseCase<HashMap<Object,Object>> {
-    private String msg;
+public class RegisterDeviceToNotificationUseCase extends SingleUseCase<HashMap<Object, Object>> {
     NotificationRepository notificationRepository;
+    private String msg;
+
     @Inject
     public RegisterDeviceToNotificationUseCase(NotificationRepository notificationRepository) {
         this.notificationRepository = notificationRepository;

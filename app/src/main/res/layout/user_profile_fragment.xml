@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="?attr/colorOnPrimary"
 
     android:orientation="vertical">
@@ -158,41 +157,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:weightSum="2">
 
                 <LinearLayout
-                    android:layout_width="180dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/likesNumberTextView"
-                        style="@style/TextAppearance.MaterialComponents.Subtitle1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="0"
-                        android:textAlignment="center"
-                        android:textColor="?attr/colorOnSecondary" />
-
-                    <TextView
-                        style="@style/TextAppearance.MaterialComponents.Subtitle1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="VISITED CITIES"
-                        android:textAlignment="center"
-                        android:textColor="?attr/colorOnSecondary" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="180dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -218,9 +189,8 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="180dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -252,12 +222,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:orientation="horizontal">
+                android:layout_margin="8dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/followMaterialButton"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Follow"
@@ -267,7 +239,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/requestMaterialButton"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Trip mate"
@@ -341,7 +313,6 @@
             </LinearLayout>
 
 
-
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -355,12 +326,13 @@
                 android:text="Activities" />
 
             <com.google.android.material.textview.MaterialTextView
-                style="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:id="@+id/noPostsMaterialTextView"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:text="I don't have any activities yet" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/postsRecyclerView"
                 android:layout_width="match_parent"

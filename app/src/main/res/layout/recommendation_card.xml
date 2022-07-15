@@ -43,6 +43,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginHorizontal="8dp"
             android:orientation="horizontal">
 
             <com.google.android.material.textview.MaterialTextView
@@ -71,62 +72,29 @@
 
         </LinearLayout>
 
-        <TableLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="4">
+            android:layout_marginHorizontal="8dp"
+            android:orientation="horizontal">
 
-            <!--            <TableRow>-->
+            <View
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_marginVertical="8dp"
+                android:background="@drawable/ic_baseline_star_24" />
 
-            <!--                <View-->
-            <!--                    android:layout_width="30dp"-->
-            <!--                    android:layout_height="30dp"-->
-            <!--                    android:layout_gravity="center"-->
-            <!--                    android:layout_marginLeft="10dp"-->
-            <!--                    android:background="@drawable/ic_sun" />-->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtPlaceCardRating"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="1dp"
+                android:fontFamily="@font/montserrat_alternates_medium"
+                android:text="4.5" />
 
-            <!--                <com.google.android.material.textview.MaterialTextView-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_marginTop="0dp"-->
-            <!--                    android:fontFamily="@font/montserrat_alternates_bold"-->
-            <!--                    android:text="25\u00b0"-->
-            <!--                    android:textSize="18sp" />-->
-            <!--            </TableRow>-->
-
-            <TableRow
-                android:layout_margin="8dp"
-                android:gravity="right">
-
-                <Space />
-
-                <!--                <com.google.android.material.textview.MaterialTextView-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginLeft="10dp"-->
-                <!--                    android:layout_marginTop="0dp"-->
-                <!--                    android:fontFamily="@font/montserrat_alternates_semibold"-->
-                <!--                    android:text="Sunny"-->
-                <!--                    android:textSize="16sp"-->
-                <!--                    android:textStyle="bold" />-->
-
-                <View
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="center"
-                    android:layout_marginVertical="8dp"
-                    android:background="@drawable/ic_baseline_star_24" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/txtPlaceCardRating"
-                    style="@style/TextAppearance.MaterialComponents.Subtitle1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="1dp"
-                    android:fontFamily="@font/montserrat_alternates_medium"
-                    android:text="No ratings" />
-            </TableRow>
-        </TableLayout>
+        </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

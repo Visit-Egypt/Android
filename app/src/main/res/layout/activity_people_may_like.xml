@@ -17,8 +17,12 @@
             style="@style/TextAppearance.MaterialComponents.Headline4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_margin="8dp"
-            android:text="People You May Like" />
+            android:fontFamily="@font/montserrat_alternates_medium"
+            android:text="Other people like"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="24sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/peopleMayLikeRecyclerView"
