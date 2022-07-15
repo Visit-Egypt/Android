@@ -127,18 +127,19 @@ public class NetworkModule implements CallBack {
                             .build();
                     Response response = chain.proceed(request);
                     response.cacheResponse();
-                    if (response.code() == 403 || response.code() == 401) {
-                        response.close();
-                        getNewToken(userRepository, sharedPreferences);
+                    if (!token.isEmpty())
+                        if (response.code() == 403 || response.code() == 401) {
+                            response.close();
+                            getNewToken(userRepository, sharedPreferences);
 
-                        while (flag) ;
-                        Request newRequest = chain.request().newBuilder()
-                                .addHeader("Authorization", "Bearer " + newToken)
-                                .build();
-                        flag = true;
-                        return chain.proceed(newRequest);
+                            while (flag) ;
+                            Request newRequest = chain.request().newBuilder()
+                                    .addHeader("Authorization", "Bearer " + newToken)
+                                    .build();
+                            flag = true;
+                            return chain.proceed(newRequest);
 
-                    }
+                        }
 
                     return response;
 
@@ -253,7 +254,9 @@ public class NetworkModule implements CallBack {
 
     @Provides
     @Singleton
-    public PlaceRepository providePlaceRepository(@Named("Normal") RetrofitService retrofitService, PlacePageResponseDao placeDao, SharedPreferences sharedPreferences) {
+    public PlaceRepository providePlaceRepository(@Named("Normal") RetrofitService retrofitService,
+                                                  PlacePageResponseDao placeDao,
+                                                  SharedPreferences sharedPreferences) {
         return new PlaceRepositoryImp(retrofitService, sharedPreferences, placeDao);
     }
 
@@ -353,7 +356,6 @@ public class NetworkModule implements CallBack {
         getRefreshTokenUseCase.setToken(new Token(token, refreshToken));
         getRefreshTokenUseCase.setCallBack(this::callBack);
         getRefreshTokenUseCase.getNewToken();
-
     }
 
 
