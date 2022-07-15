@@ -3,57 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/drawable/female.xml" value="0.2703125" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.1828125" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/drawable/ic_baseline_image_24.xml" value="0.2703125" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/drawable/like.xml" value="0.1828125" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activitiy_child_fragment.xml" value="0.32122905027932963" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_badge.xml" value="0.17291666666666666" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_chatbot.xml" value="0.17291666666666666" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_cities.xml" value="0.21296296296296297" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_detail.xml" value="0.17291666666666666" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_discover_child_all_places.xml" value="0.17291666666666666" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_gamification.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_item.xml" value="0.17291666666666666" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_log.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_new_home.xml" value="0.17291666666666666" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_people_may_like.xml" value="0.17291666666666666" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_places.xml" value="0.21296296296296297" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_post.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_review.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_reward.xml" value="0.2046875" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_search.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_select_character.xml" value="0.152" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/activity_setting.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/app_bar_new_home.xml" value="0.17291666666666666" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/badge_earned_dialog.xml" value="0.17291666666666666" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/bot_message.xml" value="0.17291666666666666" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/card_user_title.xml" value="0.17291666666666666" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/content_new_home.xml" value="0.17291666666666666" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/detail_slide_layout.xml" value="0.17291666666666666" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/dialog_add_review.xml" value="0.165625" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/dialog_choose_character.xml" value="0.165625" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/discover_child_fragment.xml" value="0.2" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/fragment_account.xml" value="0.21041666666666667" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/gamification_fragment.xml" value="0.17291666666666666" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/home_slider_shimmer_placeholder_layout.xml" value="0.17291666666666666" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/item_hashtag.xml" value="0.17291666666666666" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/load_state_item.xml" value="0.17291666666666666" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/nav_header_new_home.xml" value="0.17291666666666666" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/places_card.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/places_card_shimmer.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/places_place_card.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/post_card.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/slider_item.xml" value="0.17291666666666666" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/user_card_shimmer.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/user_message.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/user_profile_fragment.xml" value="0.21296296296296297" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/layout/users_card.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/menu/activity_main_drawer.xml" value="0.536" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/menu/bottom_nav_menu.xml" value="0.17291666666666666" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/menu/home_menu.xml" value="0.17291666666666666" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1828125" />
-        <entry key="..\:/Users/LAPTOP/Desktop/Android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
+        <entry key="..\:/Users/LAPTOP/Desktop/AndroidIntegration/app/src/main/res/layout/activitiy_child_fragment.xml" value="0.24010416666666667" />
+        <entry key="..\:/Users/LAPTOP/Desktop/AndroidIntegration/app/src/main/res/layout/activity_select_character.xml" value="0.24010416666666667" />
       </map>
     </option>
   </component>
