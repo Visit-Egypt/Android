@@ -100,6 +100,7 @@ public class PostsRecyclerViewAdapter extends RecyclerView.Adapter<PostsRecycler
 
     public void setUser(User user) {
         this.user = user;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
