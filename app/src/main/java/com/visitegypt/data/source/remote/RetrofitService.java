@@ -62,7 +62,7 @@ public interface RetrofitService {
     public Single<String> forgotPassword(@Path("email") String email);
 
     @POST("api/user/register")
-    public Single<User> registerUser(@Body User user);
+    public Single<String> registerUser(@Body User user);
 
     @POST("api/user/register/google")
     public Single<User> googleRegisterUser(@Body Token token);

@@ -41,7 +41,7 @@ public class UserRepositoryImp implements UserRepository {
     }
 
     @Override
-    public Single<User> registerUser(User user) {
+    public Single<String> registerUser(User user) {
         return retrofitService.registerUser(user);
     }
 

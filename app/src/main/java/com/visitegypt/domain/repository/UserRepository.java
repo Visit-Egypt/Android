@@ -25,7 +25,7 @@ import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 
 public interface UserRepository {
-    Single<User> registerUser(User user);
+    Single<String> registerUser(User user);
 
     Single<String> forgotPassword(String email);
 

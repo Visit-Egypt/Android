@@ -12,7 +12,7 @@ import javax.inject.Named;
 
 import io.reactivex.rxjava3.core.Single;
 
-public class RegisterUseCase extends SingleUseCase<User> {
+public class RegisterUseCase extends SingleUseCase<String> {
 
     private UserRepository userRepository;
     private User user;
@@ -40,7 +40,7 @@ public class RegisterUseCase extends SingleUseCase<User> {
     }
 
     @Override
-    protected Single<User> buildSingleUseCase() {
+    protected Single<String> buildSingleUseCase() {
         return userRepository.registerUser(user);
     }
 }

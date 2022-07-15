@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.gson.Gson;
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.User;
 import com.visitegypt.domain.usecase.ForgotPasswordUseCase;
@@ -24,7 +25,6 @@ import org.json.JSONObject;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import io.reactivex.rxjava3.functions.Consumer;
 import okhttp3.ResponseBody;
 import retrofit2.HttpException;
 
@@ -51,9 +51,10 @@ public class LogViewModel extends ViewModel {
     public LogViewModel(GetGoogleLoginTokenUseCase getGoogleLoginTokenUseCase,
                         ForgotPasswordUseCase forgotPasswordUseCase,
                         LoginUserUseCase loginUserUseCase, SharedPreferences sharedPreferences,
-                        GetUserUseCase getUserUseCase
-            , RegisterDeviceToNotificationUseCase registerDeviceToNotificationUseCase,
-                        GetGoogleRegisterTokenUseCase getGoogleRegisterTokenUseCase, RegisterUseCase registerUseCase,
+                        GetUserUseCase getUserUseCase,
+                        RegisterDeviceToNotificationUseCase registerDeviceToNotificationUseCase,
+                        GetGoogleRegisterTokenUseCase getGoogleRegisterTokenUseCase,
+                        RegisterUseCase registerUseCase,
                         UpdateUserBadgeTaskProgUseCase updateUserBadgeTaskProgUseCase
     ) {
         this.loginUserUseCase = loginUserUseCase;
@@ -73,15 +74,15 @@ public class LogViewModel extends ViewModel {
     }
 
     public void getUser() {
-        User myUser = userValidation;
         registerUseCase.saveUser(userValidation);
-        mutableLiveDataResponse.setValue("Your account was created successfully");
         registerUseCase.execute(u -> {
-            registerUseCase.saveUserData(u);
+            Log.d(TAG, "getUser: " + new Gson().toJson(u));
+            registerUseCase.saveUserData(userValidation);
             mutableLiveDataResponse.setValue("Your account was created successfully");
-
         }, throwable -> {
-            mutableLiveDataResponse.setValue("errorrr");
+            mutableLiveDataResponse.setValue("Account creation failed");
+            Log.e(TAG, "getUser: ", throwable);
+            Log.e(TAG, "getUser: " + throwable.getMessage());
 
             try {
                 Log.d(TAG, "getUser: " + throwable.getMessage());
@@ -110,14 +111,10 @@ public class LogViewModel extends ViewModel {
 
     public void signUpWithGoogle(String token, String email) {
         getGoogleRegisterTokenUseCase.setToken(new Token(token));
-        getGoogleRegisterTokenUseCase.execute(new Consumer<User>() {
-            @Override
-            public void accept(User user) throws Throwable {
-                Log.d("TAG", "donee" + user);
-                registerUseCase.saveUserData(user);
-                mutableLiveDataResponse.setValue("Your google account was created successfully");
-            }
-
+        getGoogleRegisterTokenUseCase.execute(user -> {
+            Log.d("TAG", "donee" + user);
+            registerUseCase.saveUserData(user);
+            mutableLiveDataResponse.setValue("Your google account was created successfully");
         }, throwable -> {
             mutableLiveDataResponse.setValue("There is an error may You already have an account ");
             Log.e(TAG, "signUpWithGoogle: " + throwable.getMessage());
@@ -160,29 +157,26 @@ public class LogViewModel extends ViewModel {
             try {
                 ResponseBody body = ((HttpException) throwable).response().errorBody();
                 JSONObject jObjectError = new JSONObject(body.string());
-                Log.d(TAG, "accept try : " + jObjectError.getJSONArray("errors").toString());
+                Log.d(TAG, "accept try : " + jObjectError.getJSONArray("errors"));
                 if (jObjectError.getJSONArray("errors").toString().contains("msg")) {
                     msgMutableLiveData.setValue(jObjectError.getJSONArray("errors").getJSONObject(0).getString("msg"));
                 } else {
                     msgMutableLiveData.setValue(jObjectError.getJSONArray("errors").toString());
                 }
             } catch (Exception e) {
-                Log.e(TAG, "accept catch: " + e.toString());
+                Log.e(TAG, "accept catch: " + e);
             }
         });
     }
 
     public void signInWithGoogle(String token, String email) {
         getGoogleLoginTokenUseCase.setToken(new Token(token));
-        getGoogleLoginTokenUseCase.execute(new Consumer<User>() {
-            @Override
-            public void accept(User user) throws Throwable {
-                Log.d(TAG, "donee" + user);
-                loginUserUseCase.saveUserData(user);
-                userMutable.setValue(user);
-                msgMutableLiveData.setValue("Your google login done");
-                saveUserData(user.getUserId(), email);
-            }
+        getGoogleLoginTokenUseCase.execute(user -> {
+            Log.d(TAG, "donee" + user);
+            loginUserUseCase.saveUserData(user);
+            userMutable.setValue(user);
+            msgMutableLiveData.setValue("Your google login done");
+            saveUserData(user.getUserId(), email);
         }, throwable -> Log.e(TAG, "signInWithGoogle: " + throwable.getMessage()));
     }
 

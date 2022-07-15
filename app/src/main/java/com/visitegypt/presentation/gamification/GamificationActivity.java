@@ -705,7 +705,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
                     Location.distanceBetween(latitude, longitude, place.getLatitude(), place.getLongitude(), distance);
                     Log.d(TAG, "onMapReady: " + distance[0] + " distance between you and location");
 
-                    distance[0] = 100;
+//                    distance[0] = 100;
                     if (distance[0] > GamificationRules.CONFIRM_LOCATION_CIRCLE_RADIUS) {
                         // confirmLocation();
                         distanceAwayTextView.setText(String.format(Locale.CANADA, "You are %,.2f metres away!", distance[0]));
