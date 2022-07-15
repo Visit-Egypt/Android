@@ -1,11 +1,14 @@
 package com.visitegypt.presentation.log;
 
+import static com.visitegypt.utils.Constants.SHARED_PREF_IS_FIRST_TIME_LOGIN;
+
 import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.visitegypt.domain.model.Token;
 import com.visitegypt.domain.model.User;
@@ -79,6 +82,7 @@ public class LogViewModel extends ViewModel {
         registerUseCase.execute(u -> {
             Log.d(TAG, "getUser: " + new Gson().toJson(u));
             registerUseCase.saveUserData(userValidation);
+
             mutableLiveDataResponse.setValue("Your account was created successfully");
         }, throwable -> {
             mutableLiveDataResponse.setValue("Account creation failed");
@@ -206,4 +210,11 @@ public class LogViewModel extends ViewModel {
             Log.e(TAG, "forgetpassword: " + throwable.getMessage());
         });
     }
+    public  boolean isFirstTimeToLogin() {
+        return sharedPreferences.getBoolean(SHARED_PREF_IS_FIRST_TIME_LOGIN, true);
+    }
+    public void setFirstTimeToLogin(boolean isFirstTime) {
+        sharedPreferences.edit().putBoolean(SHARED_PREF_IS_FIRST_TIME_LOGIN, isFirstTime).apply();
+    }
+
 }

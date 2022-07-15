@@ -17,6 +17,8 @@ public class Constants {
     public static final String SHARED_PREF_LAST_NAME = "lastName";
     public static final String SHARED_PREF_PHONE_NUMBER = "phoneNumber";
     public static final String SHARED_PREF_NAME = "secret_shared_prefs";
+    public static final String SHARED_PREF_IS_FIRST_TIME_LOGIN = "first_time_to_login";
+
     private static final int PHOTO_SELECTED = 1;
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
     public static final String PLACE_ID = "placeId";
