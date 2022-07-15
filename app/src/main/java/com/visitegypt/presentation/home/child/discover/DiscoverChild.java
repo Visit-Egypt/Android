@@ -2,6 +2,7 @@ package com.visitegypt.presentation.home.child.discover;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.google.android.material.button.MaterialButton;
 import com.smarteist.autoimageslider.SliderView;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
+import com.visitegypt.domain.model.Slider;
 import com.visitegypt.presentation.home.child.discover.allPlaces.DiscoverChildAllPlacesActivity;
 import com.visitegypt.presentation.home.child.discover.peopleMayLike.PeopleMayLike;
 import com.visitegypt.presentation.home.child.discover.youMayLike.YouMayLike;
@@ -101,6 +103,11 @@ public class DiscoverChild extends Fragment {
         sliderView.setScrollTimeInSec(3);
         sliderView.setAutoCycle(true);
         sliderView.startAutoCycle();
+
+        /////////////////////
+
+
+        /////////////////////
         /**********************************************/
         //init Places Recycler view
         btnYouMayLike = discoverLayOut.findViewById(R.id.btnYouMayLike);
@@ -195,37 +202,36 @@ public class DiscoverChild extends Fragment {
         stopShimmerAnimation();
     }
 
-    private void createDummyPlaces() {
-        Place place = new Place();
-        ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add("https://nileholiday.com/wp-content/uploads/2019/10/All-Temples-Of-Egypt1.jpg");
-        place.setImageUrls(arrayList);
-        place.setTitle("Karnak Temple");
-        place.setLongDescription("The Karnak Temple Complex, commonly known as Karnak, comprises a vast mix of decayed temples, chapels, pylons, and other buildings near Luxor, Egypt.");
-        place.setCity("Cairo");
-        Place place2 = new Place();
-        ArrayList<String> arrayList2 = new ArrayList<>();
-        arrayList2.add("https://www.egypttoday.com/siteimages/Larg/202106010323272327.jpg");
-        place2.setImageUrls(arrayList2);
-        place2.setTitle("Masjid Al Hakim");
-        place2.setCity("Cairo");
-        place2.setLongDescription("The Mosque of al-Hakim, nicknamed al-Anwar, is a major Islamic religious site in Cairo, Egypt.");
-
-        Place place3 = new Place();
-        ArrayList<String> arrayList3 = new ArrayList<>();
-        arrayList3.add("https://cdn2.civitatis.com/egipto/asuan/excursion-abu-simbel-grid.jpg");
-        place3.setImageUrls(arrayList3);
-        place3.setTitle("Abu Simbel Temples");
-        place3.setLongDescription("Abu Simbel is two massive rock-cut temples in the village of Abu Simbel, Aswan Governorate, Upper Egypt, near the border with Sudan");
-
-        placesYouMayLike.add(place);
-        placesYouMayLike.add(place2);
-        placesYouMayLikeAdapter.updatePlacesList(placesYouMayLike);
-    }
+//    private void createDummyPlaces() {
+//        Place place = new Place();
+//        ArrayList<String> arrayList = new ArrayList<>();
+//        arrayList.add("https://nileholiday.com/wp-content/uploads/2019/10/All-Temples-Of-Egypt1.jpg");
+//        place.setImageUrls(arrayList);
+//        place.setTitle("Karnak Temple");
+//        place.setLongDescription("The Karnak Temple Complex, commonly known as Karnak, comprises a vast mix of decayed temples, chapels, pylons, and other buildings near Luxor, Egypt.");
+//        place.setCity("Cairo");
+//        Place place2 = new Place();
+//        ArrayList<String> arrayList2 = new ArrayList<>();
+//        arrayList2.add("https://www.egypttoday.com/siteimages/Larg/202106010323272327.jpg");
+//        place2.setImageUrls(arrayList2);
+//        place2.setTitle("Masjid Al Hakim");
+//        place2.setCity("Cairo");
+//        place2.setLongDescription("The Mosque of al-Hakim, nicknamed al-Anwar, is a major Islamic religious site in Cairo, Egypt.");
+//
+//        Place place3 = new Place();
+//        ArrayList<String> arrayList3 = new ArrayList<>();
+//        arrayList3.add("https://cdn2.civitatis.com/egipto/asuan/excursion-abu-simbel-grid.jpg");
+//        place3.setImageUrls(arrayList3);
+//        place3.setTitle("Abu Simbel Temples");
+//        place3.setLongDescription("Abu Simbel is two massive rock-cut temples in the village of Abu Simbel, Aswan Governorate, Upper Egypt, near the border with Sudan");
+//
+//        placesYouMayLike.add(place);
+//        placesYouMayLike.add(place2);
+//        placesYouMayLikeAdapter.updatePlacesList(placesYouMayLike);
+//    }
 
     private void onClickListeners() {
         btnAllPlaces.setOnClickListener(view -> {
-//            ((Home) getActivity()).changeFragment(new DiscoverChildAllPlaces());
             Intent intent = new Intent(getContext(), DiscoverChildAllPlacesActivity.class);
             startActivity(intent);
         });

@@ -15,7 +15,6 @@ import com.visitegypt.domain.model.Item;
 import com.visitegypt.domain.model.Place;
 import com.visitegypt.domain.model.PlaceActivity;
 import com.visitegypt.domain.usecase.GetItemPagingUseCase;
-import com.visitegypt.domain.usecase.GetItemsUseCase;
 import com.visitegypt.domain.usecase.GetPlaceDetailUseCase;
 import com.visitegypt.domain.usecase.GetUserPlaceActivityUseCase;
 import com.visitegypt.utils.Constants;
@@ -38,7 +37,7 @@ public class DetailViewModel extends ViewModel {
     Flowable<PagingData<Item>> flowable;
     private GetPlaceDetailUseCase getPlaceDetailUseCase;
     private GetItemPagingUseCase getItemPagingUseCase;
-//    private GetItemsUseCase getItemsUseCase;
+    //    private GetItemsUseCase getItemsUseCase;
     private GetUserPlaceActivityUseCase getUserPlaceActivityUseCase;
     private SharedPreferences sharedPreferences;
 

@@ -8,11 +8,11 @@ import android.widget.ImageView;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 import com.visitegypt.R;
 
-public class SliderAdapter extends SliderViewAdapter<SliderAdapter.Holder>{
+public class SliderAdapter extends SliderViewAdapter<SliderAdapter.Holder> {
 
     int[] images;
 
-    public SliderAdapter(int[] images){
+    public SliderAdapter(int[] images) {
 
         this.images = images;
     }
@@ -21,7 +21,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.Holder>{
     public Holder onCreateViewHolder(ViewGroup parent) {
 
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.slider_item,parent,false);
+                .inflate(R.layout.slider_item, parent, false);
         return new Holder(view);
     }
 
@@ -37,11 +37,11 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.Holder>{
         return images.length;
     }
 
-    public class Holder extends  SliderViewAdapter.ViewHolder{
+    public class Holder extends SliderViewAdapter.ViewHolder {
 
         ImageView imageView;
 
-        public Holder(View itemView){
+        public Holder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.image_view);
 

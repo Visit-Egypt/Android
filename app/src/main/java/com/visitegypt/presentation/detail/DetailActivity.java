@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -89,6 +90,15 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     @Inject
     public SharedPreferences sharedPreferences;
     public String placeIdToReview, placeIdFromReview;
+    Handler mHandler;
+    private final Runnable m_Runnable = new Runnable() {
+        public void run() {
+//            Toast.makeText(DetailActivity.this,"in runnable",Toast.LENGTH_SHORT).show();
+
+            DetailActivity.this.mHandler.postDelayed(m_Runnable, 5000);
+        }
+
+    };
     private NestedScrollView detailNestedScrollView;
     private TextView foreignerAdultPriceTextView, foreignerStudentPriceTextView,
             egyptianStudentTextView, egyptianAdultPriceTextView, descriptionTextView,
@@ -97,15 +107,12 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
             fridayOpeningHours, foreignerVideoPriceTextView, foreignerPhotoPriceTextView,
             egyptianVideoPriceTextView, egyptianPhotoPriceTextView, childrenPriceTextView,
             locationTextView, remainingActivitiesTextView;
-
     private LinearProgressIndicator remainingActivitiesProgressIndicator;
-
     private MaterialButton addReviewButton, gamificationInDetailActivityImageView, seeAllButton;
     private FloatingActionButton chatbotFloatingActionButton;
-
     private DetailViewModel detailViewModel;
     private ReviewViewModel reviewViewModel;
-//    private ItemsRecyclerViewAdapter itemsRecyclerViewAdapter;
+    //    private ItemsRecyclerViewAdapter itemsRecyclerViewAdapter;
     private RecyclerView itemsRecyclerView;
     private SliderView sliderView;
     private SliderAdapter sliderAdapter;
@@ -119,17 +126,18 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     private ScrollView shimmerScrollView;
     private CircularImageView backArrowCircularImageButton;
     private MapView mapView;
-
     private Place place;
     private MaterialTextView noReviewsMaterialTextView, visitorNameFirstReviewTextView, reviewContentTextView;
     private RatingBar firstReviewRatingBar;
-
     private LinearLayoutCompat artifactsLinearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        this.mHandler = new Handler();
+        m_Runnable.run();
+
         placeIdFromReview = getIntent().getStringExtra("place_id");
 
         if (savedInstanceState == null) {
@@ -249,12 +257,6 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
             }
         });
         detailViewModel.getItemsByPlaceId(placeId);
-        backArrowCircularImageButton.setOnClickListener(v -> backPlace());
-
-//        detailViewModel.itemMutableLiveData.observe(this, items -> {
-//            Log.d(TAG, "setting items to recycler view...");
-//            itemsRecyclerViewAdapter.setItemsArrayList(items);
-//        });
         backArrowCircularImageButton.setOnClickListener(v -> backPlace());
 
         gamificationInDetailActivityImageView.setOnClickListener(view -> {
@@ -422,6 +424,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
             } catch (Exception ignored) {
             }
         }
+        mHandler.removeCallbacks(m_Runnable);
     }
 
     @Override
@@ -435,7 +438,13 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         }
     }
 
-
+    //    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        mHandler.removeCallbacks(m_Runnable);
+//        finish();
+//
+//    }
     private void showDialog() {
         View dialogLayout = LayoutInflater.from(DetailActivity.this).inflate(R.layout.dialog_add_review, null);
         addReviewDialog = new Dialog(this);
@@ -461,11 +470,21 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
                 observeOnce(reviewViewModel.mutableLiveDataResponseCode, response -> {
                     if (response == 200) {
                         GeneralUtils.showButtonLoaded(submitReview, null);
+                        noReviewsMaterialTextView.setVisibility(View.GONE);
+                        firstReviewRatingBar.setRating(numStars);
+                        reviewContentTextView.setText(reviewText);
+                        visitorNameFirstReviewTextView.setText(firstName + " " + lastName);
+                        seeAllButton.setVisibility(View.VISIBLE);
+
+                        m_Runnable.run();
+                        firstReviewLinearLayout.setVisibility(View.VISIBLE);
+
                         addReviewDialog.dismiss();
                     } else {
                         GeneralUtils.showButtonFailed(submitReview, "Failed to submit review", "submit");
                     }
                 });
+
 //                addReviewDialog.dismiss();
             }
         });
