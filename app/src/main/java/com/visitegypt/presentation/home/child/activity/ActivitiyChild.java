@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,10 +45,12 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class ActivitiyChild extends Fragment {
     private static final String TAG = "Activitie fragment";
     DownloadManager downloadManager;
-    private ConstraintLayout getCharacterConstraintLayout, moneyARConstraintLayout;
+    Handler handler = new Handler();
+    private ConstraintLayout getCharacterConstraintLayout, moneyARConstraintLayout, learnHistoryConstraintLayout;
     private Dialog chooseCharacterDialog;
     private ActivitiyChildViewModel mViewModel;
     private ShapeableImageView learnHistory, learnAboutEgypt;
+    private View loadingLayout;
 
     public static ActivitiyChild newInstance() {
         return new ActivitiyChild();
@@ -60,6 +63,7 @@ public class ActivitiyChild extends Fragment {
         View activityChild = inflater.inflate(R.layout.activitiy_child_fragment, container, false);
         initViews(activityChild);
         initClickListeners();
+
         return activityChild;
     }
 
@@ -80,6 +84,9 @@ public class ActivitiyChild extends Fragment {
     private void initViews(View v) {
         getCharacterConstraintLayout = v.findViewById(R.id.getCharacterConstraintLayout);
         moneyARConstraintLayout = v.findViewById(R.id.moneyARConstraintLayout);
+        learnHistoryConstraintLayout = v.findViewById(R.id.learnHistoryConstraintLayout);
+        loadingLayout = v.findViewById(R.id.loadingLayout);
+
     }
 
     private void initClickListeners() {
@@ -87,8 +94,8 @@ public class ActivitiyChild extends Fragment {
             showDialog();
         });
         moneyARConstraintLayout.setOnClickListener(v -> {
+            showLoading();
 
-            List<Map<String, String>> list = new ArrayList<Map<String, String>>();
             Map<String, String> m1 = new HashMap<String, String>();
             Map<String, String> m2 = new HashMap<String, String>();
             Map<String, String> m3 = new HashMap<String, String>();
@@ -110,6 +117,10 @@ public class ActivitiyChild extends Fragment {
             m8.put("warwheel", "https://drive.google.com/uc?export=download&id=1ICH4KYi65Z8FOH_f3ZA8ZoY5V5s9R50o");
             m9.put("writer", "https://drive.google.com/uc?export=download&id=1rqym5wTxWZuETovaSQ1_24zDRzJ3BBa2");
             m10.put("hatshepsut", "https://drive.google.com/uc?export=download&id=1G2cmLMSPMKf9DPLJK5izKz9HwdjASiCK");
+//        Collections.addAll(list, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10);
+//           List<Map<String, String>> list = new ArrayList<Map<String, String>>(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10);
+//            final List<Map<String, String>> list = new ArrayList<Map<String, String>>(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10);
+            List<Map<String, String>> list = new ArrayList<Map<String, String>>();
             Collections.addAll(list, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10);
 
             downloadManager = (DownloadManager) getActivity().getBaseContext().getSystemService(Context.DOWNLOAD_SERVICE);
@@ -120,7 +131,9 @@ public class ActivitiyChild extends Fragment {
                 if (file.exists()) {
                     Log.d(TAG, "buttonClick: file exist");
                 } else {
-                    Log.d(TAG, "buttonClick: file isn't exist");
+
+                    Log.d(TAG, "buttonClick: file isn't exist" + file);
+//                    while (!file.exists()) {
                     try {
                         request.setDestinationInExternalFilesDir(getActivity(), File.separator, list.get(i).keySet().iterator().next());
                         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
@@ -130,20 +143,29 @@ public class ActivitiyChild extends Fragment {
                     } catch (Exception e) {
                         Log.e(TAG, "buttonClick:xx " + e.getMessage());
                     }
+
+//                    }
                 }
 
             }
+
 
             if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
             } else {
                 Intent intent = new Intent(getActivity(), UnityPlayerActivity.class);
-                intent.putExtra("scaneName", "1");
+                intent.putExtra("sceneIndex", "1");
                 startActivity(intent);
             }
-
+            hideLoading();
         });
-
+        learnHistoryConstraintLayout.setOnClickListener(
+                v -> {
+                    Intent intent = new Intent(getActivity(), UnityPlayerActivity.class);
+                    intent.putExtra("sceneIndex", "1");
+                    startActivity(intent);
+                }
+        );
     }
 
     private void showDialog() {
@@ -170,5 +192,15 @@ public class ActivitiyChild extends Fragment {
         });
     }
 
+//    rivate
 
+    void showLoading() {
+
+        loadingLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void hideLoading() {
+        loadingLayout.setVisibility(View.GONE);
+
+    }
 }

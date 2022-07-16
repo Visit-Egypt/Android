@@ -501,7 +501,6 @@ public class LogActivity extends AppCompatActivity implements GoogleApiClient.On
         googleSignUpButton = findViewById(R.id.googleSignUpButton);
         signInConstraintLayout = findViewById(R.id.signInConstraintLayout);
         signUpConstraintLayout = findViewById(R.id.signUpConstraintLayout);
-        loadingLayout = findViewById(R.id.loadingLayout);
         emailTextField = findViewById(R.id.emailTextField);
         passwordSignInTextField = findViewById(R.id.passwordSignInTextField);
         forgetPasswordMaterialTextView = findViewById(R.id.forgetPasswordMaterialTextView);

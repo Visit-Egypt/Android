@@ -36,6 +36,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -59,6 +60,7 @@ import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
+import com.unity3d.player.UnityPlayerActivity;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Badge;
 import com.visitegypt.domain.model.BadgeTask;
@@ -157,6 +159,7 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         initViewModels(savedInstanceState);
         initClickListeners();
 //        dummyTests();
+
     }
 
     private void dummyTests() {
@@ -193,7 +196,27 @@ public class GamificationActivity extends AppCompatActivity implements LocationL
         observeOnce(gamificationViewModel.userMutableLiveData, user1 -> {
             user = user1;
         });
+        claimButton.setOnClickListener(v -> {
+            if (ContextCompat.checkSelfPermission(GamificationActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(GamificationActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+            } else {
 
+                Intent intent = new Intent(GamificationActivity.this, UnityPlayerActivity.class);
+
+                String token = sharedPreferences.getString(Constants.SHARED_PREF_USER_ACCESS_TOKEN, "");
+                String userid = sharedPreferences.getString(Constants.SHARED_PREF_USER_ID, "");
+//            String placeid = sharedPreferences.getString(Constants., "");
+                intent.putExtra("info", token +
+                        "," + userid +
+                        "," + "6249c7df30170c0174c4419e");
+                intent.putExtra("data", token +
+                        "," + userid +
+                        ",6249c7df30170c0174c4419e");
+                startActivity(intent);
+
+            }
+
+        });
         try {
             gamificationViewModel.getPlaceDetail();
             observeOnce(gamificationViewModel.placesMutableLiveData, place -> {

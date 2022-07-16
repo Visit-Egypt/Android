@@ -4,7 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/LAPTOP/Desktop/AndroidIntegration/app/src/main/res/layout/activitiy_child_fragment.xml" value="0.24010416666666667" />
+        <entry key="..\:/Users/LAPTOP/Desktop/AndroidIntegration/app/src/main/res/layout/activity_detail.xml" value="0.14895833333333333" />
+        <entry key="..\:/Users/LAPTOP/Desktop/AndroidIntegration/app/src/main/res/layout/activity_gamification.xml" value="0.14895833333333333" />
+        <entry key="..\:/Users/LAPTOP/Desktop/AndroidIntegration/app/src/main/res/layout/activity_log.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/LAPTOP/Desktop/AndroidIntegration/app/src/main/res/layout/activity_select_character.xml" value="0.24010416666666667" />
+        <entry key="..\:/Users/LAPTOP/Desktop/AndroidIntegration/app/src/main/res/layout/loading.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

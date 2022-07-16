@@ -1,4 +1,4 @@
 rootProject.name = "VisitEgypt"
 include ':app'
 include(':unityLibrary')
-project(':unityLibrary').projectDir = new File('C:\\Users\\LAPTOP\\Desktop\\AndroidIntegration\\unityLibrary')
+project(':unityLibrary').projectDir = new File('C:\\Users\\LAPTOP\\Downloads\\Telegram Desktop\\TalBasta\\unityLibrary')
