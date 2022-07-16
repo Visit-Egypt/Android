@@ -2,7 +2,6 @@ package com.visitegypt.presentation.home.child.discover;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import com.google.android.material.button.MaterialButton;
 import com.smarteist.autoimageslider.SliderView;
 import com.visitegypt.R;
 import com.visitegypt.domain.model.Place;
-import com.visitegypt.domain.model.Slider;
 import com.visitegypt.presentation.home.child.discover.allPlaces.DiscoverChildAllPlacesActivity;
 import com.visitegypt.presentation.home.child.discover.peopleMayLike.PeopleMayLike;
 import com.visitegypt.presentation.home.child.discover.youMayLike.YouMayLike;
