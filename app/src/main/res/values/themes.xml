@@ -72,4 +72,17 @@
         <item name="android:windowExitAnimation">@android:anim/slide_out_right</item>
     </style>
 
+    <style name="Theme.VisitEgypt.Fullscreen" parent="Theme.VisitEgypt">
+        <item name="android:actionBarStyle">@style/Widget.Theme.VisitEgypt.ActionBar.Fullscreen
+        </item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
+
+    <style name="ThemeOverlay.VisitEgypt.FullscreenContainer" parent="">
+        <item name="fullscreenBackgroundColor">?attr/colorOnPrimary</item>
+        <item name="fullscreenTextColor">?attr/colorOnSecondary</item>
+    </style>
+
+
 </resources>

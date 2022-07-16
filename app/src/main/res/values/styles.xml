@@ -1,0 +1,11 @@
+<resources>
+
+    <style name="Widget.Theme.VisitEgypt.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="Widget.Theme.VisitEgypt.ButtonBar.Fullscreen" parent="">
+        <item name="android:background">?attr/colorOnSecondary</item>
+        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
+    </style>
+</resources>
